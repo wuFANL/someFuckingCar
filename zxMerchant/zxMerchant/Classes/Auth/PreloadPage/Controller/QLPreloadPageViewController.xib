@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QLPreloadPageViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="不怕侵权，你就转载" translatesAutoresizingMaskIntoConstraints="NO" id="MbO-ri-jQu">
+                    <rect key="frame" x="41" y="120" width="332" height="242"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宁德众享未来网络科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAT-dL-Klf">
+                    <rect key="frame" x="121" y="696" width="172" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.55294117649999996" green="0.57647058819999997" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="众聚精彩  享赢未来" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-A9-Mog">
+                    <rect key="frame" x="64.666666666666686" y="637" width="285" height="29"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fAT-dL-Klf" firstAttribute="top" secondItem="a3a-A9-Mog" secondAttribute="bottom" constant="30" id="8sR-kU-mWj"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="fAT-dL-Klf" secondAttribute="bottom" constant="25" id="HAa-i1-Fev"/>
+                <constraint firstItem="MbO-ri-jQu" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="100" id="PHd-LL-Yfb"/>
+                <constraint firstItem="MbO-ri-jQu" firstAttribute="width" secondItem="MbO-ri-jQu" secondAttribute="height" multiplier="332:242" id="ley-VB-Xo1"/>
+                <constraint firstItem="fAT-dL-Klf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="uzv-Zd-sQz"/>
+                <constraint firstItem="fAT-dL-Klf" firstAttribute="centerX" secondItem="a3a-A9-Mog" secondAttribute="centerX" id="v4P-3H-MZv"/>
+                <constraint firstItem="MbO-ri-jQu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vbt-gk-MOQ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="不怕侵权，你就转载" width="332" height="241.66667175292969"/>
+        <image name="众聚精彩  享赢未来" width="285.66665649414062" height="29"/>
+    </resources>
+</document>

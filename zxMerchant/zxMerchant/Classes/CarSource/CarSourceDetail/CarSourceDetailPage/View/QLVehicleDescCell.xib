@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="descCell" rowHeight="100" id="KGk-i7-Jjw" customClass="QLVehicleDescCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTn-De-GNy" customClass="UIControl">
+                        <rect key="frame" x="16" y="15" width="95" height="70"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="videoPlayIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6pD-dR-Bpc">
+                                <rect key="frame" x="35" y="22.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6pD-dR-Bpc" secondAttribute="height" multiplier="1:1" id="i9A-44-Gg2"/>
+                                    <constraint firstAttribute="width" constant="25" id="uqh-WP-Eca"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96853548290000002" green="0.96869391199999999" blue="0.9685017467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="BTn-De-GNy" secondAttribute="height" multiplier="19:14" id="6Xc-M5-X4h"/>
+                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerY" secondItem="BTn-De-GNy" secondAttribute="centerY" id="CBw-Or-Cb7"/>
+                            <constraint firstAttribute="width" constant="95" id="CXe-Vw-9cS"/>
+                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerX" secondItem="BTn-De-GNy" secondAttribute="centerX" id="wo5-2f-eg4"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里将车辆名称.档位.环保标准.排量.表显 里程.等信息.车商可编辑修改,主要目的传 到公众号详情页" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbN-Be-aBY">
+                        <rect key="frame" x="125" y="15" width="180" height="70"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nbN-Be-aBY" firstAttribute="top" secondItem="BTn-De-GNy" secondAttribute="top" id="2XP-Jc-e32"/>
+                    <constraint firstAttribute="trailing" secondItem="nbN-Be-aBY" secondAttribute="trailing" constant="15" id="2sl-F0-5SK"/>
+                    <constraint firstItem="BTn-De-GNy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="4SB-O5-bgI"/>
+                    <constraint firstItem="nbN-Be-aBY" firstAttribute="leading" secondItem="BTn-De-GNy" secondAttribute="trailing" constant="14" id="6Mp-Ld-7Qh"/>
+                    <constraint firstItem="nbN-Be-aBY" firstAttribute="bottom" secondItem="BTn-De-GNy" secondAttribute="bottom" id="e7B-4k-CT5"/>
+                    <constraint firstAttribute="bottom" secondItem="BTn-De-GNy" secondAttribute="bottom" constant="15" id="nQQ-bA-DeP"/>
+                    <constraint firstItem="BTn-De-GNy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="pFM-Ct-6yX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="contentLB" destination="nbN-Be-aBY" id="aO1-xX-CXK"/>
+                <outlet property="uploadControl" destination="BTn-De-GNy" id="YUt-Dq-ZDQ"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="videoPlayIcon" width="25" height="25"/>
+    </resources>
+</document>

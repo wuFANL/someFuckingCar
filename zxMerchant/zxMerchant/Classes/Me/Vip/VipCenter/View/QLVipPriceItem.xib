@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="QLVipPriceItem">
+            <rect key="frame" x="0.0" y="0.0" width="98" height="98"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="98" height="98"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X34-no-N7v">
+                        <rect key="frame" x="35.5" y="16" width="27" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="uhJ-g6-8ul"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvW-1i-64K">
+                        <rect key="frame" x="31.5" y="44" width="35" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Fjo-Q5-Dhf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="原价：0万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMv-4J-Xgn">
+                        <rect key="frame" x="16" y="70" width="66" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <constraints>
+                <constraint firstItem="KMv-4J-Xgn" firstAttribute="centerX" secondItem="AvW-1i-64K" secondAttribute="centerX" id="Om7-nq-gqm"/>
+                <constraint firstItem="AvW-1i-64K" firstAttribute="centerX" secondItem="X34-no-N7v" secondAttribute="centerX" id="Z2c-h9-NKv"/>
+                <constraint firstAttribute="bottom" secondItem="KMv-4J-Xgn" secondAttribute="bottom" constant="14" id="eEA-Oe-a0b"/>
+                <constraint firstItem="X34-no-N7v" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="p5Z-KR-j8b"/>
+                <constraint firstItem="KMv-4J-Xgn" firstAttribute="top" secondItem="AvW-1i-64K" secondAttribute="bottom" constant="8" id="vCo-7R-2hV"/>
+                <constraint firstItem="X34-no-N7v" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="vdp-yY-C4G"/>
+                <constraint firstItem="AvW-1i-64K" firstAttribute="top" secondItem="X34-no-N7v" secondAttribute="bottom" constant="12" id="yXn-i4-w5n"/>
+            </constraints>
+            <size key="customSize" width="118" height="115"/>
+            <connections>
+                <outlet property="oldPriceLB" destination="KMv-4J-Xgn" id="XvP-bL-4bD"/>
+                <outlet property="priceLB" destination="AvW-1i-64K" id="KtL-AE-Bwp"/>
+                <outlet property="timeLB" destination="X34-no-N7v" id="4Ec-RV-XJt"/>
+            </connections>
+            <point key="canvasLocation" x="-118.84057971014494" y="69.977678571428569"/>
+        </collectionViewCell>
+    </objects>
+</document>

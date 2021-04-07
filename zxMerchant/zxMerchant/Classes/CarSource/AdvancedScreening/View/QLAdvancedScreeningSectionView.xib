@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLAdvancedScreeningSectionView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY3-2L-1JU">
+                    <rect key="frame" x="15.000000000000002" y="12.666666666666664" width="30.666666666666671" height="18"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jcP-97-K4D">
+                    <rect key="frame" x="289" y="12.666666666666664" width="40" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="r0r-BT-f2u"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-8" maxY="0.0"/>
+                    <state key="normal" title="L" image="noSelect_gray">
+                        <color key="titleColor" systemColor="labelColor"/>
+                    </state>
+                    <state key="selected" image="select_green"/>
+                    <connections>
+                        <action selector="funBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="fia-eH-LMG"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfg-4O-oSK">
+                    <rect key="frame" x="359" y="12.666666666666664" width="40" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-8" maxY="0.0"/>
+                    <state key="normal" title="T" image="noSelect_gray">
+                        <color key="titleColor" systemColor="labelColor"/>
+                    </state>
+                    <state key="selected" image="select_green"/>
+                    <connections>
+                        <action selector="funBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Sbt-yl-ouU"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zfg-4O-oSK" secondAttribute="trailing" constant="15" id="5TU-f8-XWx"/>
+                <constraint firstItem="jcP-97-K4D" firstAttribute="centerY" secondItem="iY3-2L-1JU" secondAttribute="centerY" id="Jji-1v-GMp"/>
+                <constraint firstItem="zfg-4O-oSK" firstAttribute="width" secondItem="jcP-97-K4D" secondAttribute="width" id="L1I-J2-vdO"/>
+                <constraint firstItem="iY3-2L-1JU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="OvY-C4-sVg"/>
+                <constraint firstItem="zfg-4O-oSK" firstAttribute="centerY" secondItem="jcP-97-K4D" secondAttribute="centerY" id="VLd-hg-QdS"/>
+                <constraint firstItem="iY3-2L-1JU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="oxJ-dI-Kic"/>
+                <constraint firstItem="zfg-4O-oSK" firstAttribute="leading" secondItem="jcP-97-K4D" secondAttribute="trailing" constant="30" id="qb3-FG-527"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="aBtn" destination="jcP-97-K4D" id="taX-SJ-z4u"/>
+                <outlet property="bBtn" destination="zfg-4O-oSK" id="Lki-zw-ndY"/>
+                <outlet property="titleLB" destination="iY3-2L-1JU" id="v2e-1o-K5R"/>
+            </connections>
+            <point key="canvasLocation" x="-17.39130434782609" y="-293.88586956521743"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="noSelect_gray" width="15" height="15"/>
+        <image name="select_green" width="24" height="24"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="transactionMoneyCell" rowHeight="120" id="KGk-i7-Jjw" customClass="QLTransactionMoneyCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出售金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pi4-HI-bax">
+                        <rect key="frame" x="15" y="15" width="61.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHo-5X-GYa">
+                        <rect key="frame" x="15" y="53" width="38.5" height="45"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入金额" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-Ly-9r6">
+                        <rect key="frame" x="63.5" y="53" width="241.5" height="45"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="bbQ-Ly-9r6" firstAttribute="centerY" secondItem="uHo-5X-GYa" secondAttribute="centerY" id="IMa-jr-j6Z"/>
+                    <constraint firstAttribute="trailing" secondItem="bbQ-Ly-9r6" secondAttribute="trailing" constant="15" id="KWt-yZ-Lwj"/>
+                    <constraint firstItem="Pi4-HI-bax" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="WVc-8R-1mm"/>
+                    <constraint firstItem="bbQ-Ly-9r6" firstAttribute="bottom" secondItem="uHo-5X-GYa" secondAttribute="bottom" id="Wr2-Cm-Jtl"/>
+                    <constraint firstItem="Pi4-HI-bax" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="d0A-2c-BeB"/>
+                    <constraint firstItem="bbQ-Ly-9r6" firstAttribute="leading" secondItem="uHo-5X-GYa" secondAttribute="trailing" constant="10" id="dlo-pf-3FZ"/>
+                    <constraint firstItem="uHo-5X-GYa" firstAttribute="top" secondItem="Pi4-HI-bax" secondAttribute="bottom" constant="20" id="gF8-Rf-mLV"/>
+                    <constraint firstAttribute="bottom" secondItem="uHo-5X-GYa" secondAttribute="bottom" constant="10" id="n0G-UH-l0O"/>
+                    <constraint firstItem="bbQ-Ly-9r6" firstAttribute="top" secondItem="uHo-5X-GYa" secondAttribute="top" id="pzF-Kz-NLo"/>
+                    <constraint firstItem="uHo-5X-GYa" firstAttribute="leading" secondItem="Pi4-HI-bax" secondAttribute="leading" id="qXc-G8-dsU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="tf" destination="bbQ-Ly-9r6" id="PcD-3m-y7O"/>
+                <outlet property="titleLB" destination="Pi4-HI-bax" id="8P6-H4-BKq"/>
+            </connections>
+            <point key="canvasLocation" x="-55.072463768115945" y="84.375"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLCarCircleNaviView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WaZ-i3-nzp">
+                    <rect key="frame" x="15" y="5" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="WaZ-i3-nzp" secondAttribute="height" multiplier="1:1" id="eiW-oa-21M"/>
+                        <constraint firstAttribute="height" constant="34" id="zuP-am-tlI"/>
+                    </constraints>
+                    <state key="normal" image="whiteArrow_back"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ff-s7-per" customClass="QLBaseTarBarButton">
+                    <rect key="frame" x="365" y="5" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="5ff-s7-per" secondAttribute="height" multiplier="1:1" id="W3h-JD-CZI"/>
+                    </constraints>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="WaZ-i3-nzp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="9nE-Ze-K79"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5ff-s7-per" secondAttribute="trailing" constant="15" id="DCd-e9-Z9c"/>
+                <constraint firstItem="5ff-s7-per" firstAttribute="top" secondItem="WaZ-i3-nzp" secondAttribute="top" id="kZp-M5-BVV"/>
+                <constraint firstItem="5ff-s7-per" firstAttribute="bottom" secondItem="WaZ-i3-nzp" secondAttribute="bottom" id="lnW-Bq-qhR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="WaZ-i3-nzp" secondAttribute="bottom" constant="5" id="scX-39-so7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backBtn" destination="WaZ-i3-nzp" id="Ab7-rN-E8o"/>
+                <outlet property="funBtn" destination="5ff-s7-per" id="aLZ-HB-Q8G"/>
+            </connections>
+            <point key="canvasLocation" x="18.840579710144929" y="-272.28260869565219"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="whiteArrow_back" width="10" height="17.666666030883789"/>
+    </resources>
+</document>

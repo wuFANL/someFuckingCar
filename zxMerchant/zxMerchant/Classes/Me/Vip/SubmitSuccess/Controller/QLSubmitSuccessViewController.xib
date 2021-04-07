@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QLSubmitSuccessViewController">
+            <connections>
+                <outlet property="centerLB" destination="NhF-VV-ptl" id="swo-UR-CNY"/>
+                <outlet property="detailLB" destination="77q-Cc-DfI" id="Ee4-s2-oGj"/>
+                <outlet property="successLB" destination="o5F-EG-lok" id="7v4-kh-nC1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZ9-pB-L9V">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineSubmit_success" translatesAutoresizingMaskIntoConstraints="NO" id="RyV-kW-Tbi">
+                            <rect key="frame" x="87" y="43" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="OXW-ab-60l"/>
+                                <constraint firstAttribute="width" secondItem="RyV-kW-Tbi" secondAttribute="height" multiplier="1:1" id="ljI-G6-VpP"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提交成功" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5F-EG-lok">
+                            <rect key="frame" x="127" y="40" width="121.5" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <color key="textColor" red="0.0" green="0.67487017949999994" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-VV-ptl">
+                            <rect key="frame" x="77" y="106" width="221" height="15"/>
+                            <string key="text">稍后客服将电话联系您，确认取款款项。
+</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请保持电话通畅！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77q-Cc-DfI">
+                            <rect key="frame" x="126" y="131" width="123" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="o5F-EG-lok" firstAttribute="centerY" secondItem="RyV-kW-Tbi" secondAttribute="centerY" id="A1B-Wc-dYI"/>
+                        <constraint firstItem="77q-Cc-DfI" firstAttribute="centerX" secondItem="yZ9-pB-L9V" secondAttribute="centerX" id="BkZ-5V-IAB"/>
+                        <constraint firstItem="o5F-EG-lok" firstAttribute="top" secondItem="yZ9-pB-L9V" secondAttribute="top" constant="40" id="G0K-As-axq"/>
+                        <constraint firstItem="o5F-EG-lok" firstAttribute="centerX" secondItem="yZ9-pB-L9V" secondAttribute="centerX" id="KRI-Aw-3QV"/>
+                        <constraint firstAttribute="height" constant="200" id="PMM-Tp-87j"/>
+                        <constraint firstItem="77q-Cc-DfI" firstAttribute="top" secondItem="NhF-VV-ptl" secondAttribute="bottom" constant="10" id="SyJ-50-c9N"/>
+                        <constraint firstItem="NhF-VV-ptl" firstAttribute="centerX" secondItem="yZ9-pB-L9V" secondAttribute="centerX" id="Ufl-2j-EF6"/>
+                        <constraint firstItem="NhF-VV-ptl" firstAttribute="top" secondItem="o5F-EG-lok" secondAttribute="bottom" constant="30" id="bpa-sO-yZH"/>
+                        <constraint firstItem="o5F-EG-lok" firstAttribute="leading" secondItem="RyV-kW-Tbi" secondAttribute="trailing" constant="10" id="gWI-fq-VUJ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="yZ9-pB-L9V" secondAttribute="trailing" id="GW4-tN-SAC"/>
+                <constraint firstItem="yZ9-pB-L9V" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="Wit-4Y-bdc"/>
+                <constraint firstItem="yZ9-pB-L9V" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="eOh-1V-uQi"/>
+            </constraints>
+            <point key="canvasLocation" x="-41" y="77"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="onlineSubmit_success" width="51" height="51"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

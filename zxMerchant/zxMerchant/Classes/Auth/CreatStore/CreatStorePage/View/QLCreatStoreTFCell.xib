@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tfCell" id="KGk-i7-Jjw" customClass="QLCreatStoreTFCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YaF-p5-jyj">
+                        <rect key="frame" x="30" y="3" width="260" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ENX-Sy-Y3l">
+                                <rect key="frame" x="5" y="2" width="228" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accRightIcon_gray" translatesAutoresizingMaskIntoConstraints="NO" id="fb9-uB-N5y">
+                                <rect key="frame" x="238" y="16.5" width="10" height="7"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="3C0-DZ-Usj"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96151643990000002" green="0.96898704769999999" blue="0.97963219879999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="fb9-uB-N5y" firstAttribute="centerY" secondItem="ENX-Sy-Y3l" secondAttribute="centerY" id="2xh-nn-HZJ"/>
+                            <constraint firstAttribute="bottom" secondItem="ENX-Sy-Y3l" secondAttribute="bottom" constant="2" id="4QD-yH-P1h"/>
+                            <constraint firstAttribute="trailing" secondItem="fb9-uB-N5y" secondAttribute="trailing" constant="12" id="BWu-3L-cae"/>
+                            <constraint firstItem="ENX-Sy-Y3l" firstAttribute="leading" secondItem="YaF-p5-jyj" secondAttribute="leading" constant="5" id="F2x-AG-bFE"/>
+                            <constraint firstItem="fb9-uB-N5y" firstAttribute="leading" secondItem="ENX-Sy-Y3l" secondAttribute="trailing" constant="5" id="Nre-Nx-poX"/>
+                            <constraint firstItem="ENX-Sy-Y3l" firstAttribute="top" secondItem="YaF-p5-jyj" secondAttribute="top" constant="2" id="xQC-WW-5yl"/>
+                            <constraint firstAttribute="height" constant="40" id="xZd-9Y-OLh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="YaF-p5-jyj" secondAttribute="trailing" constant="30" id="QwP-vL-FoK"/>
+                    <constraint firstAttribute="bottom" secondItem="YaF-p5-jyj" secondAttribute="bottom" constant="3" id="d78-Xw-lWI"/>
+                    <constraint firstItem="YaF-p5-jyj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="lW8-S6-5nE"/>
+                    <constraint firstItem="YaF-p5-jyj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="uHs-b5-eZQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="accImgView" destination="fb9-uB-N5y" id="FLj-AI-2sT"/>
+                <outlet property="tf" destination="ENX-Sy-Y3l" id="N4q-Yg-sjh"/>
+                <outlet property="tfView" destination="YaF-p5-jyj" id="9NR-3A-7ec"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="93.75"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="accRightIcon_gray" width="4.5" height="7"/>
+    </resources>
+</document>

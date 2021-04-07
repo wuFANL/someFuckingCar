@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLVipCenterHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vipHeadBj" translatesAutoresizingMaskIntoConstraints="NO" id="CXi-c6-dVd">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wlz-z0-AH6">
+                    <rect key="frame" x="6" y="60" width="402" height="120"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vipHeadFunBj" translatesAutoresizingMaskIntoConstraints="NO" id="Vx5-MO-V1x">
+                            <rect key="frame" x="0.0" y="0.0" width="402" height="120"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5h-KC-jXj" customClass="QLBaseButton">
+                            <rect key="frame" x="30" y="30" width="60" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="F5h-KC-jXj" secondAttribute="height" multiplier="1:1" id="Uek-cw-l2V"/>
+                                <constraint firstAttribute="width" constant="60" id="unT-Jq-iDZ"/>
+                            </constraints>
+                            <state key="normal" image="defaultHead"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账号昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtT-4U-Dt7">
+                            <rect key="frame" x="102" y="45" width="73.666666666666686" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.68282854559999995" green="0.50411987300000005" blue="0.3143683672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="到期时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ia4-Jz-13V">
+                            <rect key="frame" x="101.99999999999999" y="69.333333333333343" width="53.333333333333329" height="15.666666666666671"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.68282854559999995" green="0.50411987300000005" blue="0.3143683672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxE-TO-6Sl">
+                            <rect key="frame" x="286" y="60" width="92" height="30"/>
+                            <color key="backgroundColor" red="0.093532659109999999" green="0.19047501680000001" blue="0.0041033360179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="coK-lr-kjU"/>
+                                <constraint firstAttribute="width" constant="92" id="xQt-jm-IWD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="邀请有礼"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Ia4-Jz-13V" firstAttribute="bottom" secondItem="F5h-KC-jXj" secondAttribute="bottom" constant="-5" id="1Nt-cW-1SB"/>
+                        <constraint firstItem="Vx5-MO-V1x" firstAttribute="leading" secondItem="wlz-z0-AH6" secondAttribute="leading" id="7hn-zb-DD6"/>
+                        <constraint firstItem="Vx5-MO-V1x" firstAttribute="top" secondItem="wlz-z0-AH6" secondAttribute="top" id="CBP-QZ-WfD"/>
+                        <constraint firstAttribute="trailing" secondItem="QxE-TO-6Sl" secondAttribute="trailing" constant="24" id="EJA-o0-oW6"/>
+                        <constraint firstAttribute="height" constant="120" id="KAi-KJ-7hw"/>
+                        <constraint firstItem="mtT-4U-Dt7" firstAttribute="leading" secondItem="F5h-KC-jXj" secondAttribute="trailing" constant="12" id="NW0-aO-G56"/>
+                        <constraint firstItem="mtT-4U-Dt7" firstAttribute="top" secondItem="F5h-KC-jXj" secondAttribute="top" constant="15" id="SqS-fi-LcD"/>
+                        <constraint firstItem="F5h-KC-jXj" firstAttribute="centerY" secondItem="wlz-z0-AH6" secondAttribute="centerY" id="Wq1-Gp-CHd"/>
+                        <constraint firstItem="Ia4-Jz-13V" firstAttribute="leading" secondItem="mtT-4U-Dt7" secondAttribute="leading" id="eYG-5C-QFe"/>
+                        <constraint firstAttribute="trailing" secondItem="Vx5-MO-V1x" secondAttribute="trailing" id="jeR-wt-xx6"/>
+                        <constraint firstItem="F5h-KC-jXj" firstAttribute="leading" secondItem="wlz-z0-AH6" secondAttribute="leading" constant="30" id="lPd-PB-Up9"/>
+                        <constraint firstItem="QxE-TO-6Sl" firstAttribute="bottom" secondItem="F5h-KC-jXj" secondAttribute="bottom" id="vQD-xB-X1f"/>
+                        <constraint firstAttribute="bottom" secondItem="Vx5-MO-V1x" secondAttribute="bottom" id="x2Q-Cf-yJb"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="CXi-c6-dVd" secondAttribute="bottom" id="2bt-Mc-5Sq"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wlz-z0-AH6" secondAttribute="bottom" id="CBV-hM-orQ"/>
+                <constraint firstItem="wlz-z0-AH6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="6" id="G4u-cB-RPF"/>
+                <constraint firstItem="CXi-c6-dVd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Iy6-7P-rkA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wlz-z0-AH6" secondAttribute="trailing" constant="6" id="eZ7-ab-hnK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="CXi-c6-dVd" secondAttribute="trailing" id="fzc-qU-Xkh"/>
+                <constraint firstItem="CXi-c6-dVd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oF8-wO-cZM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="headBtn" destination="F5h-KC-jXj" id="dA7-8g-xWL"/>
+                <outlet property="invitationBtn" destination="QxE-TO-6Sl" id="DYe-zN-scK"/>
+                <outlet property="nameLB" destination="mtT-4U-Dt7" id="dQc-hQ-8jK"/>
+                <outlet property="timeLB" destination="Ia4-Jz-13V" id="Exl-0z-f1H"/>
+            </connections>
+            <point key="canvasLocation" x="-220.28985507246378" y="49.728260869565219"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="defaultHead" width="60" height="60"/>
+        <image name="vipHeadBj" width="375" height="180.66667175292969"/>
+        <image name="vipHeadFunBj" width="360" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

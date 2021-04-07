@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLBelongingShopBottomView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDh-l2-MI7">
+                    <rect key="frame" x="30" y="6" width="38" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="38" id="ZLh-zU-oBT"/>
+                        <constraint firstAttribute="height" constant="38" id="pOO-en-Vq3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <inset key="titleEdgeInsets" minX="-18" minY="20" maxX="-5" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="12" minY="-15" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="解绑店铺" image="delete_green">
+                        <color key="titleColor" red="0.55294117649999996" green="0.57647058819999997" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccU-c8-crL">
+                    <rect key="frame" x="88" y="4.6666666666666679" width="316" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="重新编辑" backgroundImage="greenBj_332"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ccU-c8-crL" secondAttribute="trailing" constant="10" id="G9v-TP-H8H"/>
+                <constraint firstItem="ccU-c8-crL" firstAttribute="centerY" secondItem="SDh-l2-MI7" secondAttribute="centerY" id="KAo-H0-C7b"/>
+                <constraint firstItem="ccU-c8-crL" firstAttribute="leading" secondItem="SDh-l2-MI7" secondAttribute="trailing" constant="20" id="lDI-V4-TXU"/>
+                <constraint firstItem="SDh-l2-MI7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="pKV-J9-bHR"/>
+                <constraint firstItem="SDh-l2-MI7" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="uGU-G3-fva"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancelBtn" destination="SDh-l2-MI7" id="lYM-pI-Gam"/>
+                <outlet property="editBtn" destination="ccU-c8-crL" id="0Zb-D2-9Wy"/>
+            </connections>
+            <point key="canvasLocation" x="-38" y="52"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete_green" width="15" height="15"/>
+        <image name="greenBj_332" width="9" height="41"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,120 @@
+//
+//  PrefixHeader.pch
+//  luluzhuan
+//
+//  Created by 乔磊 on 2017/9/26.
+//  Copyright © 2017年 NineZero. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#pragma mark -全局导入
+#import <Masonry.h>
+#import <YYModel.h>
+#import <SDWebImage.h>
+#import "AppDelegate.h"
+#import "QLCategories.h"
+#import "QLBaseModule.h"
+#import "QLManagers.h"
+#import "QLUserInfoModel.h"
+#import "QLWebViewController.h"
+#import "QLCustomAlertView.h"
+
+
+#pragma mark --常用设置
+//黑
+#define BlackColor         [UIColor colorWithHexString:@"262e38"]
+//中灰
+#define MediumGrayColor    [UIColor colorWithHexString:@"8e939a"]
+//浅灰
+#define LightGrayColor     [UIColor colorWithHexString:@"d1d8e3"]
+//橙色
+#define OrangeColor        [UIColor colorWithHexString:@"f34915"]
+//绿色
+#define GreenColor         [UIColor colorWithHexString:@"23aa37"]
+//透明
+#define ClearColor         [UIColor clearColor]
+//白色
+#define WhiteColor         [UIColor whiteColor]
+
+//API
+#define HOST                    @"interface.zcars365.com"
+#define WEB                     @"wx.zcars365.com"
+
+#define BasePath                [NSString stringWithFormat:@"%@/index",HOST]
+#define UserPath                [NSString stringWithFormat:@"%@/user",HOST]
+#define BusinessPath            [NSString stringWithFormat:@"%@/business",HOST]
+#define HomePath                [NSString stringWithFormat:@"%@/home",HOST]
+#define VehiclePath             [NSString stringWithFormat:@"%@/car",HOST]
+#define LoanPath                [NSString stringWithFormat:@"%@/financial",HOST]
+#define FilePath                [NSString stringWithFormat:@"%@/file",HOST]
+#define AssetsPath              [NSString stringWithFormat:@"%@/assets",HOST]
+#define CarPath                 [NSString stringWithFormat:@"%@/car",HOST]
+#define ProductPath             [NSString stringWithFormat:@"%@/product",HOST]
+
+#define UrlPath                 [NSString stringWithFormat:@"http://%@/weixin/html",WEB]
+
+#define VersionId                   @"3.0"
+
+//沙盒key
+#define LocalUserInfoKey            @"localUserInfo"//本地用户信息
+#define LocalSearchHistoryKey       @"localSearchHistory"//本地搜索历史
+
+//推送key
+#define TabBarChangeKey             @"tabBarChange"//tabBar变化
+#define PushMsgKey                  @"pushMsg"//收到推送
+#define UseMoneySuccessKey          @"useMoneySuccess"//用款成功
+#define RepaymentSuccessKey         @"repaymentSuccess"//还款成功
+#define VehicleTrackKey             @"VehicleTrack"//库龄超期
+#define PostSearchkey               @"PostSearch"//用款成功
+
+//统一block
+typedef void (^resultBackBlock)(id result);
+
+
+#pragma mark --方法简化
+//AppDelegate
+#define AppDelegateShare                  ((AppDelegate *)[UIApplication sharedApplication].delegate)
+//NSFileManager
+#define DefaultFileManager                [NSFileManager defaultManager]
+//NSNotificationCenter
+#define DefaultNotificationCenter         [NSNotificationCenter defaultCenter]
+//NSUserDefaults
+#define UserDefaults                      [NSUserDefaults standardUserDefaults]
+#define UserDefaultsSet(obj,key)          [UserDefaults setObject:obj forKey:key]
+#define UserDefaultsGet(key)              [UserDefaults objectForKey:key]
+//Number转String
+#define NumberToString(i)                 [NSString stringWithFormat:@"%@",@(i)]
+//StringWithFormat
+#define StringWithFormat(format, args...) [NSString stringWithFormat:format, args]
+//Strong转URL
+#define StringToURL(...)                  [NSURL URLWithString:[NSString stringWithFormat:__VA_ARGS__]]
+//图片名获取图片
+#define ImageFromString(...)              [UIImage imageNamed:[NSString stringWithFormat:__VA_ARGS__]]
+//替换null为空字符
+#define QLNONull(str)                     ([NSString isEmptyString:str]?@"":str)
+//屏幕宽高
+#define ScreenWidth                       [[UIScreen mainScreen] bounds].size.width
+#define ScreenHeight                      [[UIScreen mainScreen] bounds].size.height
+//keyWindow
+#define KeyWindow                         [UIApplication sharedApplication].keyWindow
+//self弱引用
+#define WEAKSELF                          typeof(self) __weak weakSelf = self;
+//self强引用
+#define STRONGSELF                        typeof(weakSelf) __strong strongSelf = weakSelf;
+//判断是否有底部
+#define BottomOffset                      [[QLToolsManager share] beyond_iPhoneX]
+//scrollView不偏移20
+#define  adjustsScrollViewInsets_NO(scrollView,vc)\
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+if ([UIScrollView instancesRespondToSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:")]) {\
+[scrollView   performSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:") withObject:@(2)];\
+} else {\
+vc.automaticallyAdjustsScrollViewInsets = NO;\
+}\
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+#endif /* PrefixHeader_pch */

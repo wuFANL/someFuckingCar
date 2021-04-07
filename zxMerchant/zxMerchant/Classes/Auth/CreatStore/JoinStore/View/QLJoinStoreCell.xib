@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="joinStoreCell" id="KGk-i7-Jjw" customClass="QLJoinStoreCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FP8-CY-HTY">
+                        <rect key="frame" x="18" y="4" width="36" height="36"/>
+                        <color key="backgroundColor" systemColor="systemGray3Color"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="1HU-Dx-xbe"/>
+                            <constraint firstAttribute="width" secondItem="FP8-CY-HTY" secondAttribute="height" multiplier="1:1" id="6SA-mH-2xF"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车行名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsg-Xb-9mp">
+                        <rect key="frame" x="68" y="4" width="61.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocp-c5-QcX">
+                        <rect key="frame" x="68" y="26.5" width="22.5" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" systemColor="systemGray2Color"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Dg-55-HuQ" customClass="QLBaseButton">
+                        <rect key="frame" x="225" y="7" width="80" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="0WO-8j-Oji"/>
+                            <constraint firstAttribute="width" constant="80" id="mRi-RM-lXP"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="申请加入" backgroundImage="greenBj_332"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="9Dg-55-HuQ" secondAttribute="trailing" constant="15" id="727-YO-GfN"/>
+                    <constraint firstItem="9Dg-55-HuQ" firstAttribute="centerY" secondItem="FP8-CY-HTY" secondAttribute="centerY" id="KkU-3h-jYZ"/>
+                    <constraint firstItem="ocp-c5-QcX" firstAttribute="leading" secondItem="Dsg-Xb-9mp" secondAttribute="leading" id="KuV-cL-3IF"/>
+                    <constraint firstItem="FP8-CY-HTY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Li6-Ib-5Ik"/>
+                    <constraint firstItem="Dsg-Xb-9mp" firstAttribute="top" secondItem="FP8-CY-HTY" secondAttribute="top" id="bqB-sL-wCK"/>
+                    <constraint firstItem="ocp-c5-QcX" firstAttribute="bottom" secondItem="FP8-CY-HTY" secondAttribute="bottom" id="pyT-Qe-zXG"/>
+                    <constraint firstItem="Dsg-Xb-9mp" firstAttribute="leading" secondItem="FP8-CY-HTY" secondAttribute="trailing" constant="14" id="sJC-dn-ijP"/>
+                    <constraint firstItem="FP8-CY-HTY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="vW1-c3-rwb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <point key="canvasLocation" x="-43.478260869565219" y="64.955357142857139"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="greenBj_332" width="9" height="41"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

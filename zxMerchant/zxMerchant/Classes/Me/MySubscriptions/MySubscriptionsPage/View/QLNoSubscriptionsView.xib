@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLNoSubscriptionsView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loadingError" translatesAutoresizingMaskIntoConstraints="NO" id="YD7-1V-fby">
+                    <rect key="frame" x="142" y="159" width="130.5" height="58.5"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有订阅车源" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cds-0D-xfo">
+                    <rect key="frame" x="146" y="242.5" width="122.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您可以立即添加订阅，当有新车时会即刻提醒您" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idg-yi-4dW">
+                    <rect key="frame" x="68" y="300.5" width="278.5" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rsd-17-zeJ">
+                    <rect key="frame" x="107" y="341.5" width="200" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Qgh-vS-p4S"/>
+                        <constraint firstAttribute="width" constant="200" id="mgd-zc-Vf8"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="添加订阅" backgroundImage="greenBj_332"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="YD7-1V-fby" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="33Q-6J-clP"/>
+                <constraint firstItem="Cds-0D-xfo" firstAttribute="centerX" secondItem="YD7-1V-fby" secondAttribute="centerX" id="6Dg-Hb-hBr"/>
+                <constraint firstItem="Cds-0D-xfo" firstAttribute="top" secondItem="YD7-1V-fby" secondAttribute="bottom" constant="25" id="Bwj-IW-cFF"/>
+                <constraint firstItem="idg-yi-4dW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HlM-pg-Gp7"/>
+                <constraint firstItem="Rsd-17-zeJ" firstAttribute="top" secondItem="idg-yi-4dW" secondAttribute="bottom" constant="25" id="QlM-N1-nzK"/>
+                <constraint firstItem="Rsd-17-zeJ" firstAttribute="centerX" secondItem="idg-yi-4dW" secondAttribute="centerX" id="nXg-La-LHA"/>
+                <constraint firstItem="idg-yi-4dW" firstAttribute="top" secondItem="Cds-0D-xfo" secondAttribute="bottom" constant="40" id="nne-Ut-Sm0"/>
+                <constraint firstItem="YD7-1V-fby" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="115" id="yiI-7g-XOD"/>
+            </constraints>
+            <point key="canvasLocation" x="-17.39130434782609" y="54.910714285714285"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="greenBj_332" width="9.5" height="41"/>
+        <image name="loadingError" width="130.5" height="58.5"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

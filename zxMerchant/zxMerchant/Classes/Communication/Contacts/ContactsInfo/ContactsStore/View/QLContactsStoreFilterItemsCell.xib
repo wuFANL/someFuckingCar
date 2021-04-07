@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="filterItemsCell" rowHeight="130" id="KGk-i7-Jjw" customClass="QLContactsStoreFilterItemsCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfN-SG-1yO" customClass="UIControl">
+                        <rect key="frame" x="275" y="0.0" width="45" height="140"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UE-Bi-ihm">
+                                <rect key="frame" x="14" y="2" width="17" height="136"/>
+                                <string key="text">全 
+部 
+车 
+辆</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2UE-Bi-ihm" firstAttribute="centerY" secondItem="jfN-SG-1yO" secondAttribute="centerY" id="1al-EE-e0M"/>
+                            <constraint firstAttribute="bottom" secondItem="2UE-Bi-ihm" secondAttribute="bottom" constant="2" id="8hp-0K-eab"/>
+                            <constraint firstItem="2UE-Bi-ihm" firstAttribute="top" secondItem="jfN-SG-1yO" secondAttribute="top" constant="2" id="EG8-sv-e3K"/>
+                            <constraint firstAttribute="width" constant="45" id="IV5-A9-ODl"/>
+                            <constraint firstItem="2UE-Bi-ihm" firstAttribute="centerX" secondItem="jfN-SG-1yO" secondAttribute="centerX" id="Qeo-C8-jjR"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="jfN-SG-1yO" secondAttribute="trailing" id="mda-Bc-Ymz"/>
+                    <constraint firstAttribute="bottom" secondItem="jfN-SG-1yO" secondAttribute="bottom" id="r65-Ql-9vo"/>
+                    <constraint firstItem="jfN-SG-1yO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="yPE-Sv-2bG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="accControl" destination="jfN-SG-1yO" id="z9E-t3-A3S"/>
+            </connections>
+            <point key="canvasLocation" x="-130.43478260869566" y="98.4375"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

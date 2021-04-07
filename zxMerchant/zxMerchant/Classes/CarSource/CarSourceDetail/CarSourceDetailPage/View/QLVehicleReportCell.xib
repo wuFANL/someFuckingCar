@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reportCell" rowHeight="75" id="KGk-i7-Jjw" customClass="QLVehicleReportCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmV-uE-2pJ">
+                        <rect key="frame" x="15" y="15.5" width="290" height="45"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reportBj" translatesAutoresizingMaskIntoConstraints="NO" id="fMT-u8-Zqq">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="45"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未录入检测信息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4p4-pw-DYC">
+                                <rect key="frame" x="125" y="15" width="86" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.55294117649999996" green="0.57647058819999997" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpZ-6y-0Kn" customClass="QLBaseButton">
+                                <rect key="frame" x="254" y="11.5" width="20" height="22"/>
+                                <state key="normal" image="reportAcc"/>
+                                <state key="selected" image="reportAcc_selected"/>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reportIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0hZ-03-R4f">
+                                <rect key="frame" x="15" y="7.5" width="30" height="30"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="检测报告" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAb-1A-91n">
+                                <rect key="frame" x="55" y="13.5" width="62" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="6Za-iH-hED"/>
+                            <constraint firstItem="0hZ-03-R4f" firstAttribute="centerY" secondItem="SmV-uE-2pJ" secondAttribute="centerY" id="EcF-3O-xNo"/>
+                            <constraint firstItem="fMT-u8-Zqq" firstAttribute="leading" secondItem="SmV-uE-2pJ" secondAttribute="leading" id="GfD-2x-N2Z"/>
+                            <constraint firstItem="fMT-u8-Zqq" firstAttribute="top" secondItem="SmV-uE-2pJ" secondAttribute="top" id="H7P-em-VIC"/>
+                            <constraint firstItem="dpZ-6y-0Kn" firstAttribute="centerY" secondItem="0hZ-03-R4f" secondAttribute="centerY" id="Owi-Wk-bg6"/>
+                            <constraint firstItem="0hZ-03-R4f" firstAttribute="leading" secondItem="SmV-uE-2pJ" secondAttribute="leading" constant="15" id="S4m-Dl-qNn"/>
+                            <constraint firstAttribute="trailing" secondItem="dpZ-6y-0Kn" secondAttribute="trailing" constant="16" id="Xoc-UJ-tuE"/>
+                            <constraint firstAttribute="bottom" secondItem="fMT-u8-Zqq" secondAttribute="bottom" id="Xpy-1o-0bH"/>
+                            <constraint firstAttribute="trailing" secondItem="fMT-u8-Zqq" secondAttribute="trailing" id="Xtn-Sb-b3d"/>
+                            <constraint firstItem="4p4-pw-DYC" firstAttribute="leading" secondItem="DAb-1A-91n" secondAttribute="trailing" constant="8" id="nc5-1c-Bez"/>
+                            <constraint firstItem="DAb-1A-91n" firstAttribute="leading" secondItem="0hZ-03-R4f" secondAttribute="trailing" constant="10" id="oHA-Sz-HoW"/>
+                            <constraint firstItem="DAb-1A-91n" firstAttribute="centerY" secondItem="0hZ-03-R4f" secondAttribute="centerY" id="pYM-AL-PZ9"/>
+                            <constraint firstItem="4p4-pw-DYC" firstAttribute="centerY" secondItem="DAb-1A-91n" secondAttribute="centerY" id="ytl-e7-rkE"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="SmV-uE-2pJ" secondAttribute="trailing" constant="15" id="QMZ-2h-Dnb"/>
+                    <constraint firstAttribute="bottom" secondItem="SmV-uE-2pJ" secondAttribute="bottom" constant="15" id="h6A-tE-t24"/>
+                    <constraint firstItem="SmV-uE-2pJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="qkC-4G-PMT"/>
+                    <constraint firstItem="SmV-uE-2pJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="wIX-LP-dwc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="accBtn" destination="dpZ-6y-0Kn" id="rrZ-X6-61C"/>
+                <outlet property="detailLB" destination="4p4-pw-DYC" id="ENJ-Gx-Xes"/>
+                <outlet property="titleLB" destination="DAb-1A-91n" id="VZ2-YU-1E9"/>
+            </connections>
+            <point key="canvasLocation" x="34.782608695652179" y="44.53125"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="reportAcc" width="20" height="20"/>
+        <image name="reportAcc_selected" width="20" height="20"/>
+        <image name="reportBj" width="345" height="42.5"/>
+        <image name="reportIcon" width="30" height="30"/>
+    </resources>
+</document>

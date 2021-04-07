@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "不怕侵权，你就转载.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "不怕侵权，你就转载@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "不怕侵权，你就转载@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

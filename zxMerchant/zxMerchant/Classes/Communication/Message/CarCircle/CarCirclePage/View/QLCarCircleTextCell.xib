@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textCell" rowHeight="145" id="KGk-i7-Jjw" customClass="QLCarCircleTextCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jL1-fs-b1Q" customClass="QLBaseButton">
+                        <rect key="frame" x="15" y="0.0" width="45" height="45"/>
+                        <color key="backgroundColor" red="0.9332445264" green="0.9333974719" blue="0.93321198230000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="3bO-gV-hAd"/>
+                            <constraint firstAttribute="width" secondItem="jL1-fs-b1Q" secondAttribute="height" multiplier="1:1" id="EWJ-wP-sYK"/>
+                        </constraints>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crp-Qy-Z7y">
+                        <rect key="frame" x="72" y="0.0" width="66" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="ULc-Ew-eQU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <state key="normal" title="车友昵称">
+                            <color key="titleColor" red="0.1202516332" green="0.40350627900000002" blue="0.60250306129999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里填写发布的文案,发多少显示多少一直换行这里填写发布的文案" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZ8-07-Gi6">
+                        <rect key="frame" x="72" y="55" width="233" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJk-6m-WGi">
+                        <rect key="frame" x="72" y="110" width="30" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="588-1l-rf7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="全文">
+                            <color key="titleColor" red="0.1202516332" green="0.40350627900000002" blue="0.60250306129999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <state key="selected" title="收起"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaR-Vd-GAk">
+                        <rect key="frame" x="72" y="28" width="27" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.44309252500000001" green="0.44316959379999998" blue="0.44307607409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eug-YT-TrD" customClass="QLBaseButton">
+                        <rect key="frame" x="225" y="10" width="80" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="WoN-uJ-vU6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="关注车主" image="+_red">
+                            <color key="titleColor" systemColor="labelColor"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="top" secondItem="jL1-fs-b1Q" secondAttribute="bottom" constant="10" id="2IG-gW-3Se"/>
+                    <constraint firstItem="RaR-Vd-GAk" firstAttribute="top" secondItem="crp-Qy-Z7y" secondAttribute="bottom" constant="8" id="87p-H7-aC0"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="crp-Qy-Z7y" secondAttribute="trailing" constant="15" id="Lwg-Lj-WSD"/>
+                    <constraint firstItem="RaR-Vd-GAk" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" id="NlT-6u-ekz"/>
+                    <constraint firstItem="crp-Qy-Z7y" firstAttribute="top" secondItem="jL1-fs-b1Q" secondAttribute="top" id="UiY-m8-WR0"/>
+                    <constraint firstItem="SJk-6m-WGi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VZ8-07-Gi6" secondAttribute="bottom" constant="10" id="Wyk-dL-NUA"/>
+                    <constraint firstItem="SJk-6m-WGi" firstAttribute="leading" secondItem="VZ8-07-Gi6" secondAttribute="leading" id="XnJ-Li-iJM"/>
+                    <constraint firstItem="eug-YT-TrD" firstAttribute="centerY" secondItem="jL1-fs-b1Q" secondAttribute="centerY" id="cWg-p8-CKR"/>
+                    <constraint firstItem="jL1-fs-b1Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ctL-cP-VxS"/>
+                    <constraint firstItem="RaR-Vd-GAk" firstAttribute="bottom" secondItem="jL1-fs-b1Q" secondAttribute="bottom" id="dZf-R0-iu2"/>
+                    <constraint firstAttribute="trailing" secondItem="VZ8-07-Gi6" secondAttribute="trailing" constant="15" id="iOn-Uj-69G"/>
+                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" id="ic9-fm-Qh2"/>
+                    <constraint firstAttribute="bottom" secondItem="SJk-6m-WGi" secondAttribute="bottom" constant="10" id="k7L-nH-UwJ"/>
+                    <constraint firstItem="jL1-fs-b1Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="lCf-qO-E7O"/>
+                    <constraint firstItem="crp-Qy-Z7y" firstAttribute="leading" secondItem="jL1-fs-b1Q" secondAttribute="trailing" constant="12" id="pGN-6A-0Hu"/>
+                    <constraint firstAttribute="trailing" secondItem="eug-YT-TrD" secondAttribute="trailing" constant="15" id="vfk-t0-DPT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="headBtn" destination="jL1-fs-b1Q" id="3cR-mr-AKh"/>
+                <outlet property="headBtnTop" destination="lCf-qO-E7O" id="uA9-ME-izf"/>
+                <outlet property="likeBtn" destination="eug-YT-TrD" id="yrs-vW-RdA"/>
+                <outlet property="nikenameBtn" destination="crp-Qy-Z7y" id="tec-Fd-F6F"/>
+                <outlet property="openBtn" destination="SJk-6m-WGi" id="hLh-hi-FXP"/>
+                <outlet property="openBtnBottom" destination="k7L-nH-UwJ" id="c7b-v4-gVe"/>
+                <outlet property="textLB" destination="VZ8-07-Gi6" id="lda-My-o83"/>
+                <outlet property="timeLB" destination="RaR-Vd-GAk" id="q7n-L8-72F"/>
+            </connections>
+            <point key="canvasLocation" x="-20.289855072463769" y="93.415178571428569"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="+_red" width="25.5" height="23.5"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

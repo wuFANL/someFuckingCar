@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="众聚精彩  享赢未来" translatesAutoresizingMaskIntoConstraints="NO" id="9gr-gD-O2B">
+                                <rect key="frame" x="45" y="568" width="285" height="29"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宁德众享未来网络科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mk-tt-xZJ">
+                                <rect key="frame" x="101.5" y="627" width="172" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.55294117649999996" green="0.57647058819999997" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="不怕侵权，你就转载" translatesAutoresizingMaskIntoConstraints="NO" id="e5X-bw-KYb">
+                                <rect key="frame" x="20" y="100" width="335" height="244"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="e5X-bw-KYb" secondAttribute="height" multiplier="332:242" id="W65-Ll-CGB"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="e5X-bw-KYb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Ahx-90-MVz"/>
+                            <constraint firstItem="e5X-bw-KYb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HIw-et-tvH"/>
+                            <constraint firstItem="7Mk-tt-xZJ" firstAttribute="top" secondItem="9gr-gD-O2B" secondAttribute="bottom" constant="30" id="Ij3-UM-16l"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e5X-bw-KYb" secondAttribute="trailing" constant="20" id="Npd-aR-cBp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9gr-gD-O2B" secondAttribute="trailing" constant="45" id="PJK-JI-r2q"/>
+                            <constraint firstItem="7Mk-tt-xZJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fU1-Ag-HY9"/>
+                            <constraint firstItem="9gr-gD-O2B" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="45" id="qlK-Qo-h2O"/>
+                            <constraint firstItem="e5X-bw-KYb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="w94-gv-TFN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7Mk-tt-xZJ" secondAttribute="bottom" constant="25" id="wA5-KM-TxH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="不怕侵权，你就转载" width="332" height="241.5"/>
+        <image name="众聚精彩  享赢未来" width="285.5" height="29"/>
+    </resources>
+</document>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="QLShareImgItem">
+            <rect key="frame" x="0.0" y="0.0" width="119" height="127"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="119" height="127"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j3w-cC-2gl">
+                        <rect key="frame" x="0.0" y="0.0" width="119" height="127"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jS8-S0-vVP">
+                        <rect key="frame" x="80" y="5" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="99q-m6-fVV"/>
+                            <constraint firstAttribute="width" secondItem="jS8-S0-vVP" secondAttribute="height" multiplier="1:1" id="tvZ-uY-HkT"/>
+                        </constraints>
+                        <state key="normal" image="choose_white"/>
+                        <state key="selected" image="choose_orange"/>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="j3w-cC-2gl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Hoi-ej-cCU"/>
+                <constraint firstAttribute="bottom" secondItem="j3w-cC-2gl" secondAttribute="bottom" id="Mpe-ej-gmK"/>
+                <constraint firstItem="j3w-cC-2gl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Sbb-dU-u6f"/>
+                <constraint firstItem="jS8-S0-vVP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="cgb-ec-hv1"/>
+                <constraint firstAttribute="trailing" secondItem="jS8-S0-vVP" secondAttribute="trailing" constant="4" id="f8y-09-kiE"/>
+                <constraint firstAttribute="trailing" secondItem="j3w-cC-2gl" secondAttribute="trailing" id="nUt-0a-hFB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="119" height="127"/>
+            <connections>
+                <outlet property="chooseBtn" destination="jS8-S0-vVP" id="fxb-TF-NDM"/>
+                <outlet property="imgView" destination="j3w-cC-2gl" id="iZ0-2v-sUH"/>
+            </connections>
+            <point key="canvasLocation" x="181.8840579710145" y="123.54910714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="choose_orange" width="17" height="17"/>
+        <image name="choose_white" width="17" height="17"/>
+    </resources>
+</document>

@@ -1,0 +1,29 @@
+platform :ios,'9.0'
+inhibit_all_warnings!
+
+target 'zxMerchant' do
+  pod 'AFNetworking'
+  pod 'MBProgressHUD'
+  pod 'SDWebImage'
+  pod 'MJRefresh'
+  pod 'IQKeyboardManager'
+  pod 'YYModel'
+  pod 'Masonry'
+  pod 'AliyunOSSiOS' ,'= 2.10.7'
+  pod 'JPush'
+  pod 'TZImagePickerController'
+  # U-Share SDK
+  pod 'UMCCommon'
+  pod 'UMCSecurityPlugins'
+  pod 'UMCShare/UI'
+  # 集成微信(精简版0.2M)
+  pod 'UMCShare/Social/ReducedWeChat'
+  # 集成QQ/QZone/TIM(精简版0.5M)
+  pod 'UMCShare/Social/ReducedQQ'
+  # 微信
+  pod 'WechatOpenSDK'
+  #bug监听
+  pod 'Bugly'
+
+
+end

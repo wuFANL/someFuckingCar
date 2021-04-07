@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QLRemarksSetViewController">
+            <connections>
+                <outlet property="finishBtn" destination="EzX-7M-2ib" id="mUp-3z-lKr"/>
+                <outlet property="remarksTF" destination="I32-9e-MBN" id="KdX-3e-Odp"/>
+                <outlet property="tfView" destination="6Yz-tK-3ii" id="5JF-QT-FRj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编辑备注" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0F-K1-fpt">
+                    <rect key="frame" x="30" y="84" width="121.5" height="36"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编辑备注方便寻找车友" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7U-cJ-4rY">
+                    <rect key="frame" x="30" y="130" width="123" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Yz-tK-3ii">
+                    <rect key="frame" x="30" y="169.5" width="354" height="44"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入备注" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I32-9e-MBN">
+                            <rect key="frame" x="8" y="0.0" width="341" height="44"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="3T9-XW-FaG"/>
+                        <constraint firstAttribute="trailing" secondItem="I32-9e-MBN" secondAttribute="trailing" constant="5" id="7Ee-zB-SdA"/>
+                        <constraint firstItem="I32-9e-MBN" firstAttribute="top" secondItem="6Yz-tK-3ii" secondAttribute="top" id="XOk-Gh-1y1"/>
+                        <constraint firstAttribute="bottom" secondItem="I32-9e-MBN" secondAttribute="bottom" id="nC0-m7-uZM"/>
+                        <constraint firstItem="I32-9e-MBN" firstAttribute="leading" secondItem="6Yz-tK-3ii" secondAttribute="leading" constant="8" id="o0w-eo-nmV"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzX-7M-2ib" customClass="QLBaseButton">
+                    <rect key="frame" x="30" y="239.5" width="354" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="iDh-ml-jI3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="完成" backgroundImage="login_grayBtn_round"/>
+                    <state key="selected" title="登录" backgroundImage="login_greenBtn_round"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="light" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="finishBtnClick:" destination="-1" eventType="touchUpInside" id="HtB-bU-L1c"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="f7U-cJ-4rY" firstAttribute="leading" secondItem="m0F-K1-fpt" secondAttribute="leading" id="0Do-bL-y9r"/>
+                <constraint firstItem="m0F-K1-fpt" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="40" id="2C0-Qm-nBP"/>
+                <constraint firstItem="EzX-7M-2ib" firstAttribute="trailing" secondItem="6Yz-tK-3ii" secondAttribute="trailing" id="4ZO-aN-hp2"/>
+                <constraint firstItem="EzX-7M-2ib" firstAttribute="leading" secondItem="6Yz-tK-3ii" secondAttribute="leading" id="Ace-cs-Vsx"/>
+                <constraint firstItem="m0F-K1-fpt" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="30" id="Tkv-db-9nv"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="6Yz-tK-3ii" secondAttribute="trailing" constant="30" id="XAN-g1-kGb"/>
+                <constraint firstItem="EzX-7M-2ib" firstAttribute="top" secondItem="6Yz-tK-3ii" secondAttribute="bottom" constant="26" id="e9l-Ja-fQS"/>
+                <constraint firstItem="f7U-cJ-4rY" firstAttribute="top" secondItem="m0F-K1-fpt" secondAttribute="bottom" constant="10" id="g0N-gD-gRm"/>
+                <constraint firstItem="6Yz-tK-3ii" firstAttribute="leading" secondItem="f7U-cJ-4rY" secondAttribute="leading" id="qsT-bm-imc"/>
+                <constraint firstItem="6Yz-tK-3ii" firstAttribute="top" secondItem="f7U-cJ-4rY" secondAttribute="bottom" constant="25" id="ryw-gw-dl4"/>
+            </constraints>
+            <point key="canvasLocation" x="-28" y="70"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="login_grayBtn_round" width="314" height="44"/>
+        <image name="login_greenBtn_round" width="320" height="50"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="QLCarStyleItem">
+            <rect key="frame" x="0.0" y="0.0" width="105" height="93"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="105" height="93"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CrC-so-I1j" customClass="QLBaseButton">
+                        <rect key="frame" x="0.0" y="0.0" width="105" height="93"/>
+                        <inset key="titleEdgeInsets" minX="-106" minY="0.0" maxX="0.0" maxY="-36"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="-18" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="两厢轿车" image="carStyle_0">
+                            <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <state key="selected" backgroundImage="itemBjSelected">
+                            <color key="titleColor" red="0.0" green="0.70980392156862748" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <constraints>
+                <constraint firstItem="CrC-so-I1j" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="E2X-oX-iYd"/>
+                <constraint firstItem="CrC-so-I1j" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="M2D-6v-TtW"/>
+                <constraint firstAttribute="bottom" secondItem="CrC-so-I1j" secondAttribute="bottom" id="SYd-zh-uWA"/>
+                <constraint firstAttribute="trailing" secondItem="CrC-so-I1j" secondAttribute="trailing" id="x34-Ku-kja"/>
+            </constraints>
+            <size key="customSize" width="105" height="93"/>
+            <connections>
+                <outlet property="carBtn" destination="CrC-so-I1j" id="XPe-iM-Xmj"/>
+            </connections>
+            <point key="canvasLocation" x="52.5" y="73.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="carStyle_0" width="105" height="31.5"/>
+        <image name="itemBjSelected" width="105" height="50"/>
+    </resources>
+</document>
