@@ -203,7 +203,7 @@
         }];
     
     } else if (tableView == self.bTableView) {
-        if (indexPath.row == 0) {
+        if (indexPath.section == 0) {
             [self.bTableView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.view).offset(self.view.width);
             }];
