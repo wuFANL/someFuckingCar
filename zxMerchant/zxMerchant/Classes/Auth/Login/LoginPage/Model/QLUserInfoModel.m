@@ -25,7 +25,7 @@
 }
 //保存本地信息
 + (void)saveUserInfo:(NSDictionary *)result_info {
-    [UserDefaults setObject:result_info forKey:LocalUserInfoKey];
+    [UserDefaults setObject:[result_info deleteNull] forKey:LocalUserInfoKey];
 }
 //获取本地用户信息字典
 + (NSDictionary *)getLocalDic {

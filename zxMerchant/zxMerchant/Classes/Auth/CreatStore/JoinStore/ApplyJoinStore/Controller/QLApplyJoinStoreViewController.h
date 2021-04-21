@@ -1,5 +1,5 @@
 //
-//  QLJoinStoreViewController.h
+//  QLApplyJoinStoreViewController.h
 //  zxMerchant
 //
 //  Created by lei qiao on 2020/11/2.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QLJoinStoreViewController : QLBaseTableViewController
+@interface QLApplyJoinStoreViewController : QLBaseTableViewController
 
 @end
 

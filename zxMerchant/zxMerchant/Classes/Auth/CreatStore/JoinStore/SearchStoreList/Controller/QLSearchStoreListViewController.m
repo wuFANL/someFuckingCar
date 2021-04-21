@@ -1,20 +1,22 @@
 //
-//  QLJoinStoreViewController.m
+//  QLSearchStoreListViewController.m
 //  zxMerchant
 //
-//  Created by lei qiao on 2020/11/2.
-//  Copyright © 2020 ql. All rights reserved.
+//  Created by lei qiao on 2021/4/22.
+//  Copyright © 2021 ql. All rights reserved.
 //
 
-#import "QLJoinStoreViewController.h"
+#import "QLSearchStoreListViewController.h"
 #import "QLJoinStoreCell.h"
+#import "QLApplyJoinStoreViewController.h"
+#import "QLJoinStoreDetailViewController.h"
 
-@interface QLJoinStoreViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface QLSearchStoreListViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
 
 @end
 
-@implementation QLJoinStoreViewController
+@implementation QLSearchStoreListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,6 +27,11 @@
 }
 
 #pragma mark - action
+//申请加入
+- (void)applyBtnClick {
+    QLApplyJoinStoreViewController *ajsVC = [QLApplyJoinStoreViewController new];
+    [self.navigationController pushViewController:ajsVC animated:YES];
+}
 //取消
 - (void)rightItemClick {
     [self.navigationController popViewControllerAnimated:YES];
@@ -71,8 +78,15 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLJoinStoreCell *cell = [tableView dequeueReusableCellWithIdentifier:@"joinStoreCell" forIndexPath:indexPath];
-    
+    [cell.applyBtn addTarget:self action:@selector(applyBtnClick) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    QLJoinStoreDetailViewController *jsdVC = [QLJoinStoreDetailViewController new];
+    jsdVC.status = WaitStoreAgreen;
+    [self.navigationController pushViewController:jsdVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
@@ -93,4 +107,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 30;
 }
+
+
 @end

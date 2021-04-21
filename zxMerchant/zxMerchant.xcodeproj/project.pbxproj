@@ -71,7 +71,7 @@
 		A00621862513DD7300A571E5 /* UIAlertController+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A006215B2513DD7300A571E5 /* UIAlertController+QLUtil.m */; };
 		A00621872513DD7300A571E5 /* UIView+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A006215E2513DD7300A571E5 /* UIView+QLUtil.m */; };
 		A00621882513DD7300A571E5 /* UIFont+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A00621612513DD7300A571E5 /* UIFont+QLUtil.m */; };
-		A00621892513DD7300A571E5 /* NSMutableDictionary+Ordered.m in Sources */ = {isa = PBXBuildFile; fileRef = A00621632513DD7300A571E5 /* NSMutableDictionary+Ordered.m */; };
+		A00621892513DD7300A571E5 /* NSMutableDictionary+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A00621632513DD7300A571E5 /* NSMutableDictionary+QLUtil.m */; };
 		A006218A2513DD7300A571E5 /* NSString+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A00621662513DD7300A571E5 /* NSString+QLUtil.m */; };
 		A006218C2513DD7300A571E5 /* UITableView+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A006216D2513DD7300A571E5 /* UITableView+QLUtil.m */; };
 		A006218D2513DD7300A571E5 /* MBProgressHUD+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A00621702513DD7300A571E5 /* MBProgressHUD+QLUtil.m */; };
@@ -309,13 +309,7 @@
 		A07332B3254C8DB900570FDB /* QLRidersDynamicImgItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A07332B1254C8DB900570FDB /* QLRidersDynamicImgItem.m */; };
 		A07332B4254C8DB900570FDB /* QLRidersDynamicImgItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07332B2254C8DB900570FDB /* QLRidersDynamicImgItem.xib */; };
 		A07CDF2D254E7B62000CAB62 /* QLKitLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDF2C254E7B62000CAB62 /* QLKitLogManager.m */; };
-		A07CDF94254EF424000CAB62 /* QLCityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDF8B254EF424000CAB62 /* QLCityChooseViewController.m */; };
-		A07CDF95254EF424000CAB62 /* QLCityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDF8E254EF424000CAB62 /* QLCityListModel.m */; };
-		A07CDF96254EF424000CAB62 /* QLCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07CDF92254EF424000CAB62 /* QLCityTableViewCell.xib */; };
-		A07CDF97254EF424000CAB62 /* QLCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDF93254EF424000CAB62 /* QLCityTableViewCell.m */; };
-		A07CDFA1254F0A17000CAB62 /* QLCityLocationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07CDF9E254F0A17000CAB62 /* QLCityLocationItem.xib */; };
-		A07CDFA2254F0A17000CAB62 /* QLCityLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDFA0254F0A17000CAB62 /* QLCityLocationItem.m */; };
-		A07CDFAD254F1434000CAB62 /* QLJoinStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDFAC254F1434000CAB62 /* QLJoinStoreViewController.m */; };
+		A07CDFAD254F1434000CAB62 /* QLApplyJoinStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDFAC254F1434000CAB62 /* QLApplyJoinStoreViewController.m */; };
 		A07CDFB8254F169B000CAB62 /* QLJoinStoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CDFB6254F169B000CAB62 /* QLJoinStoreCell.m */; };
 		A07CDFB9254F169B000CAB62 /* QLJoinStoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07CDFB7254F169B000CAB62 /* QLJoinStoreCell.xib */; };
 		A084CE25252CC7EB006AE22F /* QLSystemMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A084CE22252CC7EB006AE22F /* QLSystemMessageCell.xib */; };
@@ -324,6 +318,10 @@
 		A084CE34252CC97E006AE22F /* QLFriendMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A084CE32252CC97E006AE22F /* QLFriendMessageCell.xib */; };
 		A084CE3B252CCC63006AE22F /* QLMsgGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A084CE39252CCC63006AE22F /* QLMsgGroupModel.m */; };
 		A084CE41252CCD2C006AE22F /* QLMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A084CE3F252CCD2C006AE22F /* QLMsgModel.m */; };
+		A0865BEB26309B49001B85A3 /* NSDictionary+QLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865BEA26309B49001B85A3 /* NSDictionary+QLUtil.m */; };
+		A0865BF526309CD8001B85A3 /* QLSearchStoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865BF426309CD8001B85A3 /* QLSearchStoreListViewController.m */; };
+		A0865C052630A252001B85A3 /* QLJoinStoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865C042630A252001B85A3 /* QLJoinStoreDetailViewController.m */; };
+		A0865C172630A773001B85A3 /* QLPCAListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865C162630A773001B85A3 /* QLPCAListViewController.m */; };
 		A087B862259B9EFD00432E8C /* QLBelongingShopTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B860259B9EFD00432E8C /* QLBelongingShopTextCell.m */; };
 		A087B863259B9EFD00432E8C /* QLBelongingShopTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A087B861259B9EFD00432E8C /* QLBelongingShopTextCell.xib */; };
 		A087B86B259BA1A800432E8C /* QLEnterpriseCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B86A259BA1A800432E8C /* QLEnterpriseCertificationViewController.m */; };
@@ -567,8 +565,8 @@
 		A006215E2513DD7300A571E5 /* UIView+QLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+QLUtil.m"; sourceTree = "<group>"; };
 		A00621602513DD7300A571E5 /* UIFont+QLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+QLUtil.h"; sourceTree = "<group>"; };
 		A00621612513DD7300A571E5 /* UIFont+QLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+QLUtil.m"; sourceTree = "<group>"; };
-		A00621632513DD7300A571E5 /* NSMutableDictionary+Ordered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Ordered.m"; sourceTree = "<group>"; };
-		A00621642513DD7300A571E5 /* NSMutableDictionary+Ordered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Ordered.h"; sourceTree = "<group>"; };
+		A00621632513DD7300A571E5 /* NSMutableDictionary+QLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+QLUtil.m"; sourceTree = "<group>"; };
+		A00621642513DD7300A571E5 /* NSMutableDictionary+QLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+QLUtil.h"; sourceTree = "<group>"; };
 		A00621662513DD7300A571E5 /* NSString+QLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QLUtil.m"; sourceTree = "<group>"; };
 		A00621672513DD7300A571E5 /* NSString+QLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QLUtil.h"; sourceTree = "<group>"; };
 		A006216C2513DD7300A571E5 /* UITableView+QLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+QLUtil.h"; sourceTree = "<group>"; };
@@ -962,18 +960,8 @@
 		A07332B2254C8DB900570FDB /* QLRidersDynamicImgItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLRidersDynamicImgItem.xib; sourceTree = "<group>"; };
 		A07CDF2B254E7B62000CAB62 /* QLKitLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLKitLogManager.h; sourceTree = "<group>"; };
 		A07CDF2C254E7B62000CAB62 /* QLKitLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLKitLogManager.m; sourceTree = "<group>"; };
-		A07CDF8B254EF424000CAB62 /* QLCityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCityChooseViewController.m; sourceTree = "<group>"; };
-		A07CDF8C254EF424000CAB62 /* QLCityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCityChooseViewController.h; sourceTree = "<group>"; };
-		A07CDF8E254EF424000CAB62 /* QLCityListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCityListModel.m; sourceTree = "<group>"; };
-		A07CDF8F254EF424000CAB62 /* QLCityListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCityListModel.h; sourceTree = "<group>"; };
-		A07CDF91254EF424000CAB62 /* QLCityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCityTableViewCell.h; sourceTree = "<group>"; };
-		A07CDF92254EF424000CAB62 /* QLCityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCityTableViewCell.xib; sourceTree = "<group>"; };
-		A07CDF93254EF424000CAB62 /* QLCityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCityTableViewCell.m; sourceTree = "<group>"; };
-		A07CDF9E254F0A17000CAB62 /* QLCityLocationItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCityLocationItem.xib; sourceTree = "<group>"; };
-		A07CDF9F254F0A17000CAB62 /* QLCityLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCityLocationItem.h; sourceTree = "<group>"; };
-		A07CDFA0254F0A17000CAB62 /* QLCityLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCityLocationItem.m; sourceTree = "<group>"; };
-		A07CDFAB254F1434000CAB62 /* QLJoinStoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLJoinStoreViewController.h; sourceTree = "<group>"; };
-		A07CDFAC254F1434000CAB62 /* QLJoinStoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLJoinStoreViewController.m; sourceTree = "<group>"; };
+		A07CDFAB254F1434000CAB62 /* QLApplyJoinStoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLApplyJoinStoreViewController.h; sourceTree = "<group>"; };
+		A07CDFAC254F1434000CAB62 /* QLApplyJoinStoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLApplyJoinStoreViewController.m; sourceTree = "<group>"; };
 		A07CDFB5254F169B000CAB62 /* QLJoinStoreCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLJoinStoreCell.h; sourceTree = "<group>"; };
 		A07CDFB6254F169B000CAB62 /* QLJoinStoreCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLJoinStoreCell.m; sourceTree = "<group>"; };
 		A07CDFB7254F169B000CAB62 /* QLJoinStoreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLJoinStoreCell.xib; sourceTree = "<group>"; };
@@ -987,6 +975,14 @@
 		A084CE3A252CCC63006AE22F /* QLMsgGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLMsgGroupModel.h; sourceTree = "<group>"; };
 		A084CE3F252CCD2C006AE22F /* QLMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLMsgModel.m; sourceTree = "<group>"; };
 		A084CE40252CCD2C006AE22F /* QLMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLMsgModel.h; sourceTree = "<group>"; };
+		A0865BE926309B49001B85A3 /* NSDictionary+QLUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QLUtil.h"; sourceTree = "<group>"; };
+		A0865BEA26309B49001B85A3 /* NSDictionary+QLUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QLUtil.m"; sourceTree = "<group>"; };
+		A0865BF326309CD8001B85A3 /* QLSearchStoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLSearchStoreListViewController.h; sourceTree = "<group>"; };
+		A0865BF426309CD8001B85A3 /* QLSearchStoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLSearchStoreListViewController.m; sourceTree = "<group>"; };
+		A0865C032630A252001B85A3 /* QLJoinStoreDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLJoinStoreDetailViewController.h; sourceTree = "<group>"; };
+		A0865C042630A252001B85A3 /* QLJoinStoreDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLJoinStoreDetailViewController.m; sourceTree = "<group>"; };
+		A0865C152630A773001B85A3 /* QLPCAListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLPCAListViewController.h; sourceTree = "<group>"; };
+		A0865C162630A773001B85A3 /* QLPCAListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLPCAListViewController.m; sourceTree = "<group>"; };
 		A087B85F259B9EFD00432E8C /* QLBelongingShopTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLBelongingShopTextCell.h; sourceTree = "<group>"; };
 		A087B860259B9EFD00432E8C /* QLBelongingShopTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLBelongingShopTextCell.m; sourceTree = "<group>"; };
 		A087B861259B9EFD00432E8C /* QLBelongingShopTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLBelongingShopTextCell.xib; sourceTree = "<group>"; };
@@ -1834,7 +1830,7 @@
 				A00621592513DD7300A571E5 /* UIAlertController */,
 				A006215C2513DD7300A571E5 /* UIView */,
 				A006215F2513DD7300A571E5 /* UIFont */,
-				A00621622513DD7300A571E5 /* NSMutableDictionary */,
+				A00621622513DD7300A571E5 /* NSDictionary */,
 				A00621652513DD7300A571E5 /* NSString */,
 				A006216B2513DD7300A571E5 /* UITableView */,
 				A006216E2513DD7300A571E5 /* MBProgressHUD */,
@@ -1918,13 +1914,15 @@
 			path = UIFont;
 			sourceTree = "<group>";
 		};
-		A00621622513DD7300A571E5 /* NSMutableDictionary */ = {
+		A00621622513DD7300A571E5 /* NSDictionary */ = {
 			isa = PBXGroup;
 			children = (
-				A00621642513DD7300A571E5 /* NSMutableDictionary+Ordered.h */,
-				A00621632513DD7300A571E5 /* NSMutableDictionary+Ordered.m */,
+				A00621642513DD7300A571E5 /* NSMutableDictionary+QLUtil.h */,
+				A00621632513DD7300A571E5 /* NSMutableDictionary+QLUtil.m */,
+				A0865BE926309B49001B85A3 /* NSDictionary+QLUtil.h */,
+				A0865BEA26309B49001B85A3 /* NSDictionary+QLUtil.m */,
 			);
-			path = NSMutableDictionary;
+			path = NSDictionary;
 			sourceTree = "<group>";
 		};
 		A00621652513DD7300A571E5 /* NSString */ = {
@@ -2656,7 +2654,7 @@
 			isa = PBXGroup;
 			children = (
 				A07CDF88254EF413000CAB62 /* CreatStorePage */,
-				A07CDF89254EF424000CAB62 /* CityList */,
+				A07CDF89254EF424000CAB62 /* PCAList */,
 				A07CDFA9254F13EE000CAB62 /* JoinStore */,
 			);
 			path = CreatStore;
@@ -3536,21 +3534,21 @@
 			path = CreatStorePage;
 			sourceTree = "<group>";
 		};
-		A07CDF89254EF424000CAB62 /* CityList */ = {
+		A07CDF89254EF424000CAB62 /* PCAList */ = {
 			isa = PBXGroup;
 			children = (
 				A07CDF8A254EF424000CAB62 /* Controller */,
 				A07CDF8D254EF424000CAB62 /* Model */,
 				A07CDF90254EF424000CAB62 /* View */,
 			);
-			path = CityList;
+			path = PCAList;
 			sourceTree = "<group>";
 		};
 		A07CDF8A254EF424000CAB62 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDF8C254EF424000CAB62 /* QLCityChooseViewController.h */,
-				A07CDF8B254EF424000CAB62 /* QLCityChooseViewController.m */,
+				A0865C152630A773001B85A3 /* QLPCAListViewController.h */,
+				A0865C162630A773001B85A3 /* QLPCAListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3558,8 +3556,6 @@
 		A07CDF8D254EF424000CAB62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDF8F254EF424000CAB62 /* QLCityListModel.h */,
-				A07CDF8E254EF424000CAB62 /* QLCityListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3567,12 +3563,6 @@
 		A07CDF90254EF424000CAB62 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDF91254EF424000CAB62 /* QLCityTableViewCell.h */,
-				A07CDF93254EF424000CAB62 /* QLCityTableViewCell.m */,
-				A07CDF92254EF424000CAB62 /* QLCityTableViewCell.xib */,
-				A07CDF9F254F0A17000CAB62 /* QLCityLocationItem.h */,
-				A07CDFA0254F0A17000CAB62 /* QLCityLocationItem.m */,
-				A07CDF9E254F0A17000CAB62 /* QLCityLocationItem.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3580,8 +3570,9 @@
 		A07CDFA9254F13EE000CAB62 /* JoinStore */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDFAA254F1400000CAB62 /* Controller */,
-				A07CDFB4254F1680000CAB62 /* View */,
+				A0865BE226309790001B85A3 /* SearchStoreList */,
+				A0865BFD26309D55001B85A3 /* ApplyJoinStore */,
+				A0865C012630A224001B85A3 /* JoinStoreDetail */,
 			);
 			path = JoinStore;
 			sourceTree = "<group>";
@@ -3589,8 +3580,8 @@
 		A07CDFAA254F1400000CAB62 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDFAB254F1434000CAB62 /* QLJoinStoreViewController.h */,
-				A07CDFAC254F1434000CAB62 /* QLJoinStoreViewController.m */,
+				A07CDFAB254F1434000CAB62 /* QLApplyJoinStoreViewController.h */,
+				A07CDFAC254F1434000CAB62 /* QLApplyJoinStoreViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3598,9 +3589,6 @@
 		A07CDFB4254F1680000CAB62 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A07CDFB5254F169B000CAB62 /* QLJoinStoreCell.h */,
-				A07CDFB6254F169B000CAB62 /* QLJoinStoreCell.m */,
-				A07CDFB7254F169B000CAB62 /* QLJoinStoreCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3614,6 +3602,60 @@
 				A084CE3F252CCD2C006AE22F /* QLMsgModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A0865BE226309790001B85A3 /* SearchStoreList */ = {
+			isa = PBXGroup;
+			children = (
+				A0865BF226309CB8001B85A3 /* Controller */,
+				A0865BFC26309D18001B85A3 /* View */,
+			);
+			path = SearchStoreList;
+			sourceTree = "<group>";
+		};
+		A0865BF226309CB8001B85A3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0865BF326309CD8001B85A3 /* QLSearchStoreListViewController.h */,
+				A0865BF426309CD8001B85A3 /* QLSearchStoreListViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0865BFC26309D18001B85A3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A07CDFB5254F169B000CAB62 /* QLJoinStoreCell.h */,
+				A07CDFB6254F169B000CAB62 /* QLJoinStoreCell.m */,
+				A07CDFB7254F169B000CAB62 /* QLJoinStoreCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A0865BFD26309D55001B85A3 /* ApplyJoinStore */ = {
+			isa = PBXGroup;
+			children = (
+				A07CDFAA254F1400000CAB62 /* Controller */,
+				A07CDFB4254F1680000CAB62 /* View */,
+			);
+			path = ApplyJoinStore;
+			sourceTree = "<group>";
+		};
+		A0865C012630A224001B85A3 /* JoinStoreDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A0865C022630A237001B85A3 /* Controller */,
+			);
+			path = JoinStoreDetail;
+			sourceTree = "<group>";
+		};
+		A0865C022630A237001B85A3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0865C032630A252001B85A3 /* QLJoinStoreDetailViewController.h */,
+				A0865C042630A252001B85A3 /* QLJoinStoreDetailViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A087B867259BA15600432E8C /* EnterpriseCertification */ = {
@@ -4567,7 +4609,6 @@
 				A01243D425EA3CE400A90BAD /* QLNoSubscriptionsView.xib in Resources */,
 				A03D556325780BCC002FED6A /* QLCarSourceManagerCell.xib in Resources */,
 				A0ABB8B625586A0900A84297 /* QLChatBottomView.xib in Resources */,
-				A07CDF96254EF424000CAB62 /* QLCityTableViewCell.xib in Resources */,
 				A09EAB4125DEBED2007D9075 /* QLPaymentPageHeadView.xib in Resources */,
 				A046E81825531E4D005E0124 /* QLChatListHeadItem.xib in Resources */,
 				A0E709602527A9F5004D7D2B /* QLHomeCarItem.xib in Resources */,
@@ -4666,7 +4707,6 @@
 				A0E7033F257E7C280022A137 /* QLEditTopPriceView.xib in Resources */,
 				A044AD21251FDAE100D1C324 /* QLImageItem.xib in Resources */,
 				A04847C325A8DF2E00BD4596 /* QLStoreInvitationListCell.xib in Resources */,
-				A07CDFA1254F0A17000CAB62 /* QLCityLocationItem.xib in Resources */,
 				A049944F2538C9B500A1E014 /* QLCarCircleNaviView.xib in Resources */,
 				A0CAB7ED2561242B0015FAE3 /* QLSubmitBottomView.xib in Resources */,
 				A0C901B12529C98D0021C069 /* QLAddressBookListHeadView.xib in Resources */,
@@ -4743,6 +4783,7 @@
 				A05936EC259A56980042C86D /* QLBelongingShopBottomView.m in Sources */,
 				A0CAB7E8256124210015FAE3 /* QLSubmitBottomView.m in Sources */,
 				A00621902513DD7300A571E5 /* NSString+unicode.m in Sources */,
+				A0865BF526309CD8001B85A3 /* QLSearchStoreListViewController.m in Sources */,
 				A00621312513DB3900A571E5 /* QLBaseViewController.m in Sources */,
 				A0CAB7DE2561230C0015FAE3 /* QLTransactionInfoCell.m in Sources */,
 				A01243CC25EA3CD900A90BAD /* QLNoSubscriptionsView.m in Sources */,
@@ -4785,7 +4826,7 @@
 				A06D1148252E094700DD4673 /* QLContactsInfoViewController.m in Sources */,
 				A0492F54256EC81C00B5E23C /* QLCarSourceDetailViewController.m in Sources */,
 				A0CAB7FD256134410015FAE3 /* QLCarLicenseViewController.m in Sources */,
-				A07CDFAD254F1434000CAB62 /* QLJoinStoreViewController.m in Sources */,
+				A07CDFAD254F1434000CAB62 /* QLApplyJoinStoreViewController.m in Sources */,
 				A00620DB2513DB2000A571E5 /* QLViewController.m in Sources */,
 				A00621842513DD7300A571E5 /* UIButton+QLUtil.m in Sources */,
 				A044AA92251FCBF600D1C324 /* QLOSSManager.m in Sources */,
@@ -4796,13 +4837,11 @@
 				A09EAB1225DEB550007D9075 /* QLShareAlertView.m in Sources */,
 				A044AAE4251FCEBE00D1C324 /* QLCarSourcePageViewController.m in Sources */,
 				A01837DA254F2DCD000253FC /* QLDynamicSendMsgBottomView.m in Sources */,
-				A07CDF97254EF424000CAB62 /* QLCityTableViewCell.m in Sources */,
 				A00620DD2513DB2000A571E5 /* QLTabBarController.m in Sources */,
 				A0DBDAC2253377D30090C263 /* QLRemarksSetViewController.m in Sources */,
 				A0013176258FCB070080EB21 /* QLDueProcessViewController.m in Sources */,
 				A0492FA5257030D400B5E23C /* QLCollectionValueTextCell.m in Sources */,
 				A02583022545EF0100CEE15F /* QLCarCircleImgCell.m in Sources */,
-				A07CDF94254EF424000CAB62 /* QLCityChooseViewController.m in Sources */,
 				A057C7652534D6360045B7B1 /* QLContactsStoreFilterItemsCell.m in Sources */,
 				A006213D2513DB3900A571E5 /* QLBaseTarBarButton.m in Sources */,
 				A006212A2513DB3900A571E5 /* QLBaseNavigationController.m in Sources */,
@@ -4810,6 +4849,7 @@
 				A00621872513DD7300A571E5 /* UIView+QLUtil.m in Sources */,
 				A09EAB3F25DEBED2007D9075 /* QLPaymentPageModel.m in Sources */,
 				A01B49AC255DAD450082E6B2 /* QLHelpSellViewController.m in Sources */,
+				A0865C052630A252001B85A3 /* QLJoinStoreDetailViewController.m in Sources */,
 				A006207E2513DA7000A571E5 /* AppDelegate.m in Sources */,
 				A044AA93251FCBF600D1C324 /* QLConst.m in Sources */,
 				A03137B32533418500A94019 /* QLSysMsgListCell.m in Sources */,
@@ -4820,7 +4860,7 @@
 				A0492F1B256ACD4100B5E23C /* QLBrandModel.m in Sources */,
 				A087B88B259BA47B00432E8C /* QLSubmitTextCell.m in Sources */,
 				A03183CB25AA1F65007B5D3F /* QLVipCenterHeadView.m in Sources */,
-				A00621892513DD7300A571E5 /* NSMutableDictionary+Ordered.m in Sources */,
+				A00621892513DD7300A571E5 /* NSMutableDictionary+QLUtil.m in Sources */,
 				A09EAAF725DEB346007D9075 /* QLShareImgViewController.m in Sources */,
 				A006213E2513DB3900A571E5 /* QLBadgeButton.m in Sources */,
 				A09EAB5125DEBF90007D9075 /* QLBankCardCell.m in Sources */,
@@ -4856,7 +4896,7 @@
 				A044AADA251FCE6500D1C324 /* QLFunBottomView.m in Sources */,
 				A05936DA259A4F930042C86D /* QLBelongingShopPageViewController.m in Sources */,
 				A02C93362523AA310031A6D7 /* QLHomePageHeadView.m in Sources */,
-				A07CDFA2254F0A17000CAB62 /* QLCityLocationItem.m in Sources */,
+				A0865C172630A773001B85A3 /* QLPCAListViewController.m in Sources */,
 				A00131232587CF850080EB21 /* QLShareImgItem.m in Sources */,
 				A04930212573E71300B5E23C /* QLAdvancedScreeningAddCell.m in Sources */,
 				A0492F25256C346200B5E23C /* QLVehicleConditionResultView.m in Sources */,
@@ -4869,7 +4909,6 @@
 				A044AAFC251FD21200D1C324 /* QLPushMsgModel.m in Sources */,
 				A04847B725A8DD9A00BD4596 /* QLStoreInvitationListViewController.m in Sources */,
 				A0F13FED25E41DF200C8F67B /* QLEditPermissionCell.m in Sources */,
-				A07CDF95254EF424000CAB62 /* QLCityListModel.m in Sources */,
 				A049300A2572C32100B5E23C /* QLAdvancedScreeningSectionView.m in Sources */,
 				A0492F8825702C7700B5E23C /* QLCarDetailAccInfoCell.m in Sources */,
 				A025832625473A5200CEE15F /* QLCarCircleAccCell.m in Sources */,
@@ -5003,6 +5042,7 @@
 				A046E81725531E4D005E0124 /* QLChatListHeadItem.m in Sources */,
 				A044AAD5251FCE6500D1C324 /* QLCreatStoreViewController.m in Sources */,
 				A0492F6E257020CC00B5E23C /* QLCarDetailSectionView.m in Sources */,
+				A0865BEB26309B49001B85A3 /* NSDictionary+QLUtil.m in Sources */,
 				A0F13FF625E4211900C8F67B /* QLStaffDetailViewController.m in Sources */,
 				A09EAB6025DEC176007D9075 /* QLAddVerificationView.m in Sources */,
 				A09EAAE425DEB2C4007D9075 /* QLVehicleCertificateCell.m in Sources */,

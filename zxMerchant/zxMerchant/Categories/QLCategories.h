@@ -62,7 +62,8 @@
  */
 #import "NSBundle+QLUtil.h"
 /*
-*NSMutableDictionary
+*NSDictionary
 */
-#import "NSMutableDictionary+Ordered.h"
+#import "NSMutableDictionary+QLUtil.h"
+#import "NSDictionary+QLUtil.h"
 #endif /* QLCategories_h */
