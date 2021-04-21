@@ -59,6 +59,7 @@ static NSTimeInterval requestTimeout = 20;//请求超时时间
     }
     mutableParam[@"version_id"] = VersionId;
     mutableParam[@"sign"] = [QLParamSignManager paramSign:mutableParam];
+    mutableParam[@"account_id"] = [QLUserInfoModel getLocalInfo].account.account_id;
     if (url == nil) {
         url = [NSString stringWithFormat:@"http://%@/index/%@.do",HOST,mutableParam[@"operation_type"]];
     } else {

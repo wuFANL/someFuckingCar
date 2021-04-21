@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLTopCarSourceViewController : QLBaseTableViewController
+/** 数据源*/
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
+- (void)endRefresh;
 @end
 
 NS_ASSUME_NONNULL_END

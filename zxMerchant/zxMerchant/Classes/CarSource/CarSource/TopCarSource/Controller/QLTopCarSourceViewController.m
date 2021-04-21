@@ -10,7 +10,7 @@
 #import "QLCarCircleTextCell.h"
 #import "QLTopCarSourcePriceCell.h"
 #import "QLCarCircleImgCell.h"
-
+#import <MJRefresh.h>
 @interface QLTopCarSourceViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -23,6 +23,12 @@
     [self tableViewSet];
     
 }
+
+- (void)endRefresh{
+    
+}
+
+
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
@@ -30,12 +36,19 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.page = 0;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleTextCell" bundle:nil] forCellReuseIdentifier:@"textCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLTopCarSourcePriceCell" bundle:nil] forCellReuseIdentifier:@"topCarSourcePriceCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
-
-   
+    
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
 }
+
+
+- (void)refreshHeaderDidPull{
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }

@@ -26,6 +26,7 @@
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
     adjustsScrollViewInsets_NO(self.tableView, self);
+    self.tableView.page = 0;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
