@@ -256,7 +256,7 @@
     } else if (tableView == self.bTableView) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"收起";
-            cell.imageView.image = [UIImage imageNamed:@"closeSlider"];
+            cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
         } else {
             QLSeriesModel *seriesModel = self.bArr[indexPath.row-1];
             cell.textLabel.text = seriesModel.series_name;
@@ -280,7 +280,7 @@
     } else {
         if (indexPath.section == 0) {
             cell.textLabel.text = @"收起";
-            cell.imageView.image = [UIImage imageNamed:@"closeSlider"];
+            cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
         } else {
             QLTypeModel *typeModel = self.cArr[indexPath.section-1];
             QLTypeInfoModel *infoModel = typeModel.modelList[indexPath.row];

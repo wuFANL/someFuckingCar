@@ -15,6 +15,7 @@
 #import "QLHomeVisitRecordCell.h"
 #import "QLHomeVisitListCell.h"
 #import "QLHomeCarCell.h"
+#import "QLAddCarPageViewController.h"
 #import "QLMyStoreViewController.h"
 #import "QLVehicleCertificateViewController.h"
 #import "QLPaymentPageViewController.h"
@@ -136,7 +137,8 @@
 }
 //发车事件
 - (void)msgBtnClick {
-    
+    QLAddCarPageViewController *acpVC = [QLAddCarPageViewController new];
+    [self.navigationController pushViewController:acpVC animated:YES];
 }
 //搜索点击
 - (void)searchBarClick {

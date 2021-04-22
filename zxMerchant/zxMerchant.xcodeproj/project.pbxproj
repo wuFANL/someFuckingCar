@@ -322,6 +322,7 @@
 		A0865BF526309CD8001B85A3 /* QLSearchStoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865BF426309CD8001B85A3 /* QLSearchStoreListViewController.m */; };
 		A0865C052630A252001B85A3 /* QLJoinStoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865C042630A252001B85A3 /* QLJoinStoreDetailViewController.m */; };
 		A0865C172630A773001B85A3 /* QLPCAListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865C162630A773001B85A3 /* QLPCAListViewController.m */; };
+		A0865C4B2631E49C001B85A3 /* QLAddCarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0865C4A2631E49C001B85A3 /* QLAddCarPageViewController.m */; };
 		A087B862259B9EFD00432E8C /* QLBelongingShopTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B860259B9EFD00432E8C /* QLBelongingShopTextCell.m */; };
 		A087B863259B9EFD00432E8C /* QLBelongingShopTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A087B861259B9EFD00432E8C /* QLBelongingShopTextCell.xib */; };
 		A087B86B259BA1A800432E8C /* QLEnterpriseCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B86A259BA1A800432E8C /* QLEnterpriseCertificationViewController.m */; };
@@ -983,6 +984,8 @@
 		A0865C042630A252001B85A3 /* QLJoinStoreDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLJoinStoreDetailViewController.m; sourceTree = "<group>"; };
 		A0865C152630A773001B85A3 /* QLPCAListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLPCAListViewController.h; sourceTree = "<group>"; };
 		A0865C162630A773001B85A3 /* QLPCAListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLPCAListViewController.m; sourceTree = "<group>"; };
+		A0865C492631E49C001B85A3 /* QLAddCarPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPageViewController.h; sourceTree = "<group>"; };
+		A0865C4A2631E49C001B85A3 /* QLAddCarPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLAddCarPageViewController.m; sourceTree = "<group>"; };
 		A087B85F259B9EFD00432E8C /* QLBelongingShopTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLBelongingShopTextCell.h; sourceTree = "<group>"; };
 		A087B860259B9EFD00432E8C /* QLBelongingShopTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLBelongingShopTextCell.m; sourceTree = "<group>"; };
 		A087B861259B9EFD00432E8C /* QLBelongingShopTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLBelongingShopTextCell.xib; sourceTree = "<group>"; };
@@ -1752,6 +1755,7 @@
 			isa = PBXGroup;
 			children = (
 				A00621422513DC6000A571E5 /* HomePage */,
+				A0865C462631E462001B85A3 /* AddCar */,
 				A09EAB1725DEBE1E007D9075 /* MyStore */,
 				A09EAADB25DEB2C4007D9075 /* VehicleCertificate */,
 				A09EAB2225DEBED2007D9075 /* PaymentAccount */,
@@ -3658,6 +3662,31 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		A0865C462631E462001B85A3 /* AddCar */ = {
+			isa = PBXGroup;
+			children = (
+				A0865C472631E46F001B85A3 /* AddCarPage */,
+			);
+			path = AddCar;
+			sourceTree = "<group>";
+		};
+		A0865C472631E46F001B85A3 /* AddCarPage */ = {
+			isa = PBXGroup;
+			children = (
+				A0865C482631E482001B85A3 /* Controller */,
+			);
+			path = AddCarPage;
+			sourceTree = "<group>";
+		};
+		A0865C482631E482001B85A3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0865C492631E49C001B85A3 /* QLAddCarPageViewController.h */,
+				A0865C4A2631E49C001B85A3 /* QLAddCarPageViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		A087B867259BA15600432E8C /* EnterpriseCertification */ = {
 			isa = PBXGroup;
 			children = (
@@ -5048,6 +5077,7 @@
 				A09EAAE425DEB2C4007D9075 /* QLVehicleCertificateCell.m in Sources */,
 				A0492F9B25702E7E00B5E23C /* QLVehicleReportCell.m in Sources */,
 				A00620E02513DB2000A571E5 /* QLCustomAlertView.m in Sources */,
+				A0865C4B2631E49C001B85A3 /* QLAddCarPageViewController.m in Sources */,
 				A084CE26252CC7EB006AE22F /* QLSystemMessageCell.m in Sources */,
 				A049944A2538C99800A1E014 /* QLCarCircleNaviView.m in Sources */,
 				A001315E258BDACD0080EB21 /* QLChatFloatView.m in Sources */,
