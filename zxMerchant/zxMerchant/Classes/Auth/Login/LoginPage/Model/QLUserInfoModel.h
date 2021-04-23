@@ -165,6 +165,9 @@
  */
 @property (nonatomic, strong) NSString *visit_times;
 
+/** 上一次选中的cityCode*/
+@property (nonatomic, strong) NSString *last_city_code;
+
 @end
 
 

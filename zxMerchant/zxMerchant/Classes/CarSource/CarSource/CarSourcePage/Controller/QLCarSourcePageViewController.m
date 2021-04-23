@@ -82,9 +82,10 @@
     QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)self.subVCArr.lastObject;
     NSInteger topPage = vc_top.tableView.page;
     NSInteger allPage = vc_all.tableView.page;
-
+    
+    NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
     // 全部
-    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_all_car_list",@"sort_by":[NSString stringWithFormat:@"%lu",type],@"page_no":@(allPage + 1),@"page_size":@(listShowCount),@"min_price":min_price,@"max_price":max_price,@"brand_id":brand_id} success:^(id response) {
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_all_car_list",@"sort_by":[NSString stringWithFormat:@"%lu",type],@"page_no":@(allPage + 1),@"page_size":@(listShowCount),@"min_price":min_price,@"max_price":max_price,@"brand_id":brand_id,@"cityCode":@(350921)} success:^(id response) {
         NSDictionary* resultDic = response;
         // 停止刷新动作
         [vc_all endRefresh];
@@ -109,11 +110,11 @@
     }];
     
     // 头部车源
-    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_top_car_list",@"sort_by":[NSString stringWithFormat:@"%lu",type],@"page_no":@(topPage + 1),@"page_size":@(listShowCount),@"min_price":min_price,@"max_price":max_price,@"brand_id":brand_id} success:^(id response) {
-
-    } fail:^(NSError *error) {
-        [MBProgressHUD showError:error.domain];
-    }];
+//    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_top_car_list",@"sort_by":[NSString stringWithFormat:@"%lu",type],@"page_no":@(topPage + 1),@"page_size":@(listShowCount),@"min_price":min_price,@"max_price":max_price,@"brand_id":brand_id} success:^(id response) {
+//
+//    } fail:^(NSError *error) {
+//        [MBProgressHUD showError:error.domain];
+//    }];
     
 }
 
