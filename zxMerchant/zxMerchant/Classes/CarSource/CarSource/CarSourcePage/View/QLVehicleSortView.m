@@ -84,14 +84,16 @@
     model.rowCount = 1;
     model.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     model.Spacing = QLMinimumSpacingMake(5, 5);
+    model.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     model.registerType = CellNibRegisterType;
     model.itemName = @"QLCollectionValueCell";
-    QLBaseCollectionView *collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectMake(0,0, ScreenWidth, 44) ItemModel:model];
+    model.itemSize = CGSizeMake((ScreenWidth-(model.columnCount-1)*5)/model.columnCount, 44);
+    QLBaseCollectionView *collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectMake(0,0, self.width, 44) ItemModel:model];
     collectionView.scrollEnabled = NO;
     collectionView.extendDelegate = self;
     collectionView.dataArr = self.dataArr;
     [self addSubview:collectionView];
-    [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.left.right.equalTo(self);
         make.height.mas_equalTo(44);
     }];

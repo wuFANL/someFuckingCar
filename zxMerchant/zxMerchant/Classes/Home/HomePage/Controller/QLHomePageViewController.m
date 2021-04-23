@@ -15,6 +15,7 @@
 #import "QLHomeVisitRecordCell.h"
 #import "QLHomeVisitListCell.h"
 #import "QLHomeCarCell.h"
+#import "QLAddCarPageViewController.h"
 #import "QLMyStoreViewController.h"
 #import "QLVehicleCertificateViewController.h"
 #import "QLPaymentPageViewController.h"
@@ -41,6 +42,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //tableView
     [self tableViewSet];
     //导航
@@ -53,6 +55,7 @@
 #pragma mark - network
 //首页数据
 - (void)getHomeData {
+    return;
     [MBProgressHUD showCustomLoading:nil];
     [[QLToolsManager share] getFunData:^(id result, NSError *error) {
         if (!error) {
@@ -136,7 +139,8 @@
 }
 //发车事件
 - (void)msgBtnClick {
-    
+    QLAddCarPageViewController *acpVC = [QLAddCarPageViewController new];
+    [self.navigationController pushViewController:acpVC animated:YES];
 }
 //搜索点击
 - (void)searchBarClick {

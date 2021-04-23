@@ -1,5 +1,5 @@
 //
-//  NSMutableDictionary+Ordered.h
+//  NSMutableDictionary+QLUtil.h
 //  OrderedMutableDictionary
 //
 //  Created by Locke on 2017/3/17.
@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@interface NSMutableDictionary (Ordered)
+@interface NSMutableDictionary (QLUtil)
 
 NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 有序可变字典

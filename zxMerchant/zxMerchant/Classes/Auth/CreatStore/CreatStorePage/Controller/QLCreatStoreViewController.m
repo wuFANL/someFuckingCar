@@ -11,8 +11,8 @@
 #import "QLCreatStoreTFCell.h"
 #import "QLCreatStoreTVCell.h"
 #import "QLSubmitImgConfigCell.h"
-#import "QLCityChooseViewController.h"
-#import "QLJoinStoreViewController.h"
+#import "QLPCAListViewController.h"
+#import "QLSearchStoreListViewController.h"
 
 @interface QLCreatStoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
@@ -65,20 +65,20 @@
 - (void)creatStoreRequest {
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:BusinessPath params:@{
-                        @"operation_type":@"create_business",
-                        @"account_id":self.account_id,
-                        @"name":@"",
-                        @"business_name":@"",
-                        @"business_area":@"",
-                        @"address":@"",
-                        @"cover_image":@"",
-                        @"idcar_back_pic":@"",
-                        @"idcar_font_pic":@"",
-                        @"province":@"",
-                        @"city":@"",
-                        @"county":@"",
-                        @"region_code":@"",
-                        @"business_pic":@""
+        @"operation_type":@"create_business",
+        @"account_id":self.account_id,
+        @"name":@"",
+        @"business_name":@"",
+        @"business_area":@"",
+        @"address":@"",
+        @"cover_image":@"",
+        @"idcar_back_pic":@"",
+        @"idcar_font_pic":@"",
+        @"province":@"",
+        @"city":@"",
+        @"county":@"",
+        @"region_code":@"",
+        @"business_pic":@""
     } success:^(id response) {
         [MBProgressHUD showSuccess:@"创建成功"];
         //进入首页
@@ -96,12 +96,15 @@
 }
 //加入店铺
 - (void)joinStoreBtnClick {
-    QLJoinStoreViewController *jsVC = [QLJoinStoreViewController new];
-    [self.navigationController pushViewController:jsVC animated:YES];
+    QLSearchStoreListViewController *sjlVC = [QLSearchStoreListViewController new];
+    [self.navigationController pushViewController:sjlVC animated:YES];
 }
 //选择图片
 - (void)aControlClick:(UIControl *)control {
-    
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+         //选择的图片
+        
+    }];
 }
 //输入栏内容发生变化
 - (void)textFieldTextChange:(UITextField *)tf {
@@ -194,9 +197,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0&&indexPath.row == 2) {
         //选择所在区域
-        QLCityChooseViewController *ccVC = [QLCityChooseViewController new];
-        ccVC.naviTitle = @"选择城市";
-        ccVC.showCurrentLocation = YES;
+        QLPCAListViewController *ccVC = [QLPCAListViewController new];
         [self.navigationController pushViewController:ccVC animated:YES];
         
     }
@@ -215,14 +216,6 @@
     if (section == 0) {
         string = [[NSMutableAttributedString alloc] initWithString:@"生成店铺" attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 30],NSForegroundColorAttributeName: [UIColor colorWithRed:48/255.0 green:56/255.0 blue:66/255.0 alpha:1.0]}];
         
-    } else {
-//        NSString *titleStr = @"店铺头图、身份证正反面或营业执照";
-//        NSString *deatilStr = @"长按图片拖动排序,第一张默认为店铺头图";
-//        NSString *contenStr = [NSString stringWithFormat:@"%@\n%@",titleStr,deatilStr];
-//        string = [[NSMutableAttributedString alloc] initWithString:contenStr attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 15],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-//
-//        [string addAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13], NSForegroundColorAttributeName: [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0]} range:[contenStr rangeOfString:deatilStr]];
-    
     }
     label.attributedText = string;
     return headerView;

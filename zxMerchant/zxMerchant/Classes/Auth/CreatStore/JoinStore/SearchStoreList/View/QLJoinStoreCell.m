@@ -15,6 +15,14 @@
     // Initialization code
 }
 
+-(IBAction)actionSelectedCell:(id)sender
+{
+    if(self.selectedBlock)
+    {
+        self.selectedBlock();
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

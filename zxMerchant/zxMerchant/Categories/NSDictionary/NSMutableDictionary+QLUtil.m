@@ -1,18 +1,18 @@
 //
-//  NSMutableDictionary+Ordered.m
+//  NSMutableDictionary+QLUtil.m
 //  OrderedMutableDictionary
 //
 //  Created by Locke on 2017/3/17.
 //  Copyright © 2017年 lainkai. All rights reserved.
 //
 
-#import "NSMutableDictionary+Ordered.h"
+#import "NSMutableDictionary+QLUtil.h"
 #import "NSObject+QLUtil.h"
 
 static const void *OrderedDictionaryKeys = (void *)@"OrderedDictionaryKeys";
 static BOOL isHasBeenRemoved;
 
-@implementation NSMutableDictionary (Ordered)
+@implementation NSMutableDictionary (QLUtil)
 
 + (void)load {
     static dispatch_once_t onceToken;
