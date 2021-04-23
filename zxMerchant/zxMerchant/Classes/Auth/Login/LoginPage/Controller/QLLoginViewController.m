@@ -85,12 +85,12 @@
         
     } seq:VersionId.integerValue];
     
-    QLCreatStoreViewController *csVC = [QLCreatStoreViewController new];
-    csVC.account_id = [QLUserInfoModel getLocalInfo].account.account_id;
-    csVC.backToTab = YES;
-    [self.navigationController pushViewController:csVC animated:YES];
-    
-    return;
+//    QLCreatStoreViewController *csVC = [QLCreatStoreViewController new];
+//    csVC.account_id = [QLUserInfoModel getLocalInfo].account.account_id;
+//    csVC.backToTab = YES;
+//    [self.navigationController pushViewController:csVC animated:YES];
+//
+//    return;
     
     //显示逻辑
     if ([QLUserInfoModel getLocalInfo].account.pwd_flag.integerValue == 0) {
