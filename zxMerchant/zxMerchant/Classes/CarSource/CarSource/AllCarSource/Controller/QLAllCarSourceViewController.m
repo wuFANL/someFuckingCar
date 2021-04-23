@@ -9,7 +9,7 @@
 #import "QLAllCarSourceViewController.h"
 #import "QLHomeCarCell.h"
 #import "QLCarSourceDetailViewController.h"
-
+#import <MJRefresh.h>
 @interface QLAllCarSourceViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -20,7 +20,11 @@
     [super viewDidLoad];
     //tableView
     [self tableViewSet];
-    
+}
+
+- (void)endRefresh {
+    [self.tableView.mj_footer endRefreshing];
+    [self.tableView.mj_header endRefreshing];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -31,9 +35,14 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLHomeCarCell" bundle:nil] forCellReuseIdentifier:@"hCarCell"];
-   
-
-   
+    MJWeakSelf
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+        weakSelf.tableView.page = 0;
+        [weakSelf.tableView.mj_header beginRefreshing];
+    }];
+    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
+        [weakSelf.tableView.mj_footer beginRefreshing];
+    }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

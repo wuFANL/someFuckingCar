@@ -86,6 +86,8 @@
     // 全部
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_all_car_list",@"sort_by":[NSString stringWithFormat:@"%lu",type],@"page_no":@(allPage + 1),@"page_size":@(listShowCount),@"min_price":min_price,@"max_price":max_price,@"brand_id":brand_id} success:^(id response) {
         NSDictionary* resultDic = response;
+        // 停止刷新动作
+        [vc_all endRefresh];
         if (resultDic && [resultDic.allKeys containsObject:@"result_info"]) {
             NSDictionary * infoDic = [resultDic objectForKey:@"result_info"];
             if (infoDic && [infoDic.allKeys containsObject:@"car_list"]) {
@@ -95,12 +97,15 @@
                     vc_all.tableView.page ++;
                     // 2. 对数据源拼接
                     [vc_all.dataArray addObjectsFromArray:carArray];
-                    
+                    // 
+                    // 刷新数据
+                    [vc_all.tableView reloadData];
                 }
             }
         }
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
+        [vc_all endRefresh];
     }];
     
     // 头部车源

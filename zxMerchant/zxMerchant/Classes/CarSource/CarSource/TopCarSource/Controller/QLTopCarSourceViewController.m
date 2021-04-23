@@ -21,13 +21,12 @@
     [super viewDidLoad];
     //tableView
     [self tableViewSet];
-    
 }
 
 - (void)endRefresh{
-    
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
-
 
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -42,11 +41,17 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
     
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
+    
+    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterDidPull)];
 }
 
-
-- (void)refreshHeaderDidPull{
+- (void)refreshHeaderDidPull {
     [self.tableView.mj_header beginRefreshing];
+    self.tableView.page = 0;
+}
+
+- (void)refreshFooterDidPull {
+    [self.tableView.mj_footer beginRefreshing];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
