@@ -5253,8 +5253,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SN6GCKR489;
+				DEVELOPMENT_TEAM = UDSE4Z8AVF;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5263,8 +5264,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.EmbellishJiao.ZXCarMerchant;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haleyhan.mwy;
 				PRODUCT_NAME = "众享商服";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5275,8 +5277,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SN6GCKR489;
+				DEVELOPMENT_TEAM = GWUURFN644;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5285,8 +5288,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.EmbellishJiao.ZXCarMerchant;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haleyhan.mwy;
 				PRODUCT_NAME = "众享商服";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

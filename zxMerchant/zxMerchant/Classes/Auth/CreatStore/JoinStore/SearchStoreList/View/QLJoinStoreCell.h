@@ -10,11 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^SelectedIndexBlock)(void);
+
 @interface QLJoinStoreCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imgView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLB;
-@property (weak, nonatomic) IBOutlet UILabel *addressLB;
-@property (weak, nonatomic) IBOutlet QLBaseButton *applyBtn;
+@property (nonatomic, copy) SelectedIndexBlock selectedBlock;
+@property (nonatomic, strong) IBOutlet UILabel *carName;
+@property (nonatomic, strong) IBOutlet UILabel *carAddress;
+@property (nonatomic, strong) IBOutlet UIImageView *carImageV;
 
 @end
 

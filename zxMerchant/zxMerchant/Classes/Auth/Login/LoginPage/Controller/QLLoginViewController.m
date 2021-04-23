@@ -47,7 +47,7 @@
     //获取倒计时时间
     [[QLToolsManager share] codeBtnCountdown:self.getCodeBtn Pattern:2];
     
-    self.phoneTF.text = @"18136249206";//15066655192
+    self.phoneTF.text = @"15859359999";//15066655192
     self.codeTF.text = @"123456";
 }
 #pragma mark- network
@@ -84,6 +84,13 @@
         QLLog(@"别名注册成功-%@",iAlias);
         
     } seq:VersionId.integerValue];
+    
+    QLCreatStoreViewController *csVC = [QLCreatStoreViewController new];
+    csVC.account_id = [QLUserInfoModel getLocalInfo].account.account_id;
+    csVC.backToTab = YES;
+    [self.navigationController pushViewController:csVC animated:YES];
+    
+    return;
     
     //显示逻辑
     if ([QLUserInfoModel getLocalInfo].account.pwd_flag.integerValue == 0) {
@@ -220,7 +227,7 @@
 }
 - (IBAction)closeBtnClick:(id)sender {
     
-    
+    [AppDelegateShare initTabBarVC];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -10,10 +10,19 @@
 #import "QLSubmitBottomView.h"
 #import "QLSubmitImgConfigCell.h"
 #import "QLCreatStoreTFCell.h"
+#import "QLOSSManager.h"
+#import "QLJoinStoreDetailViewController.h"
 
 @interface QLApplyJoinStoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
+@property (nonatomic, strong) NSString *headImageV;
+@property (nonatomic, strong) NSString *cardFront;
+@property (nonatomic, strong) NSString *cardbackG;
+@property (nonatomic, strong) NSString *nameString;
 
+@property (nonatomic, strong) QLSubmitImgConfigCell *headerCell;
+@property (nonatomic, strong) QLSubmitImgConfigCell *cardFrontCell;
+@property (nonatomic, strong) QLSubmitImgConfigCell *cardBackGCell;
 @end
 
 @implementation QLApplyJoinStoreViewController
@@ -30,21 +39,103 @@
     //tableView
     [self tableViewSet];
 }
+
+//加入车行
+- (void)addShopRequest {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"join_business",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":self.bussiness_id,@"name":self.nameString,@"head_pic":self.headImageV,@"idcar_font_pic":self.cardFront,@"idcar_back_pic":self.cardbackG} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        QLJoinStoreDetailViewController *jsdVC = [QLJoinStoreDetailViewController new];
+        jsdVC.status = WaitStoreAgreen;
+        [self.navigationController pushViewController:jsdVC animated:YES];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 //提交
 - (void)submitBtnClick {
-    
+    if([NSString isEmptyString:self.headImageV])
+    {
+        [MBProgressHUD showError:@"请上传头像"];
+    }
+    if([NSString isEmptyString:self.cardFront])
+    {
+        [MBProgressHUD showError:@"请上传身份证正面"];
+    }
+    if([NSString isEmptyString:self.cardbackG])
+    {
+        [MBProgressHUD showError:@"请上传身份证背面"];
+    }
+    if([NSString isEmptyString:self.nameString])
+    {
+        [MBProgressHUD showError:@"请输入姓名"];
+    }
+    [self addShopRequest];
 }
 //选择图片
 - (void)aControlClick:(UIControl *)control {
     [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
          //选择的图片
+        [MBProgressHUD showCustomLoading:nil];
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        switch (control.tag) {
+            case 0:
+            {
+                [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+                    [MBProgressHUD immediatelyRemoveHUD];
+                    if (state == UploadImageSuccess) {
+                        self.headImageV = [names firstObject];
+                        self.headerCell.aImgView.image = img;
+                    } else {
+                        [MBProgressHUD showError:@"图片上传失败"];
+                    }
+                }];
+            }
+                break;
+            case 1:
+            {
+                [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+                    [MBProgressHUD immediatelyRemoveHUD];
+                    if (state == UploadImageSuccess) {
+                        self.cardFront = [names firstObject];
+                        self.cardFrontCell.aImgView.image = img;
+                    } else {
+                        [MBProgressHUD showError:@"图片上传失败"];
+                    }
+                }];
+            }
+                break;
+            case 2:
+            {
+                [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+                    [MBProgressHUD immediatelyRemoveHUD];
+                    if (state == UploadImageSuccess) {
+                        self.cardbackG = [names firstObject];
+                        self.cardBackGCell.aImgView.image = img;
+                    } else {
+                        [MBProgressHUD showError:@"图片上传失败"];
+                    }
+                }];
+            }
+                break;
+                
+            default:
+                break;
+        }
         
     }];
 }
 //输入栏内容发生变化
 - (void)textFieldTextChange:(UITextField *)tf {
-    
+    self.nameString = tf.text;
+    if([NSString isEmptyString:self.nameString])
+    {
+        self.nameString = [QLUserInfoModel getLocalInfo].account.nickname;
+    }
 }
 #pragma mark -tableView
 - (void)tableViewSet {
@@ -73,7 +164,12 @@
         cell.accImgView.hidden = YES;
         cell.tf.enabled = YES;
         cell.tf.tag = indexPath.row;
-        cell.tf.placeholder = @"输入姓名";
+        if([NSString isEmptyString:[QLUserInfoModel getLocalInfo].account.nickname]) {
+            cell.tf.placeholder = @"输入姓名";
+        } else {
+            cell.tf.text = [QLUserInfoModel getLocalInfo].account.nickname;
+            self.nameString = [QLUserInfoModel getLocalInfo].account.nickname;
+        }
         [cell.tf addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
         return cell;
     } else {
@@ -89,12 +185,15 @@
         if (indexPath.row == 0) {
             cell.bControl.hidden = YES;
             cell.aTitleLB.text = @"头像";
+            self.headerCell = cell;
         } else if (indexPath.row == 1) {
             cell.bImgView.image = [UIImage imageNamed:@"ID_card_front"];
             cell.aTitleLB.text = @"上传身份证正面";
+            self.cardFrontCell = cell;
         } else if (indexPath.row == 2) {
             cell.bImgView.image = [UIImage imageNamed:@"ID_card_back"];
             cell.aTitleLB.text = @"上传身份证反面";
+            self.cardBackGCell = cell;
         }
         return cell;
     }

@@ -42,6 +42,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //tableView
     [self tableViewSet];
     //导航
@@ -54,6 +55,7 @@
 #pragma mark - network
 //首页数据
 - (void)getHomeData {
+    return;
     [MBProgressHUD showCustomLoading:nil];
     [[QLToolsManager share] getFunData:^(id result, NSError *error) {
         if (!error) {

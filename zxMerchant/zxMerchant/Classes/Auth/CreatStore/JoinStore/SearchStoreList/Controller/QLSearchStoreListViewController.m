@@ -13,7 +13,7 @@
 
 @interface QLSearchStoreListViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
-
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation QLSearchStoreListViewController
@@ -24,12 +24,31 @@
     [self setNavi];
     //tableView
     [self tableViewSet];
+    
+    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    [self carListRequestWithWord:@""];
 }
+
+//车行列表
+- (void)carListRequestWithWord:(NSString *)word {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"find_business",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_name":word} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        NSDictionary *dic = (NSDictionary *)response;
+        [self.dataArray removeAllObjects];
+        [self.dataArray addObjectsFromArray:[[dic objectForKey:@"result_info"] objectForKey:@"business_list"]];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 
 #pragma mark - action
 //申请加入
-- (void)applyBtnClick {
+- (void)applyBtnClick:(NSString *)bus_id {
     QLApplyJoinStoreViewController *ajsVC = [QLApplyJoinStoreViewController new];
+    ajsVC.bussiness_id = bus_id;
     [self.navigationController pushViewController:ajsVC animated:YES];
 }
 //取消
@@ -43,6 +62,7 @@
     self.searchBar = [[QLBaseSearchBar alloc]initWithFrame:titleView.bounds];
     [self.searchBar setBjColor:[UIColor groupTableViewBackgroundColor]];
     self.searchBar.placeholder = @"输入搜索内容";
+    self.searchBar.textField.clearButtonMode = UITextFieldViewModeNever;
     self.searchBar.delegate = self;
     [titleView addSubview:self.searchBar];
     self.navigationItem.titleView = titleView;
@@ -61,6 +81,21 @@
     leftItem.width = 10;
     self.navigationItem.leftBarButtonItems = @[leftItem];
 }
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self carListRequestWithWord:self.searchBar.text];
+}
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSString *strr = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
+    if(strr && strr.length > 0 && ![NSString isEmptyString:strr]) {
+        return YES;
+    } else {
+        [self carListRequestWithWord:@""];
+    }
+    return YES;
+}
+
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
@@ -74,13 +109,21 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.dataArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLJoinStoreCell *cell = [tableView dequeueReusableCellWithIdentifier:@"joinStoreCell" forIndexPath:indexPath];
-    [cell.applyBtn addTarget:self action:@selector(applyBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *dataDic = [self.dataArray objectAtIndex:indexPath.row];
+    cell.carName.text = [dataDic objectForKey:@"business_name"];
+    cell.carAddress.text  = [dataDic objectForKey:@"address"];
+    [cell.carImageV sd_setImageWithURL:[NSURL URLWithString:[dataDic objectForKey:@"business_pic"]]];
+    
+    [cell setSelectedBlock:^{
+        [self applyBtnClick:[dataDic objectForKey:@"business_id"]];
+    }];
     return cell;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -88,6 +131,7 @@
     jsdVC.status = WaitStoreAgreen;
     [self.navigationController pushViewController:jsdVC animated:YES];
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     UILabel *lb = [UILabel new];

@@ -138,6 +138,16 @@
     [self.view endEditing:YES];
 }
 
+// MARK: 通用方法
+/* 结束编辑模式 */
+- (void)endEidt {
+     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+}
+/* 点击空白处收起键盘 */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self endEidt];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

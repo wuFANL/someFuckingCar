@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger,JoinStoreStatus) {
  *申请状态
  */
 @property (nonatomic, assign) JoinStoreStatus status;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLApplyJoinStoreViewController : QLBaseTableViewController
-
+@property (nonatomic, strong) NSString *bussiness_id;
 @end
 
 NS_ASSUME_NONNULL_END
