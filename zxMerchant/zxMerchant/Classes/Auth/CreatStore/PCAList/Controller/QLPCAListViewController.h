@@ -12,7 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *省市区 选择
  */
+
+typedef void (^SelectedLocationBlock) (NSDictionary *);
 @interface QLPCAListViewController : QLViewController
+@property (nonatomic, copy) SelectedLocationBlock selectedBlock;
 
 @end
 

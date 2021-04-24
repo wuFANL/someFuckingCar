@@ -14,27 +14,77 @@
 
 @interface QLJoinStoreDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBelongingShopBottomView *bottomView;
+@property (nonatomic, strong) NSDictionary *dataDictionary;
 
+@property (nonatomic, strong) NSDictionary *sourceDic;
 @end
 
 @implementation QLJoinStoreDetailViewController
+
+-(id)initWithDataDic:(NSDictionary *)dataDic
+{
+    self = [super init];
+    if(self)
+    {
+        self.dataDictionary = [dataDic copy];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"申请加入店铺";
     
-    [self.view addSubview:self.bottomView];
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
-        make.height.mas_equalTo(50);
-    }];
-    //tableView
-    [self tableViewSet];
+    [self seeProgressRequest];
 }
+
+//查看加入车行进度
+- (void)seeProgressRequest {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:UserPath params:self.dataDictionary success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        self.sourceDic = [response objectForKey:@"result_info"];
+        int st = [[[self.sourceDic objectForKey:@"personnel"] objectForKey:@"state"] intValue];
+        if(st == 99)
+        {
+            self.status = JoinFail;
+        }
+        else if (st == 1)
+        {
+            self.status = JoinSuccess;
+        }
+        else
+        {
+            self.status = WaitStoreAgreen;
+        }
+        
+        [self.view addSubview:self.bottomView];
+        [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self.view);
+            make.height.mas_equalTo(50);
+        }];
+        //tableView
+        [self tableViewSet];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 //取消申请
 - (void)cancelBtnClick {
-    
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"opinion",@"business_personnel_id":[[self.sourceDic objectForKey:@"personnel"] objectForKey:@"business_personnel_id"],@"state":@"2"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -68,14 +118,40 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         QLBelongingShopInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopInfoCell" forIndexPath:indexPath];
-        
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[[self.sourceDic objectForKey:@"business"] objectForKey:@"business_pic"]]];
+        cell.storeNameLB.text = [[self.sourceDic objectForKey:@"business"] objectForKey:@"business_name"];
+        cell.addressLB.text = [[self.sourceDic objectForKey:@"business"] objectForKey:@"address"];
+        NSString *stat = @"";
+        int st = [[[self.sourceDic objectForKey:@"personnel"] objectForKey:@"state"] intValue];
+        if(st == 99)
+        {
+            stat = @"拒绝";
+        }
+        else if (st == 1)
+        {
+            stat = @"通过";
+        }
+        else
+        {
+            stat = @"申请中";
+        }
+        [cell.statusBtn setTitle:stat forState:UIControlStateNormal];
         return cell;
     } else {
         if (indexPath.row == 0||indexPath.row == 1) {
             QLAccountInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell" forIndexPath:indexPath];
             cell.callBtn.hidden = YES;
-            cell.titleLB.text = @"时间";
-            cell.detailLB.text = @"2020年10月10日";
+            if(indexPath.row == 0)
+            {
+                cell.titleLB.text = @"申请时间";
+                cell.detailLB.text = [[self.sourceDic objectForKey:@"personnel"] objectForKey:@"create_time"];
+            }
+            else
+            {
+                cell.titleLB.text = @"审核时间";
+                cell.detailLB.text = [[self.sourceDic objectForKey:@"personnel"] objectForKey:@"update_time"];
+            }
+
             return cell;
         } else {
             QLSubmitImgConfigCell *cell = [tableView dequeueReusableCellWithIdentifier:@"submitImgConfigCell" forIndexPath:indexPath];
@@ -86,10 +162,9 @@
             cell.bControl.tag = indexPath.row;
             cell.aTitleLB.text = @"上传身份证正面";
             cell.bTitleLB.text = @"上传身份证反面";
-            cell.aImgView.image = [UIImage imageNamed:@"ID_card_front"];
-            cell.bImgView.image = [UIImage imageNamed:@"ID_card_back"];
             
-            
+            [cell.aImgView sd_setImageWithURL:[NSURL URLWithString:[[self.sourceDic objectForKey:@"account"] objectForKey:@"idcard_front_pic"]]];
+            [cell.bImgView sd_setImageWithURL:[NSURL URLWithString:[[self.sourceDic objectForKey:@"account"] objectForKey:@"idcard_back_pic"]]];
             
             return cell;
         }
