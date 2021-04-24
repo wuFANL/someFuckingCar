@@ -16,6 +16,8 @@ typedef NS_ENUM(NSInteger,JoinStoreStatus) {
     JoinFail
 };
 @interface QLJoinStoreDetailViewController : QLBaseTableViewController
+-(id)initWithDataDic:(NSDictionary *)dataDic;
+
 /**
  *申请状态
  */

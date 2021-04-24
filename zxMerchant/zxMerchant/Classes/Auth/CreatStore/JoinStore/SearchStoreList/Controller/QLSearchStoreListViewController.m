@@ -126,10 +126,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    QLJoinStoreDetailViewController *jsdVC = [QLJoinStoreDetailViewController new];
-    jsdVC.status = WaitStoreAgreen;
-    [self.navigationController pushViewController:jsdVC animated:YES];
+    //这边不给直接进
+//    NSDictionary *dataDic = [self.dataArray objectAtIndex:indexPath.row];
+//    QLJoinStoreDetailViewController *jsdVC = [[QLJoinStoreDetailViewController alloc] initWithDataDic:@{@"operation_type":@"application_information",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":[dataDic objectForKey:@"business_id"]}];
+//    [self.navigationController pushViewController:jsdVC animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

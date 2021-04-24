@@ -3542,8 +3542,6 @@
 			isa = PBXGroup;
 			children = (
 				A07CDF8A254EF424000CAB62 /* Controller */,
-				A07CDF8D254EF424000CAB62 /* Model */,
-				A07CDF90254EF424000CAB62 /* View */,
 			);
 			path = PCAList;
 			sourceTree = "<group>";
@@ -3555,20 +3553,6 @@
 				A0865C162630A773001B85A3 /* QLPCAListViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		A07CDF8D254EF424000CAB62 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A07CDF90254EF424000CAB62 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A07CDFA9254F13EE000CAB62 /* JoinStore */ = {
@@ -3588,13 +3572,6 @@
 				A07CDFAC254F1434000CAB62 /* QLApplyJoinStoreViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		A07CDFB4254F1680000CAB62 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A084CE38252CCC63006AE22F /* Model */ = {
@@ -3640,7 +3617,6 @@
 			isa = PBXGroup;
 			children = (
 				A07CDFAA254F1400000CAB62 /* Controller */,
-				A07CDFB4254F1680000CAB62 /* View */,
 			);
 			path = ApplyJoinStore;
 			sourceTree = "<group>";

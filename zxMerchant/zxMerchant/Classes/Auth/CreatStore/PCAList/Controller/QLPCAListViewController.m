@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSMutableArray *aArr;
 @property (nonatomic, strong) NSMutableArray *bArr;
 @property (nonatomic, strong) NSMutableArray *cArr;
+
+@property (nonatomic, strong) NSMutableDictionary *sourceDic;
 @end
 
 @implementation QLPCAListViewController
@@ -74,11 +76,56 @@
         make.left.right.top.equalTo(self.cTableView);
         make.height.mas_equalTo(44);
     }];
-    
-    self.aArr = @[@"1",@"2",@"3"];
-    self.bArr = @[@"1",@"2",@"3"];
-    self.cArr = @[@"1",@"2",@"3"];
+    self.aArr = [[NSMutableArray alloc] initWithCapacity:0];
+    self.bArr = [[NSMutableArray alloc] initWithCapacity:0];
+    self.cArr = [[NSMutableArray alloc] initWithCapacity:0];
+    self.sourceDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [self getShengList];
+
 }
+
+- (void)getShengList
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"get_region_list",@"pcode":@"0",@"flag":@"0"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.aArr removeAllObjects];
+        [self.aArr addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"region_list"]];
+        [self.aTableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)getShiList:(NSString *)shiPcode
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"get_region_list",@"pcode":shiPcode,@"flag":@"0"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.bArr removeAllObjects];
+        [self.bArr addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"region_list"]];
+        [self.bTableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)getQuList:(NSString *)quPcode
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"get_region_list",@"pcode":quPcode,@"flag":@"0"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.cArr removeAllObjects];
+        [self.cArr addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"region_list"]];
+        [self.cTableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark -action
 //增加头部控件
 - (void)addHeadControl:(UIControl *)control {
@@ -113,7 +160,7 @@
 #pragma mark -tableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == self.aTableView) {
-        return self.aArr.count;
+        return 1;
     } else if (tableView == self.bTableView) {
         return 2;
     } else {
@@ -122,7 +169,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.aTableView) {
-        return 4;
+        return [self.aArr count];
     } else if (tableView == self.bTableView) {
         if (section == 0) {
             return 1;
@@ -149,7 +196,8 @@
     //数据
     if (tableView == self.aTableView) {
        
-        cell.textLabel.text = @"名称1";
+        NSDictionary *dic = [self.aArr objectAtIndex:indexPath.row];
+        cell.textLabel.text = [dic objectForKey:@"region_name"];;
        
         //选中颜色
         if (indexPath == self.aIndex) {
@@ -161,7 +209,8 @@
             cell.textLabel.text = @"收起";
             cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
         } else {
-            cell.textLabel.text = @"名称2";
+            NSDictionary *dic = [self.bArr objectAtIndex:indexPath.row];
+            cell.textLabel.text = [dic objectForKey:@"region_name"];;
             //选中颜色
             if (indexPath == self.bIndex) {
                 cell.textLabel.textColor = WhiteColor;
@@ -173,7 +222,8 @@
             cell.textLabel.text = @"收起";
             cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
         } else {
-            cell.textLabel.text = @"名称3";
+            NSDictionary *dic = [self.cArr objectAtIndex:indexPath.row];
+            cell.textLabel.text = [dic objectForKey:@"region_name"];;
             //选中颜色
             if (indexPath == self.cIndex) {
                 cell.textLabel.textColor = WhiteColor;
@@ -197,6 +247,9 @@
 //            [self.bArr removeAllObjects];
 //            [self.cArr removeAllObjects];
         }
+        NSDictionary *dic = [self.aArr objectAtIndex:indexPath.row];
+        [self getShiList:[dic objectForKey:@"adcode"]];
+        [self.sourceDic setObject:[dic objectForKey:@"region_name"] forKey:@"sheng"];
         //打开列表
         [self.bTableView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(space);
@@ -216,6 +269,9 @@
                 self.cIndex = nil;
 //                [self.cArr removeAllObjects];
             }
+            NSDictionary *dic = [self.bArr objectAtIndex:indexPath.row];
+            [self getQuList:[dic objectForKey:@"adcode"]];
+            [self.sourceDic setObject:[dic objectForKey:@"region_name"] forKey:@"shi"];
             [self.cTableView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.view).offset(space*2);
             }];
@@ -231,7 +287,13 @@
         } else {
             if (self.cIndex != indexPath) {
                 self.cIndex = indexPath;
-               
+            }
+            NSDictionary *dic = [self.cArr objectAtIndex:indexPath.row];
+            [self.sourceDic setObject:[dic objectForKey:@"region_name"] forKey:@"qu"];
+            [self.sourceDic setObject:[dic objectForKey:@"adcode"] forKey:@"quma"];
+            if(self.selectedBlock)
+            {
+                self.selectedBlock(self.sourceDic);
             }
             [self.navigationController popViewControllerAnimated:YES];
         }

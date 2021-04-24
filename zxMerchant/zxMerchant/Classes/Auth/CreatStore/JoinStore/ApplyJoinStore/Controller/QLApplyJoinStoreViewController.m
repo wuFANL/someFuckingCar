@@ -46,8 +46,7 @@
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"join_business",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":self.bussiness_id,@"name":self.nameString,@"head_pic":self.headImageV,@"idcar_font_pic":self.cardFront,@"idcar_back_pic":self.cardbackG} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
         
-        QLJoinStoreDetailViewController *jsdVC = [QLJoinStoreDetailViewController new];
-        jsdVC.status = WaitStoreAgreen;
+        QLJoinStoreDetailViewController *jsdVC = [[QLJoinStoreDetailViewController alloc] initWithDataDic:@{@"operation_type":@"application_information",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":self.bussiness_id}];
         [self.navigationController pushViewController:jsdVC animated:YES];
         
     } fail:^(NSError *error) {
@@ -61,18 +60,22 @@
     if([NSString isEmptyString:self.headImageV])
     {
         [MBProgressHUD showError:@"请上传头像"];
+        return;
     }
     if([NSString isEmptyString:self.cardFront])
     {
         [MBProgressHUD showError:@"请上传身份证正面"];
+        return;
     }
     if([NSString isEmptyString:self.cardbackG])
     {
         [MBProgressHUD showError:@"请上传身份证背面"];
+        return;
     }
     if([NSString isEmptyString:self.nameString])
     {
         [MBProgressHUD showError:@"请输入姓名"];
+        return;
     }
     [self addShopRequest];
 }
