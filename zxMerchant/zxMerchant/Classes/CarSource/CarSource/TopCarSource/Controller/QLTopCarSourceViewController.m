@@ -48,6 +48,7 @@
 - (void)refreshHeaderDidPull {
     [self.tableView.mj_header beginRefreshing];
     self.tableView.page = 0;
+    //
 }
 
 - (void)refreshFooterDidPull {

@@ -10,9 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^AllCarSourcerefreshBlock)(NSUInteger currentPage);
+
 @interface QLAllCarSourceViewController : QLBaseTableViewController
 /** 数据源*/
 @property (nonatomic, strong) NSMutableArray *dataArray;
+
+/** 子页面需要刷新*/
+@property (nonatomic, copy) AllCarSourcerefreshBlock refreshBlock;
 
 - (void)endRefresh;
 @end

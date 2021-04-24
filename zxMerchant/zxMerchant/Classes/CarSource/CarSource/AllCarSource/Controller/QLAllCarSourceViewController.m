@@ -38,10 +38,17 @@
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLHomeCarCell" bundle:nil] forCellReuseIdentifier:@"hCarCell"];
     MJWeakSelf
-    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+//    self.tableView.mj_header =
+    
+    MJRefreshHeader* header =[MJRefreshHeader headerWithRefreshingBlock:^{
         weakSelf.tableView.page = 0;
         [weakSelf.tableView.mj_header beginRefreshing];
+        if (weakSelf.refreshBlock) {
+            weakSelf.refreshBlock(0);
+        }
     }];
+    
+    
     self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
         [weakSelf.tableView.mj_footer beginRefreshing];
     }];
@@ -54,7 +61,9 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLHomeCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hCarCell" forIndexPath:indexPath];
-    
+    if (self.dataArray.count > indexPath.row) {
+        [cell updateUIWithDic:self.dataArray[indexPath.row]];
+    }
     
     return cell;
 

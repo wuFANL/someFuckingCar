@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -81,7 +81,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="描述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLf-wc-EAQ">
-                        <rect key="frame" x="165" y="60" width="25" height="14.5"/>
+                        <rect key="frame" x="165" y="43" width="25" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -108,7 +108,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="城市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCO-GQ-O48">
-                        <rect key="frame" x="329" y="60" width="25" height="14.5"/>
+                        <rect key="frame" x="329" y="43" width="25" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -122,6 +122,7 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="aLf-wc-EAQ" firstAttribute="top" secondItem="DIJ-oq-4J4" secondAttribute="bottom" constant="5" id="1em-V2-A66"/>
                     <constraint firstItem="DIJ-oq-4J4" firstAttribute="leading" secondItem="T16-2L-uh1" secondAttribute="trailing" constant="15" id="2fy-Bm-3Mx"/>
                     <constraint firstItem="T16-2L-uh1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="3uc-LQ-xng"/>
                     <constraint firstItem="Wv3-4t-3lH" firstAttribute="bottom" secondItem="l9O-h7-x6Q" secondAttribute="bottom" id="7rB-MM-oxz"/>
@@ -148,7 +149,6 @@
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DIJ-oq-4J4" secondAttribute="trailing" constant="15" id="pWd-Ef-HQN"/>
                     <constraint firstItem="T16-2L-uh1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rwQ-bU-vby"/>
                     <constraint firstAttribute="bottom" secondItem="T16-2L-uh1" secondAttribute="bottom" constant="20" id="u0y-hR-TAa"/>
-                    <constraint firstItem="aLf-wc-EAQ" firstAttribute="centerY" secondItem="T16-2L-uh1" secondAttribute="centerY" id="uiT-1j-otW"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SBa-ho-1XX" secondAttribute="trailing" constant="10" id="wfS-tU-ekS"/>
                     <constraint firstItem="HPA-re-IAh" firstAttribute="centerY" secondItem="T16-2L-uh1" secondAttribute="centerY" id="xIa-lO-ZBe"/>
                 </constraints>
@@ -160,6 +160,7 @@
                 <outlet property="activityImgView" destination="cvg-20-ZbE" id="EM6-Yu-AaG"/>
                 <outlet property="activityPriceLB" destination="Q3Z-OC-fYW" id="uBF-KG-XH3"/>
                 <outlet property="activityStatusLB" destination="atA-hv-rDO" id="pI2-N4-qNa"/>
+                <outlet property="cityLabel" destination="CCO-GQ-O48" id="klC-d9-XGa"/>
                 <outlet property="descLB" destination="aLf-wc-EAQ" id="Ytz-1x-iNX"/>
                 <outlet property="imgView" destination="T16-2L-uh1" id="esG-jt-zgU"/>
                 <outlet property="lineView" destination="1k7-1J-WAE" id="GwU-8O-qLO"/>

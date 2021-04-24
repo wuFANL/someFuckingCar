@@ -27,12 +27,13 @@ typedef NS_ENUM(NSUInteger, AccType) {
 @property (weak, nonatomic) IBOutlet UILabel *priceLB;
 @property (weak, nonatomic) IBOutlet UILabel *retailPriceLB;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 
 /**
  *是否显示图标
  */
 @property (nonatomic, assign) AccType accType;
-
+- (void)updateUIWithDic:(NSDictionary *)dataDic;
 @end
 
 NS_ASSUME_NONNULL_END
