@@ -10,16 +10,23 @@
 #import "QLListSectionIndexView.h"
 #import "QLContactsInfoViewController.h"
 #import "QLRemarksSetViewController.h"
+#import "QLUserInfoModel.h"
 
 @interface QLContactsPageViewController ()<UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
 @property (nonatomic, strong) QLListSectionIndexView *indexView;
-
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation QLContactsPageViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self requestForMyFirends];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     //tableView
     [self tableViewSet];
     //索引
@@ -36,6 +43,27 @@
     [longPress setMinimumPressDuration:1.5];
     [self.view addGestureRecognizer:longPress];
 }
+#pragma mark - request
+-(void)requestForMyFirends
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.dataArray removeAllObjects];
+        [self.dataArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"account_list"]];
+        NSString *headerPath = [[response objectForKey:@"result_info"] objectForKey:@"head_pic"];
+        if(![NSString isEmptyString:headerPath] && self.headerBlock) {
+            self.headerBlock(headerPath);
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 //pop的cell设置
 - (void)cell:(UITableViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
@@ -77,22 +105,23 @@
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.dataArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.textLabel.text = @"车友昵称";
-    
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"head_pic"]]];
+    cell.textLabel.text = [dic objectForKey:@"nickname"];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    QLContactsInfoViewController *ciVC = [QLContactsInfoViewController new];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    QLContactsInfoViewController *ciVC = [[QLContactsInfoViewController alloc] initWithFirendID:[dic objectForKey:@"account_id"]];
     ciVC.contactRelation = Friend;
     [self.navigationController pushViewController:ciVC animated:YES];
 }

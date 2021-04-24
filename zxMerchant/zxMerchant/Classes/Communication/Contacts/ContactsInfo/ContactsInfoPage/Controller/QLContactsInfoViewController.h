@@ -14,6 +14,8 @@ typedef NS_ENUM(NSInteger,ContactRelation) {
     Friend = 1,
 };
 @interface QLContactsInfoViewController : QLBaseTableViewController
+
+-(id)initWithFirendID:(NSString *)firendID;
 /**
  *联系人关系
  */

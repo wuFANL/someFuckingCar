@@ -51,6 +51,7 @@
 #define AssetsPath              [NSString stringWithFormat:@"%@/assets",HOST]
 #define CarPath                 [NSString stringWithFormat:@"%@/car",HOST]
 #define ProductPath             [NSString stringWithFormat:@"%@/product",HOST]
+#define FirendPath              [NSString stringWithFormat:@"%@/friendship",HOST]
 
 #define UrlPath                 [NSString stringWithFormat:@"http://%@/weixin/html",WEB]
 

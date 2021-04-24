@@ -16,10 +16,20 @@
 
 @interface QLContactsInfoViewController ()<UIPopoverPresentationControllerDelegate,PopViewControlDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseButton *moreBtn;
-
+@property (nonatomic, strong) NSString *firendId;
 @end
 
 @implementation QLContactsInfoViewController
+-(id)initWithFirendID:(NSString *)firendID
+{
+    self = [super init];
+    if(self)
+    {
+        self.firendId = firendID;
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -32,9 +42,25 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:self.moreBtn];
         self.navigationItem.rightBarButtonItem = rightItem;
     }
+    
+    [self requestForFirendshipInfo];
+    
     //tableView
     [self tableViewSet];
 }
+#pragma mark - request
+-(void)requestForFirendshipInfo
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"info",@"account_id":self.firendId,@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 //功能按钮
 - (void)funBtnClick {

@@ -36,6 +36,9 @@
     //subView
     QLMessagePageViewController *mpVC = [QLMessagePageViewController new];
     QLContactsPageViewController *cpVC = [QLContactsPageViewController new];
+    [cpVC setHeaderBlock:^(NSString * _Nonnull headerPath) {
+        [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
+    }];
     self.subVCArr = @[mpVC,cpVC];
     self.needGestureRecognizer = YES;
     self.delegate = self;
