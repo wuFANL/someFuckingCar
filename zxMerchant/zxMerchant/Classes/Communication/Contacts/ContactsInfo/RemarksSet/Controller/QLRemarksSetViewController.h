@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLRemarksSetViewController : QLViewController
-
+@property (nonatomic, strong) NSString *firendId;
 @end
 
 NS_ASSUME_NONNULL_END

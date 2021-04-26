@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLContactsStoreViewController : QLBaseTableViewController
+-(id)initWithDic:(NSDictionary *)dic;
 /**
  *导航栏标题
  */

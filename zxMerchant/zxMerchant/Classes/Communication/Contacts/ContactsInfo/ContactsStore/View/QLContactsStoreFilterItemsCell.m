@@ -7,12 +7,10 @@
 //
 
 #import "QLContactsStoreFilterItemsCell.h"
-#import "QLImgTextItem.h"
-#import "QLConditionsItem.h"
+
 
 @interface QLContactsStoreFilterItemsCell()<QLBaseCollectionViewDelegate>
-@property (nonatomic, strong) QLBaseCollectionView *carIconCollectionView;
-@property (nonatomic, strong) QLBaseCollectionView *priceCollectionView;
+
 @end
 @implementation QLContactsStoreFilterItemsCell
 
@@ -31,21 +29,20 @@
         make.left.right.top.equalTo(self);
         make.bottom.equalTo(self.priceCollectionView.mas_top);
     }];
-    
-    
-    
-    self.carIconCollectionView.dataArr = [@[@"1",@"2",@"3"] mutableCopy];
-    self.priceCollectionView.dataArr = [@[@"1",@"2",@"3"] mutableCopy];
+    self.priceCollectionView.dataArr = [@[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"] mutableCopy];
 }
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:[QLImgTextItem class]]) {
         QLImgTextItem *item = (QLImgTextItem *)baseCell;
-        
+        NSDictionary *dic = [[[dataArr objectAtIndex:indexPath.row] objectForKey:@"brand_list"] firstObject];
+        [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"image_url"]]];
+        item.titleLB.text = [dic objectForKey:@"brand_name"];
         
     } else if ([baseCell isKindOfClass:[QLConditionsItem class]]) {
         QLConditionsItem *item = (QLConditionsItem *)baseCell;
         item.deleteBtn.hidden = YES;
+        item.titleLB.text = [dataArr objectAtIndex:indexPath.row];
         [item roundRectCornerRadius:2 borderWidth:1 borderColor:[UIColor lightGrayColor]];
     }
 }

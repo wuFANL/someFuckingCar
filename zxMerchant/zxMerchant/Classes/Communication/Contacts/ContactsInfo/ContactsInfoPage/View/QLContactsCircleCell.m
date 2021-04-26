@@ -22,7 +22,6 @@
         make.edges.equalTo(self.bjView);
     }];
     
-    self.collectionView.dataArr = [@[@"1",@"2",@"3",@"4"] mutableCopy];
 }
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
@@ -30,6 +29,8 @@
         QLImageItem *item = (QLImageItem *)baseCell;
         item.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
+        NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
+        [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"file_url"]]];
     }
 }
 #pragma mark - Lazy
@@ -48,5 +49,10 @@
         _collectionView.userInteractionEnabled = NO;
     }
     return _collectionView;
+}
+
+-(void)showImageWithArray:(NSArray *)ar
+{
+    self.collectionView.dataArr = [ar mutableCopy];
 }
 @end

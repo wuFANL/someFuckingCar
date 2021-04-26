@@ -32,6 +32,16 @@
 #pragma mark - action
 //完成
 - (IBAction)finishBtnClick:(id)sender {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"remark",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"to_account_id":self.firendId,@"remark":self.remarksTF.text} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [MBProgressHUD showSuccess:@"设置成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
     
 }
 //输入框开始编辑

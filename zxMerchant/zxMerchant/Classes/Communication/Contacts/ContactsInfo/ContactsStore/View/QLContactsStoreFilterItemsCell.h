@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QLImgTextItem.h"
+#import "QLConditionsItem.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLContactsStoreFilterItemsCell : UITableViewCell
+@property (nonatomic, strong) QLBaseCollectionView *carIconCollectionView;
+@property (nonatomic, strong) QLBaseCollectionView *priceCollectionView;
 @property (weak, nonatomic) IBOutlet UIControl *accControl;
 
 @end

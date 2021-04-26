@@ -33,15 +33,15 @@
     [defaultImgArr addObject:@"home"];
     [selectedImgArr addObject:@"homeSelected"];
     
-    //找车源
-    if ([[QLToolsManager share].homePageModel getFun:CarSource] != nil) {
-        QLCarSourcePageViewController *cspVC = [QLCarSourcePageViewController new];
-        [vcArr addObject:cspVC];
-        [titleArr addObject:@"找车源"];
-        [defaultImgArr addObject:@"carSource"];
-        [selectedImgArr addObject:@"carSourceSelected"];
-        
-    }
+//    //找车源
+//    if ([[QLToolsManager share].homePageModel getFun:CarSource] != nil) {
+//        QLCarSourcePageViewController *cspVC = [QLCarSourcePageViewController new];
+//        [vcArr addObject:cspVC];
+//        [titleArr addObject:@"找车源"];
+//        [defaultImgArr addObject:@"carSource"];
+//        [selectedImgArr addObject:@"carSourceSelected"];
+//        
+//    }
     
     //车辆管理
     if ([[QLToolsManager share].homePageModel getFun:CarManager] != nil) {

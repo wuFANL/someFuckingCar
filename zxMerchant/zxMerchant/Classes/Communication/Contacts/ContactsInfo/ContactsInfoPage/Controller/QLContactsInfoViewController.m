@@ -17,6 +17,11 @@
 @interface QLContactsInfoViewController ()<UIPopoverPresentationControllerDelegate,PopViewControlDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseButton *moreBtn;
 @property (nonatomic, strong) NSString *firendId;
+
+@property (nonatomic, strong) NSMutableDictionary *userInfoDic;
+@property (nonatomic, strong) NSMutableDictionary *dynamicListDic;
+@property (nonatomic, strong) NSMutableDictionary *businessStoreDic;
+@property (nonatomic, strong) NSMutableDictionary *friendShipDic;
 @end
 
 @implementation QLContactsInfoViewController
@@ -25,7 +30,7 @@
     self = [super init];
     if(self)
     {
-        self.firendId = firendID;
+        self.firendId = [NSString stringWithString:firendID];
     }
     return self;
 }
@@ -34,7 +39,9 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     
+    [self requestForFirendshipInfo];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //navigation
@@ -42,9 +49,11 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:self.moreBtn];
         self.navigationItem.rightBarButtonItem = rightItem;
     }
-    
-    [self requestForFirendshipInfo];
-    
+    self.userInfoDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.dynamicListDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.businessStoreDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.friendShipDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+
     //tableView
     [self tableViewSet];
 }
@@ -54,8 +63,19 @@
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"info",@"account_id":self.firendId,@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-
+        [self.userInfoDic removeAllObjects];
+        [self.userInfoDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"user_info"]];
         
+        [self.dynamicListDic removeAllObjects];
+        [self.dynamicListDic addEntriesFromDictionary:[[[response objectForKey:@"result_info"] objectForKey:@"dynamic_list"] firstObject]];
+        
+        [self.businessStoreDic removeAllObjects];
+        [self.businessStoreDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"business_store"]];
+        
+        [self.friendShipDic removeAllObjects];
+        [self.friendShipDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"friendship"]];
+        
+        [self.tableView reloadData];
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
@@ -68,8 +88,12 @@
 }
 //拨号
 - (void)callPhoneClick {
-    [[QLToolsManager share] contactCustomerService:@"111"];
+    if(![NSString isEmptyString:[self.userInfoDic objectForKey:@"mobile"]])
+    {
+        [[QLToolsManager share] contactCustomerService:[self.userInfoDic objectForKey:@"mobile"]];
+    }
 }
+
 //pop的cell设置
 - (void)cell:(UITableViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     baseCell.textLabel.font = [UIFont systemFontOfSize:10];
@@ -77,10 +101,17 @@
     baseCell.textLabel.textColor = [UIColor colorWithHexString:@"#797D81"];
     baseCell.textLabel.text = dataArr[indexPath.row];
 }
-//pop的cell点击
+//pop的cell点击 - 删除好友
 - (void)popClickCall:(NSInteger)index {
-    
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"remove",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"to_account_id":self.firendId} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.navigationController popViewControllerAnimated:YES];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
+
 //pop样式
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
     return UIModalPresentationNone;
@@ -110,24 +141,30 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             QLContactsDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsDescCell" forIndexPath:indexPath];
-            
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"head_pic"]]];
+            cell.nikenameLB.text = [self.userInfoDic objectForKey:@"nickname"];
+            cell.numLB.text = [NSString stringWithFormat:@"编号: %@",[self.userInfoDic objectForKey:@"account_number"]];
+            cell.addressLB.text = [NSString stringWithFormat:@"地区: %@",[self.userInfoDic objectForKey:@"address"]];
             return cell;
         } else if (indexPath.row == 4) {
             QLContactsCircleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsCircleCell" forIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.titleLB.text = @"车友圈";
-            
-            
+            if(self.dynamicListDic && [self.dynamicListDic count] > 0)
+            {
+                NSArray *ar = [self.dynamicListDic objectForKey:@"file_array"];
+                [cell showImageWithArray:ar];
+            }
             return cell;
         } else {
             QLContactsTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsTextCell" forIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             if (indexPath.row == 1) {
                 cell.titleLB.text = @"设置备注";
-                cell.contentLB.text = @"有备注传,没有空着";
+                cell.contentLB.text = [NSString isEmptyString:[self.friendShipDic objectForKey:@"remark2"]] == YES?@"":[self.friendShipDic objectForKey:@"remark2"];
             } else if (indexPath.row == 2) {
                 cell.titleLB.text = @"电话号码";
-                cell.contentLB.text = @"18977889991";
+                cell.contentLB.text = [NSString isEmptyString:[self.userInfoDic objectForKey:@"mobile"]] == YES?@"":[self.userInfoDic objectForKey:@"mobile"];
                 
                 QLBaseButton *accBtn = [[QLBaseButton alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
                 [accBtn setImage:[UIImage imageNamed:@"callIcon"] forState:UIControlStateNormal];
@@ -135,7 +172,14 @@
                 cell.accessoryView = accBtn;
             } else {
                 cell.titleLB.text = @"车友店";
-                cell.contentLB.text = @"0辆车在售";
+                if([[self.businessStoreDic objectForKey:@"car_count"] intValue] > 0)
+                {
+                    cell.contentLB.text = [NSString stringWithFormat:@"%@辆车在售",[self.businessStoreDic objectForKey:@"car_count"]];
+                }
+                else
+                {
+                    cell.contentLB.text = @"0辆车在售";
+                }
             }
             return cell;
         }
@@ -168,10 +212,14 @@
         if (indexPath.row == 1) {
             //备注
             QLRemarksSetViewController *rsVC = [QLRemarksSetViewController new];
+            rsVC.firendId = self.firendId;
             [self.navigationController pushViewController:rsVC animated:YES];
         } else if (indexPath.row == 3) {
             //车友店
-            QLContactsStoreViewController *csVC = [QLContactsStoreViewController new];
+            NSString *ship_id = [self.friendShipDic objectForKey:@"ship_id"];
+            NSString *business_id = [self.businessStoreDic objectForKey:@"business_id"];
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ship_id,@"ship_id",self.firendId,@"accID",business_id,@"business_id", nil];
+            QLContactsStoreViewController *csVC = [[QLContactsStoreViewController alloc] initWithDic:dic];
             [self.navigationController pushViewController:csVC animated:YES];
         } else if (indexPath.row == 4) {
             //车友圈

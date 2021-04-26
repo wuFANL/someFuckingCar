@@ -14,10 +14,25 @@
 
 @interface QLContactsStoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLContactsStoreBottomView *bottomView;
+@property (nonatomic, strong) NSMutableDictionary *sourceDic;
 
+@property (nonatomic, strong) NSMutableDictionary *userInfoDic;
+@property (nonatomic, strong) NSMutableDictionary *account_friendshipDic;
+@property (nonatomic, strong) NSMutableDictionary *businessInfoDic;
+@property (nonatomic, strong) NSMutableArray *brand_listAr;
 @end
 
 @implementation QLContactsStoreViewController
+
+-(id)initWithDic:(NSDictionary *)dic
+{
+    self = [super init];
+    if(self)
+    {
+        self.sourceDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,8 +46,50 @@
         make.height.mas_equalTo(50);
         make.bottom.equalTo(self.view).offset(BottomOffset?-34:0);
     }];
+
+    self.userInfoDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.account_friendshipDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.businessInfoDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.brand_listAr = [[NSMutableArray alloc] initWithCapacity:0];
+    [self requestForStore];
     //tableView
     [self tableViewSet];
+}
+
+-(void)requestForStore
+{
+    [MBProgressHUD showCustomLoading:@""];
+    NSString *ship_id = [self.sourceDic objectForKey:@"ship_id"];
+    NSString *business_id = [self.sourceDic objectForKey:@"business_id"];
+    NSString *firendId = [self.sourceDic objectForKey:@"accID"];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"store",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":business_id,@"account_id":firendId,@"ship_id":ship_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.userInfoDic removeAllObjects];
+        [self.userInfoDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"user_info"]];
+                                                    
+        [self.account_friendshipDic removeAllObjects];
+        [self.account_friendshipDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"account_friendship"]];
+        
+        [self.businessInfoDic removeAllObjects];
+        [self.businessInfoDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"business_info"]];
+        
+        [self.brand_listAr removeAllObjects];
+        [self.brand_listAr addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"brand_list"]];
+        
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForStoreCarList
+{
+//    [MBProgressHUD showCustomLoading:@""];
+//    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car_page_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"to_account_id":self.firendId} success:^(id response) {
+//        [MBProgressHUD immediatelyRemoveHUD];
+//    } fail:^(NSError *error) {
+//        [MBProgressHUD showError:error.domain];
+//    }];
 }
 
 #pragma mark - action
@@ -54,7 +111,10 @@
 }
 //电话
 - (void)rightItemClick {
-    
+    if(![NSString isEmptyString:[self.userInfoDic objectForKey:@"mobile"]])
+    {
+        [[QLToolsManager share] contactCustomerService:[self.userInfoDic objectForKey:@"mobile"]];
+    }
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -82,11 +142,14 @@
         if (indexPath.row == 0) {
             QLContactsDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsDescCell" forIndexPath:indexPath];
             cell.collectionBtn.hidden = NO;
-            
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"head_pic"]]];
+            cell.nikenameLB.text = [self.userInfoDic objectForKey:@"nickname"];
+            cell.numLB.text = [NSString stringWithFormat:@"地区: %@",[self.userInfoDic objectForKey:@"address"]];
+            cell.addressLB.text = [NSString stringWithFormat:@"%lu辆车在售",(unsigned long)[self.brand_listAr count]];
             return cell;
         } else {
             QLContactsStoreFilterItemsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"filterItemsCell" forIndexPath:indexPath];
-            
+            cell.carIconCollectionView.dataArr = [self.brand_listAr mutableCopy];
             return cell;
         }
         

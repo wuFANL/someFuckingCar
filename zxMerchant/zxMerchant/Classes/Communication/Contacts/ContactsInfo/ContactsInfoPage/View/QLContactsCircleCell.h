@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UIView *bjView;
 
-
+-(void)showImageWithArray:(NSArray *)ar;
 @end
 
 NS_ASSUME_NONNULL_END
