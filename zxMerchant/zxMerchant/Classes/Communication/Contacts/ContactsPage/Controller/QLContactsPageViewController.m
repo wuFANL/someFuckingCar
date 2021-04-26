@@ -114,7 +114,13 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"head_pic"]]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"head_pic"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (image) {
+            cell.imageView.image = [UIImage drawWithImage:cell.imageView.image size:CGSizeMake(38, 38)];
+            
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
     cell.textLabel.text = [dic objectForKey:@"nickname"];
     return cell;
 }

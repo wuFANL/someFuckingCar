@@ -29,9 +29,14 @@
         //默认添加图片
         self.addImg = [UIImage imageNamed:@"addImage"];
         //增加collectionView
-        if (!self.collectionView) {
-            [self addCollectionView];
-        }
+        QLItemModel *model = [QLItemModel new];
+        model.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        model.Spacing = QLMinimumSpacingMake(5, 5);
+        model.registerType = CellNibRegisterType;
+        model.itemName = @"QLImageItem";
+        CGFloat itemWidth = (ScreenWidth-32*2-5*2)/3;
+        model.itemSize = CGSizeMake(itemWidth, itemWidth);
+        self.listStyleModel = model;
         //长按手势
         UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
         longPressGesture.minimumPressDuration = 0.1;
@@ -41,6 +46,24 @@
     return self;
 }
 #pragma mark - setter
+//设置collectionView样式
+- (void)setListStyleModel:(QLItemModel *)listStyleModel {
+    _listStyleModel= listStyleModel;
+    //删除之前的collectionView
+    [self.collectionView removeFromSuperview];
+    self.collectionView = nil;
+    //重新设置collectionView
+    QLBaseCollectionView *collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectZero ItemModel:listStyleModel];
+    collectionView.backgroundColor = ClearColor;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    [self.contentView addSubview:collectionView];
+    [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(15, 32, 15, 32));
+        make.height.mas_equalTo(listStyleModel.itemSize.width);
+    }];
+    self.collectionView = collectionView;
+}
 //设置添加图片
 - (void)setAddImg:(UIImage *)addImg {
     _addImg = addImg;
@@ -148,7 +171,7 @@
 }
 //改变collectionView高度
 - (void)imgChangeImpactHeight {
-    CGFloat itemWidth = (ScreenWidth-32*2-5*2)/3;
+    CGFloat itemWidth = self.listStyleModel.itemSize.width;
     NSInteger row = self.imagesArr.count/3+(self.imagesArr.count%3>0&&self.imagesArr.count%3<=3?1:0);
     [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(row*itemWidth+(row-1)*5);
@@ -175,26 +198,6 @@
     }];
 }
 #pragma mark - collectionView
-//增加collectionView
-- (void)addCollectionView {
-    QLItemModel *model = [QLItemModel new];
-    model.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    model.Spacing = QLMinimumSpacingMake(5, 5);
-    model.registerType = CellNibRegisterType;
-    model.itemName = @"QLImageItem";
-    CGFloat itemWidth = (ScreenWidth-32*2-5*2)/3;
-    model.itemSize = CGSizeMake(itemWidth, itemWidth);
-    QLBaseCollectionView *collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectZero ItemModel:model];
-    collectionView.backgroundColor = ClearColor;
-    collectionView.delegate = self;
-    collectionView.dataSource = self;
-    [self.contentView addSubview:collectionView];
-    [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(15, 32, 15, 32));
-        make.height.mas_equalTo(itemWidth);
-    }];
-    self.collectionView = collectionView;
-}
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }

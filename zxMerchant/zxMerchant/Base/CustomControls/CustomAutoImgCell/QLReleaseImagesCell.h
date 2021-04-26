@@ -38,6 +38,10 @@
  */
 @property (nonatomic, assign) BOOL canMultipleChoice;
 /**
+ *列表样式
+ */
+@property (nonatomic, strong)QLItemModel *listStyleModel;
+/**
  *代理
  */
 @property (nonatomic, weak) id<QLReleaseImagesCellDelegate> delegate;
