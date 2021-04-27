@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46D288A726384C3000ED5063 /* MyFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D288A626384C3000ED5063 /* MyFriendsModel.m */; };
 		8B5444E2B6065B3A620CE255 /* libPods-zxMerchant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */; };
 		A00131032587CCFF0080EB21 /* QLCarCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00131022587CCFF0080EB21 /* QLCarCertificateViewController.m */; };
 		A00131222587CF850080EB21 /* QLShareImgItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00131202587CF840080EB21 /* QLShareImgItem.xib */; };
@@ -444,6 +445,8 @@
 
 /* Begin PBXFileReference section */
 		1FC797DA817D377725364FB6 /* Pods-zxMerchant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.release.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.release.xcconfig"; sourceTree = "<group>"; };
+		46D288A526384C3000ED5063 /* MyFriendsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFriendsModel.h; sourceTree = "<group>"; };
+		46D288A626384C3000ED5063 /* MyFriendsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFriendsModel.m; sourceTree = "<group>"; };
 		4D6A19686CBA7D7EA17CC708 /* Pods-zxMerchant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.debug.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.debug.xcconfig"; sourceTree = "<group>"; };
 		7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zxMerchant.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00131012587CCFF0080EB21 /* QLCarCertificateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCertificateViewController.h; sourceTree = "<group>"; };
@@ -4144,6 +4147,8 @@
 			children = (
 				A0C901982529C7720021C069 /* QLContactsPageViewController.h */,
 				A0C901992529C7720021C069 /* QLContactsPageViewController.m */,
+				46D288A526384C3000ED5063 /* MyFriendsModel.h */,
+				46D288A626384C3000ED5063 /* MyFriendsModel.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4994,6 +4999,7 @@
 				A07332642548910000570FDB /* QLCarCircleCommentCell.m in Sources */,
 				A00621812513DD7300A571E5 /* UIImage+QLUtil.m in Sources */,
 				A00621862513DD7300A571E5 /* UIAlertController+QLUtil.m in Sources */,
+				46D288A726384C3000ED5063 /* MyFriendsModel.m in Sources */,
 				A0F1400225E4285600C8F67B /* QLAccountInfoCell.m in Sources */,
 				A00620E62513DB2100A571E5 /* QLHeadListView.m in Sources */,
 				A04F063225DBE1DF00C471F6 /* QLMyBrowseViewController.m in Sources */,
