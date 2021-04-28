@@ -20,6 +20,12 @@
 @property (nonatomic, strong) NSMutableDictionary *account_friendshipDic;
 @property (nonatomic, strong) NSMutableDictionary *businessInfoDic;
 @property (nonatomic, strong) NSMutableArray *brand_listAr;
+
+@property (nonatomic, strong) NSMutableArray *carLiatArray;
+
+@property (nonatomic, strong) NSString *carIDd;
+@property (nonatomic, strong) NSString *carPrice;
+
 @end
 
 @implementation QLContactsStoreViewController
@@ -51,7 +57,10 @@
     self.account_friendshipDic = [[NSMutableDictionary alloc] initWithCapacity:0];
     self.businessInfoDic = [[NSMutableDictionary alloc] initWithCapacity:0];
     self.brand_listAr = [[NSMutableArray alloc] initWithCapacity:0];
+    self.carLiatArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
     [self requestForStore];
+    [self requestForStoreCarListWithCarID:@"" mixPrice:@"1" maxPrice:@"9999999"];
     //tableView
     [self tableViewSet];
 }
@@ -74,7 +83,10 @@
         [self.businessInfoDic addEntriesFromDictionary:[[response objectForKey:@"result_info"] objectForKey:@"business_info"]];
         
         [self.brand_listAr removeAllObjects];
-        [self.brand_listAr addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"brand_list"]];
+        NSArray *arry = [[response objectForKey:@"result_info"] objectForKey:@"brand_list"];
+        [arry enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.brand_listAr addObjectsFromArray:[obj objectForKey:@"brand_list"]];
+        }];
         
         [self.tableView reloadData];
     } fail:^(NSError *error) {
@@ -82,14 +94,68 @@
     }];
 }
 
--(void)requestForStoreCarList
+-(void)requestForStoreCarListWithCarID:(NSString *)carID mixPrice:(NSString *)mixPrice maxPrice:(NSString *)maxPrice
 {
-//    [MBProgressHUD showCustomLoading:@""];
-//    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car_page_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"to_account_id":self.firendId} success:^(id response) {
-//        [MBProgressHUD immediatelyRemoveHUD];
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    [MBProgressHUD showCustomLoading:@""];
+    NSString *business_id = [self.sourceDic objectForKey:@"business_id"];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car_page_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":business_id,@"brand_id":self.carIDd?:@"",@"min_price":mixPrice,@"max_price":maxPrice,@"page_no":@"1",@"page_size":@"100"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        [self.carLiatArray removeAllObjects];
+        [self.carLiatArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"car_list"]];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)invokerData:(NSString *)price
+{
+    NSString *minP = @"1";
+    NSString *maxP = @"9999999";
+    if([price isEqualToString:@"不限价格"])
+    {
+        minP = @"1";
+        maxP = @"9999999";
+    }
+    else if ([price isEqualToString:@"5万以内"])
+    {
+        minP = @"1";
+        maxP = @"50000";
+    }
+    else if ([price isEqualToString:@"5万-10万"])
+    {
+        minP = @"50000";
+        maxP = @"100000";
+    }
+    else if ([price isEqualToString:@"10万-15万"])
+    {
+        minP = @"100000";
+        maxP = @"150000";
+    }
+    else if ([price isEqualToString:@"15万-20万"])
+    {
+        minP = @"150000";
+        maxP = @"200000";
+    }
+    else if ([price isEqualToString:@"20万-30万"])
+    {
+        minP = @"200000";
+        maxP = @"300000";
+    }
+    else if ([price isEqualToString:@"30万-50万"])
+    {
+        minP = @"300000";
+        maxP = @"500000";
+    }
+    else if([price isEqualToString:@"50万以上"])
+    {
+        minP = @"500000";
+        maxP = @"9999999";
+    }
+    
+    [self requestForStoreCarListWithCarID:self.carIDd?:@"" mixPrice:minP maxPrice:maxP];
+
 }
 
 #pragma mark - action
@@ -135,7 +201,7 @@
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0?2:5;
+    return section == 0?2:[self.carLiatArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -150,17 +216,40 @@
         } else {
             QLContactsStoreFilterItemsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"filterItemsCell" forIndexPath:indexPath];
             cell.carIconCollectionView.dataArr = [self.brand_listAr mutableCopy];
+            [cell setCarBlock:^(NSString * _Nonnull carID) {
+                self.carIDd = carID;
+                [self invokerData:self.carPrice];
+            }];
+            
+            [cell setCarPriceBlock:^(NSString * _Nonnull price) {
+                self.carPrice = price;
+                [self invokerData:self.carPrice];
+            }];
+            
+            [cell setAllBlock:^{
+                self.carIDd = @"";
+                self.carPrice = @"";
+                [self invokerData:@""];
+            }];
             return cell;
         }
         
     } else {
         QLContactsStoreCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsStoreCarCell" forIndexPath:indexPath];
         cell.isEditing = self.bottomView.allBtn.selected;
-        
+        NSDictionary *dic = [self.carLiatArray objectAtIndex:indexPath.row];
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+        cell.titleLB.text = [dic objectForKey:@"model"];
+        cell.accLB.text = [NSString stringWithFormat:@"%@ | %@万公里",[dic objectForKey:@"production_year"],[dic objectForKey:@"driving_distance"]];
+        cell.timeLB.text = [[[dic objectForKey:@"update_time"] componentsSeparatedByString:@" "] firstObject];
+        cell.addressLB.text = [dic objectForKey:@"city_belong"];
+        cell.priceLB.text = [NSString stringWithFormat:@"%.1f万",[[dic objectForKey:@"wholesale_price"] floatValue]/10000];
         return cell;
     }
     
 }
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {

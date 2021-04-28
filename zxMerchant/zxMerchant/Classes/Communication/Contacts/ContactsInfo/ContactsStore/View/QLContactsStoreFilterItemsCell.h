@@ -11,7 +11,15 @@
 #import "QLConditionsItem.h"
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^CarSelectedBlock) (NSString *carID);
+typedef void (^CarPriceSelectedBlock) (NSString *price);
+typedef void (^AllSelectedBlock) (void);
+
 @interface QLContactsStoreFilterItemsCell : UITableViewCell
+@property (nonatomic, copy) CarSelectedBlock carBlock;
+@property (nonatomic, copy) CarPriceSelectedBlock carPriceBlock;
+@property (nonatomic, copy) AllSelectedBlock allBlock;
+
 @property (nonatomic, strong) QLBaseCollectionView *carIconCollectionView;
 @property (nonatomic, strong) QLBaseCollectionView *priceCollectionView;
 @property (weak, nonatomic) IBOutlet UIControl *accControl;

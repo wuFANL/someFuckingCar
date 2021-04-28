@@ -33,11 +33,20 @@
     }];
     self.priceCollectionView.dataArr = [@[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"] mutableCopy];
 }
+
+-(IBAction)actionALlCar:(id)sender
+{
+    if(self.allBlock)
+    {
+        self.allBlock();
+    }
+}
+
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:[QLImgTextItem class]]) {
         QLImgTextItem *item = (QLImgTextItem *)baseCell;
-        NSDictionary *dic = [[[dataArr objectAtIndex:indexPath.row] objectForKey:@"brand_list"] firstObject];
+        NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
         [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"image_url"]]];
         item.titleLB.text = [dic objectForKey:@"brand_name"];
         
@@ -51,7 +60,24 @@
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
-    
+    if(collectionView.tag == 10086)
+    {
+        //车标
+        NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
+        if(self.carBlock)
+        {
+            self.carBlock([dic objectForKey:@"id"]);
+        }
+    }
+    else
+    {
+        //价格
+        NSString *price = [dataArr objectAtIndex:indexPath.row];
+        if(self.carPriceBlock)
+        {
+            self.carPriceBlock(price);
+        }
+    }
 }
 #pragma mark - Lazy
 - (QLBaseCollectionView *)carIconCollectionView {
@@ -69,6 +95,7 @@
         _carIconCollectionView.extendDelegate = self;
         
     }
+    _carIconCollectionView.tag = 10086;
     return _carIconCollectionView;
 }
 - (QLBaseCollectionView *)priceCollectionView {
@@ -86,6 +113,7 @@
         _priceCollectionView.extendDelegate = self;
         
     }
+    _carIconCollectionView.tag = 10087;
     return _priceCollectionView;
 }
 @end
