@@ -43,10 +43,13 @@
         make.height.mas_equalTo(44+(BottomOffset?44:20));
     }];
     
+    WEAKSELF
     //subView
     QLTopCarSourceViewController *tcsVC = [QLTopCarSourceViewController new];
+    tcsVC.refreshBlock = ^(NSUInteger page) {
+        [weakSelf topCarSourceReloadData];
+    };
     QLAllCarSourceViewController *acsVC = [QLAllCarSourceViewController new];
-    WEAKSELF
     acsVC.refreshBlock = ^(NSUInteger currentPage) {
         [weakSelf allCarSourceReloadData];
     };
@@ -54,7 +57,10 @@
     self.needGestureRecognizer = YES;
     self.delegate = self;
     
-    [self reloadSubVcData];
+    
+//    [self reloadSubVcData];
+    
+    
 }
 - (void)viewDidLayoutSubviews {
     [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -70,6 +76,19 @@
 - (void)reloadSubVcData{
     [self allCarSourceReloadData];
     [self topCarSourceReloadData];
+    
+    // 检查是否有筛选项
+    [self checkIsHasSelectItem];
+}
+
+- (void)checkIsHasSelectItem{
+    BOOL hasSelect = NO;
+    if (hasSelect) {
+        // show
+    } else {
+        // hide
+        
+    }
 }
 
 
@@ -87,12 +106,6 @@
         max_price = [price componentsSeparatedByString:@"-"].lastObject;
     }
     NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
-    
-    //    是否有vip 在account对象里flag字段
-    //    1=无会员 2=全省会员 3=全国会员
-    
-    //是否关注字段 在business_car 对象里concern字段
-    //    已关注=1，未关注=0
     return @{
         @"sort_by":[NSString stringWithFormat:@"%lu",type],
         @"page_size":@(listShowCount),
@@ -146,9 +159,26 @@
     
     [QLNetworkingManager postWithUrl:BusinessPath params:conditionDic success:^(id response) {
         // 停止刷新动作
+        NSDictionary* resultDic = response;
+        // 停止刷新动作
         [vc_top endRefresh];
+        if (resultDic && [resultDic.allKeys containsObject:@"result_info"]) {
+            NSDictionary * infoDic = [resultDic objectForKey:@"result_info"];
+            if (infoDic && [infoDic.allKeys containsObject:@"car_list"]) {
+                NSArray *carArray = [infoDic objectForKey:@"car_list"];
+                if ([carArray isKindOfClass:[NSArray class]] && carArray.count > 0) {
+                    // 1. page数增加
+                    vc_top.tableView.page ++;
+                    // 2. 对数据源拼接
+                    [vc_top.dataArray addObjectsFromArray:carArray];
+                    // 刷新数据
+                    [vc_top.tableView reloadData];
+                }
+            }
+        }
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
+        [vc_top endRefresh];
     }];
     
 }
@@ -217,8 +247,7 @@
 }
 //类型标题点击
 - (void)chooseSelect:(UIButton *)lastBtn CurrentBtn:(UIButton *)currentBtn Index:(NSInteger)index {
-    self.headView.showResultView = index==0?NO:YES;
-    
+//    self.headView.showResultView = index==0?NO:YES;
     [self viewChangeAnimation:index];
 }
 //轮播图

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *pifaPrice;
 @property (nonatomic, strong) NSString *lingshouPrice;
+
+//- (void)updateWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

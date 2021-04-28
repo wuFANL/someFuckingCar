@@ -42,12 +42,21 @@
     if ([baseCell isKindOfClass:[QLCarCircleImgItem class]]) {
         QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
         item.playBtn.hidden = self.dataType==ImageType?YES:NO;
+        NSDictionary * infoDic = dataArr[indexPath.row];
+        if ([infoDic objectForKey:@"pic_url"]) {
+            NSString *url = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"pic_url"]];
+            [item.imgView sd_setImageWithURL:[NSURL URLWithString:url]];
+        }
+        
         
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
+    // 图片放大
     
 }
+
+
 //属性监听
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"contentSize"]&&[object isKindOfClass:[UICollectionView class]]) {
@@ -61,8 +70,6 @@
                 [((UITableView *)self.superview) reloadData];
             }];
             [CATransaction commit];
-            
-            
         }
         
     }

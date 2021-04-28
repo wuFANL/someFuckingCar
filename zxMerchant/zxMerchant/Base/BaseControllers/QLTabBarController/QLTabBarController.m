@@ -26,13 +26,6 @@
     NSMutableArray *defaultImgArr = [NSMutableArray array];
     NSMutableArray *selectedImgArr = [NSMutableArray array];
     
-    //首页
-    QLHomePageViewController *homeVC = [QLHomePageViewController new];
-    [vcArr addObject:homeVC];
-    [titleArr addObject:@"首页"];
-    [defaultImgArr addObject:@"home"];
-    [selectedImgArr addObject:@"homeSelected"];
-    
     //找车源
     if ([[QLToolsManager share].homePageModel getFun:CarSource] != nil) {
         QLCarSourcePageViewController *cspVC = [QLCarSourcePageViewController new];
@@ -42,6 +35,15 @@
         [selectedImgArr addObject:@"carSourceSelected"];
         
     }
+    
+    //首页
+    QLHomePageViewController *homeVC = [QLHomePageViewController new];
+    [vcArr addObject:homeVC];
+    [titleArr addObject:@"首页"];
+    [defaultImgArr addObject:@"home"];
+    [selectedImgArr addObject:@"homeSelected"];
+    
+    
     
     //车辆管理
     if ([[QLToolsManager share].homePageModel getFun:CarManager] != nil) {
