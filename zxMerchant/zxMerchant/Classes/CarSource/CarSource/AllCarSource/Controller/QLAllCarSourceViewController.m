@@ -38,7 +38,7 @@
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLHomeCarCell" bundle:nil] forCellReuseIdentifier:@"hCarCell"];
     MJWeakSelf
-//    self.tableView.mj_header =
+    
     
     MJRefreshHeader* header =[MJRefreshHeader headerWithRefreshingBlock:^{
         weakSelf.tableView.page = 0;
@@ -47,7 +47,7 @@
             weakSelf.refreshBlock(0);
         }
     }];
-    
+    self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
         [weakSelf.tableView.mj_footer beginRefreshing];

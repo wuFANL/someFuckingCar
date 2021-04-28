@@ -137,6 +137,10 @@ typedef void (^ImgCallBlock)(UIImagePickerController *picker,NSDictionary *info)
  */
 + (void)cellSetRound:(UITableView *)tableView Cell:(UITableViewCell *)cell IndexPath:(NSIndexPath *)indexPath SideSpace:(CGFloat)margin;
 /**
+ *转换时间一小时前 一天前
+ */
++ (NSString *)compareCurrentTime:(NSString *)str;
+/**
  *单例
  */
 +(QLToolsManager *)share;

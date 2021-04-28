@@ -72,6 +72,7 @@
 - (QLBaseTableView *)tableView {
     if (!_tableView) {
         _tableView = [[QLBaseTableView alloc] init];
+        _tableView.page = 0;
     }
     return _tableView;
 }

@@ -54,6 +54,7 @@
     QLNavigationController *tabBarNavi = [[QLNavigationController alloc]initWithRootViewController:tabBar];
     self.window.rootViewController = tabBarNavi;
     [self.window makeKeyAndVisible];
+    
 }
 #pragma mark -初始化登录
 - (void)initLoginVC {

@@ -146,7 +146,7 @@
     lastBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     currentBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     
-    self.headView.showResultView = index==0?NO:YES;
+//    self.headView.showResultView = index==0?NO:YES;
     
     [self viewChangeAnimation:index];
 }

@@ -48,7 +48,9 @@
 - (void)refreshHeaderDidPull {
     [self.tableView.mj_header beginRefreshing];
     self.tableView.page = 0;
-    //
+    if (self.refreshBlock) {
+        self.refreshBlock(0);
+    }
 }
 
 - (void)refreshFooterDidPull {
@@ -56,28 +58,49 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.dataArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSDictionary *dic = @{};
+    if (indexPath.section <= self.dataArray.count) {
+        dic = self.dataArray[indexPath.section];
+    }
     if (indexPath.row == 0) {
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.headBtnTop.constant = 15;
         cell.openBtnBottom.constant = 0;
-        
+        if (!cell.dataDic) {
+            cell.dataDic = dic;
+            [cell upDateWithDic:dic];
+        }
         return cell;
     } else if (indexPath.row == 1) {
         QLTopCarSourcePriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCarSourcePriceCell" forIndexPath:indexPath];
-        
-        
+        // 批发价
+        if ([dic objectForKey:@"wholesale_price"]) {
+            float wholesale_price = [[NSString stringWithFormat:@"%@",[dic objectForKey:@"wholesale_price"]] floatValue];
+            cell.pifaPrice = [[QLToolsManager share] unitConversion:wholesale_price];
+        }
+        // 零售价
+        if ([dic objectForKey:@"wholesale_price_old"]) {
+            float wholesale_price_old = [[NSString stringWithFormat:@"%@",[dic objectForKey:@"wholesale_price_old"]] floatValue];
+            cell.lingshouPrice = [[QLToolsManager share] unitConversion:wholesale_price_old];
+        }
         return cell;
     } else  {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
         cell.bjViewBottom.constant = 15;
         cell.dataType = indexPath.section/2==0?ImageType:VideoType;
-        cell.dataArr = [@[@"1",@"2",@"3",@"4"] mutableCopy];
+        if ([dic objectForKey:@"car_attr_list"]) {
+            NSArray *array = [dic objectForKey:@"car_attr_list"];
+            if ([array isKindOfClass:[NSArray class]]) {
+                cell.dataArr = [array mutableCopy];
+            }
+        }
         return cell;
     } 
 
@@ -90,6 +113,13 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 10;
+}
+
+-(NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
 }
 
 

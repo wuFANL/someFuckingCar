@@ -23,9 +23,9 @@ PODS:
   - Masonry (1.1.0)
   - MBProgressHUD (1.2.0)
   - MJRefresh (3.5.0)
-  - SDWebImage (5.9.2):
-    - SDWebImage/Core (= 5.9.2)
-  - SDWebImage/Core (5.9.2)
+  - SDWebImage (5.11.0):
+    - SDWebImage/Core (= 5.11.0)
+  - SDWebImage/Core (5.11.0)
   - TZImagePickerController (3.6.0)
   - UMAPM (1.2.1)
   - UMCCommon (7.2.8):
@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
-  SDWebImage: 0b42b8719ab0c5257177d5894306e8a336b21cbb
+  SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   TZImagePickerController: a37d7eec87c54436e896a67947033ad2178d498b
   UMAPM: 58a98390bbb593b9d008f16a403ecd6c550229fd
   UMCCommon: e009dc757d88ce37774f612291d6ee2fa4a2dca0
@@ -109,4 +109,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b6f2e8aecca0df39ec1d430772eae1d28701e6b8
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.9.1
