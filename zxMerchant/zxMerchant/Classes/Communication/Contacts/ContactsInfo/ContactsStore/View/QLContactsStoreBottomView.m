@@ -27,12 +27,26 @@
     if (isEditing) {
         self.allBtn.hidden = NO;
         self.allBtnWidth.constant = 85;
+        
+        self.cancelBtn.hidden = NO;
+        self.cancelBtnRight.constant = 10;
+        CGFloat btnWidth = (self.width-85-10-30)/2;
+        self.cancelBtnWidth.constant = btnWidth;
+        self.funBtnWidth.constant = btnWidth;
+        [self.cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         [self.funBtn setTitle:@"确定" forState:UIControlStateNormal];
+        
     } else {
         self.allBtn.hidden = YES;
         self.allBtnWidth.constant = 0;
-        [self.funBtn setTitle:@"选车加入我的车库" forState:UIControlStateNormal];
         
+        self.cancelBtn.hidden = YES;
+        self.cancelBtnRight.constant = 0;
+        self.cancelBtnWidth.constant = 0;
+        
+        CGFloat btnWidth = self.width-30;
+        self.funBtnWidth.constant = btnWidth;
+        [self.funBtn setTitle:@"选车加入我的车库" forState:UIControlStateNormal];
     }
 }
 @end

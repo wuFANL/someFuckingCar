@@ -74,6 +74,7 @@
     if (indexPath.section == 1) {
         QLSubmitTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.lineView.hidden = NO;
+        
         switch (indexPath.row) {
             case 0:{
                 cell.titleLB.text = @"VIN码(0/17)";
@@ -131,6 +132,7 @@
                 cell.titleLB.text = @"销售归属人";
                 break;
         }
+
         return cell;
     } else {
         QLReleaseImagesCell *cell = [[QLReleaseImagesCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"imgCell"];

@@ -37,13 +37,15 @@
 //设置偏移量
 - (void)setOffY:(CGFloat)offY {
     _offY = offY;
+    [self.window removeFromSuperview];
+    self.window = nil;
     //新增window
     CGFloat top = BottomOffset?88:64;
     self.window = [[UIWindow alloc]initWithFrame:CGRectMake(0, top+self.offY, ScreenWidth, ScreenHeight-top-self.offY)];
     self.window.windowLevel = UIWindowLevelAlert;
-    self.window.hidden = YES;
     [KeyWindow addSubview:self.window];
     [self.window makeKeyAndVisible];
+    self.window.hidden = YES;
     //设置控件大小
     self.frame = self.window.bounds;
     //加载子控件
@@ -157,7 +159,7 @@
 }
 //隐藏
 - (void)hidden {
-    [UIView animateWithDuration:animationDuration animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         [self.alertView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(35);
         }];

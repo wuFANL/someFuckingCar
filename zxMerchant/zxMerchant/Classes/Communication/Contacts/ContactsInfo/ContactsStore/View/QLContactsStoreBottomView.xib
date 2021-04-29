@@ -25,10 +25,27 @@
                     <state key="normal" title="全选" image="noSelect_gray">
                         <color key="titleColor" red="0.66313010449999998" green="0.67172193530000002" blue="0.69299912450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <state key="selected" image="selectSuccess_green">
+                        <color key="titleColor" red="0.34133166069999998" green="0.70949989560000004" blue="0.33758312460000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOi-VE-Qhx">
+                    <rect key="frame" x="99.999999999999986" y="4" width="144.66666666666663" height="42"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="144.66999999999999" id="irN-VW-qdd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" backgroundImage="cityChoose_Selected">
+                        <color key="titleColor" red="0.34133166069999998" green="0.70949989560000004" blue="0.33758312460000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-2Z-uae">
-                    <rect key="frame" x="100" y="4" width="299" height="42"/>
+                    <rect key="frame" x="254.66666666666663" y="4" width="144.33333333333337" height="42"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="144.33000000000001" id="BWg-4y-yWq"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" backgroundImage="greenBj_332">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,23 +57,32 @@
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1fK-2Z-uae" secondAttribute="trailing" constant="15" id="2rq-FU-5lh"/>
                 <constraint firstItem="Oad-VU-0kf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="7Dd-m8-C68"/>
-                <constraint firstItem="1fK-2Z-uae" firstAttribute="leading" secondItem="Oad-VU-0kf" secondAttribute="trailing" id="A4q-Wd-oiG"/>
+                <constraint firstItem="1fK-2Z-uae" firstAttribute="top" secondItem="DOi-VE-Qhx" secondAttribute="top" id="BWi-cA-Qi5"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1fK-2Z-uae" secondAttribute="bottom" constant="4" id="DbZ-cH-u7s"/>
                 <constraint firstItem="1fK-2Z-uae" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="4" id="JGQ-Zk-BZ9"/>
                 <constraint firstItem="Oad-VU-0kf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="KjG-NP-SiX"/>
+                <constraint firstItem="1fK-2Z-uae" firstAttribute="bottom" secondItem="DOi-VE-Qhx" secondAttribute="bottom" id="WlE-dW-p8E"/>
+                <constraint firstItem="DOi-VE-Qhx" firstAttribute="leading" secondItem="Oad-VU-0kf" secondAttribute="trailing" id="eWJ-O7-vnt"/>
+                <constraint firstItem="1fK-2Z-uae" firstAttribute="leading" secondItem="DOi-VE-Qhx" secondAttribute="trailing" constant="10" id="vWn-Tj-5y5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="allBtn" destination="Oad-VU-0kf" id="4u7-Vr-Dov"/>
                 <outlet property="allBtnWidth" destination="Efh-Ve-xur" id="ahg-E0-z2Z"/>
+                <outlet property="cancelBtn" destination="DOi-VE-Qhx" id="AOY-Lf-rFm"/>
+                <outlet property="cancelBtnRight" destination="vWn-Tj-5y5" id="z7W-iJ-3fG"/>
+                <outlet property="cancelBtnWidth" destination="irN-VW-qdd" id="rX1-HF-dUB"/>
                 <outlet property="funBtn" destination="1fK-2Z-uae" id="22j-7D-c53"/>
+                <outlet property="funBtnWidth" destination="BWg-4y-yWq" id="hPe-0c-6dJ"/>
             </connections>
             <point key="canvasLocation" x="-28.985507246376812" y="69.293478260869577"/>
         </view>
     </objects>
     <resources>
+        <image name="cityChoose_Selected" width="51.666667938232422" height="22"/>
         <image name="greenBj_332" width="9" height="41"/>
         <image name="noSelect_gray" width="15" height="15"/>
+        <image name="selectSuccess_green" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

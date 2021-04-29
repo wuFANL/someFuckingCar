@@ -43,7 +43,7 @@
         QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
         item.playBtn.hidden = self.dataType==ImageType?YES:NO;
         NSDictionary * infoDic = dataArr[indexPath.row];
-        if ([infoDic objectForKey:@"pic_url"]) {
+        if ([infoDic isKindOfClass:[NSDictionary class]]&&[infoDic objectForKey:@"pic_url"]) {
             NSString *url = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"pic_url"]];
             [item.imgView sd_setImageWithURL:[NSURL URLWithString:url]];
         }

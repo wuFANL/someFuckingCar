@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *brand_listAr;
 
 @property (nonatomic, strong) NSMutableArray *carLiatArray;
+@property (nonatomic, strong) NSMutableArray *chooseCarArr;
 
 @property (nonatomic, strong) NSString *carIDd;
 @property (nonatomic, strong) NSString *carPrice;
@@ -159,10 +160,37 @@
 }
 
 #pragma mark - action
+//选择车辆
+- (void)carChoose:(UIButton *)sender {
+    NSInteger index = sender.tag;
+    NSDictionary *carDic = [self.carLiatArray objectAtIndex:index];
+    
+    NSDictionary *chooseDic = nil;
+    for (NSDictionary *dic in self.chooseCarArr) {
+        if ([dic[@"id"] isEqualToString:carDic[@"id"]]) {
+            chooseDic = dic;
+        }
+    }
+    if (chooseDic) {
+        [self.chooseCarArr removeObject:chooseDic];
+    } else {
+        [self.chooseCarArr addObject:carDic];
+    }
+    self.bottomView.allBtn.selected = self.chooseCarArr.count == self.carLiatArray.count?YES:NO;
+    [self.tableView reloadData];
 
+    
+}
 //全选
 - (void)allBtnClick {
+    
     self.bottomView.allBtn.selected = !self.bottomView.allBtn.selected;
+    if (self.bottomView.allBtn.selected) {
+        [self.chooseCarArr addObjectsFromArray:self.carLiatArray];
+    } else {
+        [self.chooseCarArr removeAllObjects];
+    }
+    
     [self.tableView reloadData];
 }
 //选车
@@ -170,10 +198,18 @@
     if (self.bottomView.isEditing == NO) {
         //选择车辆
         self.bottomView.isEditing = YES;
+        [self.tableView reloadData];
     } else {
         //确定
         
     }
+}
+//取消
+- (void)cancelBtnClick {
+    self.bottomView.isEditing = NO;
+    self.bottomView.allBtn.selected = NO;
+    [self.chooseCarArr removeAllObjects];
+    [self.tableView reloadData];
 }
 //电话
 - (void)rightItemClick {
@@ -236,7 +272,7 @@
         
     } else {
         QLContactsStoreCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsStoreCarCell" forIndexPath:indexPath];
-        cell.isEditing = self.bottomView.allBtn.selected;
+        cell.isEditing = self.bottomView.isEditing;
         NSDictionary *dic = [self.carLiatArray objectAtIndex:indexPath.row];
         [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
         cell.titleLB.text = [dic objectForKey:@"model"];
@@ -244,6 +280,17 @@
         cell.timeLB.text = [[[dic objectForKey:@"update_time"] componentsSeparatedByString:@" "] firstObject];
         cell.addressLB.text = [dic objectForKey:@"city_belong"];
         cell.priceLB.text = [NSString stringWithFormat:@"%.1f万",[[dic objectForKey:@"wholesale_price"] floatValue]/10000];
+        
+        cell.selectBtn.tag = indexPath.row;
+        cell.selectBtn.selected = NO;
+        [cell.selectBtn addTarget:self action:@selector(carChoose:) forControlEvents:UIControlEventTouchUpInside];
+        
+        for (NSDictionary *chooseDic in self.chooseCarArr) {
+            if ([dic[@"id"] isEqualToString:chooseDic[@"id"]]) {
+                cell.selectBtn.selected = YES;
+            }
+        }
+        
         return cell;
     }
     
@@ -275,8 +322,15 @@
         _bottomView.allBtnWidth.constant = 0;
         
         [_bottomView.allBtn addTarget:self action:@selector(allBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.cancelBtn addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView.funBtn addTarget:self action:@selector(funBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
+}
+- (NSMutableArray *)chooseCarArr {
+    if (!_chooseCarArr) {
+        _chooseCarArr = [NSMutableArray array];
+    }
+    return _chooseCarArr;
 }
 @end

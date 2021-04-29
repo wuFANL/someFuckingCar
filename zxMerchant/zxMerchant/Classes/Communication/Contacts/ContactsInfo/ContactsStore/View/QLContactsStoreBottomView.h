@@ -12,7 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLContactsStoreBottomView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *allBtn;
+@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelBtnRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelBtnWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *allBtnWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *funBtnWidth;
 @property (weak, nonatomic) IBOutlet UIButton *funBtn;
 /**
  *是否处于编辑状态

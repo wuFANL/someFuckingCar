@@ -58,7 +58,7 @@
     self.delegate = self;
     
     
-//    [self reloadSubVcData];
+    [self reloadSubVcData];
     
     
 }
@@ -67,10 +67,12 @@
         CGFloat height = 140+(BottomOffset?44:20)+(self.headView.showResultView?48:0);
         make.height.mas_equalTo(height);
     }];
-    
+
     for (UIViewController *vc in self.childViewControllers) {
         vc.view.frame = CGRectMake(0,CGRectGetMaxY(self.headView.frame), self.view.width, self.view.height-CGRectGetMaxY(self.headView.frame));
     }
+    
+    
 }
 
 - (void)reloadSubVcData{
@@ -187,6 +189,11 @@
 - (void)selectTypeBack:(NSInteger)type {
     
     if (type == 0||type == 2) {
+        CGFloat conditionResultViewY = CGRectGetMaxY(self.headView.conditionResultView.frame)-(BottomOffset?88:64);
+        if (conditionResultViewY != self.vcView.offY) {
+            self.vcView.offY = conditionResultViewY;
+        }
+        
         NSArray *dataArr = nil;
         NSIndexPath *selectIndexPath = nil;
         if (type == 0) {
@@ -286,7 +293,7 @@
 - (QLVehicleConditionsView *)vcView {
     if (!_vcView) {
         _vcView = [[QLVehicleConditionsView alloc]init];
-        self.vcView.offY = self.headView.conditionView.y-(BottomOffset?44:20);
+        
     }
     return _vcView;
 }
