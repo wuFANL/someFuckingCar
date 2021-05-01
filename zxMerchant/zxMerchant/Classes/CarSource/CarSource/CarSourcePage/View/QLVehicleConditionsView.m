@@ -246,9 +246,9 @@
     if (!_collectionView) {
         QLItemModel *model = [QLItemModel new];
         model.columnCount = 3;
-        model.itemSize = CGSizeMake((self.width-15*4)/3, 50);
+        model.itemSize = CGSizeMake((self.width-15*4)/3 - 10, 50);
         model.itemName = @"QLIconItem";
-        model.Spacing = QLMinimumSpacingMake(15, 15);
+        model.Spacing = QLMinimumSpacingMake(10, 10);
         model.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
         _collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectZero ItemModel:model];
         _collectionView.extendDelegate = self;

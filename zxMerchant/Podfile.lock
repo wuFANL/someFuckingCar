@@ -1,0 +1,112 @@
+PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
+  - AliyunOSSiOS (2.10.7)
+  - Bugly (2.5.90)
+  - IQKeyboardManager (6.5.6)
+  - JCore (2.6.2)
+  - JPush (3.5.2):
+    - JCore (< 3.0.0, >= 2.0.0)
+  - Masonry (1.1.0)
+  - MBProgressHUD (1.2.0)
+  - MJRefresh (3.5.0)
+  - SDWebImage (5.11.0):
+    - SDWebImage/Core (= 5.11.0)
+  - SDWebImage/Core (5.11.0)
+  - TZImagePickerController (3.6.0)
+  - UMAPM (1.2.1)
+  - UMCCommon (7.2.8):
+    - UMAPM
+    - UMDevice
+  - UMCSecurityPlugins (1.0.6)
+  - UMCShare/Core (6.10.2):
+    - UMCCommon
+  - UMCShare/Social/ReducedQQ (6.10.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMCShare/Social/ReducedWeChat (6.10.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMCShare/UI (6.10.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMDevice (1.2.0)
+  - WechatOpenSDK (1.8.7.1)
+  - YYModel (1.0.4)
+
+DEPENDENCIES:
+  - AFNetworking
+  - AliyunOSSiOS (= 2.10.7)
+  - Bugly
+  - IQKeyboardManager
+  - JPush
+  - Masonry
+  - MBProgressHUD
+  - MJRefresh
+  - SDWebImage
+  - TZImagePickerController
+  - UMCCommon
+  - UMCSecurityPlugins
+  - UMCShare/Social/ReducedQQ
+  - UMCShare/Social/ReducedWeChat
+  - UMCShare/UI
+  - WechatOpenSDK
+  - YYModel
+
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - AliyunOSSiOS
+    - Bugly
+    - IQKeyboardManager
+    - JCore
+    - JPush
+    - Masonry
+    - MBProgressHUD
+    - MJRefresh
+    - SDWebImage
+    - TZImagePickerController
+    - UMAPM
+    - UMCCommon
+    - UMCSecurityPlugins
+    - UMCShare
+    - UMDevice
+    - WechatOpenSDK
+    - YYModel
+
+SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
+  Bugly: 88bc32c0acc6fef7b74d610f0319ee7560d6b9fe
+  IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
+  JPush: 95b78ca7b3dd56455b1de6b8488be350ea942a41
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
+  SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
+  TZImagePickerController: a37d7eec87c54436e896a67947033ad2178d498b
+  UMAPM: 58a98390bbb593b9d008f16a403ecd6c550229fd
+  UMCCommon: e009dc757d88ce37774f612291d6ee2fa4a2dca0
+  UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
+  UMCShare: e14e1399673fa361cddbde3a05b3743e10f673f7
+  UMDevice: da050ba77e5075b1ec08303065722d25f599e483
+  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+
+PODFILE CHECKSUM: b6f2e8aecca0df39ec1d430772eae1d28701e6b8
+
+COCOAPODS: 1.9.1

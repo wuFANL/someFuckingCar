@@ -69,9 +69,23 @@
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    QLCarSourceDetailViewController *csdVC = [QLCarSourceDetailViewController new];
-    [self.navigationController pushViewController:csdVC animated:YES];
+    
+    if (indexPath.row <= self.dataArray.count) {
+        NSDictionary *dataInfo = self.dataArray[indexPath.row];
+        NSDictionary *carInfoData = @{
+            //    account_id    对方用户id
+            @"account_id":[dataInfo objectForKey:@"belonger"]?[dataInfo objectForKey:@"belonger"]:@"",
+            //    car_id        车辆id model_id?
+            @"car_id":[dataInfo objectForKey:@"id"]?[dataInfo objectForKey:@"id"]:@""
+        };
+        QLCarSourceDetailViewController *csdVC = [QLCarSourceDetailViewController new];
+        [csdVC updateVcWithData:carInfoData];
+        [self.navigationController pushViewController:csdVC animated:YES];
+    }
+   
 }
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     return 120;
 }

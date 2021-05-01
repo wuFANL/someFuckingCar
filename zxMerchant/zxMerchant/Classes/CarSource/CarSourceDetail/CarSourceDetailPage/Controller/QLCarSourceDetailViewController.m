@@ -24,6 +24,8 @@
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
 @property (nonatomic, strong) QLCarDetailHeadView *headView;
 @property (nonatomic, strong) QLFunBottomView *bottomView;
+/** 车辆信息*/
+@property (nonatomic, strong) NSDictionary *carData;
 @end
 
 @implementation QLCarSourceDetailViewController
@@ -50,6 +52,50 @@
     //tableView
     [self tableViewSet];
 }
+
+#pragma mark -- 数据更新方法
+- (void)updateVcWithData:(NSDictionary *)dic {
+    // 请求车辆信息
+    NSDictionary *paraDic = @{
+        @"operation_type":@"car/info",
+        @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id?[QLUserInfoModel getLocalInfo].account.account_id:@"",
+        @"account_id":[dic objectForKey:@"account_id"],
+        @"car_id":[dic objectForKey:@"car_id"]
+    };
+    
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:paraDic success:^(id response) {
+        [weakSelf parseDataWithResponse:response];
+        // 刷新背景图
+        [weakSelf parseAndRefreshHeaderImage:response];
+        // 刷新主数据
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+- (void)parseDataWithResponse:(NSDictionary *)response {
+    if ([response isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *reslutInfo = [response objectForKey:@"result_info"];
+        if ([reslutInfo isKindOfClass:[NSDictionary class]]) {
+            self.carData = reslutInfo;
+        }
+    }
+}
+
+// 解析并刷新汽车背景图
+- (void)parseAndRefreshHeaderImage:(NSDictionary *)response {
+    if ([response isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *reslutInfo = [response objectForKey:@"result_info"];
+        if ([reslutInfo isKindOfClass:[NSDictionary class]]) {
+            NSString *headerUrl = [NSString stringWithFormat:@"%@",[[reslutInfo objectForKey:@"car_info"] objectForKey:@"car_img"]];
+            self.headView.bannerArr = @[headerUrl];
+            //self.headView.headBtn.backgroundColor =[UIColor redColor];
+        }
+    }
+}
+
 #pragma mark - action
 //谈价格
 - (void)priceBtnClick {
@@ -130,12 +176,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            // 车辆名称
             QLCarDetailTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleCell" forIndexPath:indexPath];
-            
+            if (self.carData) {
+                cell.titleLB.text = [NSString stringWithFormat:@"%@",[[self.carData objectForKey:@"car_info"] objectForKey:@"model"]];
+            }
             return cell;
         } else {
+            // 车辆价格
             QLCarDetailPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"priceCell" forIndexPath:indexPath];
-            
+            [cell updateWithDic:self.carData];
             return cell;
         }
     } else if (indexPath.section == 1) {
