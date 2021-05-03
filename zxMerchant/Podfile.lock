@@ -16,6 +16,8 @@ PODS:
     - AFNetworking/NSURLSession
   - AliyunOSSiOS (2.10.7)
   - Bugly (2.5.90)
+  - CLPlayer (1.3.0):
+    - Masonry
   - IQKeyboardManager (6.5.6)
   - JCore (2.6.2)
   - JPush (3.5.2):
@@ -51,6 +53,7 @@ DEPENDENCIES:
   - AFNetworking
   - AliyunOSSiOS (= 2.10.7)
   - Bugly
+  - CLPlayer
   - IQKeyboardManager
   - JPush
   - Masonry
@@ -71,6 +74,7 @@ SPEC REPOS:
     - AFNetworking
     - AliyunOSSiOS
     - Bugly
+    - CLPlayer
     - IQKeyboardManager
     - JCore
     - JPush
@@ -91,6 +95,7 @@ SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
   Bugly: 88bc32c0acc6fef7b74d610f0319ee7560d6b9fe
+  CLPlayer: 3ac15f89d42404a11b3919d6dfdf152ff02a4aa8
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
   JPush: 95b78ca7b3dd56455b1de6b8488be350ea942a41
@@ -107,6 +112,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: b6f2e8aecca0df39ec1d430772eae1d28701e6b8
+PODFILE CHECKSUM: 58cf791fc06ece05f86f4311ddcc0945c1bef85c
 
 COCOAPODS: 1.9.1

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,22 +21,29 @@
                         <rect key="frame" x="16" y="15" width="95" height="70"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="videoPlayIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6pD-dR-Bpc">
-                                <rect key="frame" x="35" y="22.5" width="25" height="25"/>
+                                <rect key="frame" x="35" y="23" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="6pD-dR-Bpc" secondAttribute="height" multiplier="1:1" id="i9A-44-Gg2"/>
                                     <constraint firstAttribute="width" constant="25" id="uqh-WP-Eca"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carVideo" translatesAutoresizingMaskIntoConstraints="NO" id="EbE-6B-fgs">
+                                <rect key="frame" x="0.0" y="0.0" width="95" height="70"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.96853548290000002" green="0.96869391199999999" blue="0.9685017467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="EbE-6B-fgs" secondAttribute="bottom" id="3HA-sX-4cn"/>
                             <constraint firstAttribute="width" secondItem="BTn-De-GNy" secondAttribute="height" multiplier="19:14" id="6Xc-M5-X4h"/>
-                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerY" secondItem="BTn-De-GNy" secondAttribute="centerY" id="CBw-Or-Cb7"/>
                             <constraint firstAttribute="width" constant="95" id="CXe-Vw-9cS"/>
-                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerX" secondItem="BTn-De-GNy" secondAttribute="centerX" id="wo5-2f-eg4"/>
+                            <constraint firstAttribute="trailing" secondItem="EbE-6B-fgs" secondAttribute="trailing" id="Otd-Uq-4WE"/>
+                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerX" secondItem="BTn-De-GNy" secondAttribute="centerX" id="cre-Np-9s7"/>
+                            <constraint firstItem="6pD-dR-Bpc" firstAttribute="centerY" secondItem="BTn-De-GNy" secondAttribute="centerY" constant="0.5" id="cuB-JU-JUd"/>
+                            <constraint firstItem="EbE-6B-fgs" firstAttribute="leading" secondItem="BTn-De-GNy" secondAttribute="leading" id="lks-3z-xxI"/>
+                            <constraint firstItem="EbE-6B-fgs" firstAttribute="top" secondItem="BTn-De-GNy" secondAttribute="top" id="zSk-j5-Cgt"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里将车辆名称.档位.环保标准.排量.表显 里程.等信息.车商可编辑修改,主要目的传 到公众号详情页" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbN-Be-aBY">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbN-Be-aBY">
                         <rect key="frame" x="125" y="15" width="180" height="70"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="highlightedColor"/>
@@ -55,12 +62,14 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="contentLB" destination="nbN-Be-aBY" id="aO1-xX-CXK"/>
+                <outlet property="firstFramePic" destination="EbE-6B-fgs" id="z3U-Dg-3gV"/>
                 <outlet property="uploadControl" destination="BTn-De-GNy" id="YUt-Dq-ZDQ"/>
             </connections>
-            <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
+            <point key="canvasLocation" x="-149.27536231884059" y="93.75"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="carVideo" width="95" height="70"/>
         <image name="videoPlayIcon" width="25" height="25"/>
     </resources>
 </document>

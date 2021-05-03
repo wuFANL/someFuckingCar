@@ -30,6 +30,7 @@ target 'zxMerchant' do
   pod 'WechatOpenSDK'
   #bug监听
   pod 'Bugly'
-
+  # 播放器
+  pod 'CLPlayer'
 
 end

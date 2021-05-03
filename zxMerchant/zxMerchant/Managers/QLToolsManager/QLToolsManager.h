@@ -17,7 +17,7 @@
 
 typedef void (^ResultBlock)(id result,NSError *error);
 typedef void (^ImgCallBlock)(UIImagePickerController *picker,NSDictionary *info);
-
+extern NSString* EncodeStringFromDic(NSDictionary *dic, NSString *key);
 @interface QLToolsManager : NSObject
 #pragma mark - 全局属性
 /**

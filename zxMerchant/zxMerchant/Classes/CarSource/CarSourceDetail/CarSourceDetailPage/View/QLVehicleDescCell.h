@@ -11,8 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLVehicleDescCell : UITableViewCell
+// 图片 播放器
 @property (weak, nonatomic) IBOutlet UIControl *uploadControl;
+// 车辆描述
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
+@property (weak, nonatomic) IBOutlet UIImageView *firstFramePic;
+
+- (void)updateWithDic:(NSDictionary *)dic;
 
 @end
 

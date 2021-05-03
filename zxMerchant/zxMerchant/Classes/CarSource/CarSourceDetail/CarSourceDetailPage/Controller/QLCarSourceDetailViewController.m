@@ -18,7 +18,9 @@
 #import "QLTableImgCell.h"
 #import "QLCarImgShowCell.h"
 #import "QLFunBottomView.h"
+#import "QLContactsStoreViewController.h"
 #import "QLCarDescViewController.h"
+#import <CLPlayerView.h>
 
 @interface QLCarSourceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,QLCarDetailHeadViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
@@ -32,7 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,10 +115,35 @@
 - (void)checkReport {
     
 }
-//车辆描述
+// 播放视频
 - (void)uploadControlClick {
-    QLCarDescViewController *cdVC = [QLCarDescViewController new];
-    [self.navigationController pushViewController:cdVC animated:YES];
+    __block UIView* blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    blackView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:blackView];
+    
+    __block CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 50, ScreenWidth, ScreenHeight)];
+    [self.view addSubview:playerView];
+    
+    playerView.url = [NSURL URLWithString:@"https://vd4.bdstatic.com/mda-kkjw724xrgeuruaw/mda-kkjw724xrgeuruaw.mp4"];
+    
+    [self.view bringSubviewToFront:playerView];
+    //播放
+    [playerView playVideo];
+    //返回按钮点击事件回调
+    [playerView backButton:^(UIButton *button) {
+        [playerView destroyPlayer];
+        playerView = nil;
+        [blackView removeFromSuperview];
+        blackView = nil;
+    }];
+    //播放完成回调
+    [playerView endPlay:^{
+        //销毁播放器
+        [playerView destroyPlayer];
+        playerView = nil;
+        [blackView removeFromSuperview];
+        blackView = nil;
+    }];
 }
 //分区头更多按钮点击
 - (void)headerAccBtnClick:(UIButton *)sender {
@@ -124,7 +151,8 @@
 }
 //分区尾更多按钮点击
 - (void)footerAccBtnClick:(UIButton *)sender {
-    
+    QLContactsStoreViewController* vc = [QLContactsStoreViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 //轮播图点击
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index {
@@ -165,13 +193,27 @@
         make.edges.equalTo(tableHeaderView);
     }];
     self.tableView.tableHeaderView = tableHeaderView;
-   
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section==0?2:section==3?4:1;
+    
+    switch (section) {
+        case 0:
+            return 2;
+            break;
+        case 1:
+            return 1;
+        case 2:
+            return 2;
+        default:
+        {
+            return 1;
+        }
+            break;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -189,42 +231,43 @@
             return cell;
         }
     } else if (indexPath.section == 1) {
+        // 车辆信息
         QLVehicleConfigCell *cell = [tableView dequeueReusableCellWithIdentifier:@"configCell" forIndexPath:indexPath];
-
+        if (self.carData) {
+            [cell updateWithDic:self.carData];
+        }
         return cell;
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
+            // 车辆描述
             QLVehicleDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"descCell" forIndexPath:indexPath];
             [cell.uploadControl addTarget:self action:@selector(uploadControlClick) forControlEvents:UIControlEventTouchUpInside];
-            
+            [cell updateWithDic:self.carData];
             return cell;
         } else {
             QLVehicleReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reportCell" forIndexPath:indexPath];
-            [cell.accBtn addTarget:self action:@selector(checkReport) forControlEvents:UIControlEventTouchUpInside];
-            cell.accBtn.selected = YES;
-            cell.detailLB.text = @"查看详细检测报告";
             return cell;
         }
     } else {
-        if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
-            QLCarImgShowCell *cell = [tableView dequeueReusableCellWithIdentifier:@"carImgCell" forIndexPath:indexPath];
-            [cell.checkReportBtn setTitle:@"查看更多" forState:UIControlStateNormal];
-            [cell.checkReportBtn addTarget:self action:@selector(moreImgBtnClick) forControlEvents:UIControlEventTouchUpInside];
-            return cell;
-        } else {
-            QLTableImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
-            NSString *imgUrl = @"";
-            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (!error) {
-                    cell.imgHeight.constant = (self.view.width-30)*(image.size.height/image.size.width);
-                }
-            }];
-            return cell;
-        }
+        //        if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
+        //            QLCarImgShowCell *cell = [tableView dequeueReusableCellWithIdentifier:@"carImgCell" forIndexPath:indexPath];
+        //            [cell.checkReportBtn setTitle:@"查看更多" forState:UIControlStateNormal];
+        //            [cell.checkReportBtn addTarget:self action:@selector(moreImgBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        //            return cell;
+        //        } else {
+        //
+        //        }
+        
+        QLTableImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
+        NSString *imgUrl = @"";
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (!error) {
+                cell.imgHeight.constant = (self.view.width-30)*(image.size.height/image.size.width);
+            }
+        }];
+        return cell;
     }
     
-    
-
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -243,7 +286,7 @@
     if (section == 2) {
         QLCarDetailSectionView *sectionView = [QLCarDetailSectionView new];
         sectionView.titleLB.text = @"";
-        sectionView.collectBtn.hidden = NO;
+        sectionView.collectBtn.hidden = YES;
         sectionView.moreBtn.tag = section;
         sectionView.moreBtn.hidden = NO;
         [sectionView.moreBtn setTitle:@"TA的车源" forState:UIControlStateNormal];

@@ -33,6 +33,24 @@
  */
 @property (nonatomic, strong) ImgCallBlock imgCallBack;
 @end
+NSString* EncodeStringFromDic(NSDictionary *dic, NSString *key)
+{
+    if (nil != dic
+        && [dic isKindOfClass:[NSDictionary class]]) {
+        
+        id temp = [dic objectForKey:key];
+        if ([temp isKindOfClass:[NSString class]])
+        {
+            return temp;
+        }
+        else if ([temp isKindOfClass:[NSNumber class]])
+        {
+            return [temp stringValue];
+        }
+    }
+    
+    return @"";
+}
 @implementation QLToolsManager
 #pragma mark- 全局数据
 #pragma mark -分享记录
@@ -479,3 +497,4 @@
     return wayTool;
 }
 @end
+

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,14 +13,14 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reportCell" rowHeight="75" id="KGk-i7-Jjw" customClass="QLVehicleReportCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmV-uE-2pJ">
-                        <rect key="frame" x="15" y="15.5" width="290" height="45"/>
+                        <rect key="frame" x="15" y="15" width="290" height="45"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reportBj" translatesAutoresizingMaskIntoConstraints="NO" id="fMT-u8-Zqq">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reportBj" translatesAutoresizingMaskIntoConstraints="NO" id="fMT-u8-Zqq">
                                 <rect key="frame" x="0.0" y="0.0" width="290" height="45"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未录入检测信息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4p4-pw-DYC">
@@ -32,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpZ-6y-0Kn" customClass="QLBaseButton">
-                                <rect key="frame" x="254" y="11.5" width="20" height="22"/>
+                                <rect key="frame" x="252" y="11.5" width="20" height="22"/>
                                 <state key="normal" image="reportAcc"/>
                                 <state key="selected" image="reportAcc_selected"/>
                             </button>
@@ -54,7 +52,7 @@
                             <constraint firstItem="fMT-u8-Zqq" firstAttribute="top" secondItem="SmV-uE-2pJ" secondAttribute="top" id="H7P-em-VIC"/>
                             <constraint firstItem="dpZ-6y-0Kn" firstAttribute="centerY" secondItem="0hZ-03-R4f" secondAttribute="centerY" id="Owi-Wk-bg6"/>
                             <constraint firstItem="0hZ-03-R4f" firstAttribute="leading" secondItem="SmV-uE-2pJ" secondAttribute="leading" constant="15" id="S4m-Dl-qNn"/>
-                            <constraint firstAttribute="trailing" secondItem="dpZ-6y-0Kn" secondAttribute="trailing" constant="16" id="Xoc-UJ-tuE"/>
+                            <constraint firstAttribute="trailing" secondItem="dpZ-6y-0Kn" secondAttribute="trailing" constant="18" id="Xoc-UJ-tuE"/>
                             <constraint firstAttribute="bottom" secondItem="fMT-u8-Zqq" secondAttribute="bottom" id="Xpy-1o-0bH"/>
                             <constraint firstAttribute="trailing" secondItem="fMT-u8-Zqq" secondAttribute="trailing" id="Xtn-Sb-b3d"/>
                             <constraint firstItem="4p4-pw-DYC" firstAttribute="leading" secondItem="DAb-1A-91n" secondAttribute="trailing" constant="8" id="nc5-1c-Bez"/>
