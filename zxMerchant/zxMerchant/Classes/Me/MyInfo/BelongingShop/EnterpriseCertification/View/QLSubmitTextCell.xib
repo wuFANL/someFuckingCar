@@ -87,6 +87,7 @@
                 <outlet property="lineView" destination="Fd5-J6-sKN" id="CTZ-aK-XSO"/>
                 <outlet property="textView" destination="2D5-Hx-yS6" id="7hm-mW-n0m"/>
                 <outlet property="titleLB" destination="bLn-SC-A7k" id="Och-r7-hWL"/>
+                <outlet property="titleWidth" destination="L1D-1k-N5w" id="Z3z-EL-mvt"/>
                 <outlet property="tvHeight" destination="9w9-CG-SgS" id="SBY-g7-Ddw"/>
                 <outlet property="unitLB" destination="r52-wc-QTk" id="AoN-QI-EtL"/>
             </connections>

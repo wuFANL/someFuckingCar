@@ -74,62 +74,87 @@
     if (indexPath.section == 1) {
         QLSubmitTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.lineView.hidden = NO;
-        
+        cell.titleLB.textColor = [UIColor darkTextColor];
+        cell.textView.placeholderLB.textColor = [UIColor lightGrayColor];
+        cell.textView.userInteractionEnabled = YES;
         switch (indexPath.row) {
             case 0:{
                 cell.titleLB.text = @"VIN码(0/17)";
+                cell.textView.placeholder = @"输入或右边的扫一扫";
+                [cell.actionBtn setImage:[UIImage imageNamed:@"carScan"] forState:UIControlStateNormal];
             }
                 break;
             case 1:{
                 cell.titleLB.text = @"品牌/车系";
+                cell.textView.placeholder = @"点击调取品牌车系车型";
             }
                 break;
             case 2:{
                 cell.titleLB.text = @"首次上牌";
+                cell.textView.placeholderLB.textColor = OrangeColor;
+                cell.textView.placeholder = @"必选";
             }
                 break;
             case 3:{
                 cell.titleLB.text = @"表显里程";
+                cell.textView.placeholder = @"0.01~100之间的数字";
             }
                 break;
             case 4:{
                 cell.titleLB.text = @"在线标价";
+                cell.textView.placeholderLB.textColor = OrangeColor;
+                cell.textView.placeholder = @"必填";
+                
             }
                 break;
             case 5:{
                 cell.titleLB.text = @"销售低价";
+                cell.textView.placeholder = @"非必填";
             }
                 break;
             case 6:{
                 cell.titleLB.text = @"批发价";
+                cell.textView.placeholderLB.textColor = OrangeColor;
+                cell.textView.placeholder = @"必填";
             }
                 break;
             case 7:{
                 cell.titleLB.text = @"采购价";
+                cell.textView.placeholderLB.textColor = OrangeColor;
+                cell.textView.placeholder = @"必填";
             }
                 break;
             case 8:{
                 cell.titleLB.text = @"过户次数";
+                cell.textView.placeholder = @"非必填";
             }
                 break;
             case 9:{
-                cell.titleLB.text = @"";
+                cell.titleLB.text = @"变速箱/车身颜色/车辆类型/环保标准";
+                cell.textView.userInteractionEnabled = NO;
+                cell.titleWidth.constant = 250;
+                cell.titleLB.textColor = [UIColor lightGrayColor];
             }
                 break;
             case 10:{
                 cell.titleLB.text = @"排量";
+                cell.textView.placeholder = @"非必选";
             }
                 break;
             case 11:{
                 cell.titleLB.text = @"年检到期";
+                cell.textView.placeholder = @"非必选";
             }
                 break;
             case 12:{
                 cell.titleLB.text = @"强制险到期";
+                cell.textView.placeholder = @"非必选";
             }
                 break;
             default:
                 cell.titleLB.text = @"销售归属人";
+                cell.textView.placeholderLB.textColor = OrangeColor;
+                cell.textView.placeholder = @"必选";
                 break;
         }
 

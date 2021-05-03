@@ -54,6 +54,18 @@
     _itemArr = itemArr;
     [self.collectionView reloadData];
 }
+#pragma mark - action
+- (void)deleteBtnClick:(UIButton *)sender {
+    NSInteger index = sender.tag;
+    NSMutableArray *temArr = [NSMutableArray arrayWithArray:self.itemArr];
+    [temArr removeObjectAtIndex:index];
+    self.itemArr = temArr;
+    self.dataHandler(self.itemArr);
+}
+- (void)resetBtnClick {
+    self.itemArr = nil;
+    self.dataHandler(self.itemArr);
+}
 #pragma mark - collectionView
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForSectionAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.collectionView.width, 0);
@@ -71,11 +83,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QLConditionsItem *item = (QLConditionsItem *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     item.showDeleteBtn = YES;
+    item.deleteBtn.tag = indexPath.row;
     item.backgroundColor = WhiteColor;
     [item roundRectCornerRadius:3 borderWidth:1 borderColor:LightGrayColor];
     
     item.titleLB.text = self.itemArr[indexPath.row];
-   
+    [item.deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     return item;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,7 +103,7 @@
         [_resetBtn setTitle:@"重置" forState:UIControlStateNormal];
         [_resetBtn setImage:[UIImage imageNamed:@"refresh_gray"] forState:UIControlStateNormal];
         [_resetBtn layoutButtonWithEdgeInsetsStyle:QLButtonEdgeInsetsStyleLeft imageTitleSpace:8];
-        
+        [_resetBtn addTarget:self action:@selector(resetBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _resetBtn;
 }

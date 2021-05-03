@@ -59,15 +59,15 @@
     NSArray *warns = nil;
     if (type == 0) {
         //智能排序
-        conditions = @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"];
+        conditions = self.sort_byArr;
         
     } else if (type == 1) {
         //价格
-        conditions = @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"];
+        conditions = self.priceRangeArr;
 
     } else if (type == 2) {
         //状态
-        conditions = @[@"在售",@"仓库中",@"已售"];
+        conditions = self.deal_stateArr;
         warns = @[@"年检到期",@"强制险到期"];
 //        warns = @[@"年检到期",@"强制险到期",@"库龄超期"];
         self.lineView.hidden = NO;
@@ -80,15 +80,18 @@
     NSInteger row = ceil(conditions.count/3.0);
     CGFloat collectionViewHeight = (50*row+(row+1)*15);
     CGFloat alertViewHieght = collectionViewHeight+50+(type==2?140:0);
-    
-    [self.alertView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(self);
         make.height.mas_equalTo(alertViewHieght);
     }];
+   
     self.warnCollectionView.dataArr = [warns mutableCopy];
     self.collectionView.dataArr = [conditions mutableCopy];
-    [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(self.alertView);
         make.height.mas_equalTo(collectionViewHeight);
     }];
+
 }
 //设置点中下标
 - (void)setSelectIndexPath:(NSIndexPath *)selectIndexPath {
@@ -287,12 +290,22 @@
     }
     return _closeBtn;
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (NSArray *)sort_byArr {
+    if (!_sort_byArr) {
+        _sort_byArr = @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"];
+    }
+    return _sort_byArr;
 }
-*/
-
+- (NSArray *)priceRangeArr {
+    if (!_priceRangeArr) {
+        _priceRangeArr = @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"];
+    }
+    return _priceRangeArr;
+}
+- (NSArray *)deal_stateArr {
+    if (!_deal_stateArr) {
+        _deal_stateArr = @[@"在售",@"仓库中",@"已售"];
+    }
+    return _deal_stateArr;
+}
 @end
