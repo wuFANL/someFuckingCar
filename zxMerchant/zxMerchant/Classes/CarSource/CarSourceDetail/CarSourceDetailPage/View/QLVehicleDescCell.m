@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-
+    [self.uploadControl bringSubviewToFront:self.playImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -31,9 +31,9 @@
         if (vieoUrl.length > 0) {
             // 有视频
             self.firstFramePic.image = [UIImage videoFramerateWithPath:vieoUrl];
-           // self.uploadControl.hidden = NO;
+            self.playImageView.hidden = NO;
         } else {
-           // self.uploadControl.hidden = YES;
+            self.playImageView.hidden = YES;
         }
     }
 }

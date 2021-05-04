@@ -20,4 +20,8 @@
     return self;
 }
 
+- (void)updateData:(NSDictionary *)data {
+    
+}
+
 @end

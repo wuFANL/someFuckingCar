@@ -62,6 +62,7 @@
     
     //个人中心
     QLMePageViewController *meVC = [QLMePageViewController new];
+    [meVC getInfo];
     [vcArr addObject:meVC];
     [titleArr addObject:@"我的"];
     [defaultImgArr addObject:@"me"];

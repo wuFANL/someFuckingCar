@@ -18,21 +18,39 @@
 #import "QLStaffListViewController.h"
 #import "QLSetUpViewController.h"
 
+
 @interface QLMePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLMePageHeadView *headView;
 
 @end
 
 @implementation QLMePageViewController
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-   
 }
+
+- (void)getInfo {
+    // 请求数据
+    NSDictionary *para = @{
+        @"operation_type":@"all_info",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
+    };
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:UserPath params:para success:^(id response) {
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //tableView
     [self tableViewSet];
+    // 请求具体信息
 }
 #pragma mark - 头部
 //个人信息
@@ -42,8 +60,8 @@
 }
 //会员中心
 - (void)vipStatusBtnClick {
-//    QLVipAuditView *vaView = [QLVipAuditView new];
-//    [vaView show];
+    //    QLVipAuditView *vaView = [QLVipAuditView new];
+    //    [vaView show];
     
     QLVipCenterViewController *vcVC = [QLVipCenterViewController new];
     [self.navigationController pushViewController:vcVC animated:YES];
@@ -77,7 +95,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-   
+    
     //tableHeaderView
     UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
     [tableHeaderView addSubview:self.headView];

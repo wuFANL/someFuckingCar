@@ -66,7 +66,7 @@
     };
     
     WEAKSELF
-    [QLNetworkingManager postWithUrl:BusinessPath params:paraDic success:^(id response) {
+    [QLNetworkingManager postWithUrl: BusinessPath params:paraDic success:^(id response) {
         [weakSelf parseDataWithResponse:response];
         // 刷新背景图
         [weakSelf parseAndRefreshHeaderImage:response];
@@ -106,6 +106,25 @@
 //加入车库
 - (void)joinBtnClick {
     
+    NSDictionary *para = @{
+        @"operation_type":@"select_car",
+        @"business_id":EncodeStringFromDic([self.carData objectForKey:@"car_info"], @"business_id"),
+        @"car_ids":EncodeStringFromDic([self.carData objectForKey:@"car_param"], @"id"),
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"state":@"1"
+    };
+    
+    [MBProgressHUD showLoading:@"正在加入"];
+    [QLNetworkingManager postWithUrl:BusinessPath params:para success:^(id response) {
+        NSString*resultStr = EncodeStringFromDic([response objectForKey:@"result_info"], @"result");
+        if ([resultStr isEqualToString:@"success"]) {
+            [MBProgressHUD showSuccess:@"已加入"];
+        } else {
+            [MBProgressHUD showError:resultStr];
+        }
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 //更多图片
 - (void)moreImgBtnClick {
@@ -117,33 +136,40 @@
 }
 // 播放视频
 - (void)uploadControlClick {
-    __block UIView* blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    blackView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:blackView];
-    
-    __block CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 50, ScreenWidth, ScreenHeight)];
-    [self.view addSubview:playerView];
-    
-    playerView.url = [NSURL URLWithString:@"https://vd4.bdstatic.com/mda-kkjw724xrgeuruaw/mda-kkjw724xrgeuruaw.mp4"];
-    
-    [self.view bringSubviewToFront:playerView];
-    //播放
-    [playerView playVideo];
-    //返回按钮点击事件回调
-    [playerView backButton:^(UIButton *button) {
-        [playerView destroyPlayer];
-        playerView = nil;
-        [blackView removeFromSuperview];
-        blackView = nil;
-    }];
-    //播放完成回调
-    [playerView endPlay:^{
-        //销毁播放器
-        [playerView destroyPlayer];
-        playerView = nil;
-        [blackView removeFromSuperview];
-        blackView = nil;
-    }];
+    if (self.carData && [self.carData objectForKey:@"car_param"]) {
+        
+        NSString *vieoUrl = EncodeStringFromDic([self.carData objectForKey:@"car_param"], @"car_video");
+        if (vieoUrl.length > 0) {
+            // 有视频
+            __block UIView* blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+            blackView.backgroundColor = [UIColor blackColor];
+            [self.view addSubview:blackView];
+            
+            __block CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 50, ScreenWidth, ScreenHeight)];
+            [self.view addSubview:playerView];
+            
+            playerView.url = [NSURL URLWithString:vieoUrl];
+            
+            [self.view bringSubviewToFront:playerView];
+            //播放
+            [playerView playVideo];
+            //返回按钮点击事件回调
+            [playerView backButton:^(UIButton *button) {
+                [playerView destroyPlayer];
+                playerView = nil;
+                [blackView removeFromSuperview];
+                blackView = nil;
+            }];
+            //播放完成回调
+            [playerView endPlay:^{
+                //销毁播放器
+                [playerView destroyPlayer];
+                playerView = nil;
+                [blackView removeFromSuperview];
+                blackView = nil;
+            }];
+        }
+    }
 }
 //分区头更多按钮点击
 - (void)headerAccBtnClick:(UIButton *)sender {
@@ -151,7 +177,15 @@
 }
 //分区尾更多按钮点击
 - (void)footerAccBtnClick:(UIButton *)sender {
-    QLContactsStoreViewController* vc = [QLContactsStoreViewController new];
+    
+    NSString *ship_id = EncodeStringFromDic([self.carData objectForKey:@"friend_ship"], @"ship_id");
+    
+    NSDictionary *para = @{
+        @"ship_id":ship_id,
+        @"business_id":EncodeStringFromDic([self.carData objectForKey:@"car_info"], @"business_id"),
+        @"accID":EncodeStringFromDic([[self.carData objectForKey:@"car_info"] objectForKey:@"business_car"], @"account_id")
+    };
+    QLContactsStoreViewController* vc = [[QLContactsStoreViewController alloc]initWithDic:para];
     [self.navigationController pushViewController:vc animated:YES];
 }
 //轮播图点击
@@ -210,7 +244,12 @@
             return 2;
         default:
         {
-            return 1;
+            // 汽车的图片
+            NSArray *carAttr = [self.carData objectForKey:@"car_attr"];
+            if ([carAttr isKindOfClass:[NSArray class]]) {
+                return carAttr.count;
+            }
+            return 0;
         }
             break;
     }
@@ -260,11 +299,16 @@
         
         QLTableImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
         NSString *imgUrl = @"";
-        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-            if (!error) {
-                cell.imgHeight.constant = (self.view.width-30)*(image.size.height/image.size.width);
-            }
-        }];
+        NSArray *carAttr = [self.carData objectForKey:@"car_attr"];
+        if ([carAttr isKindOfClass:[NSArray class]] && indexPath.row < carAttr.count) {
+            imgUrl = EncodeStringFromDic(carAttr[indexPath.row], @"pic_url");
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (!error) {
+                    cell.imgHeight.constant = (self.view.width-30)*(image.size.height/image.size.width);
+                }
+            }];
+        }
+        
         return cell;
     }
     
@@ -282,7 +326,7 @@
     }
     return nil;
 }
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == 2) {
         QLCarDetailSectionView *sectionView = [QLCarDetailSectionView new];
         sectionView.titleLB.text = @"";

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 车辆描述
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
 @property (weak, nonatomic) IBOutlet UIImageView *firstFramePic;
+@property (weak, nonatomic) IBOutlet UIImageView *playImageView;
 
 - (void)updateWithDic:(NSDictionary *)dic;
 

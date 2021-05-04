@@ -63,6 +63,7 @@
             <connections>
                 <outlet property="contentLB" destination="nbN-Be-aBY" id="aO1-xX-CXK"/>
                 <outlet property="firstFramePic" destination="EbE-6B-fgs" id="z3U-Dg-3gV"/>
+                <outlet property="playImageView" destination="6pD-dR-Bpc" id="QBE-4u-gch"/>
                 <outlet property="uploadControl" destination="BTn-De-GNy" id="YUt-Dq-ZDQ"/>
             </connections>
             <point key="canvasLocation" x="-149.27536231884059" y="93.75"/>

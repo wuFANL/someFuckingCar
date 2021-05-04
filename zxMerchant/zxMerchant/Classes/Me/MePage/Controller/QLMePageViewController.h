@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLMePageViewController : QLBaseTableViewController
-
+- (void)getInfo;
 @end
 
 NS_ASSUME_NONNULL_END
