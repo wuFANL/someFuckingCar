@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLRidersDynamicViewController : QLBaseTableViewController
+@property (nonatomic, strong) NSString *friendId;
 -(id)initWithFriendId:(NSString *)friendID; //好友的account_id
+
 @end
 
 NS_ASSUME_NONNULL_END

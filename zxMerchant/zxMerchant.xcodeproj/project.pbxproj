@@ -334,6 +334,7 @@
 		A087B88B259BA47B00432E8C /* QLSubmitTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B888259BA47A00432E8C /* QLSubmitTextCell.m */; };
 		A087B892259BA5EA00432E8C /* QLSubmitImgConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B890259BA5EA00432E8C /* QLSubmitImgConfigCell.m */; };
 		A087B893259BA5EA00432E8C /* QLSubmitImgConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A087B891259BA5EA00432E8C /* QLSubmitImgConfigCell.xib */; };
+		A0922C752641D64C00755B2F /* QLRidersDynamicListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */; };
 		A09EAAD025DD8C9E007D9075 /* QLSubmitSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A09EAACE25DD8C9D007D9075 /* QLSubmitSuccessViewController.m */; };
 		A09EAAD125DD8C9E007D9075 /* QLSubmitSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09EAACF25DD8C9D007D9075 /* QLSubmitSuccessViewController.xib */; };
 		A09EAAE325DEB2C4007D9075 /* QLVehicleCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A09EAADD25DEB2C4007D9075 /* QLVehicleCertificateViewController.m */; };
@@ -1008,6 +1009,8 @@
 		A087B88F259BA5EA00432E8C /* QLSubmitImgConfigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLSubmitImgConfigCell.h; sourceTree = "<group>"; };
 		A087B890259BA5EA00432E8C /* QLSubmitImgConfigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLSubmitImgConfigCell.m; sourceTree = "<group>"; };
 		A087B891259BA5EA00432E8C /* QLSubmitImgConfigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLSubmitImgConfigCell.xib; sourceTree = "<group>"; };
+		A0922C732641D64C00755B2F /* QLRidersDynamicListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLRidersDynamicListModel.h; sourceTree = "<group>"; };
+		A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLRidersDynamicListModel.m; sourceTree = "<group>"; };
 		A09EAACD25DD8C9D007D9075 /* QLSubmitSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLSubmitSuccessViewController.h; sourceTree = "<group>"; };
 		A09EAACE25DD8C9D007D9075 /* QLSubmitSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLSubmitSuccessViewController.m; sourceTree = "<group>"; };
 		A09EAACF25DD8C9D007D9075 /* QLSubmitSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLSubmitSuccessViewController.xib; sourceTree = "<group>"; };
@@ -2112,6 +2115,7 @@
 			isa = PBXGroup;
 			children = (
 				A0733283254B485300570FDB /* Controller */,
+				A0922C6F2641D49400755B2F /* Model */,
 				A073328D254B48E500570FDB /* View */,
 			);
 			path = RidersDynamicPage;
@@ -3718,6 +3722,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A0922C6F2641D49400755B2F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0922C732641D64C00755B2F /* QLRidersDynamicListModel.h */,
+				A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A09625AB25911312007D7CF7 /* ChangeMobile */ = {
 			isa = PBXGroup;
 			children = (
@@ -4818,6 +4831,7 @@
 				A0865BF526309CD8001B85A3 /* QLSearchStoreListViewController.m in Sources */,
 				A00621312513DB3900A571E5 /* QLBaseViewController.m in Sources */,
 				A0CAB7DE2561230C0015FAE3 /* QLTransactionInfoCell.m in Sources */,
+				A0922C752641D64C00755B2F /* QLRidersDynamicListModel.m in Sources */,
 				A01243CC25EA3CD900A90BAD /* QLNoSubscriptionsView.m in Sources */,
 				A0492EF3256A677D00B5E23C /* QLVehicleSortView.m in Sources */,
 				A044AA96251FCBF600D1C324 /* QLFileManager.m in Sources */,
