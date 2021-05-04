@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLSubmitTextCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleWidth;
 @property (weak, nonatomic) IBOutlet QLBaseTextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tvHeight;
 @property (weak, nonatomic) IBOutlet UILabel *unitLB;

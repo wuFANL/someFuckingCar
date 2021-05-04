@@ -13,15 +13,27 @@
 #import "QLRidersDynamicTextCell.h"
 #import "QLCarCircleImgCell.h"
 #import "QLRidersDynamicDetailViewController.h"
-
+#import <MJRefresh.h>
 @interface QLRidersDynamicViewController ()<UITableViewDelegate,UITableViewDataSource,QLBannerViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
 @property (nonatomic, strong) QLCarCircleHeadView *headView;
 
-
+@property (nonatomic, strong) NSString *friendId;
+@property (nonatomic, strong) NSMutableArray *listArray;
+@property (nonatomic, assign) NSInteger pageIndex;
 @end
 
 @implementation QLRidersDynamicViewController
+
+-(id)initWithFriendId:(NSString *)friendID
+{
+    self = [super init];
+    if(self)
+    {
+        self.friendId = friendID;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -30,6 +42,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.listArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.pageIndex = 1;
+    [self requestForFriendCirle];
     //导航栏
     [self.view addSubview:self.naviView];
     [self.naviView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -39,6 +54,36 @@
     //tableView
     [self tableViewSet];
 }
+
+-(void)refreshHeaderDidPull
+{
+    
+}
+
+-(void)refreshFooterDidPull
+{
+    
+}
+
+-(void)requestForFriendCirle
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":self.friendId,@"page_no":[NSString stringWithFormat:@"%ldd",(long)self.pageIndex],@"page_size":@"20"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        if(self.pageIndex == 1) {
+            [self.listArray removeAllObjects];
+            [self.listArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"dynamic_list"]];
+        } else {
+            [self.listArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"dynamic_list"]];
+        }
+
+        [self.tableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
@@ -71,6 +116,10 @@
         make.edges.equalTo(tableHeaderView);
     }];
     self.tableView.tableHeaderView = tableHeaderView;
+    
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
+    
+    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterDidPull)];
    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

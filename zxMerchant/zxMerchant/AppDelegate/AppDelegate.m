@@ -36,7 +36,7 @@
     //初始友盟
     [[QLUMShareManager shareManager] initShare];
     //初始化极光
-//    [self initJPUSH:launchOptions];
+    [self initJPUSH:launchOptions];
     //微信注册
     [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString *log) {//在register之前打开log, 后续可以根据log排查问题
         QLLog(@"WeChatSDK: %@", log);
@@ -84,8 +84,8 @@
     }
     //初始化 JPush 代码
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [JPUSHService setupWithOption:launchOptions appKey:@"2c8ea5af3f409621880b139c" channel:@"App Store" apsForProduction:YES advertisingIdentifier:advertisingId];
+    
+    [JPUSHService setupWithOption:launchOptions appKey:@"2c8ea5af3f409621880b139c" channel:@"App Store" apsForProduction:NO];
     //远程推送的消息
     if (launchOptions) {
         NSDictionary * userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

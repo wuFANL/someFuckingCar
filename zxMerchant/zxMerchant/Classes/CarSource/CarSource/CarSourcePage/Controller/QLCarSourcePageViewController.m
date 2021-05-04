@@ -19,7 +19,7 @@
 @property (nonatomic, strong) QLCarSourceNaviView *naviView;
 @property (nonatomic, strong) QLCarSourceHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
-
+@property (nonatomic, strong) NSMutableDictionary *conditionDic;
 @end
 
 @implementation QLCarSourcePageViewController
@@ -84,12 +84,16 @@
 }
 
 - (void)checkIsHasSelectItem{
-    BOOL hasSelect = NO;
+    BOOL hasSelect = self.conditionDic.count ==0?NO:YES;
     if (hasSelect) {
         // show
+        self.headView.showResultView = YES;
+        
+        self.headView.conditionResultView.itemArr = self.conditionDic.allValues;
+        
     } else {
         // hide
-        
+        self.headView.showResultView = NO;
     }
 }
 
@@ -213,9 +217,14 @@
                 //选项选择
                 if (type == 0&&indexPath.row >= 0) {
                     weakSelf.vcView.sort_by = indexPath.row+1;
-                    weakSelf.headView.conditionView.dataArr[0] = dataArr[indexPath.row];
+                    NSString *sort_by_Str = dataArr[indexPath.row];
+                    weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
+                    
+                    [weakSelf.conditionDic setObject:sort_by_Str forKey:@"sort_by"];
                 } else if (type == 2&&indexPath.row >= 0) {
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
+                    
+                    [weakSelf.conditionDic setObject:weakSelf.vcView.priceRangeArr[indexPath.row] forKey:@"priceRange"];
                 }
                 [weakSelf reloadSubVcData];
             }
@@ -233,6 +242,10 @@
         cbVC.callback = ^(QLBrandInfoModel * _Nullable brandModel, QLSeriesModel * _Nullable seriesModel, QLTypeInfoModel * _Nullable typeModel) {
             if (brandModel.brand_id.length != 0) {
                 weakSelf.vcView.brandModel = brandModel;
+                
+                NSString *carName = [NSString stringWithFormat:@"%@%@",brandModel.brand_name,seriesModel.series_name];
+                [weakSelf.conditionDic setObject:carName forKey:@"carName"];
+                
                 [weakSelf reloadSubVcData];
             }
         };
@@ -286,7 +299,19 @@
         _headView.conditionView.showScreenItem = YES;
         _headView.conditionView.delegate = self;
         
-        _headView.conditionResultView.itemArr = @[@"本田",@"20万以上"];
+        _headView.conditionResultView.dataHandler = ^(id result) {
+            NSArray *dataArr = result;
+            //数据变化回调
+            NSInteger diffIndex = -1;
+            for (NSString *value in self.conditionDic.allValues) {
+                if (![dataArr containsObject:value]) {
+                    diffIndex = [self.conditionDic.allValues indexOfObject:value];
+                }
+            }
+            [self.conditionDic removeObjectAtIndex:diffIndex];
+            // 检查是否有筛选项
+            [self checkIsHasSelectItem];
+        };
     }
     return _headView;
 }
@@ -296,5 +321,11 @@
         
     }
     return _vcView;
+}
+- (NSMutableDictionary *)conditionDic {
+    if (!_conditionDic) {
+        _conditionDic = [NSMutableDictionary dictionary];
+    }
+    return _conditionDic;
 }
 @end

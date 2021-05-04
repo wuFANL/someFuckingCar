@@ -201,7 +201,27 @@
         [self.tableView reloadData];
     } else {
         //确定
-        
+        if([self.chooseCarArr count] > 0) {
+            __block NSString *carList = @"";
+            [self.chooseCarArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                 if([carList isEqualToString:@""])
+                 {
+                     carList = [obj objectForKey:@"id"];
+                 } else {
+                     carList = [NSString stringWithFormat:@"%@,%@",carList,[obj objectForKey:@"id"]];
+                 }
+            }];
+            
+            [MBProgressHUD showCustomLoading:@""];
+            NSString *business_id = [self.sourceDic objectForKey:@"business_id"];
+            [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"select_car.",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":business_id,@"car_ids":carList,@"state":@"1"} success:^(id response) {
+                [MBProgressHUD immediatelyRemoveHUD];
+                [self cancelBtnClick];
+                [self.tableView reloadData];
+            } fail:^(NSError *error) {
+                [MBProgressHUD showError:error.domain];
+            }];
+        }
     }
 }
 //取消

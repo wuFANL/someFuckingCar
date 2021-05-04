@@ -23,6 +23,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) NSInteger type;
 /**
+ *智能排序选项
+ */
+@property (nonatomic, copy) NSArray *sort_byArr;
+/**
+ *价格排序选项
+ */
+@property (nonatomic, copy) NSArray *priceRangeArr;
+/**
+ *状态排序选项
+ */
+@property (nonatomic, copy) NSArray *deal_stateArr;
+/**
  *排序
  */
 @property (nonatomic, assign) NSInteger sort_by;
