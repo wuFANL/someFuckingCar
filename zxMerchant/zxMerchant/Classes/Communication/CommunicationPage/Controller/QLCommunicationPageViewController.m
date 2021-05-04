@@ -35,6 +35,10 @@
     }];
     //subView
     QLMessagePageViewController *mpVC = [QLMessagePageViewController new];
+    [mpVC setMsgBlock:^(NSDictionary * _Nonnull messageDic) {
+        [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:[messageDic objectForKey:@"head"]] forState:UIControlStateNormal];
+        self.headView.accBtn.badgeValue = [messageDic objectForKey:@"badge"];
+    }];
     QLContactsPageViewController *cpVC = [QLContactsPageViewController new];
     [cpVC setHeaderBlock:^(NSString * _Nonnull headerPath) {
         [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
