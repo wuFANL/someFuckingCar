@@ -224,6 +224,7 @@
         } else if (indexPath.row == 4) {
             //车友圈
             QLRidersDynamicViewController *rdVC = [QLRidersDynamicViewController new];
+            rdVC.friendId = self.firendId;
             [self.navigationController pushViewController:rdVC animated:YES];
         }
     }

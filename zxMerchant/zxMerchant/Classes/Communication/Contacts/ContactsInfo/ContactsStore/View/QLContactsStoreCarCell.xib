@@ -25,11 +25,8 @@
                             <constraint firstAttribute="width" constant="140" id="Naa-ha-iIe"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ova-hT-uIq">
-                        <rect key="frame" x="15" y="12" width="45" height="45"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="45" id="ytg-6d-Yph"/>
-                        </constraints>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cooperationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ova-hT-uIq">
+                        <rect key="frame" x="15" y="12" width="49" height="19"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77j-n6-Hb5">
                         <rect key="frame" x="170" y="12" width="31" height="18"/>
@@ -97,7 +94,6 @@
                     <constraint firstItem="5xG-Um-rEd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="gLW-BR-gb0"/>
                     <constraint firstItem="5xG-Um-rEd" firstAttribute="top" secondItem="ova-hT-uIq" secondAttribute="top" id="guO-m5-qL8"/>
                     <constraint firstItem="DqC-WE-s2U" firstAttribute="trailing" secondItem="DTl-4i-6Zi" secondAttribute="trailing" id="jFI-QR-dce"/>
-                    <constraint firstItem="ova-hT-uIq" firstAttribute="width" secondItem="ova-hT-uIq" secondAttribute="height" multiplier="1:1" id="pfv-6O-NhC"/>
                     <constraint firstItem="rnx-Pe-PEk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ws1-wj-KF8"/>
                     <constraint firstItem="Rt8-cG-8dT" firstAttribute="leading" secondItem="DTl-4i-6Zi" secondAttribute="trailing" constant="16" id="xNF-jG-1vo"/>
                 </constraints>
@@ -118,6 +114,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="cooperationIcon" width="49" height="19"/>
         <image name="noSelect_gray" width="15" height="15"/>
         <image name="selectSuccess_green" width="20" height="20"/>
         <systemColor name="groupTableViewBackgroundColor">

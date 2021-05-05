@@ -10,6 +10,8 @@
 
 
 @interface QLContactsStoreFilterItemsCell()<QLBaseCollectionViewDelegate>
+@property (nonatomic, assign) NSInteger carIndex;
+@property (nonatomic, assign) NSInteger priceIndex;
 
 @end
 @implementation QLContactsStoreFilterItemsCell
@@ -32,6 +34,8 @@
         make.bottom.equalTo(self.priceCollectionView.mas_top);
     }];
     self.priceCollectionView.dataArr = [@[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"] mutableCopy];
+    self.carIndex = -1;
+    self.priceIndex = -1;
 }
 
 -(IBAction)actionALlCar:(id)sender
@@ -49,6 +53,7 @@
         NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
         [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"image_url"]]];
         item.titleLB.text = [dic objectForKey:@"brand_name"];
+        [item.contentView roundRectCornerRadius:3 borderWidth:1 borderColor:(self.carIndex == indexPath.row?GreenColor:ClearColor)];
         
     } else if ([baseCell isKindOfClass:[QLConditionsItem class]]) {
         QLConditionsItem *item = (QLConditionsItem *)baseCell;
@@ -56,12 +61,14 @@
         item.deleteLeftSpace.constant = 0;
         item.deleteBtn.hidden = YES;
         item.titleLB.text = [dataArr objectAtIndex:indexPath.row];
-        [item roundRectCornerRadius:2 borderWidth:1 borderColor:[UIColor lightGrayColor]];
+        item.titleLB.textColor = self.priceIndex == indexPath.row?GreenColor:[UIColor lightGrayColor];
+        [item roundRectCornerRadius:3 borderWidth:1 borderColor:(self.priceIndex == indexPath.row?GreenColor:[UIColor lightGrayColor])];
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if(collectionView.tag == 10086)
     {
+        self.carIndex = indexPath.row;
         //车标
         NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
         if(self.carBlock)
@@ -71,6 +78,7 @@
     }
     else
     {
+        self.priceIndex = indexPath.row;
         //价格
         NSString *price = [dataArr objectAtIndex:indexPath.row];
         if(self.carPriceBlock)
@@ -78,6 +86,7 @@
             self.carPriceBlock(price);
         }
     }
+    [collectionView reloadData];
 }
 #pragma mark - Lazy
 - (QLBaseCollectionView *)carIconCollectionView {

@@ -300,6 +300,7 @@
         cell.timeLB.text = [[[dic objectForKey:@"update_time"] componentsSeparatedByString:@" "] firstObject];
         cell.addressLB.text = [dic objectForKey:@"city_belong"];
         cell.priceLB.text = [NSString stringWithFormat:@"%.1f万",[[dic objectForKey:@"wholesale_price"] floatValue]/10000];
+        cell.accImgView.image =  [[dic objectForKey:@"cooperation_flag"] boolValue]?[UIImage imageNamed:@"cooperationIcon"]:nil;
         
         cell.selectBtn.tag = indexPath.row;
         cell.selectBtn.selected = NO;

@@ -13,14 +13,14 @@
 #import "QLRidersDynamicTextCell.h"
 #import "QLCarCircleImgCell.h"
 #import "QLRidersDynamicDetailViewController.h"
-#import <MJRefresh.h>
-@interface QLRidersDynamicViewController ()<UITableViewDelegate,UITableViewDataSource,QLBannerViewDelegate>
+#import "QLRidersDynamicListModel.h"
+
+@interface QLRidersDynamicViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,QLBannerViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
 @property (nonatomic, strong) QLCarCircleHeadView *headView;
 
-@property (nonatomic, strong) NSString *friendId;
 @property (nonatomic, strong) NSMutableArray *listArray;
-@property (nonatomic, assign) NSInteger pageIndex;
+
 @end
 
 @implementation QLRidersDynamicViewController
@@ -42,9 +42,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.listArray = [[NSMutableArray alloc] initWithCapacity:0];
-    self.pageIndex = 1;
-    [self requestForFriendCirle];
     //导航栏
     [self.view addSubview:self.naviView];
     [self.naviView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -55,31 +52,35 @@
     [self tableViewSet];
 }
 
--(void)refreshHeaderDidPull
-{
-    
-}
-
--(void)refreshFooterDidPull
-{
-    
-}
-
--(void)requestForFriendCirle
-{
-    [MBProgressHUD showCustomLoading:@""];
-    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":self.friendId,@"page_no":[NSString stringWithFormat:@"%ldd",(long)self.pageIndex],@"page_size":@"20"} success:^(id response) {
+-(void)dataRequest {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":QLNONull(self.friendId),@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-        if(self.pageIndex == 1) {
+        if (self.tableView.page == 1) {
             [self.listArray removeAllObjects];
-            [self.listArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"dynamic_list"]];
-        } else {
-            [self.listArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"dynamic_list"]];
         }
-
+        NSArray *temArr = [NSArray yy_modelArrayWithClass:[QLRidersDynamicListModel class] json:response[@"result_info"][@"dynamic_list"]];
+        [self.listArray addObjectsFromArray:temArr];
+        //无数据设置
+        if (self.listArray.count == 0) {
+            self.tableView.hidden = YES;
+            self.showNoDataView = YES;
+        } else {
+            self.tableView.hidden = NO;
+            self.showNoDataView = NO;
+        }
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == listShowCount) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        //刷新
         [self.tableView reloadData];
         
     } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [MBProgressHUD showError:error.domain];
     }];
 }
@@ -105,6 +106,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
+    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showFootRefreshControl = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLRidersDynamicCell" bundle:nil] forCellReuseIdentifier:@"ridersDynamicCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLRidersDynamicTextCell" bundle:nil] forCellReuseIdentifier:@"ridersDynamicTextCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
@@ -116,10 +120,6 @@
         make.edges.equalTo(tableHeaderView);
     }];
     self.tableView.tableHeaderView = tableHeaderView;
-    
-    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
-    
-    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterDidPull)];
    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -179,5 +179,10 @@
     }
     return _headView;
 }
-
+- (NSMutableArray *)listArray {
+    if (!_listArray) {
+        _listArray = [NSMutableArray array];
+    }
+    return _listArray;
+}
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4672051726413DA8002E946A /* MessageListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4672051626413DA8002E946A /* MessageListModel.m */; };
 		46D288A726384C3000ED5063 /* MyFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D288A626384C3000ED5063 /* MyFriendsModel.m */; };
 		8B5444E2B6065B3A620CE255 /* libPods-zxMerchant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */; };
 		A00131032587CCFF0080EB21 /* QLCarCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00131022587CCFF0080EB21 /* QLCarCertificateViewController.m */; };
@@ -333,6 +334,7 @@
 		A087B88B259BA47B00432E8C /* QLSubmitTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B888259BA47A00432E8C /* QLSubmitTextCell.m */; };
 		A087B892259BA5EA00432E8C /* QLSubmitImgConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A087B890259BA5EA00432E8C /* QLSubmitImgConfigCell.m */; };
 		A087B893259BA5EA00432E8C /* QLSubmitImgConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A087B891259BA5EA00432E8C /* QLSubmitImgConfigCell.xib */; };
+		A0922C752641D64C00755B2F /* QLRidersDynamicListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */; };
 		A09EAAD025DD8C9E007D9075 /* QLSubmitSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A09EAACE25DD8C9D007D9075 /* QLSubmitSuccessViewController.m */; };
 		A09EAAD125DD8C9E007D9075 /* QLSubmitSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09EAACF25DD8C9D007D9075 /* QLSubmitSuccessViewController.xib */; };
 		A09EAAE325DEB2C4007D9075 /* QLVehicleCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A09EAADD25DEB2C4007D9075 /* QLVehicleCertificateViewController.m */; };
@@ -445,6 +447,8 @@
 
 /* Begin PBXFileReference section */
 		1FC797DA817D377725364FB6 /* Pods-zxMerchant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.release.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.release.xcconfig"; sourceTree = "<group>"; };
+		4672051526413DA8002E946A /* MessageListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageListModel.h; sourceTree = "<group>"; };
+		4672051626413DA8002E946A /* MessageListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageListModel.m; sourceTree = "<group>"; };
 		46D288A526384C3000ED5063 /* MyFriendsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFriendsModel.h; sourceTree = "<group>"; };
 		46D288A626384C3000ED5063 /* MyFriendsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFriendsModel.m; sourceTree = "<group>"; };
 		4D6A19686CBA7D7EA17CC708 /* Pods-zxMerchant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.debug.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1005,6 +1009,8 @@
 		A087B88F259BA5EA00432E8C /* QLSubmitImgConfigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLSubmitImgConfigCell.h; sourceTree = "<group>"; };
 		A087B890259BA5EA00432E8C /* QLSubmitImgConfigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLSubmitImgConfigCell.m; sourceTree = "<group>"; };
 		A087B891259BA5EA00432E8C /* QLSubmitImgConfigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLSubmitImgConfigCell.xib; sourceTree = "<group>"; };
+		A0922C732641D64C00755B2F /* QLRidersDynamicListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLRidersDynamicListModel.h; sourceTree = "<group>"; };
+		A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLRidersDynamicListModel.m; sourceTree = "<group>"; };
 		A09EAACD25DD8C9D007D9075 /* QLSubmitSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLSubmitSuccessViewController.h; sourceTree = "<group>"; };
 		A09EAACE25DD8C9D007D9075 /* QLSubmitSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLSubmitSuccessViewController.m; sourceTree = "<group>"; };
 		A09EAACF25DD8C9D007D9075 /* QLSubmitSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLSubmitSuccessViewController.xib; sourceTree = "<group>"; };
@@ -2109,6 +2115,7 @@
 			isa = PBXGroup;
 			children = (
 				A0733283254B485300570FDB /* Controller */,
+				A0922C6F2641D49400755B2F /* Model */,
 				A073328D254B48E500570FDB /* View */,
 			);
 			path = RidersDynamicPage;
@@ -3589,6 +3596,8 @@
 				A084CE39252CCC63006AE22F /* QLMsgGroupModel.m */,
 				A084CE40252CCD2C006AE22F /* QLMsgModel.h */,
 				A084CE3F252CCD2C006AE22F /* QLMsgModel.m */,
+				4672051526413DA8002E946A /* MessageListModel.h */,
+				4672051626413DA8002E946A /* MessageListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3711,6 +3720,15 @@
 				A087B891259BA5EA00432E8C /* QLSubmitImgConfigCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A0922C6F2641D49400755B2F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0922C732641D64C00755B2F /* QLRidersDynamicListModel.h */,
+				A0922C742641D64C00755B2F /* QLRidersDynamicListModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A09625AB25911312007D7CF7 /* ChangeMobile */ = {
@@ -4813,6 +4831,7 @@
 				A0865BF526309CD8001B85A3 /* QLSearchStoreListViewController.m in Sources */,
 				A00621312513DB3900A571E5 /* QLBaseViewController.m in Sources */,
 				A0CAB7DE2561230C0015FAE3 /* QLTransactionInfoCell.m in Sources */,
+				A0922C752641D64C00755B2F /* QLRidersDynamicListModel.m in Sources */,
 				A01243CC25EA3CD900A90BAD /* QLNoSubscriptionsView.m in Sources */,
 				A0492EF3256A677D00B5E23C /* QLVehicleSortView.m in Sources */,
 				A044AA96251FCBF600D1C324 /* QLFileManager.m in Sources */,
@@ -4892,6 +4911,7 @@
 				A006213E2513DB3900A571E5 /* QLBadgeButton.m in Sources */,
 				A09EAB5125DEBF90007D9075 /* QLBankCardCell.m in Sources */,
 				A031379925333B5300A94019 /* QLMsgSettingViewController.m in Sources */,
+				4672051726413DA8002E946A /* MessageListModel.m in Sources */,
 				A00621392513DB3900A571E5 /* MJDIYHeader.m in Sources */,
 				A0C901A92529C9820021C069 /* QLAddressBookListHeadView.m in Sources */,
 				A044AAD2251FCE6500D1C324 /* QLLoginViewController.m in Sources */,

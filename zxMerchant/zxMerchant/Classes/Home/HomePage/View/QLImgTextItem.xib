@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="func_101" translatesAutoresizingMaskIntoConstraints="NO" id="rgF-7z-Gp3">
-                        <rect key="frame" x="12" y="0.0" width="65" height="65"/>
+                        <rect key="frame" x="13" y="2" width="63" height="63"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="rgF-7z-Gp3" secondAttribute="height" multiplier="1:1" id="flL-Kq-eEV"/>
                         </constraints>
@@ -36,7 +36,7 @@
             </view>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <constraints>
-                <constraint firstItem="rgF-7z-Gp3" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="-15" id="7Qc-Bg-4dg"/>
+                <constraint firstItem="rgF-7z-Gp3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="4SI-N4-Rwx"/>
                 <constraint firstItem="3GT-1J-AuV" firstAttribute="centerX" secondItem="rgF-7z-Gp3" secondAttribute="centerX" id="8W0-cw-O50"/>
                 <constraint firstAttribute="bottom" secondItem="3GT-1J-AuV" secondAttribute="bottom" constant="2" id="Ex6-2d-QVl"/>
                 <constraint firstItem="rgF-7z-Gp3" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="TR8-xx-a5O"/>
