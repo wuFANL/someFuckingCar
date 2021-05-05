@@ -21,7 +21,8 @@
 
 @interface QLMePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLMePageHeadView *headView;
-
+/** 数据源*/
+@property (nonatomic, strong) NSDictionary *dataInfo;
 @end
 
 @implementation QLMePageViewController
@@ -40,7 +41,8 @@
     };
     WEAKSELF
     [QLNetworkingManager postWithUrl:UserPath params:para success:^(id response) {
-        [weakSelf.tableView reloadData];
+        weakSelf.dataInfo = [response objectForKey:@"result_info"];
+        [weakSelf.headView updateData:weakSelf.dataInfo];
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
@@ -108,7 +110,8 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
+    //    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
@@ -119,12 +122,20 @@
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
     cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#FF6600"];
     cell.detailTextLabel.text = @"";
+    //    if (indexPath.row == 0) {
+    //        cell.textLabel.text = @"店账户余额(元) ";
+    //        cell.detailTextLabel.text = @"0.0";
+    //    } else if (indexPath.row == 1) {
+    //        cell.textLabel.text = @"员工管理";
+    //    } else if (indexPath.row == 2) {
+    //        cell.textLabel.text = @"专属客服";
+    //    } else {
+    //        cell.textLabel.text = @"系统设置";
+    //    }
+    
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"店账户余额(元) ";
-        cell.detailTextLabel.text = @"0.0";
-    } else if (indexPath.row == 1) {
         cell.textLabel.text = @"员工管理";
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 1) {
         cell.textLabel.text = @"专属客服";
     } else {
         cell.textLabel.text = @"系统设置";
@@ -139,6 +150,16 @@
         [self.navigationController pushViewController:slVC animated:YES];
     } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-2) {
         //专属客服
+        [MBProgressHUD showLoading:@"正在查询"];
+        WEAKSELF
+        [QLNetworkingManager postWithUrl:HomePath params:@{@"operation_type":@"customer_service_tel",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"region_code":@""} success:^(id response) {
+            [MBProgressHUD hideHUDForView:weakSelf.view animated:NO];
+            NSString *telephoneNumber = EncodeStringFromDic([response objectForKey:@"result_info"], @"tel");
+            NSMutableString * str= [[NSMutableString alloc] initWithFormat:@"telprompt://%@",telephoneNumber];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
         
     } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
         //设置

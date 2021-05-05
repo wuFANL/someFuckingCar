@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *bImgView;
 @property (weak, nonatomic) IBOutlet UILabel *bTitleLB;
 
+
+- (void)updateWithStaff:(BOOL)isStaff andIndexPath:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QLAddStaffViewController : QLBaseTableViewController
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
 
+/** 是否是新增员工*/
+@property (nonatomic, assign) BOOL isAddStaff;
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;

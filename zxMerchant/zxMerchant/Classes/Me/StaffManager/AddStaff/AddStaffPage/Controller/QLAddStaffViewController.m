@@ -33,6 +33,7 @@
 }
 #pragma mark - action
 - (void)codeBtnClick {
+    // 获取验证码
     
 }
 - (void)aControlClick:(UIControl *)control {
@@ -71,7 +72,7 @@
         cell.bControl.tag = indexPath.row;
         [cell.aControl addTarget:self action:@selector(aControlClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.bControl addTarget:self action:@selector(bControlClick:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [cell updateWithStaff:self.isAddStaff andIndexPath:indexPath.row];
         return cell;
     } else {
         QLContentTFCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tfCell" forIndexPath:indexPath];

@@ -16,7 +16,8 @@
 @interface QLStaffListViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
 
-
+/** 员工数据*/
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation QLStaffListViewController
@@ -37,10 +38,30 @@
     //tableView
     [self tableViewSet];
     
+    [self sendRequest];
 }
+
+- (void)sendRequest{
+    NSDictionary * para = @{
+        @"operation_type":@"personnel_list",
+        @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id
+    };
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:para success:^(id response) {
+        NSArray *dataArr = [[response objectForKey:@"result_info"] objectForKey:@"at_work_personnel_list"];
+        if ([dataArr isKindOfClass:[NSArray class]]) {
+            weakSelf.dataArray = [dataArr mutableCopy];
+            [weakSelf.tableView reloadData];
+        }
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 #pragma mark - action
 - (void)funBtnClick {
     QLAddStaffViewController *asVC = [QLAddStaffViewController new];
+    asVC.isAddStaff = YES;
     [self.navigationController pushViewController:asVC animated:YES];
 }
 
@@ -60,12 +81,11 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLStoreInvitationListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeInvitationListCell" forIndexPath:indexPath];
-   
-    
+    [cell updateWithData:self.dataArray[indexPath.row]];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

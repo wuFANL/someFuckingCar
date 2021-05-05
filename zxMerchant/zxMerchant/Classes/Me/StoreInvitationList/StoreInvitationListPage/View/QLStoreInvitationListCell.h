@@ -11,12 +11,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLStoreInvitationListCell : UITableViewCell
+// 头像
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
+// 昵称
 @property (weak, nonatomic) IBOutlet UILabel *nameLB;
+
+// 电话号码
 @property (weak, nonatomic) IBOutlet QLBaseButton *mobileBtn;
 @property (weak, nonatomic) IBOutlet QLBaseButton *iconBtn;
+// 状态
 @property (weak, nonatomic) IBOutlet QLBaseButton *statusBtn;
 
+- (void)updateWithData:(NSDictionary *)data;
 @end
 
 NS_ASSUME_NONNULL_END
