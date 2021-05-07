@@ -13,8 +13,18 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self.numLB roundRectCornerRadius:15*0.5 borderWidth:1 borderColor:ClearColor];
-    
-    
 }
 
+-(void)showBadge:(NSString *)num
+{
+    if([num intValue] > 0)
+    {
+        self.numLB.hidden = NO;
+        self.numLB.text = num;
+    }
+    else
+    {
+        self.numLB.hidden = YES;
+    }
+}
 @end

@@ -21,9 +21,37 @@
 @property (nonatomic, assign) NSInteger chooseTypeIndex;
 @property (nonatomic, strong) QLChatBottomView *bottomView;
 
+@property (nonatomic, strong) MessageDetailModel *detlModel;
+@property (nonatomic, strong) NSMutableArray *topArray;
 @end
 
 @implementation QLChatListPageViewController
+
+-(id)initWithMessageDetailModel:(MessageDetailModel *)detailModel
+{
+    self = [super init];
+    if(self)
+    {
+        self.detlModel = detailModel;
+        self.topArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
+}
+
+-(void)requestForChatTop
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@""} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+
+        [self.topArray removeAllObjects];
+        [self.topArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"all_car_list"]];
+        self.collectionView.dataArr = [self.topArray mutableCopy];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -31,6 +59,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //导航栏
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"helpMallNaviIcon"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -40,7 +69,7 @@
         make.left.right.top.equalTo(self.view);
         make.height.mas_equalTo(88);
     }];
-    self.collectionView.dataArr = [@[@"1",@"2",@"3"] mutableCopy];
+
     //底部
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,6 +82,8 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self requestForChatTop];
 }
 
 #pragma mark - action
@@ -156,7 +187,11 @@
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:[QLChatListHeadItem class]]) {
+        NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
         QLChatListHeadItem *item = (QLChatListHeadItem *)baseCell;
+        [item showBadge:[dic objectForKey:@"msg_count"]];
+        [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+        
         [item.imgView roundRectCornerRadius:2 borderWidth:3 borderColor:indexPath.row == self.chooseTypeIndex?GreenColor:ClearColor];
         
     }

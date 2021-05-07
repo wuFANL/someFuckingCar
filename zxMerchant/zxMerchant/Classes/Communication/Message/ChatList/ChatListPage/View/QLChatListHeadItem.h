@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet QLBaseButton *iconBtn;
 @property (weak, nonatomic) IBOutlet UILabel *numLB;
-
+-(void)showBadge:(NSString *)num;
 @end
 
 NS_ASSUME_NONNULL_END
