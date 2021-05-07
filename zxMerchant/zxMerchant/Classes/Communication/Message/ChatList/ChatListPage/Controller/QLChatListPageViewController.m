@@ -191,7 +191,24 @@
         QLChatListHeadItem *item = (QLChatListHeadItem *)baseCell;
         [item showBadge:[dic objectForKey:@"msg_count"]];
         [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
-        
+        NSString *belonger = [dic objectForKey:@"belonger"];
+        NSString *t_id = [dic objectForKey:@"t_id"];
+        item.iconBtn.hidden = NO;
+        if([belonger isEqualToString:[QLUserInfoModel getLocalInfo].account.account_id])
+        {
+            [item.iconBtn setTitle:@"我的" forState:UIControlStateNormal];
+        }
+        else
+        {
+            if([t_id intValue] > 0)
+            {
+                [item.iconBtn setTitle:@"洽谈" forState:UIControlStateNormal];
+            }
+            else
+            {
+                item.iconBtn.hidden = YES;
+            }
+        }
         [item.imgView roundRectCornerRadius:2 borderWidth:3 borderColor:indexPath.row == self.chooseTypeIndex?GreenColor:ClearColor];
         
     }
@@ -204,6 +221,7 @@
 - (QLBaseCollectionView *)collectionView {
     if (!_collectionView) {
         QLItemModel *model = [QLItemModel new];
+        model.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         model.sectionInset = UIEdgeInsetsMake(15, 12, 15, 0);
         model.Spacing = QLMinimumSpacingMake(10, 10);
         model.rowCount = 1;
