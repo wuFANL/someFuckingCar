@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLSysMsgListViewController : QLBaseTableViewController
+-(id)initWithTitle:(NSString *)titleStr;
 /**
  *分组名
  */

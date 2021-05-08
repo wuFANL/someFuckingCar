@@ -16,14 +16,95 @@
 #import "QLTransactionSubmitViewController.h"
 #import "QLCarLicenseViewController.h"
 
-@interface QLChatListPageViewController ()<QLBaseCollectionViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface QLChatListPageViewController ()<QLBaseCollectionViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
 @property (nonatomic, assign) NSInteger chooseTypeIndex;
 @property (nonatomic, strong) QLChatBottomView *bottomView;
 
+@property (nonatomic, strong) MessageDetailModel *detlModel;
+@property (nonatomic, strong) NSMutableArray *topArray;
+@property (nonatomic, strong) NSMutableArray *chatListArray;
+@property (nonatomic, strong) NSDictionary *currentDic;
+@property (nonatomic, strong) NSString *currentID;
 @end
 
 @implementation QLChatListPageViewController
+
+-(id)initWithMessageDetailModel:(MessageDetailModel *)detailModel
+{
+    self = [super init];
+    if(self)
+    {
+        self.detlModel = detailModel;
+        self.topArray = [[NSMutableArray alloc] initWithCapacity:0];
+        self.chatListArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
+}
+
+-(void)requestForChatTop
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@""} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+
+        [self.topArray removeAllObjects];
+        [self.topArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"all_car_list"]];
+        self.collectionView.dataArr = [self.topArray mutableCopy];
+        if([self.collectionView.dataArr count] > 0)
+        {
+            [self requestForChatList:[self.collectionView.dataArr firstObject]];
+            self.currentDic = [[self.collectionView.dataArr firstObject] copy];
+        }
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+- (void)dataRequest
+{
+    [self requestForChatList:self.currentDic];
+}
+
+-(void)requestForChatList:(NSDictionary *)dic
+{
+    if(![[dic objectForKey:@"id"] isEqualToString:self.currentID])
+    {
+        self.tableView.page = 1;
+    }
+    self.currentID = [dic objectForKey:@"id"];
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+
+        if (self.tableView.page == 1) {
+            [self.chatListArray removeAllObjects];
+        }
+        NSArray *temArr = [NSArray arrayWithArray:[[response objectForKey:@"result_info"] objectForKey:@"detail_list"]];
+        [self.chatListArray addObjectsFromArray:temArr];
+        //无数据设置
+        if (self.chatListArray.count == 0) {
+            self.tableView.hidden = YES;
+            self.showNoDataView = YES;
+        } else {
+            self.tableView.hidden = NO;
+            self.showNoDataView = NO;
+        }
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == 20) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        
+        [self.tableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -31,6 +112,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //导航栏
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"helpMallNaviIcon"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -40,7 +122,7 @@
         make.left.right.top.equalTo(self.view);
         make.height.mas_equalTo(88);
     }];
-    self.collectionView.dataArr = [@[@"1",@"2",@"3"] mutableCopy];
+
     //底部
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,6 +135,8 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self requestForChatTop];
 }
 
 #pragma mark - action
@@ -110,34 +194,49 @@
         make.top.equalTo(self.collectionView.mas_bottom);
         make.bottom.equalTo(self.bottomView.mas_top);
     }];
+    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showFootRefreshControl = YES;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return [self.chatListArray count];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLChatMsgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatMsgCell" forIndexPath:indexPath];
-    if (indexPath.section == 0) {
+    
+    NSDictionary *dic = [self.chatListArray objectAtIndex:indexPath.section];
+    [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
+    NSString *mtype = [dic objectForKey:@"m_type"];
+    if([mtype isEqualToString:@"1"] || [mtype isEqualToString:@"3"] || [mtype isEqualToString:@"6"]) {
         cell.msgType = TextMsg;
-        cell.msgReceiver = MyMsg;
-    } else if (indexPath.section == 1) {
+    } else if([mtype isEqualToString:@"2"]) {
         cell.msgType = ImgMsg;
-        cell.msgReceiver = OtherMsg;
     } else {
         cell.msgType = AskMsg;
+    }
+    //内容
+    if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"from_account_id"]])
+    {
+        //我发别人
+        cell.msgReceiver = MyMsg;
+    }
+    else
+    {
+        //别人发给我
         cell.msgReceiver = OtherMsg;
     }
-    
+
     return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
+    NSDictionary *dic = [self.chatListArray objectAtIndex:section];
     UILabel *lb = [UILabel new];
     lb.textColor = [UIColor colorWithHexString:@"#999999"];
     lb.font = [UIFont systemFontOfSize:13];
-    lb.text = @"时间";
+    lb.text = [dic objectForKey:@"create_time"];
     [headerView addSubview:lb];
     [lb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(headerView);
@@ -156,19 +255,36 @@
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:[QLChatListHeadItem class]]) {
+        NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
         QLChatListHeadItem *item = (QLChatListHeadItem *)baseCell;
+        [item showBadge:[dic objectForKey:@"msg_count"]];
+        [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+        NSString *belonger = [dic objectForKey:@"belonger"];
+        NSString *t_id = [dic objectForKey:@"t_id"];
+        item.iconBtn.hidden = NO;
+        if([belonger isEqualToString:[QLUserInfoModel getLocalInfo].account.account_id]) {
+            [item.iconBtn setTitle:@"我的" forState:UIControlStateNormal];
+        } else {
+            if([t_id intValue] > 0) {
+                [item.iconBtn setTitle:@"洽谈" forState:UIControlStateNormal];
+            } else {
+                item.iconBtn.hidden = YES;
+            }
+        }
         [item.imgView roundRectCornerRadius:2 borderWidth:3 borderColor:indexPath.row == self.chooseTypeIndex?GreenColor:ClearColor];
-        
     }
 }
 -(void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     self.chooseTypeIndex = indexPath.row;
+    [self requestForChatList:[self.topArray objectAtIndex:indexPath.row]];
+    self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];
     [collectionView reloadData];
 }
 #pragma mark - Lazy
 - (QLBaseCollectionView *)collectionView {
     if (!_collectionView) {
         QLItemModel *model = [QLItemModel new];
+        model.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         model.sectionInset = UIEdgeInsetsMake(15, 12, 15, 0);
         model.Spacing = QLMinimumSpacingMake(10, 10);
         model.rowCount = 1;

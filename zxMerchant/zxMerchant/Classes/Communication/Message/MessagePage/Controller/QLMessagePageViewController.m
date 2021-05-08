@@ -145,12 +145,12 @@
     MessageDetailModel *model = [self.dataModel.info_list objectAtIndex:indexPath.row];
     if ([model.type isEqualToString:@"2"]) {
         //通知
-        QLSysMsgListViewController *smlVC = [QLSysMsgListViewController new];
+        QLSysMsgListViewController *smlVC = [[QLSysMsgListViewController alloc] initWithTitle:[model.msgSet objectForKey:@"title"]];
         [self.navigationController pushViewController:smlVC animated:YES];
     } else {
         //聊天
-        QLChatListPageViewController *clpVC = [QLChatListPageViewController new];
-        clpVC.navigationItem.title = @"对方账号名称";
+        QLChatListPageViewController *clpVC = [[QLChatListPageViewController alloc] initWithMessageDetailModel:model];
+        clpVC.navigationItem.title = [[model.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"nickname"];
         [self.navigationController pushViewController:clpVC animated:YES];
     }
 }
