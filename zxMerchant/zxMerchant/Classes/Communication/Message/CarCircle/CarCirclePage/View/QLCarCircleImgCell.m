@@ -8,6 +8,8 @@
 
 #import "QLCarCircleImgCell.h"
 #import "QLCarCircleImgItem.h"
+#import "QLFullScreenImgView.h"
+#import "QLRidersDynamicListModel.h"
 
 @interface QLCarCircleImgCell()<QLBaseCollectionViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -42,10 +44,13 @@
     if ([baseCell isKindOfClass:[QLCarCircleImgItem class]]) {
         QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
         item.playBtn.hidden = self.dataType==ImageType?YES:NO;
-        NSDictionary * infoDic = dataArr[indexPath.row];
-        if ([infoDic isKindOfClass:[NSDictionary class]]&&[infoDic objectForKey:@"pic_url"]) {
-            NSString *url = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"pic_url"]];
+        id obj = dataArr[indexPath.row];
+        if ([obj isKindOfClass:[NSDictionary class]]&&[(NSDictionary *)obj objectForKey:@"pic_url"]) {
+            NSString *url = [NSString stringWithFormat:@"%@",[(NSDictionary *)obj objectForKey:@"pic_url"]];
             [item.imgView sd_setImageWithURL:[NSURL URLWithString:url]];
+        } else if ([obj isKindOfClass:[QLRidersDynamicFileModel class]]) {
+            QLRidersDynamicFileModel *model = obj;
+            [item.imgView sd_setImageWithURL:[NSURL URLWithString:model.file_url]];
         }
         
         
@@ -53,7 +58,15 @@
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     // 图片放大
-    
+    UICollectionViewCell *baseCell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([baseCell isKindOfClass:[QLCarCircleImgItem class]]) {
+        QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
+        if (item.imgView.image) {
+            QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
+            fsiView.img = item.imgView.image;
+            [fsiView show];
+        }
+    }
 }
 
 

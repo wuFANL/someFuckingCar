@@ -30,9 +30,7 @@
 //车友圈新消息
 -(void)requestForCircleNew
 {
-    [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"to_read/count",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
-        [MBProgressHUD immediatelyRemoveHUD];
         
         NSString *toreadcount = [[response objectForKey:@"result_info"] objectForKey:@"to_read_count"];
         NSString *head = [[response objectForKey:@"result_info"] objectForKey:@"head_pic"];
@@ -180,8 +178,8 @@
     
     return headerView;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.row < 5?65:95;
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return 100;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;

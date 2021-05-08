@@ -51,10 +51,25 @@
     //tableView
     [self tableViewSet];
 }
-
--(void)dataRequest {
+#pragma - network
+- (void)getStoreInfo {
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"info",@"account_id":self.friendId,@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        NSDictionary *resultDic = response[@"result_info"];
+        
+        self.headView.bannerView.imagesArr = @[QLNONull(resultDic[@"business_store"][@"cover_image"])];
+        [self.headView.headBtn sd_setImageWithURL:[NSURL URLWithString:QLNONull(resultDic[@"user_info"][@"head_pic"])] forState:UIControlStateNormal];
+        self.headView.nameLB.text = QLNONull(resultDic[@"business_store"][@"name"]);
+        [self.headView.storeNameBtn setTitle:QLNONull(resultDic[@"business_store"][@"business_name"]) forState:UIControlStateNormal];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+- (void)dataRequest {
+    if (self.tableView.page == 1) {
+        [self getStoreInfo];
+    }
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":QLNONull(self.friendId),@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
-        [MBProgressHUD immediatelyRemoveHUD];
         if (self.tableView.page == 1) {
             [self.listArray removeAllObjects];
         }
@@ -88,7 +103,7 @@
 #pragma mark - action
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
-    
+    [imageBtn sd_setImageWithURL:[NSURL URLWithString:imageArr[index]] forState:UIControlStateNormal];
 }
 //轮播图点击
 - (void)bannerView:(QLBannerView *)bannerView ImageClick:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
@@ -123,30 +138,27 @@
    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.listArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0?1:2;
+    if (section < self.listArray.count) {
+        QLRidersDynamicListModel *model = self.listArray[section];
+        return model.file_array.count == 0?1:2;
+    }
+    return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        QLRidersDynamicCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ridersDynamicCell" forIndexPath:indexPath];
-        cell.dataType = NoDynamicData;
-
+    QLRidersDynamicListModel *model = self.listArray[indexPath.section];
+    if (indexPath.row == 0) {
+        QLRidersDynamicTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ridersDynamicTextCell" forIndexPath:indexPath];
+        cell.model = model;
         return cell;
     } else {
-        if (indexPath.row == 0) {
-            QLRidersDynamicTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ridersDynamicTextCell" forIndexPath:indexPath];
-            
-            return cell;
-        } else {
-            QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
-            cell.dataType = indexPath.section/2==0?ImageType:VideoType;
-            cell.dataArr = [@[@"1",@"2",@"3",@"4"] mutableCopy];
-            return cell;
-        }
+        QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
+        cell.dataType = ImageType;
+        cell.dataArr = [model.file_array mutableCopy];
+        return cell;
     }
-
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row != 0) {

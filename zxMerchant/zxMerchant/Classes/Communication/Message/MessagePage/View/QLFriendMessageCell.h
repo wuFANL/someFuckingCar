@@ -18,10 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *accView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *accViewHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *accImgView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *accImgWidth;
 @property (weak, nonatomic) IBOutlet UILabel *accLB;
+@property (weak, nonatomic) IBOutlet UILabel *grayLB;
 
 @property (nonatomic, assign) NSInteger badgeValue;
-
+@property (nonatomic, assign) BOOL showAccImg;
 @end
 
 NS_ASSUME_NONNULL_END

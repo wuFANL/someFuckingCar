@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ridersDynamicTextCell" rowHeight="97" id="KGk-i7-Jjw" customClass="QLRidersDynamicTextCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ridersDynamicTextCell" rowHeight="97" id="KGk-i7-Jjw" customClass="QLRidersDynamicTextCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="97"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -27,6 +27,9 @@
                             <color key="titleColor" red="0.1202516332" green="0.40350627900000002" blue="0.60250306129999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <state key="selected" title="收起"/>
+                        <connections>
+                            <action selector="showBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5j2-nK-wAs"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-ne-hw7">
                         <rect key="frame" x="15" y="10" width="47" height="25"/>
@@ -56,6 +59,12 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="allBtn" destination="yA6-ei-4oC" id="Kee-jT-2I6"/>
+                <outlet property="allBtnHeight" destination="ikq-Zq-apg" id="qwC-ny-eIc"/>
+                <outlet property="contentLB" destination="xAb-zW-ae8" id="b0n-qo-rke"/>
+                <outlet property="timeLB" destination="cac-ne-hw7" id="CKt-gX-9hf"/>
+            </connections>
             <point key="canvasLocation" x="8.6956521739130448" y="97.433035714285708"/>
         </tableViewCell>
     </objects>

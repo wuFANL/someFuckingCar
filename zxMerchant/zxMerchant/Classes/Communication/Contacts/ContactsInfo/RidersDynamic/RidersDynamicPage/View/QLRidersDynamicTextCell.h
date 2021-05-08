@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLRidersDynamicTextCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *timeLB;
+@property (weak, nonatomic) IBOutlet UILabel *contentLB;
+@property (weak, nonatomic) IBOutlet UIButton *allBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *allBtnHeight;
+@property (nonatomic, assign) BOOL showAllBtn;
+@property (nonatomic, strong) id model;
 
 @end
 
