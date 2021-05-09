@@ -21,19 +21,18 @@
         QLRidersDynamicListModel *rdlModel = model;
         NSDate *date = [rdlModel.create_time dateFromString:@"yyyy-MM-dd HH:mm:ss"];
         
-        NSString *monthStr = [NSString stringWithFormat:@"%ld月",date.month];
-        NSString *dayStr = [NSString stringWithFormat:@"%ld",date.day];
+        NSString *monthStr = [NSString stringWithFormat:@"%02ld月",date.month];
+        NSString *dayStr = [NSString stringWithFormat:@"%02ld",date.day];
         NSString *timeStr = [NSString stringWithFormat:@"%@ %@",dayStr,monthStr];
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:timeStr attributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 18],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-        [string addAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 18]} range:[timeStr rangeOfString:dayStr]];
-        [string addAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 12]} range:[timeStr rangeOfString:monthStr]];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:timeStr attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:18],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+        [string addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize: 18]} range:[timeStr rangeOfString:dayStr]];
+        [string addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize: 12]} range:[timeStr rangeOfString:monthStr]];
         self.timeLB.attributedText = string;
         
         self.contentLB.text = rdlModel.dynamic_content;
         
         NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.contentLB.font withWidth:self.contentLB.width];
-        self.showAllBtn = row<=5?NO:YES;
-        QLLog(@"%ld",row);
+        self.showAllBtn = row <= 5?NO:YES;
     }
 }
 - (void)setShowAllBtn:(BOOL)showAllBtn {

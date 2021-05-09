@@ -155,8 +155,12 @@
         return cell;
     } else {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
+        cell.collectionViewHeight = model.fileCellHeight;
         cell.dataType = ImageType;
         cell.dataArr = [model.file_array mutableCopy];
+        cell.heightHandler = ^(id result) {
+            model.fileCellHeight = [result floatValue];
+        };
         return cell;
     }
 }

@@ -22,9 +22,17 @@
     
 }
 #pragma mark - setter
+- (void)setCollectionViewHeight:(CGFloat)collectionViewHeight {
+    _collectionViewHeight = collectionViewHeight;
+    
+    if (self.bjViewHeight.constant != self.collectionViewHeight && self.collectionViewHeight != 0) {
+        self.bjViewHeight.constant = self.collectionViewHeight;
+    }
+}
 //设置数据
 - (void)setDataArr:(NSMutableArray *)dataArr {
     _dataArr = dataArr;
+    
     self.collectionView.dataArr = dataArr;
 }
 //设置数据类型
@@ -75,9 +83,15 @@
     if ([keyPath isEqualToString:@"contentSize"]&&[object isKindOfClass:[UICollectionView class]]) {
         UICollectionView *collectionView = (UICollectionView *)object;
         CGFloat heigth  = collectionView.collectionViewLayout.collectionViewContentSize.height;
-        if (self.bjViewHeight.constant < heigth) {
+        
+        
+        if (![[NSString stringWithFormat:@"%.0f",self.bjViewHeight.constant] isEqualToString:[NSString stringWithFormat:@"%.0f",heigth]]) {
             self.bjViewHeight.constant = heigth;
-            
+            self.collectionViewHeight = heigth;
+            if (self.heightHandler) {
+                self.heightHandler(@(heigth));
+            }
+           
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
                 [((UITableView *)self.superview) reloadData];

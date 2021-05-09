@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yA6-ei-4oC">
-                        <rect key="frame" x="72" y="57" width="30" height="25"/>
+                        <rect key="frame" x="85" y="57" width="30" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="ikq-Zq-apg"/>
                         </constraints>
@@ -31,9 +31,10 @@
                             <action selector="showBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5j2-nK-wAs"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-ne-hw7">
-                        <rect key="frame" x="15" y="10" width="47" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-ne-hw7">
+                        <rect key="frame" x="15" y="10" width="60" height="25"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="60" id="bK7-P3-C5L"/>
                             <constraint firstAttribute="height" constant="25" id="dUf-HH-yxb"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
@@ -41,7 +42,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里填写发布的文案,发多少显示多少一直换行这里填写发布的文案" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAb-zW-ae8">
-                        <rect key="frame" x="72" y="10" width="232" height="36"/>
+                        <rect key="frame" x="85" y="10" width="219" height="37"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -55,7 +56,6 @@
                     <constraint firstItem="yA6-ei-4oC" firstAttribute="leading" secondItem="xAb-zW-ae8" secondAttribute="leading" id="Wg3-jB-b63"/>
                     <constraint firstItem="cac-ne-hw7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="eEw-RA-JYs"/>
                     <constraint firstItem="yA6-ei-4oC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xAb-zW-ae8" secondAttribute="bottom" constant="10" id="eo6-Ka-db9"/>
-                    <constraint firstItem="xAb-zW-ae8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="72" id="hwV-sT-r7c"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

@@ -25,6 +25,14 @@ typedef NS_ENUM(NSInteger,QLCarCircleDataType) {
  *数据数组
  */
 @property (nonatomic, strong) NSMutableArray *dataArr;
+/**
+ *记录collectionView高度
+ */
+@property (nonatomic, assign) CGFloat collectionViewHeight;
+/**
+ *返回collectionView高度
+ */
+@property (nonatomic, strong) resultBackBlock heightHandler;
 @end
 
 NS_ASSUME_NONNULL_END

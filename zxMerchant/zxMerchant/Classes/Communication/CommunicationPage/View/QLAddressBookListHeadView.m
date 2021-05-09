@@ -28,6 +28,8 @@
         //分区模块点击
         [self.sectionControl addTarget:self action:@selector(sectionControlClick) forControlEvents:UIControlEventTouchUpInside];
         
+        self.accBtn.hidden = YES;
+        self.accBtn.badgeValue = @"0";
     }
     return self;
 }
