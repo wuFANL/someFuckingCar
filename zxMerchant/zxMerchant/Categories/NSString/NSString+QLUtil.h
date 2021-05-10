@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+#import <CoreText/CoreText.h>
 @interface NSString (QLUtil)
 #pragma mark -实例调用
 /**
@@ -28,6 +28,10 @@
  */
 - (CGFloat)widthWithFont:(UIFont *)font;
 - (CGFloat)widthWithFontSize:(CGFloat)fontSize;
+/**
+ *字符串行数
+ */
+-(NSInteger)rowsOfStringWithFont:(UIFont *)font withWidth:(CGFloat)width;
 /**
  *时间字符串转换为时间戳
  */

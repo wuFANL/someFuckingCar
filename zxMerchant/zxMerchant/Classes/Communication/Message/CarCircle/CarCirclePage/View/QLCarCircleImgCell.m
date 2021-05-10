@@ -8,6 +8,8 @@
 
 #import "QLCarCircleImgCell.h"
 #import "QLCarCircleImgItem.h"
+#import "QLFullScreenImgView.h"
+#import "QLRidersDynamicListModel.h"
 
 @interface QLCarCircleImgCell()<QLBaseCollectionViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -20,9 +22,17 @@
     
 }
 #pragma mark - setter
+- (void)setCollectionViewHeight:(CGFloat)collectionViewHeight {
+    _collectionViewHeight = collectionViewHeight;
+    
+    if (self.bjViewHeight.constant != self.collectionViewHeight && self.collectionViewHeight != 0) {
+        self.bjViewHeight.constant = self.collectionViewHeight;
+    }
+}
 //设置数据
 - (void)setDataArr:(NSMutableArray *)dataArr {
     _dataArr = dataArr;
+    
     self.collectionView.dataArr = dataArr;
 }
 //设置数据类型
@@ -42,10 +52,13 @@
     if ([baseCell isKindOfClass:[QLCarCircleImgItem class]]) {
         QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
         item.playBtn.hidden = self.dataType==ImageType?YES:NO;
-        NSDictionary * infoDic = dataArr[indexPath.row];
-        if ([infoDic isKindOfClass:[NSDictionary class]]&&[infoDic objectForKey:@"pic_url"]) {
-            NSString *url = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"pic_url"]];
+        id obj = dataArr[indexPath.row];
+        if ([obj isKindOfClass:[NSDictionary class]]&&[(NSDictionary *)obj objectForKey:@"pic_url"]) {
+            NSString *url = [NSString stringWithFormat:@"%@",[(NSDictionary *)obj objectForKey:@"pic_url"]];
             [item.imgView sd_setImageWithURL:[NSURL URLWithString:url]];
+        } else if ([obj isKindOfClass:[QLRidersDynamicFileModel class]]) {
+            QLRidersDynamicFileModel *model = obj;
+            [item.imgView sd_setImageWithURL:[NSURL URLWithString:model.file_url]];
         }
         
         
@@ -53,7 +66,15 @@
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     // 图片放大
-    
+    UICollectionViewCell *baseCell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([baseCell isKindOfClass:[QLCarCircleImgItem class]]) {
+        QLCarCircleImgItem *item = (QLCarCircleImgItem *)baseCell;
+        if (item.imgView.image) {
+            QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
+            fsiView.img = item.imgView.image;
+            [fsiView show];
+        }
+    }
 }
 
 
@@ -62,9 +83,15 @@
     if ([keyPath isEqualToString:@"contentSize"]&&[object isKindOfClass:[UICollectionView class]]) {
         UICollectionView *collectionView = (UICollectionView *)object;
         CGFloat heigth  = collectionView.collectionViewLayout.collectionViewContentSize.height;
-        if (self.bjViewHeight.constant < heigth) {
+        
+        
+        if (![[NSString stringWithFormat:@"%.0f",self.bjViewHeight.constant] isEqualToString:[NSString stringWithFormat:@"%.0f",heigth]]) {
             self.bjViewHeight.constant = heigth;
-            
+            self.collectionViewHeight = heigth;
+            if (self.heightHandler) {
+                self.heightHandler(@(heigth));
+            }
+           
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
                 [((UITableView *)self.superview) reloadData];

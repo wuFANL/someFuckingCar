@@ -16,6 +16,7 @@
     if (self) {
         self = [QLCarCircleHeadView viewFromXib];
         
+        [self.headBtn roundRectCornerRadius:3 borderWidth:1 borderColor:ClearColor];
     }
     return self;
 }

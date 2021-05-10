@@ -33,6 +33,10 @@
 }
 #pragma mark - action
 - (void)addMsgView {
+    //移除之前图层
+    [self.msgView removeFromSuperview];
+    self.msgView = nil;
+    //新增
     if (self.msgReceiver != UnknowReceiver&&self.msgType != UnknowMsg) {
         if (self.msgType == TextMsg) {
             QLChatMsgAContentView *contentView = [QLChatMsgAContentView new];

@@ -56,6 +56,22 @@
     
     return ceilf(size.width);
 }
+#pragma mark- /**字符串行数*/
+-(NSInteger)rowsOfStringWithFont:(UIFont *)font withWidth:(CGFloat)width {
+    if (!self || self.length == 0) {
+        return 0;
+    }
+    CTFontRef myFont = CTFontCreateWithName(( CFStringRef)([font fontName]), [font pointSize], NULL);
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:self];
+    [attStr addAttribute:(NSString *)kCTFontAttributeName value:(__bridge  id)myFont range:NSMakeRange(0, attStr.length)];
+    CFRelease(myFont);
+    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString(( CFAttributedStringRef)attStr);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, CGRectMake(0,0,width,MAXFLOAT));
+    CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, 0), path, NULL);
+    NSArray *lines = ( NSArray *)CTFrameGetLines(frame);
+    return lines.count;
+}
 #pragma mark- /**时间字符串转换为时间戳*/
 - (NSString *)timeStampFromString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
