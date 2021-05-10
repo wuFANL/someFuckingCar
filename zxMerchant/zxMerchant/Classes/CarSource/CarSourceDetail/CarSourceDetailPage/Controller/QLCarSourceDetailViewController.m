@@ -36,6 +36,12 @@
     self.navigationController.navigationBar.hidden = YES;
     
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"USERCENTERREFRESH" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //导航栏

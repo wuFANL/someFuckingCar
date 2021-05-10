@@ -52,7 +52,8 @@
     [super viewDidLoad];
     //tableView
     [self tableViewSet];
-    // 请求具体信息
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getInfo) name:@"USERCENTERREFRESH" object:nil];
 }
 #pragma mark - 头部
 //个人信息
@@ -151,10 +152,10 @@
     } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-2) {
         //专属客服
         [MBProgressHUD showLoading:@"正在查询"];
-        WEAKSELF
+//        WEAKSELF
         [QLNetworkingManager postWithUrl:HomePath params:@{@"operation_type":@"customer_service_tel",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"region_code":@""} success:^(id response) {
-            [MBProgressHUD hideHUDForView:weakSelf.view animated:NO];
             NSString *telephoneNumber = EncodeStringFromDic([response objectForKey:@"result_info"], @"tel");
+            [MBProgressHUD showSuccess:[NSString stringWithFormat:@"已查到 ： %@",telephoneNumber]];
             NSMutableString * str= [[NSMutableString alloc] initWithFormat:@"telprompt://%@",telephoneNumber];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         } fail:^(NSError *error) {

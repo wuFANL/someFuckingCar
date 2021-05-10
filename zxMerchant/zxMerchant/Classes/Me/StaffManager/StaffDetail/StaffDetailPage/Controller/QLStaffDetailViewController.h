@@ -21,6 +21,9 @@ typedef NS_ENUM(NSInteger,StaffInviteStatus) {
  *邀请状态
  */
 @property (nonatomic, assign) StaffInviteStatus status;
+
+/** 员工信息*/
+@property (nonatomic, strong) NSDictionary *empInfo;
 @end
 
 NS_ASSUME_NONNULL_END

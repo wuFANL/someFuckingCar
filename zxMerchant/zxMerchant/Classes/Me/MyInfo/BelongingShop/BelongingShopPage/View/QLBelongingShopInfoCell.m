@@ -22,4 +22,26 @@
     // Configure the view for the selected state
 }
 
+- (void)updateWithDic:(NSDictionary *)dic {
+    
+    NSString *head_pic = EncodeStringFromDic(dic, @"head_pic");
+    NSString *monile = EncodeStringFromDic(dic, @"mobile");
+    NSString *personnel_nickname = EncodeStringFromDic(dic, @"personnel_nickname");
+    
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:head_pic]];
+    self.storeNameLB.text = personnel_nickname;
+    self.addressLB.text = monile;
+    
+    NSString *state = EncodeStringFromDic(dic, @"state");
+    
+    if ([state isEqualToString:@"1"]) {
+        // 已通过审核
+        self.statusBtn.hidden = YES;
+    } else {
+        self.statusBtn.hidden = NO;
+        [self.statusBtn setTitle:@"正在审核" forState:UIControlStateNormal];
+    }
+    
+}
+
 @end

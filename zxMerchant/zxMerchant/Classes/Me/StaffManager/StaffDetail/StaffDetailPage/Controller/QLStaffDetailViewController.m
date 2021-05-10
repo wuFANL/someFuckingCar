@@ -27,11 +27,17 @@
    
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"员工详情";
     
     [self.view addSubview:self.bottomView];
+    self.bottomView.hidden = YES;
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.mas_equalTo(50);
@@ -84,27 +90,29 @@
     if (section == 0) {
         return 1;
     } else {
-        if (self.status == WaitStoreAgreen) {
-            return 3;
-        } else if (self.status == InviteSuccess) {
-            return 5;
-        } else {
-            return 2;
-        }
+//        if (self.status == WaitStoreAgreen) {
+//            return 3;
+//        } else if (self.status == InviteSuccess) {
+//            return 5;
+//        } else {
+//            return 2;
+//        }
+        return 1;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         QLBelongingShopInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopInfoCell" forIndexPath:indexPath];
-        
+        [cell updateWithDic:self.empInfo];
         return cell;
     } else {
         if (self.status != InviteSuccess) {
             if (indexPath.row == 0||indexPath.row == 1) {
                 QLAccountInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell" forIndexPath:indexPath];
                 cell.callBtn.hidden = YES;
-                cell.titleLB.text = @"时间";
-                cell.detailLB.text = @"2020年10月10日";
+//                cell.titleLB.text = @"时间";
+//                cell.detailLB.text = @"2020年10月10日";
+                cell.titleLB.text = @"正在审核";
                 return cell;
             } else {
                 QLSubmitImgConfigCell *cell = [tableView dequeueReusableCellWithIdentifier:@"submitImgConfigCell" forIndexPath:indexPath];
@@ -120,7 +128,7 @@
         } else {
             QLEditPermissionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"permissionCell" forIndexPath:indexPath];
             cell.selectBtnHeight.constant = 0;
-            
+            cell.dataDic = [self.empInfo objectForKey:@"role_list"][0];
             return cell;
         }
     }
@@ -178,6 +186,24 @@
         [_bottomView.editBtn addTarget:self action:@selector(editBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
+}
+
+//- (NSDictionary *)empInfo {
+//
+//}
+
+- (void)setEmpInfo:(NSDictionary *)empInfo {
+    _empInfo = empInfo;
+    
+    //state
+    NSString *state = EncodeStringFromDic(empInfo, @"state");
+    if ([state isEqualToString:@"1"]) {
+        self.status = InviteSuccess;
+    } else {
+        self.status= WaitStaffAgreen;
+    }
+
+    [self.tableView reloadData];
 }
 
 @end

@@ -92,7 +92,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     QLStaffDetailViewController *sdVC = [QLStaffDetailViewController new];
-    sdVC.status = indexPath.row>4?4:(indexPath.row+1);
+    sdVC.empInfo = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:sdVC animated:YES];
     
 }
