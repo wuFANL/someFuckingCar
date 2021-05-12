@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *unitLB;
 @property (weak, nonatomic) IBOutlet UILabel *priceLB;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
-
+- (void)updateWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

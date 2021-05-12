@@ -10,7 +10,7 @@
 #import "QLChooseHeadView.h"
 #import "QLHelpSellCell.h"
 
-@interface QLHelpSellViewController ()<QLBaseSearchBarDelegate,QLChooseHeadViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface QLHelpSellViewController ()<QLBaseSearchBarDelegate,QLChooseHeadViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
 @property (nonatomic, strong) QLChooseHeadView *headView;
 //全部数据组
@@ -53,6 +53,211 @@
     self.tableView2.hidden = YES;
     self.tableView3.hidden = YES;
     
+//    setShowHeadRefreshControl
+    [self.tableView setShowFootRefreshControl:YES];
+    [self.tableView setShowHeadRefreshControl:YES];
+    [self.tableView1 setShowFootRefreshControl:YES];
+    [self.tableView1 setShowHeadRefreshControl:YES];
+    [self.tableView2 setShowFootRefreshControl:YES];
+    [self.tableView2 setShowHeadRefreshControl:YES];
+    [self.tableView3 setShowFootRefreshControl:YES];
+    [self.tableView3 setShowHeadRefreshControl:YES];
+    
+    [self otherGetData];
+}
+
+
+- (void)otherGetData {
+    
+    WEAKSELF
+    NSDictionary *para = @{
+        @"operation_type":@"help_sell_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+        @"state":@"0",
+        @"page_no":@(self.tableView1.page),
+        @"page_size":@(20)
+    };
+    
+    [QLNetworkingManager postWithUrl:CarPath params:para success:^(id response) {
+        [weakSelf.tableView1.mj_header endRefreshing];
+        [weakSelf.tableView1.mj_footer endRefreshing];
+        NSArray *targetArr = @[];
+        if ([response objectForKey:@"result_info"]) {
+            NSDictionary *infoDic = [response objectForKey:@"result_info"];
+            if ([infoDic isKindOfClass:[NSDictionary class]]) {
+                NSArray * tempArr = [infoDic objectForKey:@"sell_list"];
+                if ([tempArr isKindOfClass:[NSArray class]]) {
+                    targetArr = tempArr;
+                }
+            }
+        }
+        if (weakSelf.tableView1.page == 1) {
+            weakSelf.waitDataArr = [targetArr mutableCopy];
+        } else {
+            [weakSelf.waitDataArr addObjectsFromArray:targetArr];
+        }
+        [weakSelf.tableView1 reloadData];
+    } fail:^(NSError *error) {
+        [weakSelf.tableView1.mj_header endRefreshing];
+        [weakSelf.tableView1.mj_footer endRefreshing];
+    }];
+    
+    
+    
+    NSDictionary *para1 = @{
+        @"operation_type":@"help_sell_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+        @"state":@"1",
+        @"page_no":@(self.tableView2.page),
+        @"page_size":@(20)
+    };
+    
+    [QLNetworkingManager postWithUrl:CarPath params:para1 success:^(id response) {
+        [weakSelf.tableView2.mj_header endRefreshing];
+        [weakSelf.tableView2.mj_footer endRefreshing];
+        NSArray *targetArr = @[];
+        if ([response objectForKey:@"result_info"]) {
+            NSDictionary *infoDic = [response objectForKey:@"result_info"];
+            if ([infoDic isKindOfClass:[NSDictionary class]]) {
+                NSArray * tempArr = [infoDic objectForKey:@"sell_list"];
+                if ([tempArr isKindOfClass:[NSArray class]]) {
+                    targetArr = tempArr;
+                }
+            }
+        }
+        if (weakSelf.tableView2.page == 1) {
+            weakSelf.chatDataArr = [targetArr mutableCopy];
+        } else {
+            [weakSelf.chatDataArr addObjectsFromArray:targetArr];
+        }
+        [weakSelf.tableView2 reloadData];
+    } fail:^(NSError *error) {
+        [weakSelf.tableView2.mj_header endRefreshing];
+        [weakSelf.tableView2.mj_footer endRefreshing];
+    }];
+    
+    
+    NSDictionary *para2 = @{
+        @"operation_type":@"help_sell_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+        @"state":@"2",
+        @"page_no":@(self.tableView3.page),
+        @"page_size":@(20)
+    };
+    
+    [QLNetworkingManager postWithUrl:CarPath params:para2 success:^(id response) {
+        [weakSelf.tableView3.mj_header endRefreshing];
+        [weakSelf.tableView3.mj_footer endRefreshing];
+        NSArray *targetArr = @[];
+        if ([response objectForKey:@"result_info"]) {
+            NSDictionary *infoDic = [response objectForKey:@"result_info"];
+            if ([infoDic isKindOfClass:[NSDictionary class]]) {
+                NSArray * tempArr = [infoDic objectForKey:@"sell_list"];
+                if ([tempArr isKindOfClass:[NSArray class]]) {
+                    targetArr = tempArr;
+                }
+            }
+        }
+        if (weakSelf.tableView3.page == 1) {
+            weakSelf.doneDataArr = [targetArr mutableCopy];
+        } else {
+            [weakSelf.doneDataArr addObjectsFromArray:targetArr];
+        }
+        [weakSelf.tableView3 reloadData];
+    } fail:^(NSError *error) {
+        [weakSelf.tableView3.mj_header endRefreshing];
+        [weakSelf.tableView3.mj_footer endRefreshing];
+    }];
+}
+
+- (void)dataRequest {
+    
+    NSString *state = @"";
+    NSInteger page = 0;
+    if (self.tableView.hidden == NO) {
+        state = @"-1";
+        page = self.tableView.page;
+    } else if (self.tableView1.hidden == NO) {
+        state = @"0";
+        page = self.tableView1.page;
+    } else if (self.tableView2.hidden == NO) {
+        state = @"1";
+        page = self.tableView2.page;
+    } else {
+        state = @"2";
+        page = self.tableView3.page;
+    }
+    
+    NSDictionary *para = @{
+        @"operation_type":@"help_sell_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+        @"state":state,
+        @"page_no":@(page),
+        @"page_size":@(20)
+    };
+    
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:CarPath params:para success:^(id response) {
+        NSArray *targetArr = @[];
+        if ([response objectForKey:@"result_info"]) {
+            NSDictionary *infoDic = [response objectForKey:@"result_info"];
+            if ([infoDic isKindOfClass:[NSDictionary class]]) {
+                NSArray * tempArr = [infoDic objectForKey:@"sell_list"];
+                if ([tempArr isKindOfClass:[NSArray class]]) {
+                    targetArr = tempArr;
+                }
+            }
+        }
+        
+        if (weakSelf.tableView.hidden == NO) {
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
+            
+            if (weakSelf.tableView.page == 1) {
+                weakSelf.allDataArr = [targetArr mutableCopy];
+            } else {
+                [weakSelf.allDataArr addObjectsFromArray:targetArr];
+            }
+            [weakSelf.tableView reloadData];
+        } else if (weakSelf.tableView1.hidden == NO) {
+            [weakSelf.tableView1.mj_header endRefreshing];
+            [weakSelf.tableView1.mj_footer endRefreshing];
+            
+            if (weakSelf.tableView1.page == 1) {
+                weakSelf.waitDataArr = [targetArr mutableCopy];
+            } else {
+                [weakSelf.waitDataArr addObjectsFromArray:targetArr];
+            }
+            [weakSelf.tableView1 reloadData];
+        } else if (weakSelf.tableView2.hidden == NO) {
+            [weakSelf.tableView2.mj_header endRefreshing];
+            [weakSelf.tableView2.mj_footer endRefreshing];
+            
+            if (weakSelf.tableView2.page == 1) {
+                weakSelf.chatDataArr = [targetArr mutableCopy];
+            } else {
+                [weakSelf.chatDataArr addObjectsFromArray:targetArr];
+            }
+            [weakSelf.tableView2 reloadData];
+        } else {
+            [weakSelf.tableView3.mj_header endRefreshing];
+            [weakSelf.tableView3.mj_footer endRefreshing];
+            
+            if (weakSelf.tableView3.page == 1) {
+                weakSelf.doneDataArr = [targetArr mutableCopy];
+            } else {
+                [weakSelf.doneDataArr addObjectsFromArray:targetArr];
+            }
+            [weakSelf.tableView3 reloadData];
+        }
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - action
 //头部选择样式设置
@@ -107,6 +312,7 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 68, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLHelpSellCell" bundle:nil] forCellReuseIdentifier:@"helpSellCell"];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
@@ -133,6 +339,7 @@
     self.tableView2.separatorInset = UIEdgeInsetsMake(0, 68, 0, 0);
     self.tableView2.delegate = self;
     self.tableView2.dataSource = self;
+    self.tableView2.extendDelegate = self;
     [self.tableView2 registerNib:[UINib nibWithNibName:@"QLHelpSellCell" bundle:nil] forCellReuseIdentifier:@"helpSellCell"];
     [self.view insertSubview:self.tableView2 aboveSubview:self.backgroundView];
     [self.tableView2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,6 +355,7 @@
     self.tableView3.separatorInset = UIEdgeInsetsMake(0, 68, 0, 0);
     self.tableView3.delegate = self;
     self.tableView3.dataSource = self;
+    self.tableView3.extendDelegate = self;
     [self.tableView3 registerNib:[UINib nibWithNibName:@"QLHelpSellCell" bundle:nil] forCellReuseIdentifier:@"helpSellCell"];
     [self.view insertSubview:self.tableView3 aboveSubview:self.backgroundView];
     [self.tableView3 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -190,6 +398,8 @@
     } else {
         para = self.doneDataArr[indexPath.row];
     }
+    
+    [cell updateWithDic:para];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
