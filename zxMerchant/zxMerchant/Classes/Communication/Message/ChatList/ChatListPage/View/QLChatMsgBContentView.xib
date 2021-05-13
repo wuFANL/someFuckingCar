@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -39,12 +40,25 @@
                     <state key="normal" title="不同意">
                         <color key="titleColor" red="0.37307563420000001" green="0.77778375150000001" blue="0.26777765149999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <connections>
+                        <action selector="actionTapBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="qhw-VE-3nL"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pW-Cv-LVO">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pW-Cv-LVO">
                     <rect key="frame" x="116" y="61" width="96" height="36"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="同意" backgroundImage="greenBj_332"/>
+                    <connections>
+                        <action selector="actionTapBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="PcS-2M-nzy"/>
+                    </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eli-W7-kxY">
+                    <rect key="frame" x="5" y="61" width="174" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" systemColor="systemGreenColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -68,13 +82,17 @@
             <connections>
                 <outlet property="agreeBtn" destination="8pW-Cv-LVO" id="Ebg-UI-sWv"/>
                 <outlet property="cancelBtn" destination="ZgW-c4-7lO" id="3Ur-cB-O2z"/>
-                <outlet property="contentLB" destination="y6S-1W-M9n" id="Oux-GN-zTr"/>
+                <outlet property="contentLB" destination="y6S-1W-M9n" id="wsf-iT-y2V"/>
                 <outlet property="priceLB" destination="owt-Ht-JkG" id="aDT-FY-9Xt"/>
+                <outlet property="statusLab" destination="eli-W7-kxY" id="eRK-hH-1NK"/>
             </connections>
             <point key="canvasLocation" x="28.260869565217394" y="-196.05978260869566"/>
         </view>
     </objects>
     <resources>
         <image name="greenBj_332" width="9" height="41"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) QLChatBottomView *bottomView;
 
 @property (nonatomic, strong) MessageDetailModel *detlModel;
+@property (nonatomic, strong) NSString *friendPhone;
 @property (nonatomic, strong) NSMutableArray *topArray;
 @property (nonatomic, strong) NSMutableArray *chatListArray;
 @property (nonatomic, strong) NSDictionary *currentDic;
@@ -42,24 +43,94 @@
     return self;
 }
 
+-(void)requestForMsgSendJY:(NSString *)content PriceStr:(NSString *)price
+{
+    NSDictionary *dic = @{@"operation_type":@"chat_send",
+                            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
+                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"content":content,@"m_type":@"4",@"status":@"0",
+                            @"price":price
+    };
+    [self requestForMsgSendWithDic:dic];
+}
+-(void)requestForMsgSendHZ:(NSString *)content PriceStr:(NSString *)price
+{
+    NSDictionary *dic = @{@"operation_type":@"chat_send",
+                            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
+                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"content":content,@"m_type":@"5",@"status":@"0",
+                            @"price":price
+    };
+    [self requestForMsgSendWithDic:dic];
+}
+-(void)requestForMsgSendText:(NSString *)chatMsg
+{
+    NSDictionary *dic = @{@"operation_type":@"chat_send",
+                            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
+                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"content":chatMsg,@"m_type":@"1",@"status":@"1",
+                            @"t_id":[self.detlModel.tradeInfo objectForKey:@"t_id"],
+    };
+    [self requestForMsgSendWithDic:dic];
+}
+-(void)requestForMsgSendImage:(NSString *)imageUrl
+{
+    NSDictionary *dic = @{@"operation_type":@"chat_send",
+                            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
+                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",
+                            @"car_send":@"0",
+                            @"file_url":imageUrl,
+                            @"content":@"图片",@"m_type":@"2",@"status":@"1",
+                            @"t_id":[self.detlModel.tradeInfo objectForKey:@"t_id"],
+    };
+    [self requestForMsgSendWithDic:dic];
+}
+
+-(void)requestForMsgSendWithDic:(NSDictionary *)params
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:params success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self dataRequest];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 -(void)requestForChatTop
 {
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@""} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-
+        self.friendPhone = [[[response objectForKey:@"result_info"] objectForKey:@"user_info"] objectForKey:@"mobile"];
         [self.topArray removeAllObjects];
         [self.topArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"all_car_list"]];
         self.collectionView.dataArr = [self.topArray mutableCopy];
         if([self.collectionView.dataArr count] > 0)
         {
-            [self requestForChatList:[self.collectionView.dataArr firstObject]];
             self.currentDic = [[self.collectionView.dataArr firstObject] copy];
+            [self requestForChatList:[self.collectionView.dataArr firstObject]];
+            [self requestForIsMyCar];
         }
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
 }
+
+-(void)requestForAgreeOrCancel:(NSString *)msg_id btnTag:(NSInteger)tag
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:TradePath params:@{@"operation_type":@"is_msg_agree",@"status":tag==0?@"-1":@"1",@"msg_id":msg_id} success:^(id response) {
+        [self dataRequest];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 
 - (void)dataRequest
 {
@@ -100,6 +171,34 @@
         
         [self.tableView reloadData];
         
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForIsMyCar
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"query_car_local_state",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"car_id":[self.currentDic objectForKey:@"id"]?:@""} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+//        返1 是我的车辆 有 交易 图片 车证 联系
+//        不是我的车辆
+//        返-1有 交易 图片 联系 加入帮卖
+//        返2有 交易 图片 联系 取消帮卖
+        NSString *result = [[response objectForKey:@"result_info"] objectForKey:@"result"];
+        if([result isEqualToString:@"-1"])
+        {
+            self.bottomView.funArr = @[@"交易",@"图片",@"联系",@"加入帮卖"];
+        }
+        else if ([result isEqualToString:@"2"])
+        {
+            self.bottomView.funArr = @[@"交易",@"图片",@"联系",@"取消帮卖"];
+        }
+        else
+        {
+            self.bottomView.funArr = @[@"交易",@"图片",@"车证",@"联系"];
+        }
+
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
@@ -207,6 +306,8 @@
     QLChatMsgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatMsgCell" forIndexPath:indexPath];
     
     NSDictionary *dic = [self.chatListArray objectAtIndex:indexPath.section];
+    cell.sourceDic = dic;
+
     [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
     NSString *mtype = [dic objectForKey:@"m_type"];
     if([mtype isEqualToString:@"1"] || [mtype isEqualToString:@"3"] || [mtype isEqualToString:@"6"]) {
@@ -227,7 +328,13 @@
         //别人发给我
         cell.msgReceiver = OtherMsg;
     }
-
+    [cell setTapCarBlock:^{
+        
+    }];
+    [cell setAOrcBlock:^(NSInteger tag, NSString * _Nonnull msg_id) {
+        [self requestForAgreeOrCancel:msg_id btnTag:tag];
+    }];
+    [cell showMsgBtnWithDic:dic];
     return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -276,8 +383,9 @@
 }
 -(void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     self.chooseTypeIndex = indexPath.row;
-    [self requestForChatList:[self.topArray objectAtIndex:indexPath.row]];
     self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];
+    [self requestForChatList:[self.topArray objectAtIndex:indexPath.row]];
+    [self requestForIsMyCar];
     [collectionView reloadData];
 }
 #pragma mark - Lazy
@@ -302,8 +410,10 @@
 - (QLChatBottomView *)bottomView {
     if (!_bottomView) {
         _bottomView = [QLChatBottomView new];
-        _bottomView.funArr = @[@"交易",@"图片",@"车证",@"派单",@"联系",@"加入帮卖"];
         WEAKSELF
+        [_bottomView setMsgBlock:^(NSString * _Nonnull MsgText) {
+            [weakSelf requestForMsgSendText:MsgText];
+        }];
         _bottomView.clickHandler = ^(id result, NSError *error) {
             NSString *funName = result;
             if ([funName isEqualToString:@"交易"]) {
@@ -312,7 +422,18 @@
                 sheetView.clickHandler = ^(id result, NSError *error) {
                     NSInteger index = [result integerValue];
                     if (index != -1) {
-                        QLTransactionSubmitViewController *tsVC = [QLTransactionSubmitViewController new];
+                        QLTransactionSubmitViewController *tsVC = [[QLTransactionSubmitViewController alloc] initWithSourceDic:weakSelf.currentDic];
+                        [tsVC setMsBlock:^(NSString * _Nonnull price, NSString * _Nonnull content) {
+                            if(index == 0)
+                            {
+                                [weakSelf requestForMsgSendJY:content PriceStr:price];
+                            }
+                            else
+                            {
+                                [weakSelf requestForMsgSendHZ:content PriceStr:price];
+
+                            }
+                        }];
                         tsVC.type = index==0?TransactionContract:CooperativeTransaction;
                         tsVC.showDesc = YES;
                         [weakSelf.navigationController pushViewController:tsVC animated:YES];
@@ -322,7 +443,14 @@
             } else if ([funName isEqualToString:@"图片"]) {
                 [[QLToolsManager share] getPhotoAlbum:weakSelf resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
                     UIImage *img = info[UIImagePickerControllerOriginalImage];
-                   
+                    [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+                        [MBProgressHUD immediatelyRemoveHUD];
+                        if (state == UploadImageSuccess) {
+                            [weakSelf requestForMsgSendImage:[names firstObject]];
+                        } else {
+                            [MBProgressHUD showError:@"图片上传失败"];
+                        }
+                    }];
                 }];
             } else if ([funName isEqualToString:@"车证"]) {
                 QLCarLicenseViewController *clVC = [QLCarLicenseViewController new];
@@ -331,9 +459,29 @@
                 QLDistributionOrderViewController *doVC = [QLDistributionOrderViewController new];
                 [weakSelf.navigationController pushViewController:doVC animated:YES];
             }
+            else if ([funName isEqualToString:@"联系"]) {
+                [[QLToolsManager share] contactCustomerService:weakSelf.friendPhone];
+            }
+            else if ([funName containsString:@"帮卖"]) {
+                [weakSelf requestForSelectedCar];
+            }
             
         };
     }
     return _bottomView;
 }
+     
+-(void)requestForSelectedCar
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"select_car",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_id":[self.currentDic objectForKey:@"business_id"],@"car_ids":[self.currentDic objectForKey:@"id"],@"state":@"1"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self requestForIsMyCar];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+
+    
+}
+     
 @end

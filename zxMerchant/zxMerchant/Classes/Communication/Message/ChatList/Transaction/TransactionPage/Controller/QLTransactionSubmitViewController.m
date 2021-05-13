@@ -16,10 +16,23 @@
 
 @interface QLTransactionSubmitViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
+@property (nonatomic, strong) NSDictionary *sourceDic;
+@property (nonatomic, strong) QLTransactionMoneyCell *currentMoneyCell;
+@property (nonatomic, strong) QLCreatStoreTVCell *currentStoreCell;
 
 @end
 
 @implementation QLTransactionSubmitViewController
+
+-(id)initWithSourceDic:(NSDictionary *)dic
+{
+    self = [super init];
+    if(self)
+    {
+        self.sourceDic = [dic copy];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +60,21 @@
 #pragma mark - action
 //确定按钮
 - (void)funBtnClick {
-    
+    if([NSString isEmptyString:self.currentMoneyCell.tf.text])
+    {
+        [MBProgressHUD showError:@"请填写价格"];
+        return;
+    }
+    NSString *contentStr = self.currentStoreCell.tv.text;
+    if([NSString isEmptyString:self.currentStoreCell.tv.text])
+    {
+        contentStr = [NSString stringWithFormat:@"%@, %@, %@万公里, 过户%@次",[self.sourceDic objectForKey:@"model"],[self.sourceDic objectForKey:@"vin_code"],[[self.sourceDic objectForKey:@"driving_distance"] stringValue],[[self.sourceDic objectForKey:@"transfer_times"] stringValue]];
+    }
+    if(self.msBlock)
+    {
+        self.msBlock(self.currentMoneyCell.tf.text,contentStr);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -74,10 +101,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         QLTransactionInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"transactionInfoCell" forIndexPath:indexPath];
+        [cell.carImageV sd_setImageWithURL:[NSURL URLWithString:[self.sourceDic objectForKey:@"car_img"]]];
+        cell.carNameLab.text = [self.sourceDic objectForKey:@"model"];
+        cell.carContentLab.text = [NSString stringWithFormat:@"%@ | %@ | %@",[self.sourceDic objectForKey:@"production_year"],[[self.sourceDic objectForKey:@"driving_distance"] stringValue],[self.sourceDic objectForKey:@"city_belong"]];
         
         return cell;
     } else if (indexPath.row == 1) {
         QLTransactionMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"transactionMoneyCell" forIndexPath:indexPath];
+        self.currentMoneyCell = cell;
         
         return cell;
     } else if (indexPath.row == 2&&self.showBuyer) {
@@ -86,9 +117,10 @@
         return cell;
     } else if(indexPath.row == ([tableView numberOfRowsInSection:indexPath.section]-1)&&self.showDesc) {
         QLCreatStoreTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tvCell" forIndexPath:indexPath];
+        self.currentStoreCell = cell;
         cell.tv.backgroundColor = WhiteColor;
         cell.tv.constraintLB.hidden = YES;
-        cell.tv.placeholder = @"车辆品牌、车系、车型、VIN码、表显里程、过户次数、排量、变速箱、车身颜色";
+        cell.tv.placeholder = [NSString stringWithFormat:@"%@, %@, %@万公里, 过户%@次",[self.sourceDic objectForKey:@"model"],[self.sourceDic objectForKey:@"vin_code"],[[self.sourceDic objectForKey:@"driving_distance"] stringValue],[[self.sourceDic objectForKey:@"transfer_times"] stringValue]];
     
         return cell;
     }

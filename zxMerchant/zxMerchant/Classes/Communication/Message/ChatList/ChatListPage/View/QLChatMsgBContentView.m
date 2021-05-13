@@ -21,4 +21,12 @@
     return self;
 }
 
+-(IBAction)actionTapBtn:(UIButton *)sender
+{
+    if(self.tapBlock)
+    {
+        self.tapBlock(sender.tag);
+    }
+}
+
 @end

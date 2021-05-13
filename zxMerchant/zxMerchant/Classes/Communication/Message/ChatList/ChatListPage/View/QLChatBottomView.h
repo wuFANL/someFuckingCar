@@ -10,7 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^ChatMsgSendBlock) (NSString *MsgText);
+
 @interface QLChatBottomView : UIView
+@property (nonatomic, copy) ChatMsgSendBlock msgBlock;
 @property (weak, nonatomic) IBOutlet UIView *funView;
 @property (weak, nonatomic) IBOutlet QLBaseTextView *tv;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tvHeight;

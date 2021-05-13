@@ -41,6 +41,7 @@
 #define HOST                    @"interface.zcars365.com"
 #define WEB                     @"wx.zcars365.com"
 
+#define TradePath              [NSString stringWithFormat:@"%@/trade",HOST]
 #define BasePath                [NSString stringWithFormat:@"%@/index",HOST]
 #define UserPath                [NSString stringWithFormat:@"%@/user",HOST]
 #define BusinessPath            [NSString stringWithFormat:@"%@/business",HOST]

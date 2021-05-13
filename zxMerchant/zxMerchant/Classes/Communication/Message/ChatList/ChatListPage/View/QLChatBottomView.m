@@ -82,4 +82,14 @@
     }
 }
 
+-(IBAction)sendMsg
+{
+    [self.tv resignFirstResponder];
+    if(self.msgBlock && self.tv.text.length > 0)
+    {
+        self.msgBlock(self.tv.text);
+        self.tv.text = @"";
+    }
+}
+
 @end

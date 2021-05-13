@@ -14,7 +14,10 @@ typedef NS_ENUM(NSInteger,TransactionType) {
     TransactionContract = 1,//交易合同
     ShopSale = 2,//店铺出售
 };
+typedef void (^MakeSureBlock) (NSString *price,NSString *content);
 @interface QLTransactionSubmitViewController : QLBaseTableViewController
+-(id)initWithSourceDic:(NSDictionary *)dic;
+@property (nonatomic, copy) MakeSureBlock msBlock;
 /**
  *类型
  */

@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLTransactionInfoCell : UITableViewCell
+@property (nonatomic, strong) IBOutlet UIImageView *carImageV;
+@property (nonatomic, strong) IBOutlet UILabel *carNameLab;
+@property (nonatomic, strong) IBOutlet UILabel *carContentLab;
 
 @end
 

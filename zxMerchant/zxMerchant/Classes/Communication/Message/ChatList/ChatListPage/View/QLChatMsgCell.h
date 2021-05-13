@@ -21,7 +21,13 @@ typedef NS_ENUM(NSInteger,MsgType) {
     AskMsg = 3,
     
 };
+
+typedef void (^TapCarDetailBlock) (void);
+typedef void (^TapAgreeOrCancelBlock) (NSInteger tag, NSString *msg_id);
+
 @interface QLChatMsgCell : UITableViewCell
+@property (nonatomic, copy) TapCarDetailBlock tapCarBlock;
+@property (nonatomic, copy) TapAgreeOrCancelBlock aOrcBlock;
 @property (weak, nonatomic) IBOutlet UIControl *aHeadControl;
 @property (weak, nonatomic) IBOutlet UIImageView *aHeadImgView;
 @property (weak, nonatomic) IBOutlet UILabel *aHeadLB;
@@ -33,6 +39,10 @@ typedef NS_ENUM(NSInteger,MsgType) {
 
 @property (nonatomic, assign) MsgReceiver msgReceiver;
 @property (nonatomic, assign) MsgType msgType;
+@property (nonatomic, copy) NSDictionary *sourceDic;
+
+//展示两个按钮的view
+-(void)showMsgBtnWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END
