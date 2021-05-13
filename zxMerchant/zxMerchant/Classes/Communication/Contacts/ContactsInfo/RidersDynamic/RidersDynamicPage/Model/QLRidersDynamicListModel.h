@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *dynamic_id;
 @property (nonatomic, copy) NSArray *file_array;
 @property (nonatomic, assign) CGFloat fileCellHeight;
+@property (nonatomic, copy) NSArray *interact_list;
+@property (nonatomic, copy) NSArray *praise_list;
+@property (nonatomic, copy) NSString *flag;
 @property (nonatomic, copy) NSString *state;
 @property (nonatomic, copy) NSString *vx_state;
 @end

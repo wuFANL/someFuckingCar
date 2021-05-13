@@ -1,16 +1,17 @@
 //
-//  QLHelpSellViewController.m
+//  QLMyHelpSellViewController.m
 //  zxMerchant
 //
 //  Created by lei qiao on 2020/11/13.
 //  Copyright © 2020 ql. All rights reserved.
 //
 
-#import "QLHelpSellViewController.h"
+#import "QLMyHelpSellViewController.h"
 #import "QLChooseHeadView.h"
 #import "QLHelpSellCell.h"
+#import "QLAddCustomerViewController.h"
 
-@interface QLHelpSellViewController ()<QLBaseSearchBarDelegate,QLChooseHeadViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
+@interface QLMyHelpSellViewController ()<QLBaseSearchBarDelegate,QLChooseHeadViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
 @property (nonatomic, strong) QLChooseHeadView *headView;
 //全部数据组
@@ -29,7 +30,7 @@
 @property (nonatomic, strong) QLBaseTableView *tableView3;
 @end
 
-@implementation QLHelpSellViewController
+@implementation QLMyHelpSellViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -293,7 +294,8 @@
 }
 //右导航按钮
 - (void)rightItemClick {
-    
+    QLAddCustomerViewController *acVC = [QLAddCustomerViewController new];
+    [self.navigationController pushViewController:acVC animated:YES];
 }
 //导航栏
 - (void)naviSet {

@@ -13,7 +13,7 @@
 #import "QLStoreInvitationListViewController.h"
 #import "QLMyBrowseViewController.h"
 #import "QLMySubscriptionsPageViewController.h"
-#import "QLHelpSellViewController.h"
+#import "QLMyHelpSellViewController.h"
 #import "QLVipCenterViewController.h"
 #import "QLStaffListViewController.h"
 #import "QLSetUpViewController.h"
@@ -82,7 +82,7 @@
         [self.navigationController pushViewController:mbVC animated:YES];
     } else if (sender == self.headView.bControl) {
         //我的帮卖
-        QLHelpSellViewController *hsVC = [QLHelpSellViewController new];
+        QLMyHelpSellViewController *hsVC = [QLMyHelpSellViewController new];
         [self.navigationController pushViewController:hsVC animated:YES];
     } else {
         //我的订阅

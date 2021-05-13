@@ -108,7 +108,7 @@
 		A018380C25508808000253FC /* QLReleaseCarCircleStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A018380A25508808000253FC /* QLReleaseCarCircleStatusCell.xib */; };
 		A01B498B255DA1850082E6B2 /* QLChatMsgBContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A01B498A255DA1850082E6B2 /* QLChatMsgBContentView.m */; };
 		A01B4990255DA18E0082E6B2 /* QLChatMsgBContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01B498F255DA18E0082E6B2 /* QLChatMsgBContentView.xib */; };
-		A01B49AC255DAD450082E6B2 /* QLHelpSellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01B49AB255DAD450082E6B2 /* QLHelpSellViewController.m */; };
+		A01B49AC255DAD450082E6B2 /* QLMyHelpSellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01B49AB255DAD450082E6B2 /* QLMyHelpSellViewController.m */; };
 		A01B49B4255DAE8D0082E6B2 /* QLHelpSellCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A01B49B2255DAE8D0082E6B2 /* QLHelpSellCell.m */; };
 		A01B49B5255DAE8D0082E6B2 /* QLHelpSellCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01B49B3255DAE8D0082E6B2 /* QLHelpSellCell.xib */; };
 		A01B49C3255DB5F90082E6B2 /* QLDistributionOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01B49C2255DB5F90082E6B2 /* QLDistributionOrderViewController.m */; };
@@ -371,6 +371,9 @@
 		A0A5A1E82586981200B5CD53 /* QLCarDescTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A5A1E12586981200B5CD53 /* QLCarDescTypeCell.xib */; };
 		A0A5A1E92586981200B5CD53 /* QLUpdateVedioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A5A1E22586981200B5CD53 /* QLUpdateVedioCell.m */; };
 		A0A5A1EA2586981200B5CD53 /* QLCarDescTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A5A1E32586981200B5CD53 /* QLCarDescTypeCell.m */; };
+		A0A66A05264DAE4600F7505E /* QLAddCustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A669FD264DAE4600F7505E /* QLAddCustomerViewController.m */; };
+		A0A66A08264DAE4600F7505E /* QLIntervalTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A66A02264DAE4600F7505E /* QLIntervalTextCell.xib */; };
+		A0A66A09264DAE4600F7505E /* QLIntervalTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A66A04264DAE4600F7505E /* QLIntervalTextCell.m */; };
 		A0ABB8AA255869B700A84297 /* QLChatMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0ABB8A8255869B700A84297 /* QLChatMsgCell.m */; };
 		A0ABB8AB255869B700A84297 /* QLChatMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0ABB8A9255869B700A84297 /* QLChatMsgCell.xib */; };
 		A0ABB8B1255869FE00A84297 /* QLChatBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0ABB8B0255869FE00A84297 /* QLChatBottomView.m */; };
@@ -636,8 +639,8 @@
 		A01B4989255DA1850082E6B2 /* QLChatMsgBContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLChatMsgBContentView.h; sourceTree = "<group>"; };
 		A01B498A255DA1850082E6B2 /* QLChatMsgBContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLChatMsgBContentView.m; sourceTree = "<group>"; };
 		A01B498F255DA18E0082E6B2 /* QLChatMsgBContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLChatMsgBContentView.xib; sourceTree = "<group>"; };
-		A01B49AA255DAD450082E6B2 /* QLHelpSellViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLHelpSellViewController.h; sourceTree = "<group>"; };
-		A01B49AB255DAD450082E6B2 /* QLHelpSellViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLHelpSellViewController.m; sourceTree = "<group>"; };
+		A01B49AA255DAD450082E6B2 /* QLMyHelpSellViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLMyHelpSellViewController.h; sourceTree = "<group>"; };
+		A01B49AB255DAD450082E6B2 /* QLMyHelpSellViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLMyHelpSellViewController.m; sourceTree = "<group>"; };
 		A01B49B1255DAE8D0082E6B2 /* QLHelpSellCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLHelpSellCell.h; sourceTree = "<group>"; };
 		A01B49B2255DAE8D0082E6B2 /* QLHelpSellCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLHelpSellCell.m; sourceTree = "<group>"; };
 		A01B49B3255DAE8D0082E6B2 /* QLHelpSellCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLHelpSellCell.xib; sourceTree = "<group>"; };
@@ -1070,6 +1073,11 @@
 		A0A5A1E22586981200B5CD53 /* QLUpdateVedioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLUpdateVedioCell.m; sourceTree = "<group>"; };
 		A0A5A1E32586981200B5CD53 /* QLCarDescTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCarDescTypeCell.m; sourceTree = "<group>"; };
 		A0A5A1E42586981200B5CD53 /* QLUpdateVedioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLUpdateVedioCell.h; sourceTree = "<group>"; };
+		A0A669FC264DAE4600F7505E /* QLAddCustomerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLAddCustomerViewController.h; sourceTree = "<group>"; };
+		A0A669FD264DAE4600F7505E /* QLAddCustomerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLAddCustomerViewController.m; sourceTree = "<group>"; };
+		A0A66A01264DAE4600F7505E /* QLIntervalTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLIntervalTextCell.h; sourceTree = "<group>"; };
+		A0A66A02264DAE4600F7505E /* QLIntervalTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLIntervalTextCell.xib; sourceTree = "<group>"; };
+		A0A66A04264DAE4600F7505E /* QLIntervalTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLIntervalTextCell.m; sourceTree = "<group>"; };
 		A0ABB8A7255869B600A84297 /* QLChatMsgCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLChatMsgCell.h; sourceTree = "<group>"; };
 		A0ABB8A8255869B700A84297 /* QLChatMsgCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLChatMsgCell.m; sourceTree = "<group>"; };
 		A0ABB8A9255869B700A84297 /* QLChatMsgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLChatMsgCell.xib; sourceTree = "<group>"; };
@@ -2177,20 +2185,20 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		A01B49A8255DACFB0082E6B2 /* HelpSell */ = {
+		A01B49A8255DACFB0082E6B2 /* MyHelpSell */ = {
 			isa = PBXGroup;
 			children = (
-				A01B49A9255DAD260082E6B2 /* Controller */,
-				A01B49B0255DAE790082E6B2 /* View */,
+				A0A669F8264DAD3300F7505E /* HelpSellList */,
+				A0A669FA264DAE4600F7505E /* AddCustomer */,
 			);
-			path = HelpSell;
+			path = MyHelpSell;
 			sourceTree = "<group>";
 		};
 		A01B49A9255DAD260082E6B2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A01B49AA255DAD450082E6B2 /* QLHelpSellViewController.h */,
-				A01B49AB255DAD450082E6B2 /* QLHelpSellViewController.m */,
+				A01B49AA255DAD450082E6B2 /* QLMyHelpSellViewController.h */,
+				A01B49AB255DAD450082E6B2 /* QLMyHelpSellViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2809,6 +2817,7 @@
 				A04847B325A8DCB000BD4596 /* StoreInvitationList */,
 				A03183A925AA1604007B5D3F /* Vip */,
 				A04F062E25DBE18A00C471F6 /* MyBrowse */,
+				A01B49A8255DACFB0082E6B2 /* MyHelpSell */,
 				A01243C025EA3A2C00A90BAD /* MySubscriptions */,
 				A0F13FC325E2A8AE00C8F67B /* StaffManager */,
 				A09EAC9625DEC9EC007D9075 /* SystemSetting */,
@@ -2859,7 +2868,6 @@
 			isa = PBXGroup;
 			children = (
 				A046E80B2551D26D005E0124 /* ChatListPage */,
-				A01B49A8255DACFB0082E6B2 /* HelpSell */,
 				A0CAB5582561155D0015FAE3 /* Transaction */,
 				A0CAB7F92561340A0015FAE3 /* CarLicense */,
 				A01B49BF255DB58B0082E6B2 /* DistributionOrder */,
@@ -4086,6 +4094,43 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A0A669F8264DAD3300F7505E /* HelpSellList */ = {
+			isa = PBXGroup;
+			children = (
+				A01B49A9255DAD260082E6B2 /* Controller */,
+				A01B49B0255DAE790082E6B2 /* View */,
+			);
+			path = HelpSellList;
+			sourceTree = "<group>";
+		};
+		A0A669FA264DAE4600F7505E /* AddCustomer */ = {
+			isa = PBXGroup;
+			children = (
+				A0A669FB264DAE4600F7505E /* Controller */,
+				A0A669FE264DAE4600F7505E /* View */,
+			);
+			path = AddCustomer;
+			sourceTree = "<group>";
+		};
+		A0A669FB264DAE4600F7505E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0A669FC264DAE4600F7505E /* QLAddCustomerViewController.h */,
+				A0A669FD264DAE4600F7505E /* QLAddCustomerViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0A669FE264DAE4600F7505E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A0A66A01264DAE4600F7505E /* QLIntervalTextCell.h */,
+				A0A66A04264DAE4600F7505E /* QLIntervalTextCell.m */,
+				A0A66A02264DAE4600F7505E /* QLIntervalTextCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A0C1D44425868B11002396B3 /* MyCarDetailPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -4696,6 +4741,7 @@
 				A0492F0C256A737B00B5E23C /* QLIconItem.xib in Resources */,
 				A0A5A1E82586981200B5CD53 /* QLCarDescTypeCell.xib in Resources */,
 				A063BA04257D5425001B1916 /* QLEditTopCarItem.xib in Resources */,
+				A0A66A08264DAE4600F7505E /* QLIntervalTextCell.xib in Resources */,
 				A0492F812570272900B5E23C /* QLCarDetailPriceCell.xib in Resources */,
 				A0492FCB2570364700B5E23C /* QLCarImgShowCell.xib in Resources */,
 				A07332B4254C8DB900570FDB /* QLRidersDynamicImgItem.xib in Resources */,
@@ -4894,7 +4940,7 @@
 				A006213F2513DB3900A571E5 /* QLBaseTabBarController.m in Sources */,
 				A00621872513DD7300A571E5 /* UIView+QLUtil.m in Sources */,
 				A09EAB3F25DEBED2007D9075 /* QLPaymentPageModel.m in Sources */,
-				A01B49AC255DAD450082E6B2 /* QLHelpSellViewController.m in Sources */,
+				A01B49AC255DAD450082E6B2 /* QLMyHelpSellViewController.m in Sources */,
 				A0865C052630A252001B85A3 /* QLJoinStoreDetailViewController.m in Sources */,
 				A006207E2513DA7000A571E5 /* AppDelegate.m in Sources */,
 				A044AA93251FCBF600D1C324 /* QLConst.m in Sources */,
@@ -5046,7 +5092,9 @@
 				A044AD1D251FDAC100D1C324 /* QLReleaseImagesCell.m in Sources */,
 				A01B498B255DA1850082E6B2 /* QLChatMsgBContentView.m in Sources */,
 				A0492EFB256A714100B5E23C /* QLCollectionValueCell.m in Sources */,
+				A0A66A05264DAE4600F7505E /* QLAddCustomerViewController.m in Sources */,
 				A0C901942529C5B80021C069 /* QLCommunicationPageViewController.m in Sources */,
+				A0A66A09264DAE4600F7505E /* QLIntervalTextCell.m in Sources */,
 				A02C933C2523AA310031A6D7 /* QLHomeNaviView.m in Sources */,
 				A0529E1A25B5FDBF00FCEF05 /* QLVipPriceItem.m in Sources */,
 				A044AAD4251FCE6500D1C324 /* QLUserInfoModel.m in Sources */,
@@ -5278,7 +5326,7 @@
 				DEVELOPMENT_TEAM = UDSE4Z8AVF;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5302,7 +5350,7 @@
 				DEVELOPMENT_TEAM = GWUURFN644;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
