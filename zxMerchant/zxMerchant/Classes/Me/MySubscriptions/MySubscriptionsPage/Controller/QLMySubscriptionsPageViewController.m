@@ -14,7 +14,7 @@
 #import "QLMySubscriptionsDetailViewController.h"
 #import "QLAdvancedScreeningViewController.h"
 
-@interface QLMySubscriptionsPageViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface QLMySubscriptionsPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *listArr;
 @end
 
@@ -22,7 +22,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,6 +41,42 @@
     //tableView
     [self tableViewSet];
 }
+
+- (void)dataRequest {
+    NSDictionary *para = @{
+        Operation_type:@"subscribe_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"page_no":@(self.tableView.page),
+        @"page_size":@(20)
+    };
+    
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:para success:^(id response) {
+        NSLog(@"%@",response);
+        NSDictionary *data = [response objectForKey:@"result_info"];
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            NSArray *dataArr = [data objectForKey:@"subscribe_list"];
+            if ([dataArr isKindOfClass:[NSArray class]]) {
+                if (weakSelf.tableView.page == 1) {
+                    // 头部刷新
+                    weakSelf.listArr = [dataArr mutableCopy];
+                } else {
+                    // 新增数据
+                    [weakSelf.listArr addObjectsFromArray:dataArr];
+                }
+            }
+        }
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
+        
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
+    }];
+}
+
 
 #pragma mark - navigation
 //添加订阅
@@ -72,30 +108,48 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"QLSubListMoreCell" bundle:nil] forCellReuseIdentifier:@"subListMoreCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 15, 0, 15));
     }];
+    
+    [self.tableView setShowHeadRefreshControl:YES];
+    [self.tableView setShowFootRefreshControl:YES];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.listArr.count;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2+self.listArr.count;
+
+    NSDictionary *dataDic = self.listArr[section];
+    NSArray *tempArr = [dataDic objectForKey:@"car_list"];
+    if ([tempArr isKindOfClass:[NSArray class]]) {
+        return 2 + (tempArr.count > 3?3:tempArr.count);
+    }
+    return 2;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *dataDic = self.listArr[indexPath.section];
     if (indexPath.row == 0) {
+        // 标题 标签
         QLSubListTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"subListTitleCell" forIndexPath:indexPath];
-        cell.iconArr = [@[@"1",@"2",@"3"] mutableCopy];
+        [cell updateWith:dataDic];
         return cell;
     } else if (indexPath.row == ([tableView numberOfRowsInSection:indexPath.section]-1)) {
+        // 时间
         QLSubListMoreCell *cell = [tableView dequeueReusableCellWithIdentifier:@"subListMoreCell" forIndexPath:indexPath];
-        
+        [cell updateWithDic:dataDic];
         return cell;
     } else {
         QLHomeCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hCarCell" forIndexPath:indexPath];
         cell.lineView.hidden = NO;
+        
+        NSArray *tempArr = [dataDic objectForKey:@"car_list"];
+        if ([tempArr isKindOfClass:[NSArray class]]) {
+            [cell updateUIWithDic:tempArr[indexPath.row]];
+        }
         return cell;
-
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,12 +157,20 @@
     [self.navigationController pushViewController:msdVC animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSInteger count = 2;
+    NSDictionary *dataDic = self.listArr[indexPath.section];
+    NSArray *tempArr = [dataDic objectForKey:@"car_list"];
+    if ([tempArr isKindOfClass:[NSArray class]]) {
+        count = 2 + (tempArr.count > 3?3:tempArr.count);
+    }
     if (indexPath.row == 0) {
+        // 标题
         return 90;
-    } else if (indexPath.row == self.listArr.count+1) {
+    } else if (indexPath.row == (count-1)) {
+        // 时间
         return 48;
     } else {
+        // 车
         return 120;
     }
 }
@@ -124,7 +186,7 @@
 #pragma mark - Lazy
 - (NSMutableArray *)listArr {
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[@"1",@"2"]];
+        _listArr = [NSMutableArray array];
     }
     return _listArr;
 }

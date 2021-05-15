@@ -12,6 +12,7 @@
 @interface QLSubListTitleCell()<QLIrregularLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
 
+@property (nonatomic, strong) NSDictionary *dataDic;
 @end
 @implementation QLSubListTitleCell
 
@@ -23,6 +24,67 @@
     }];
     
 }
+
+- (void)updateWith:(NSDictionary *)dic {
+    if (self.dataDic) {
+        return;
+    }
+    self.dataDic = dic;
+    // 更新标题
+    self.titleLB.text = EncodeStringFromDic(dic, @"title");
+    // 更新标签
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (NSString *key in dic) {
+        if ([key isEqualToString:@"factory_way"] || [key isEqualToString:@"emission_standard"] || [key isEqualToString:@"transmission_case"]) {
+            [dataArr addObject:EncodeStringFromDic(dic, key)];
+        }
+        if ([key isEqualToString:@"max_driving_distance"]) {
+            NSString* driveMaxDistance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"max_driving_distance") floatValue]];
+            if ([driveMaxDistance isEqualToString:@"100"]) {
+                continue;
+            }
+            [dataArr addObject:[NSString stringWithFormat:@"%@万公里",driveMaxDistance]];
+        }
+        if ([key isEqualToString:@"min_price"]) {
+            NSString *lowPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"min_price") floatValue]];
+            NSString *maxPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"max_price") floatValue]];
+            [dataArr addObject:[NSString stringWithFormat:@"%@-%@",lowPrice,maxPrice]];
+        }
+        if ([key isEqualToString:@"min_displacement"]) {
+            // 动力型号
+            NSString *energyTypeLow = EncodeStringFromDic(dic, @"min_displacement");
+            NSString *energyTypeHigh = EncodeStringFromDic(dic, @"max_displacement");
+            NSString *energyTypeUnit = EncodeStringFromDic(dic, @"displacement_type");
+            
+            if ([energyTypeLow isEqualToString:@"0"] && [energyTypeHigh isEqualToString:@"10"]) {
+                continue;
+            }
+            [dataArr addObject:[NSString stringWithFormat:@"%@-%@%@",energyTypeLow,energyTypeHigh,energyTypeUnit]];
+        }
+        if ([key isEqualToString:@"min_driving_distance"]) {
+            // 里程
+            NSString *min_driving_distance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"min_driving_distance") floatValue]];
+            NSString *max_driving_distance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"min_driving_distance") floatValue]];
+            
+            if ([min_driving_distance isEqualToString:@"0"] && [max_driving_distance isEqualToString:@"0"]) {
+                continue;;
+            }
+           [dataArr addObject:[NSString stringWithFormat:@"%@-%@万公里",min_driving_distance,max_driving_distance]];
+        }
+        // 年限
+        if ([key isEqualToString:@"min_vehicle_age"]) {
+            NSString *min_vehicle_age = EncodeStringFromDic(dic, @"min_vehicle_age");
+            NSString *max_vehicle_age = EncodeStringFromDic(dic, @"max_vehicle_age");
+            if ([min_vehicle_age isEqualToString:@"0"] && [max_vehicle_age isEqualToString:@"100"]) {
+                continue;;
+            }
+            [dataArr addObject:[NSString stringWithFormat:@"%@-%@年",min_vehicle_age,max_vehicle_age]];
+        }
+    }
+    
+    self.iconArr = dataArr;
+}
+
 #pragma mark -setter
 - (void)setIconArr:(NSMutableArray *)iconArr {
     _iconArr = iconArr;

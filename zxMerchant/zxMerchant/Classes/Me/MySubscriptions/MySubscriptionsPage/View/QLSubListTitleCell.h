@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UIView *bjView;
 @property (nonatomic, strong) NSMutableArray *iconArr;
+
+- (void)updateWith:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

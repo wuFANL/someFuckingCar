@@ -42,8 +42,8 @@
     NSString *disTance = [dataDic objectForKey:@"driving_distance"]?[[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"driving_distance"]] stringByAppendingString:@"万公里"]:@"";
     self.descLB.text = [yearStr stringByAppendingString:disTance];
     self.priceLB.text = [[QLToolsManager share] unitConversion:[[dataDic objectForKey:@"wholesale_price"] floatValue]];
-    if ([dataDic objectForKey:@"wholesale_price_old"]) {
-        self.retailPriceLB.text = [NSString stringWithFormat:@"零售价%@",[[QLToolsManager share] unitConversion:[[dataDic objectForKey:@"wholesale_price_old"] floatValue]]];
+    if ([dataDic objectForKey:@"sell_price"]) {
+        self.retailPriceLB.text = [NSString stringWithFormat:@"零售价%@",[[QLToolsManager share] unitConversion:[[dataDic objectForKey:@"sell_price"] floatValue]]];
     }
     
     self.cityLabel.text = [dataDic objectForKey:@"city_belong"];

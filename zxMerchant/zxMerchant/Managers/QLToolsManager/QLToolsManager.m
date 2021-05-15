@@ -51,6 +51,7 @@ NSString* EncodeStringFromDic(NSDictionary *dic, NSString *key)
     
     return @"";
 }
+NSString* Operation_type = @"operation_type";
 @implementation QLToolsManager
 #pragma mark- 全局数据
 #pragma mark -分享记录
