@@ -11,7 +11,7 @@
 #import "QLChatMsgCell.h"
 #import "QLChatBottomView.h"
 #import "QLCustomSheetView.h"
-#import "QLHelpSellViewController.h"
+#import "QLMyHelpSellViewController.h"
 #import "QLDistributionOrderViewController.h"
 #import "QLTransactionSubmitViewController.h"
 #import "QLCarLicenseViewController.h"
@@ -241,7 +241,7 @@
 #pragma mark - action
 //帮卖订单
 - (void)rightItemClick {
-    QLHelpSellViewController *hsVC = [QLHelpSellViewController new];
+    QLMyHelpSellViewController *hsVC = [QLMyHelpSellViewController new];
     [self.navigationController pushViewController:hsVC animated:YES];
 }
 //键盘将要 升起 的通知

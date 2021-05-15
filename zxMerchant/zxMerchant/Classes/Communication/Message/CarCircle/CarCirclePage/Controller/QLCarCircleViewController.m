@@ -17,11 +17,13 @@
 #import "QLCarCircleCommentCell.h"
 #import "QLReleaseCarCircleViewController.h"
 #import "QLUnreadMsgListViewController.h"
+#import "QLRidersDynamicListModel.h"
 
-@interface QLCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLBannerViewDelegate>
+@interface QLCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,QLBannerViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
 @property (nonatomic, strong) QLCarCircleHeadView *headView;
 
+@property (nonatomic, strong) NSMutableArray *listArray;
 @end
 
 @implementation QLCarCircleViewController
@@ -41,6 +43,30 @@
     //tableView
     [self tableViewSet];
 }
+#pragma mark - network
+- (void)dataRequest {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"all_page_list",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
+        if (self.tableView.page == 1) {
+            [self.listArray removeAllObjects];
+        }
+        NSArray *temArr = [NSArray yy_modelArrayWithClass:[QLRidersDynamicListModel class] json:response[@"result_info"][@"dynamic_list"]];
+        [self.listArray addObjectsFromArray:temArr];
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == listShowCount) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        //刷新
+        [self.tableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [MBProgressHUD showError:error.domain];
+    }];
+}
 #pragma mark - action
 //发布动态
 - (void)funBtnClick {
@@ -54,6 +80,7 @@
 }
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
+    [imageBtn sd_setImageWithURL:[NSURL URLWithString:imageArr[index]] forState:UIControlStateNormal];
     
 }
 //轮播图点击
@@ -72,6 +99,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
+    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showFootRefreshControl = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleTextCell" bundle:nil] forCellReuseIdentifier:@"textCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleAccCell" bundle:nil] forCellReuseIdentifier:@"accCell"];
@@ -88,7 +118,7 @@
    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.listArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 5;
@@ -149,8 +179,19 @@
 - (QLCarCircleHeadView *)headView {
     if(!_headView) {
         _headView = [[QLCarCircleHeadView alloc] init];
+        _headView.nameLB.text = [QLUserInfoModel getLocalInfo].account.nickname;
+        [_headView.storeNameBtn setTitle:[QLUserInfoModel getLocalInfo].business.business_name forState:UIControlStateNormal];
+        [_headView.headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
+       
+        _headView.bannerView.imagesArr = @[[QLUserInfoModel getLocalInfo].business.business_pic];
         _headView.bannerView.delegate = self;
     }
     return _headView;
+}
+- (NSMutableArray *)listArray {
+    if (!_listArray) {
+        _listArray = [NSMutableArray array];
+    }
+    return _listArray;
 }
 @end

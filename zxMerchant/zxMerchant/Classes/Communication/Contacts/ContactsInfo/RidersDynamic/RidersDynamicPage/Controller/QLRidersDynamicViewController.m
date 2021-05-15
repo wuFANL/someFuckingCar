@@ -69,7 +69,7 @@
     if (self.tableView.page == 1) {
         [self getStoreInfo];
     }
-    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":QLNONull(self.friendId),@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"personal_page_list",@"person_id":QLNONull(self.friendId),@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
         if (self.tableView.page == 1) {
             [self.listArray removeAllObjects];
         }

@@ -1,5 +1,5 @@
 //
-//  QLHelpSellViewController.h
+//  QLMyHelpSellViewController.h
 //  zxMerchant
 //
 //  Created by lei qiao on 2020/11/13.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QLHelpSellViewController : QLBaseTableViewController
+@interface QLMyHelpSellViewController : QLBaseTableViewController
 
 @end
 
