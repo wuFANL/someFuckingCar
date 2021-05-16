@@ -159,6 +159,10 @@
     self.window.hidden = NO;
     [self.window addSubview:self];
     
+    [self.collectionView reloadData];
+    if (self.warnCollectionView) {
+        [self.warnCollectionView reloadData];
+    }
 }
 //隐藏
 - (void)hidden {

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *bjView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewHeight;
 
+@property (nonatomic, strong) NSArray *listArr;
 @end
 
 NS_ASSUME_NONNULL_END

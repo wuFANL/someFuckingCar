@@ -8,6 +8,7 @@
 
 #import "QLCarCircleLikeCell.h"
 #import "QLCarCircleLikeNameItem.h"
+#import "QLRidersDynamicListModel.h"
 
 @interface QLCarCircleLikeCell()<QLIrregularLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -37,9 +38,11 @@
         id result = self.dataArr[self.dataArr.count-1-index];
         if ([result isKindOfClass:[NSString class]]) {
            title = result;
+        } else if ([result isKindOfClass:[QLRidersDynamicPraiseModel class]]) {
+            title = ((QLRidersDynamicPraiseModel *)result).account_name;
         }
     }
-    return [NSString stringWithFormat:@"%@,",title];
+    return [NSString stringWithFormat:@"%@%@",title,(index == self.dataArr.count-1)?@"":@","];
 }
 #pragma mark - collectionView
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForSectionAtIndexPath:(NSIndexPath *)indexPath {

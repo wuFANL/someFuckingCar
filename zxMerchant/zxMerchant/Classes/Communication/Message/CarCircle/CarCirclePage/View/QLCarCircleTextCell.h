@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QLRidersDynamicListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarCircleTextCell : UITableViewCell
@@ -26,11 +26,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *openBtn;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnHight;
 
-
+@property (nonatomic, strong) QLRidersDynamicListModel *model;
 @property (nonatomic, strong) NSDictionary *dataDic;
-
 - (void)upDateWithDic:(NSDictionary *)dic;
+@property (nonatomic, assign) BOOL showAllBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END

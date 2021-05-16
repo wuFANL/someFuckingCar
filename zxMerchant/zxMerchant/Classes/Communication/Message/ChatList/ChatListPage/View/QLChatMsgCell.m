@@ -76,7 +76,13 @@
             }
         } else if (self.msgType == ImgMsg) {
             UIImageView *imgView = [[UIImageView alloc] init];
-            [imgView sd_setImageWithURL:[NSURL URLWithString:[self.sourceDic objectForKey:@"file_url"]]];
+            [imgView sd_setImageWithURL:[NSURL URLWithString:[self.sourceDic objectForKey:@"file_url"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (!error) {
+                    if (cacheType == SDImageCacheTypeDisk) {
+                        [((UITableView *)self.superview) reloadData];
+                    }
+                }
+            }];
             self.msgView = imgView;
         } else if (self.msgType == AskMsg) {
             self.chatContentView = [QLChatMsgBContentView new];

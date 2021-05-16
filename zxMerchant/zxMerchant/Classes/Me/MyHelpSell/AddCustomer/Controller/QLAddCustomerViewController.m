@@ -12,7 +12,7 @@
 #import "QLChooseBrandViewController.h"
 #import "QLChooseTimeView.h"
 
-@interface QLAddCustomerViewController ()<UITableViewDelegate,UITableViewDataSource,QLIrregularLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource,QLBaseTextViewDelegate>
+@interface QLAddCustomerViewController ()<UITableViewDelegate,UITableViewDataSource,QLIrregularLayoutDataSource,QLBaseTextViewDelegate>
 @property (nonatomic, strong) QLBaseTableView *tableView;
 @property (nonatomic, strong) UIButton *submitBtn;
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,6 +51,9 @@
                             <color key="titleColor" red="0.1202516332" green="0.40350627900000002" blue="0.60250306129999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <state key="selected" title="收起"/>
+                        <connections>
+                            <action selector="showAllBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4Yc-gf-vKt"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaR-Vd-GAk">
                         <rect key="frame" x="72" y="28" width="27" height="17"/>
@@ -79,11 +82,11 @@
                     <constraint firstItem="SJk-6m-WGi" firstAttribute="leading" secondItem="VZ8-07-Gi6" secondAttribute="leading" id="XnJ-Li-iJM"/>
                     <constraint firstItem="eug-YT-TrD" firstAttribute="centerY" secondItem="jL1-fs-b1Q" secondAttribute="centerY" id="cWg-p8-CKR"/>
                     <constraint firstItem="jL1-fs-b1Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ctL-cP-VxS"/>
-                    <constraint firstItem="RaR-Vd-GAk" firstAttribute="bottom" secondItem="jL1-fs-b1Q" secondAttribute="bottom" id="dZf-R0-iu2"/>
                     <constraint firstAttribute="trailing" secondItem="VZ8-07-Gi6" secondAttribute="trailing" constant="15" id="iOn-Uj-69G"/>
                     <constraint firstItem="VZ8-07-Gi6" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" id="ic9-fm-Qh2"/>
                     <constraint firstAttribute="bottom" secondItem="SJk-6m-WGi" secondAttribute="bottom" constant="10" id="k7L-nH-UwJ"/>
                     <constraint firstItem="jL1-fs-b1Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="lCf-qO-E7O"/>
+                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="top" secondItem="RaR-Vd-GAk" secondAttribute="bottom" constant="10" id="lQn-eG-G3Q"/>
                     <constraint firstItem="crp-Qy-Z7y" firstAttribute="leading" secondItem="jL1-fs-b1Q" secondAttribute="trailing" constant="12" id="pGN-6A-0Hu"/>
                     <constraint firstAttribute="trailing" secondItem="eug-YT-TrD" secondAttribute="trailing" constant="15" id="vfk-t0-DPT"/>
                 </constraints>
@@ -96,6 +99,7 @@
                 <outlet property="nikenameBtn" destination="crp-Qy-Z7y" id="tec-Fd-F6F"/>
                 <outlet property="openBtn" destination="SJk-6m-WGi" id="hLh-hi-FXP"/>
                 <outlet property="openBtnBottom" destination="k7L-nH-UwJ" id="c7b-v4-gVe"/>
+                <outlet property="openBtnHight" destination="588-1l-rf7" id="oGi-jF-Xjx"/>
                 <outlet property="textLB" destination="VZ8-07-Gi6" id="lda-My-o83"/>
                 <outlet property="timeLB" destination="RaR-Vd-GAk" id="q7n-L8-72F"/>
             </connections>

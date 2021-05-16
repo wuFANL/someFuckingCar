@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QLCarCircleCommentContentCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
 
+@property (nonatomic, strong) id model;
 @end
 
 NS_ASSUME_NONNULL_END

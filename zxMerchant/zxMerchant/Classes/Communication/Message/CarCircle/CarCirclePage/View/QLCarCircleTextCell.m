@@ -15,11 +15,31 @@
     // Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setModel:(QLRidersDynamicListModel *)model {
+    _model = model;
+    if (model) {
+        QLRidersDynamicListModel *rdlModel = model;
+        
+        [self.headBtn sd_setImageWithURL:[NSURL URLWithString:model.account_head_pic] forState:UIControlStateNormal];
+        [self.nikenameBtn setTitle:model.account_nickname forState:UIControlStateNormal];
+        self.timeLB.text = @"";
+        self.textLB.text = rdlModel.dynamic_content;
+        NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
+        self.showAllBtn = row <= 5?NO:YES;
+    }
 }
+- (void)setShowAllBtn:(BOOL)showAllBtn {
+    _showAllBtn = showAllBtn;
+    self.openBtn.hidden = !showAllBtn;
+    self.openBtnHight.constant = showAllBtn?25:0;
+}
+- (IBAction)showAllBtnClick:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    self.textLB.numberOfLines = sender.selected==YES?5:0;
+    [((UITableView *)self.superview ) reloadData];
+    
+}
+
 
 - (void)upDateWithDic:(NSDictionary *)dic{
     // 头像

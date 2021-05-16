@@ -40,9 +40,9 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"QLTopCarSourcePriceCell" bundle:nil] forCellReuseIdentifier:@"topCarSourcePriceCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
     
-    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
+    self.tableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeaderDidPull)];
     
-    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterDidPull)];
+    self.tableView.mj_footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooterDidPull)];
 }
 
 - (void)refreshHeaderDidPull {

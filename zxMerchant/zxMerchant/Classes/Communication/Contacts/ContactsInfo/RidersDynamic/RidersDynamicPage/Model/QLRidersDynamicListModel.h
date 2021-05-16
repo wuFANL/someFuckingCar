@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class QLRidersDynamicFileModel;
+@class QLRidersDynamicInteractModel;
+@class QLRidersDynamicPraiseModel;
 
 @interface QLRidersDynamicListModel : NSObject
 @property (nonatomic, copy) NSString *account_head_pic;
@@ -21,7 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *dynamic_id;
 @property (nonatomic, copy) NSArray *file_array;
 @property (nonatomic, assign) CGFloat fileCellHeight;
+/**
+ *评论列表
+ */
 @property (nonatomic, copy) NSArray *interact_list;
+/**
+ *点赞列表
+ */
 @property (nonatomic, copy) NSArray *praise_list;
 @property (nonatomic, copy) NSString *flag;
 @property (nonatomic, copy) NSString *state;
@@ -35,6 +43,27 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *file_id;
 @property (nonatomic, copy) NSString *file_remark;
 @property (nonatomic, copy) NSString *file_url;
+@property (nonatomic, copy) NSString *state;
+@end
+
+@interface QLRidersDynamicInteractModel : NSObject
+@property (nonatomic, copy) NSString *account_id;
+@property (nonatomic, copy) NSString *account_name;
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *di_id;
+@property (nonatomic, copy) NSString *dynamic_id;
+@property (nonatomic, copy) NSString *to_account_id;
+@property (nonatomic, copy) NSString *to_account_name;
+@property (nonatomic, copy) NSString *state;
+@end
+
+@interface QLRidersDynamicPraiseModel : NSObject
+@property (nonatomic, copy) NSString *account_id;
+@property (nonatomic, copy) NSString *account_name;
+@property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *dp_id;
+@property (nonatomic, copy) NSString *dynamic_id;
 @property (nonatomic, copy) NSString *state;
 @end
 NS_ASSUME_NONNULL_END
