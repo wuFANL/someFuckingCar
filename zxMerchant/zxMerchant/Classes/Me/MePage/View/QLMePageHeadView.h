@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 消费贷
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
 @property (weak, nonatomic) IBOutlet UIButton *lookDetailBtn;
+@property (weak, nonatomic) IBOutlet UIView *yjView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yjViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yjViewTop;
 
 
 - (void)updateData:(NSDictionary *)data;
