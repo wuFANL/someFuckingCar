@@ -10,6 +10,7 @@
 #import "QLChooseHeadView.h"
 #import "QLHelpSellCell.h"
 #import "QLAddCustomerViewController.h"
+#import "QLChatListPageViewController.h"
 
 @interface QLMyHelpSellViewController ()<QLBaseSearchBarDelegate,QLChooseHeadViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
@@ -405,7 +406,21 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 取出对应的model
+    NSDictionary * para;
+    if (tableView == self.tableView) {
+        para = self.allDataArr[indexPath.row];
+    } else if (tableView == self.tableView1 ) {
+        para = self.waitDataArr[indexPath.row];
+    } else if (tableView == self.tableView2 ) {
+        para = self.chatDataArr[indexPath.row];
+    } else {
+        para = self.doneDataArr[indexPath.row];
+    }
     
+    NSLog(@"%@",para);
+    
+    // TODO:vc
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 126;

@@ -153,8 +153,12 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 点击
+    
+    //
     QLMySubscriptionsDetailViewController *msdVC = [QLMySubscriptionsDetailViewController new];
     [self.navigationController pushViewController:msdVC animated:YES];
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger count = 2;
