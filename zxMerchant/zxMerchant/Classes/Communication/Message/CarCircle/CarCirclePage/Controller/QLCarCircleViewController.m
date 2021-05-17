@@ -68,6 +68,12 @@
     }];
 }
 #pragma mark - action
+//删除动态
+- (void)deleteMsgClick:(UIButton *)sender {
+    NSInteger section = sender.tag;
+    
+    
+}
 //发布动态
 - (void)funBtnClick {
     QLReleaseCarCircleViewController *rccVC = [QLReleaseCarCircleViewController new];
@@ -121,29 +127,50 @@
     return self.listArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    
+    if (self.listArray.count > 0) {
+        NSInteger row = 2;
+        QLRidersDynamicListModel *model = self.listArray[section];
+        if (model.file_array.count != 0) {
+            row++;
+        }
+        if (model.praise_list.count != 0) {
+            row++;
+        }
+        if (model.interact_list.count != 0) {
+            row++;
+        }
+        return row;
+    }
+    return 0;
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QLRidersDynamicListModel *model = self.listArray[indexPath.section];
     if (indexPath.row == 0) {
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.likeBtn.hidden = YES;
+        cell.model = model;
         return cell;
-    } else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1&&model.file_array.count != 0) {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
-        cell.dataType = indexPath.section/2==0?ImageType:VideoType;
-        cell.dataArr = [@[@"1",@"2",@"3",@"4"] mutableCopy];
+        cell.dataType = ImageType;
+        cell.dataArr = [model.file_array mutableCopy];
         return cell;
-    } else if (indexPath.row == 2) {
-        QLCarCircleAccCell *cell = [tableView dequeueReusableCellWithIdentifier:@"accCell" forIndexPath:indexPath];
-        
-        return cell;
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-2&&model.praise_list.count != 0) {
         QLCarCircleLikeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"likeCell" forIndexPath:indexPath];
-        cell.dataArr = @[@"昵称",@"昵称",@"昵称",@"昵称",@"昵称"];
+        cell.dataArr = model.praise_list;
+        return cell;
+    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1&&model.interact_list.count != 0) {
+        QLCarCircleCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
+        cell.listArr = model.interact_list;
         return cell;
     } else {
-        QLCarCircleCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell" forIndexPath:indexPath];
-       
+        QLCarCircleAccCell *cell = [tableView dequeueReusableCellWithIdentifier:@"accCell" forIndexPath:indexPath];
+        cell.deleteBtn.tag = indexPath.section;
+        cell.accLB.text = [NSString stringWithFormat:@"%@  %@",model.address,[QLToolsManager compareCurrentTime:model.create_time]];
+        cell.deleteBtn.hidden = [model.account_id isEqualToString:[QLUserInfoModel getLocalInfo].account.account_id]?NO:YES;
+        [cell.deleteBtn addTarget:self action:@selector(deleteMsgClick:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
 
@@ -182,9 +209,10 @@
         _headView.nameLB.text = [QLUserInfoModel getLocalInfo].account.nickname;
         [_headView.storeNameBtn setTitle:[QLUserInfoModel getLocalInfo].business.business_name forState:UIControlStateNormal];
         [_headView.headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
-       
-        _headView.bannerView.imagesArr = @[[QLUserInfoModel getLocalInfo].business.business_pic];
+        
         _headView.bannerView.delegate = self;
+        _headView.bannerView.imagesArr = @[[QLUserInfoModel getLocalInfo].account.back_pic];
+        
     }
     return _headView;
 }

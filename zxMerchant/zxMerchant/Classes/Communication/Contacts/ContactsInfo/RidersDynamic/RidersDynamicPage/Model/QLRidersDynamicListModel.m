@@ -11,6 +11,8 @@
 @implementation QLRidersDynamicListModel
 + (NSDictionary *)modelContainerPropertyGenericClass {
     return @{@"file_array" : [QLRidersDynamicFileModel class],
+             @"praise_list" : [QLRidersDynamicPraiseModel class],
+             @"interact_list" : [QLRidersDynamicInteractModel class],
              };
 }
 @end
@@ -18,4 +20,14 @@
 @implementation QLRidersDynamicFileModel
 
 @end
+
+@implementation QLRidersDynamicInteractModel
+
+@end
+
+@implementation QLRidersDynamicPraiseModel
+
+@end
+
+
 

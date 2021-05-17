@@ -296,6 +296,7 @@
 //右导航按钮
 - (void)rightItemClick {
     QLAddCustomerViewController *acVC = [QLAddCustomerViewController new];
+    acVC.isAdd = YES;
     [self.navigationController pushViewController:acVC animated:YES];
 }
 //导航栏

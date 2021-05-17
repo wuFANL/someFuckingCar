@@ -31,11 +31,12 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.listArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    QLCarCircleCommentContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentContentCell" forIndexPath:indexPath];
     
+    QLCarCircleCommentContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentContentCell" forIndexPath:indexPath];
+    cell.model = self.listArr[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {

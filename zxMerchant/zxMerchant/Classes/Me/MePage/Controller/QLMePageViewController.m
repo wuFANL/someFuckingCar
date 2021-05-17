@@ -100,7 +100,10 @@
     self.tableView.dataSource = self;
     
     //tableHeaderView
-    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
+    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 225)];
+    self.headView.yjView.hidden = YES;
+    self.headView.yjViewHeight.constant = 0;
+    self.headView.yjViewTop.constant = 0;
     [tableHeaderView addSubview:self.headView];
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(tableHeaderView);

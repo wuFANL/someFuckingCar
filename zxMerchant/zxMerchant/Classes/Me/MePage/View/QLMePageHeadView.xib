@@ -271,6 +271,9 @@
                 <outlet property="storeInvitationBtn" destination="u6q-HG-g7a" id="Mfe-6j-xNj"/>
                 <outlet property="storeNameBtn" destination="RDl-zo-fha" id="Fa2-ex-LsI"/>
                 <outlet property="vipStatusBtn" destination="gAo-Oy-gCS" id="z1J-7n-4Fd"/>
+                <outlet property="yjView" destination="2Av-Ma-irE" id="pnO-yh-G2f"/>
+                <outlet property="yjViewHeight" destination="YZe-BE-V8X" id="HSA-L3-aoB"/>
+                <outlet property="yjViewTop" destination="f9J-8d-1L0" id="b1l-8e-MSu"/>
             </connections>
             <point key="canvasLocation" x="-17.39130434782609" y="79.891304347826093"/>
         </view>

@@ -21,24 +21,30 @@
 @property (nonatomic, assign) NSInteger chooseTypeIndex;
 @property (nonatomic, strong) QLChatBottomView *bottomView;
 
-@property (nonatomic, strong) MessageDetailModel *detlModel;
 @property (nonatomic, strong) NSString *friendPhone;
 @property (nonatomic, strong) NSMutableArray *topArray;
 @property (nonatomic, strong) NSMutableArray *chatListArray;
 @property (nonatomic, strong) NSDictionary *currentDic;
 @property (nonatomic, strong) NSString *currentID;
+
+//首次进入的carID 和对方的ID
+@property (nonatomic, copy) NSString *firstCarId;
+@property (nonatomic, copy) NSString *firstFriendId;
+@property (nonatomic, strong) NSMutableDictionary *firstInDic;
 @end
 
 @implementation QLChatListPageViewController
 
--(id)initWithMessageDetailModel:(MessageDetailModel *)detailModel
+-(id)initWithCarID:(NSString*)carID messageToID:(NSString *)messageTo
 {
     self = [super init];
     if(self)
     {
-        self.detlModel = detailModel;
+        self.firstCarId = carID;
+        self.firstFriendId = messageTo;
         self.topArray = [[NSMutableArray alloc] initWithCapacity:0];
         self.chatListArray = [[NSMutableArray alloc] initWithCapacity:0];
+        self.firstInDic = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     return self;
 }
@@ -47,8 +53,8 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
-                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":content,@"m_type":@"4",@"status":@"0",
                             @"price":price
     };
@@ -58,8 +64,8 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
-                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":content,@"m_type":@"5",@"status":@"0",
                             @"price":price
     };
@@ -69,10 +75,10 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
-                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",@"car_send":@"0",
+                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":chatMsg,@"m_type":@"1",@"status":@"1",
-                            @"t_id":[self.detlModel.tradeInfo objectForKey:@"t_id"],
+                            @"t_id":[self.currentDic objectForKey:@"t_id"],
     };
     [self requestForMsgSendWithDic:dic];
 }
@@ -80,12 +86,12 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],
-                            @"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@"",
+                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"car_id":[self.currentDic objectForKey:@"id"]?:@"",
                             @"car_send":@"0",
                             @"file_url":imageUrl,
                             @"content":@"图片",@"m_type":@"2",@"status":@"1",
-                            @"t_id":[self.detlModel.tradeInfo objectForKey:@"t_id"],
+                            @"t_id":[self.currentDic objectForKey:@"t_id"],
     };
     [self requestForMsgSendWithDic:dic];
 }
@@ -104,8 +110,11 @@
 -(void)requestForChatTop
 {
     [MBProgressHUD showCustomLoading:@""];
-    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"car_id":[self.detlModel.tradeInfo objectForKey:@"car_id"]?:@""} success:^(id response) {
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"car_id":self.firstCarId?:@""} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
+        [self.firstInDic removeAllObjects];
+        [self.firstInDic addEntriesFromDictionary:[response objectForKey:@"result_info"]];
+        
         self.friendPhone = [[[response objectForKey:@"result_info"] objectForKey:@"user_info"] objectForKey:@"mobile"];
         [self.topArray removeAllObjects];
         [self.topArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"all_car_list"]];
@@ -145,7 +154,7 @@
     }
     self.currentID = [dic objectForKey:@"id"];
     [MBProgressHUD showCustomLoading:@""];
-    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[[self.detlModel.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"],@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[dic objectForKey:@"surveyor_id"],@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
 
         if (self.tableView.page == 1) {

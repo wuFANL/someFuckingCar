@@ -147,7 +147,7 @@
         [self.navigationController pushViewController:smlVC animated:YES];
     } else {
         //聊天
-        QLChatListPageViewController *clpVC = [[QLChatListPageViewController alloc] initWithMessageDetailModel:model];
+        QLChatListPageViewController *clpVC = [[QLChatListPageViewController alloc] initWithCarID:[model.tradeInfo objectForKey:@"car_id"] messageToID:[[model.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"account_id"]];
         clpVC.navigationItem.title = [[model.tradeInfo objectForKey:@"buyer_info"] objectForKey:@"nickname"];
         [self.navigationController pushViewController:clpVC animated:YES];
     }
