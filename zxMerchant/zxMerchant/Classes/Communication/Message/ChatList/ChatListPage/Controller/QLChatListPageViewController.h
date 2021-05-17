@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLChatListPageViewController : QLBaseTableViewController
--(id)initWithMessageDetailModel:(MessageDetailModel *)detailModel;
+//车ID + 对方的ID
+-(id)initWithCarID:(NSString*)carID messageToID:(NSString *)messageTo;
 @end
 
 NS_ASSUME_NONNULL_END

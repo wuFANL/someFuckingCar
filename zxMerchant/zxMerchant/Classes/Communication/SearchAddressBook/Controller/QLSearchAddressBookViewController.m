@@ -8,31 +8,118 @@
 
 #import "QLSearchAddressBookViewController.h"
 #import "QLSearchHistoryCell.h"
-
-@interface QLSearchAddressBookViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+#import "MyFriendsModel.h"
+#import "QLListSectionIndexView.h"
+#import "QLContactsInfoViewController.h"
+@interface QLSearchAddressBookViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 @property (nonatomic, weak) QLBaseSearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *hotArr;
 @property (nonatomic, strong) NSArray *listArr;
+
+@property (nonatomic, strong) QLListSectionIndexView *indexView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) MyFriendsModel *friendListModel;
 @end
 
 @implementation QLSearchAddressBookViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    [self requestForMyFirends];
     
 }
+
+#pragma mark - request
+-(void)requestForMyFirends
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        self.friendListModel = [MyFriendsModel yy_modelWithJSON:[response objectForKey:@"result_info"]];
+        
+        [self.dataArray removeAllObjects];
+        [self.dataArray addObjectsFromArray:[self sortObjectsAccordingToInitialWith:self.friendListModel.account_list]];
+        
+        //抽出索引
+        __block NSMutableArray *bArray = [[NSMutableArray alloc] initWithCapacity:0];
+        [self.dataArray enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            FriendDetailModel *model = obj.firstObject;
+            [bArray addObject:model.name_index];
+        }];
+        self.indexView.indexArr = [bArray copy];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+// 按首字母分组排序数组
+-(NSMutableArray *)sortObjectsAccordingToInitialWith:(NSArray *)arr {
+
+    // 初始化UILocalizedIndexedCollation
+    UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+    
+    //得出collation索引的数量，这里是27个（26个字母和1个#）
+    NSInteger sectionTitlesCount = [[collation sectionTitles] count];
+    //初始化一个数组newSectionsArray用来存放最终的数据，我们最终要得到的数据模型应该形如@[@[以A开头的数据数组], @[以B开头的数据数组], @[以C开头的数据数组], ... @[以#(其它)开头的数据数组]]
+    NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
+    
+    //初始化27个空数组加入newSectionsArray
+    for (NSInteger index = 0; index < sectionTitlesCount; index++) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        [newSectionsArray addObject:array];
+    }
+    
+    //将每个名字分到某个section下
+    for (FriendDetailModel *personModel in arr) {
+        //获取name属性的值所在的位置，比如L，在A~Z中排第11（第一位是0），sectionNumber就为11
+        NSInteger sectionNumber = [collation sectionForObject:personModel collationStringSelector:@selector(name_index)];
+        //把name为“L”的p加入newSectionsArray中的第11个数组中去
+        NSMutableArray *sectionNames = newSectionsArray[sectionNumber];
+        [sectionNames addObject:personModel];
+    }
+   
+    //对每个section中的数组按照name属性排序
+    for (NSInteger index = 0; index < sectionTitlesCount; index++) {
+        NSMutableArray *personArrayForSection = newSectionsArray[index];
+        NSArray *sortedPersonArrayForSection = [collation sortedArrayFromArray:personArrayForSection collationStringSelector:@selector(name_index)];
+        newSectionsArray[index] = sortedPersonArrayForSection;
+    }
+
+    //删除空的数组
+    NSMutableArray *finalArr = [NSMutableArray new];
+    for (NSInteger index = 0; index < sectionTitlesCount; index++) {
+        if (((NSMutableArray *)(newSectionsArray[index])).count != 0) {
+            [finalArr addObject:newSectionsArray[index]];
+        }
+    }
+    return finalArr;
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.searchBar resignFirstResponder];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     //设置导航栏
     [self setNavi];
     //tableView
     [self tableViewSet];
     
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
+}
+
 #pragma mark - action
 //取消
 - (void)rightItemClick {
@@ -48,8 +135,18 @@
     
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.tableView.backgroundColor = self.searchBar.text.length==0?WhiteColor:[UIColor groupTableViewBackgroundColor];
-    [self.tableView reloadData];
+    
+    [self.dataArray enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj enumerateObjectsUsingBlock:^(FriendDetailModel *fobj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if([fobj.nickname hasPrefix:searchText])
+            {
+                
+            }
+        }];
+    }];
+    
+    
+//    [self.tableView reloadData];
 }
 - (void)setNavi {
     //中间输入框
@@ -79,79 +176,74 @@
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
-    self.tableView.backgroundColor = self.searchBar.text.length==0?WhiteColor:[UIColor groupTableViewBackgroundColor];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 78, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.tableView registerNib:[UINib nibWithNibName:@"QLSearchHistoryCell" bundle:nil] forCellReuseIdentifier:@"historyCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.searchBar.text.length == 0) {
-        return 1;
-    } else {
-        return 2;
-    }
+    return [self.dataArray count];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.searchBar.text.length == 0?1:5;
+    return [[self.dataArray objectAtIndex:section] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.searchBar.text.length == 0) {
-        QLSearchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
-        cell.titleLB.text = @"搜索指定内容";
-        cell.deleteBtn.hidden = YES;
-        cell.itemArr = @[@"分类名称",@"分类名称",@"分类名称"];
-        cell.result = ^(id result) {
-            self.searchBar.text = result;
-            //搜索
-            [self searchBarSearchButtonClicked:self.searchBar];
-        };
-        return cell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
-        cell.textLabel.text = @"车友昵称";
-        return cell;
-    }
-    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    FriendDetailModel *friendModel = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:friendModel.head_pic] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (image) {
+            cell.imageView.image = [UIImage drawWithImage:cell.imageView.image size:CGSizeMake(38, 38)];
+            NSIndexPath *indexp = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            [tableView reloadRowsAtIndexPaths:@[indexp] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
+    cell.textLabel.text = friendModel.nickname;
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FriendDetailModel *friendModel = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    QLContactsInfoViewController *ciVC = [[QLContactsInfoViewController alloc] initWithFirendID:friendModel.account_id];
+    ciVC.contactRelation = Friend;
+    [self.navigationController pushViewController:ciVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (self.searchBar.text.length != 0) {
-        UIView *headerView = [UIView new];
-        UILabel *lb = [UILabel new];
-        lb.font = [UIFont systemFontOfSize:12];
-        lb.textColor = [UIColor colorWithHexString:@"#666666"];
-        lb.text = @"通讯";
-        [headerView addSubview:lb];
-        [lb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(headerView);
-            make.left.mas_equalTo(18);
-        }];
-        return headerView;
-    }
-    return nil;
+    UIView *headerView = [UIView new];
+    
+    UILabel *sectionLB = [UILabel new];
+    sectionLB.font = [UIFont systemFontOfSize:11];
+    sectionLB.textColor = [UIColor colorWithHexString:@"666666"];
+    sectionLB.text = [self.indexView.indexArr objectAtIndex:section];;
+    [headerView addSubview:sectionLB];
+    [sectionLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(headerView);
+        make.left.equalTo(headerView).offset(18);
+    }];
+    
+    return headerView;
 }
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return 200;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 55;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.searchBar.text.length == 0?5:30;
+    return 30;
 }
-#pragma mark - Lazy
-- (NSMutableArray *)hotArr {
-    if (!_hotArr) {
-        _hotArr = [NSMutableArray array];
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
+}
+#pragma mark -Lazy
+- (QLListSectionIndexView *)indexView {
+    if (!_indexView) {
+        _indexView = [[QLListSectionIndexView alloc]init];
+        _indexView.defaultColor = GreenColor;
+        _indexView.relevanceView = self.tableView;
     }
-    return _hotArr;
+    return _indexView;
 }
-- (NSArray *)listArr {
-    if (!_listArr) {
-        _listArr = [NSArray array];
-    }
-    return _listArr;
-}
-
 
 
 @end

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void (^BtnTapBlock) (NSInteger tag);
 @interface QLNewFriendCell : UITableViewCell
+@property (nonatomic, copy) BtnTapBlock btnTBlock;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLB;
 @property (weak, nonatomic) IBOutlet UILabel *mobileLB;
