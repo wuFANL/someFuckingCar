@@ -13,7 +13,7 @@
 #import "QLRemarksSetViewController.h"
 #import "QLContactsStoreViewController.h"
 #import "QLRidersDynamicViewController.h"
-
+#import "QLChatListPageViewController.h"
 @interface QLContactsInfoViewController ()<UIPopoverPresentationControllerDelegate,PopViewControlDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseButton *moreBtn;
 @property (nonatomic, strong) NSString *firendId;
@@ -84,7 +84,15 @@
 #pragma mark - action
 //功能按钮
 - (void)funBtnClick {
-    
+    if (self.contactRelation == Friend) {
+        //@"发消息"
+        //聊天
+        QLChatListPageViewController *clpVC = [[QLChatListPageViewController alloc] initWithCarID:@"" messageToID:[self.userInfoDic objectForKey:@"account_id"]];
+        clpVC.navigationItem.title = [self.userInfoDic objectForKey:@"nickname"];
+        [self.navigationController pushViewController:clpVC animated:YES];
+    } else {
+       //@"添加到通讯录"
+    }
 }
 //拨号
 - (void)callPhoneClick {

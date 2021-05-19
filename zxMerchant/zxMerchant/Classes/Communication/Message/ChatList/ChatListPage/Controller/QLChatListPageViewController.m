@@ -162,7 +162,7 @@
         }
         NSArray *temArr = [NSArray arrayWithArray:[[response objectForKey:@"result_info"] objectForKey:@"detail_list"]];
         [self.chatListArray addObjectsFromArray:temArr];
-        //无数据设置
+        //无数据设置 
         if (self.chatListArray.count == 0) {
             self.tableView.hidden = YES;
             self.showNoDataView = YES;
