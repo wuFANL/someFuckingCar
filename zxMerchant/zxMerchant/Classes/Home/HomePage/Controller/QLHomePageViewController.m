@@ -21,6 +21,7 @@
 #import "QLPaymentPageViewController.h"
 #import "QLMySubscriptionsPageViewController.h"
 #import "QLCarSourceDetailViewController.h"
+#import "QLPhotosShareViewController.h"
 
 @interface QLHomePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLHomeNaviViewDelegate,QLBannerViewDelegate,QLHomePageHeadViewDelegate>
 @property (nonatomic, strong) QLHomeNaviView *naviView;
@@ -249,7 +250,11 @@
                 item.imgView.image = [UIImage imageNamed:model.diction_id];
             };
             cell.itemSelectHandler = ^(id result, NSError *error) {
+                NSIndexPath *indexPath = result[@"indexPath"];
                 
+                if (indexPath.row == 0) {
+                    [self.navigationController pushViewController:[QLPhotosShareViewController new] animated:YES];
+                }
             };
             
             return cell;

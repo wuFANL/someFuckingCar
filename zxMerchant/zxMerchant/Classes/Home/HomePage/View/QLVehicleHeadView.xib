@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="QLVehicleHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXf-LT-R0F">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCF-ha-49k">
+                    <rect key="frame" x="0.0" y="47" width="375" height="1"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="hFG-hj-s0j"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="PCF-ha-49k" firstAttribute="top" secondItem="IXf-LT-R0F" secondAttribute="bottom" id="7G4-dN-7aO"/>
+                <constraint firstItem="PCF-ha-49k" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="CMD-vO-ynw"/>
+                <constraint firstAttribute="bottom" secondItem="PCF-ha-49k" secondAttribute="bottom" id="Jkk-j6-f6p"/>
+                <constraint firstItem="IXf-LT-R0F" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="eOW-F7-Qqq"/>
+                <constraint firstItem="PCF-ha-49k" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ht7-j2-KGz"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="IXf-LT-R0F" secondAttribute="trailing" id="jg6-DP-auf"/>
+                <constraint firstItem="IXf-LT-R0F" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="vle-fy-0iD"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="typeView" destination="IXf-LT-R0F" id="ftH-Cp-mV5"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="-53.073463268365821"/>
+        </view>
+    </objects>
+</document>
