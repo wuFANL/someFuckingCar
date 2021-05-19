@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *nameLB;
 @property (weak, nonatomic) IBOutlet UILabel *yearLB;
 @property (weak, nonatomic) IBOutlet UILabel *priceLB;
-
+- (void)updateWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,11 +20,12 @@
 #import "QLVehicleCertificateViewController.h"
 #import "QLPaymentPageViewController.h"
 #import "QLMySubscriptionsPageViewController.h"
+#import "QLCarSourceDetailViewController.h"
 
 @interface QLHomePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLHomeNaviViewDelegate,QLBannerViewDelegate,QLHomePageHeadViewDelegate>
 @property (nonatomic, strong) QLHomeNaviView *naviView;
 @property (nonatomic, strong) QLHomePageHeadView *headView;
-
+@property (nonatomic, strong) QLHomePageModel *homePageModel;
 @end
 
 @implementation QLHomePageViewController
@@ -32,12 +33,14 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
     //获取首页数据
-    if (![QLToolsManager share].homePageModel) {
-        [self getHomeData];
-    } else {
-        //功能数据筛选
-        [self funDataDo];
-    }
+//    if (![QLToolsManager share].homePageModel) {
+//        [self getHomeData];
+//    } else {
+//        //功能数据筛选
+//        [self funDataDo];
+//    }
+    [self getHomeData];
+//    [self funDataDo];
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
@@ -55,18 +58,31 @@
 #pragma mark - network
 //首页数据
 - (void)getHomeData {
-    return;
+    
     [MBProgressHUD showCustomLoading:nil];
-    [[QLToolsManager share] getFunData:^(id result, NSError *error) {
-        if (!error) {
-            [MBProgressHUD immediatelyRemoveHUD];
-            //功能数据筛选
-            [self funDataDo];
-            //刷新
-            [self.tableView reloadData];
-        } else {
-            [MBProgressHUD showError:error.domain];
-        }
+//    [[QLToolsManager share] getFunData:^(id result, NSError *error) {
+//        if (!error) {
+//            [MBProgressHUD immediatelyRemoveHUD];
+//            //功能数据筛选
+//            [self funDataDo];
+//            //刷新
+//            [self.tableView reloadData];
+//        } else {
+//            [MBProgressHUD showError:error.domain];
+//        }
+//    }];
+    
+    WEAKSELF
+    
+    [QLNetworkingManager postWithUrl:HomePath params:@{@"operation_type":@"index",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+        weakSelf.homePageModel = [QLHomePageModel yy_modelWithJSON:response[@"result_info"]];
+        [MBProgressHUD immediatelyRemoveHUD];
+        //功能数据筛选
+        [weakSelf funDataDo];
+        //刷新
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
     }];
 }
 #pragma mark - action
@@ -127,7 +143,7 @@
 }
 //头部按钮
 - (void)accBtnClick:(UIButton *)sender {
-    
+    [self.navigationController pushViewController:[QLMySubscriptionsPageViewController new] animated:YES];
 }
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
@@ -165,10 +181,24 @@
     return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section==0?1:section==1?4:8;
+    
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 4;
+            break;
+        default:
+            // 好车推荐
+            return self.homePageModel.recommend_car_list.count;
+            break;
+    }
+//    return section==0?1:section==1?4:8;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        // 头条车源
         QLHorizontalScrollCell *cell = [[QLHorizontalScrollCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"horizontalScrollCell"];
         QLItemModel *itemModel = [QLItemModel new];
         itemModel.rowCount = 1;
@@ -179,21 +209,26 @@
         itemModel.registerType = ITEM_NibRegisterType;
         itemModel.itemSize = CGSizeMake(158, 185);
         cell.itemModel = itemModel;
-        cell.itemArr  = @[@"1",@"2",@"3"];
+        cell.itemArr  = self.homePageModel.top_car_list;
         cell.itemSetHandler = ^(id result, NSError *error) {
             QLHomeCarItem *item = result[@"item"];
             NSArray *dataArr = result[@"dataArr"];
             NSIndexPath *indexPath = result[@"indexPath"];
-            
-            
+            // 更新cell
+            [item updateWithDic:dataArr[indexPath.row]];
         };
         cell.itemSelectHandler = ^(id result, NSError *error) {
-            
+            NSArray *dataArr = result[@"dataArr"];
+            NSIndexPath *indexPath = result[@"indexPath"];
+            QLCarSourceDetailViewController *vc = [[QLCarSourceDetailViewController alloc]init];
+            [vc updateVcWithData:dataArr[indexPath.row]];
+            [self.navigationController pushViewController:vc animated:YES];
         };
         
         return cell;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
+            // 我的常用
             QLHorizontalScrollCell *cell = [[QLHorizontalScrollCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"horizontalScrollCell"];
             QLItemModel *itemModel = [QLItemModel new];
             itemModel.rowCount = 1;
@@ -204,13 +239,14 @@
             itemModel.registerType = ITEM_NibRegisterType;
             itemModel.itemSize = CGSizeMake(50, 60);
             cell.itemModel = itemModel;
-            cell.itemArr  = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8"];
+            cell.itemArr  = self.homePageModel.function_list;
             cell.itemSetHandler = ^(id result, NSError *error) {
                 QLImgTextItem *item = result[@"item"];
                 NSArray *dataArr = result[@"dataArr"];
                 NSIndexPath *indexPath = result[@"indexPath"];
-                item.titleLB.text = @"测试";
-                
+                QLFunModel *model = dataArr[indexPath.row];
+                item.titleLB.text = model.extend_01;
+                item.imgView.image = [UIImage imageNamed:model.diction_id];
             };
             cell.itemSelectHandler = ^(id result, NSError *error) {
                 
@@ -218,23 +254,28 @@
             
             return cell;
         } else if (indexPath.row == 1) {
+            // 今日访客
             QLHomeVisitRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recordCell" forIndexPath:indexPath];
-            
-            
+            if (self.homePageModel) {
+                [cell updateWithToday:[self.homePageModel.visit_today_c stringValue] andTotal:[self.homePageModel.visit_all_b stringValue]];
+            }
             return cell;
         } else {
+            // 车友圈
             QLHomeVisitListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"visitListCell" forIndexPath:indexPath];
             if (indexPath.row == 2) {
                 cell.titleLB.text = @"朋友圈";
             } else {
                 cell.titleLB.text = @"车商友人";
+                cell.headListView.headsArr = self.homePageModel.friend_list;
             }
             
             return cell;
         }
     } else {
+        // 好车推荐
         QLHomeCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hCarCell" forIndexPath:indexPath];
-        
+        [cell updateUIWithDic:self.homePageModel.recommend_car_list[indexPath.row]];
         return cell;
     }
 }
@@ -246,7 +287,7 @@
     if (section == 0) {
         headView.accBtn.hidden = NO;
         headView.titleLB.text = @"头条车源";
-        [headView.accBtn setTitle:@"· MORE" forState:UIControlStateNormal];
+        [headView.accBtn setTitle:@" 更多" forState:UIControlStateNormal];
     } else if (section == 1) {
         headView.titleLB.text = @"我的常用";
         
@@ -257,6 +298,16 @@
         
     return headView;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        //self.homePageModel.recommend_car_list[indexPath.row]
+        QLCarSourceDetailViewController *vc = [QLCarSourceDetailViewController new];
+        [vc updateVcWithData:self.homePageModel.recommend_car_list[indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
 }

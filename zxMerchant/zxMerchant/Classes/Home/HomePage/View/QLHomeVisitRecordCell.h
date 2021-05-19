@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLHomeVisitRecordCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIControl *todayControl;
-@property (weak, nonatomic) IBOutlet QLBaseLabel *todayLB;
+@property (weak, nonatomic) IBOutlet UILabel *todayLB;
 @property (weak, nonatomic) IBOutlet UIControl *totalControl;
-@property (weak, nonatomic) IBOutlet QLBaseLabel *totalLB;
-
+@property (weak, nonatomic) IBOutlet UILabel *totalLB;
+- (void)updateWithToday:(NSString *)today andTotal:(NSString *)total;
 @end
 
 NS_ASSUME_NONNULL_END

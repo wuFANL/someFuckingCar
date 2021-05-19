@@ -419,8 +419,9 @@
         para = self.doneDataArr[indexPath.row];
     }
     
-    NSLog(@"%@",para);
     
+    QLChatListPageViewController *vc = [[QLChatListPageViewController alloc] initWithCarID:EncodeStringFromDic(para, @"car_id") messageToID:EncodeStringFromDic(para, @"account_id")];
+    [self.navigationController pushViewController:vc animated:YES];
     // TODO:vc
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

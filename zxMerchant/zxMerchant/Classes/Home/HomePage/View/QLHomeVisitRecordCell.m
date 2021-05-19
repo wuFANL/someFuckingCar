@@ -21,4 +21,9 @@
     // Configure the view for the selected state
 }
 
+- (void)updateWithToday:(NSString *)today andTotal:(NSString *)total {
+    self.todayLB.text = today;
+    self.totalLB.text = total;
+}
+
 @end

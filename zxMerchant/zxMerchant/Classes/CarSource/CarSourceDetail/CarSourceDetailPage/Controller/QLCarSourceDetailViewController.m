@@ -67,8 +67,8 @@
     NSDictionary *paraDic = @{
         @"operation_type":@"car/info",
         @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id?[QLUserInfoModel getLocalInfo].account.account_id:@"",
-        @"account_id":[dic objectForKey:@"account_id"],
-        @"car_id":[dic objectForKey:@"car_id"]
+        @"account_id":[dic objectForKey:@"account_id"]?[dic objectForKey:@"account_id"]:[dic objectForKey:@"belonger"],
+        @"car_id":[dic objectForKey:@"car_id"]?[dic objectForKey:@"car_id"]:[dic objectForKey:@"id"]
     };
     
     WEAKSELF
