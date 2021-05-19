@@ -409,6 +409,8 @@
 		A0CAB85C2562EA610015FAE3 /* QLCarSourceNaviView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CAB85B2562EA610015FAE3 /* QLCarSourceNaviView.xib */; };
 		A0CAB8622562EFCA0015FAE3 /* QLCarSourceHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CAB8612562EFCA0015FAE3 /* QLCarSourceHeadView.m */; };
 		A0CAB8672562EFF70015FAE3 /* QLCarSourceHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CAB8662562EFF70015FAE3 /* QLCarSourceHeadView.xib */; };
+		A0CCC94C26543D9500F6F194 /* QLCarCircleAccMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CCC94B26543D9500F6F194 /* QLCarCircleAccMoreView.m */; };
+		A0CCC95126543DA200F6F194 /* QLCarCircleAccMoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC95026543DA100F6F194 /* QLCarCircleAccMoreView.xib */; };
 		A0DB81272547475700B2A9F5 /* QLCarCircleLikeNameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DB81252547475700B2A9F5 /* QLCarCircleLikeNameItem.m */; };
 		A0DB81282547475700B2A9F5 /* QLCarCircleLikeNameItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0DB81262547475700B2A9F5 /* QLCarCircleLikeNameItem.xib */; };
 		A0DBDAC2253377D30090C263 /* QLRemarksSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DBDAC0253377D30090C263 /* QLRemarksSetViewController.m */; };
@@ -1145,6 +1147,9 @@
 		A0CAB8602562EFCA0015FAE3 /* QLCarSourceHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarSourceHeadView.h; sourceTree = "<group>"; };
 		A0CAB8612562EFCA0015FAE3 /* QLCarSourceHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarSourceHeadView.m; sourceTree = "<group>"; };
 		A0CAB8662562EFF70015FAE3 /* QLCarSourceHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCarSourceHeadView.xib; sourceTree = "<group>"; };
+		A0CCC94A26543D9500F6F194 /* QLCarCircleAccMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCircleAccMoreView.h; sourceTree = "<group>"; };
+		A0CCC94B26543D9500F6F194 /* QLCarCircleAccMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarCircleAccMoreView.m; sourceTree = "<group>"; };
+		A0CCC95026543DA100F6F194 /* QLCarCircleAccMoreView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLCarCircleAccMoreView.xib; sourceTree = "<group>"; };
 		A0DB81242547475700B2A9F5 /* QLCarCircleLikeNameItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCircleLikeNameItem.h; sourceTree = "<group>"; };
 		A0DB81252547475700B2A9F5 /* QLCarCircleLikeNameItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarCircleLikeNameItem.m; sourceTree = "<group>"; };
 		A0DB81262547475700B2A9F5 /* QLCarCircleLikeNameItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLCarCircleLikeNameItem.xib; sourceTree = "<group>"; };
@@ -3299,6 +3304,9 @@
 				A025832325473A5200CEE15F /* QLCarCircleAccCell.h */,
 				A025832425473A5200CEE15F /* QLCarCircleAccCell.m */,
 				A025832525473A5200CEE15F /* QLCarCircleAccCell.xib */,
+				A0CCC94A26543D9500F6F194 /* QLCarCircleAccMoreView.h */,
+				A0CCC94B26543D9500F6F194 /* QLCarCircleAccMoreView.m */,
+				A0CCC95026543DA100F6F194 /* QLCarCircleAccMoreView.xib */,
 				A025832B254742E000CEE15F /* QLCarCircleLikeCell.h */,
 				A025832C254742E000CEE15F /* QLCarCircleLikeCell.m */,
 				A025832D254742E000CEE15F /* QLCarCircleLikeCell.xib */,
@@ -4849,6 +4857,7 @@
 				A0CAB7ED2561242B0015FAE3 /* QLSubmitBottomView.xib in Resources */,
 				A0C901B12529C98D0021C069 /* QLAddressBookListHeadView.xib in Resources */,
 				A03137D825336E7100A94019 /* QLNewFriendCell.xib in Resources */,
+				A0CCC95126543DA200F6F194 /* QLCarCircleAccMoreView.xib in Resources */,
 				A02C933B2523AA310031A6D7 /* QLAppointmentCountView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5103,6 +5112,7 @@
 				A0B7C1202581454000C59D05 /* QLMyCarDetailBottomView.m in Sources */,
 				A09EAB4225DEBED2007D9075 /* QLBankCardListViewController.m in Sources */,
 				A09EACBC25DECB28007D9075 /* QLSysMsgCenterController.m in Sources */,
+				A0CCC94C26543D9500F6F194 /* QLCarCircleAccMoreView.m in Sources */,
 				A0492EDE256A65D600B5E23C /* QLVehicleConditionsView.m in Sources */,
 				A04F064525DBF67300C471F6 /* QLVipAuditView.m in Sources */,
 				A0CAB84525619D320015FAE3 /* QLFullScreenImgView.m in Sources */,

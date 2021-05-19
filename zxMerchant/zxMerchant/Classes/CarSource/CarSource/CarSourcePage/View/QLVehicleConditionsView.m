@@ -155,10 +155,10 @@
 }
 //显示
 - (void)show {
-    [self setType:self.type];
     self.window.hidden = NO;
     [self.window addSubview:self];
     
+    [self setType:self.type];
     [self.collectionView reloadData];
     if (self.warnCollectionView) {
         [self.warnCollectionView reloadData];

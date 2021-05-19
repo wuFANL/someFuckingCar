@@ -14,6 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *tf;
 @property (weak, nonatomic) IBOutlet QLBaseButton *sendBtn;
 
+@property (nonatomic, strong) NSString *msgAccountId;
+
+@property (nonatomic, strong) NSString *sendAccountName;
+@property (nonatomic, strong) NSString *sendAccountId;
+@property (nonatomic, strong) NSString *receiverName;
+@property (nonatomic, strong) NSString *receiverAccountId;
 @end
 
 NS_ASSUME_NONNULL_END
