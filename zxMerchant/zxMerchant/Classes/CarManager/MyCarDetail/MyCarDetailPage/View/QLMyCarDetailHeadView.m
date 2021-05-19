@@ -47,7 +47,8 @@
     }
     imgView.frame = CGRectMake(-1, 0, baseCell.width+1, baseCell.height);
     imgView.tag = indexPath.row+100;
-    [imgView sd_setImageWithURL:[NSURL URLWithString:self.bannerArr[indexPath.row]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    NSDictionary *dic = self.bannerArr[indexPath.row];
+    [imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_url"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (image) {
             [imgView setContentScaleFactor:[[UIScreen mainScreen] scale]];
             imgView.contentMode =  UIViewContentModeScaleAspectFill;

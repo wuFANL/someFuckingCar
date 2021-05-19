@@ -63,6 +63,7 @@
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:NSClassFromString(self.itemModel.itemName)]) {
         self.itemSetHandler(@{@"item":baseCell,@"dataArr":dataArr,@"indexPath":indexPath}, nil);
+        
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {

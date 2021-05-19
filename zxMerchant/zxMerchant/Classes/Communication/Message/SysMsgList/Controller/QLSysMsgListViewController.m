@@ -99,7 +99,7 @@
 }
 //导航栏
 - (void)naviSet {
-    self.navigationItem.title = self.groupTitle;
+    self.navigationItem.title = self.titleString;
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"全部已读" style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -132,30 +132,22 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = [self.sourceArr objectAtIndex:indexPath.section];
     [self requestForReadMsg:[dic objectForKey:@"id"]];
-    if([self.titleString isEqualToString:@"上架通知"])
-    {
-//        NSDictionary *carInfoData = @{
-//            //    account_id    对方用户id
-//            @"account_id":[dataInfo objectForKey:@"belonger"]?[dataInfo objectForKey:@"belonger"]:@"",
-//            //    car_id        车辆id model_id
-//            @"car_id":[dataInfo objectForKey:@"id"]?[dataInfo objectForKey:@"id"]:@""
-//        };
-//        QLCarSourceDetailViewController *csdVC = [QLCarSourceDetailViewController new];
-//        [csdVC updateVcWithData:carInfoData];
-//        [self.navigationController pushViewController:csdVC animated:YES];
-        QLMyCarDetailViewController *vcdVC = [QLMyCarDetailViewController new];
-        [self.navigationController pushViewController:vcdVC animated:YES];
-    }
-    else if ([self.titleString isEqualToString:@"出售通知"])
-    {
-        QLMyCarDetailViewController *vcdVC = [QLMyCarDetailViewController new];
-        [self.navigationController pushViewController:vcdVC animated:YES];
-    }
-    else if ([self.titleString isEqualToString:@"关注通知"])
+    if ([self.titleString isEqualToString:@"关注通知"])
     {
         QLContactsInfoViewController *ciVC = [[QLContactsInfoViewController alloc] initWithFirendID:[dic objectForKey:@"from_user_id"]];
         ciVC.contactRelation = Friend;
         [self.navigationController pushViewController:ciVC animated:YES];
+    }
+    else
+    {
+        NSString *fromUserID = [dic objectForKey:@"from_user_id"];
+        NSString *carid = [dic objectForKey:@"params"];
+        NSArray *ar = [carid componentsSeparatedByString:@"&"];
+        carid = [[[ar firstObject] componentsSeparatedByString:@"="] lastObject];
+        //上架通知 + 交易通知 + 出售通知
+        QLMyCarDetailViewController *vcdVC = [[QLMyCarDetailViewController alloc] initWithUserid:fromUserID carID:carid];
+        [self.navigationController pushViewController:vcdVC animated:YES];
+        
     }
     
 }

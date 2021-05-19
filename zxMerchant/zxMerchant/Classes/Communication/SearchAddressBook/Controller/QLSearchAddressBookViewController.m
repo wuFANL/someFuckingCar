@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) QLListSectionIndexView *indexView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *smallDataArray;
+
 @property (nonatomic, strong) MyFriendsModel *friendListModel;
 @end
 
@@ -37,8 +39,12 @@
         [MBProgressHUD immediatelyRemoveHUD];
         self.friendListModel = [MyFriendsModel yy_modelWithJSON:[response objectForKey:@"result_info"]];
         
+        
+        [self.smallDataArray removeAllObjects];
         [self.dataArray removeAllObjects];
         [self.dataArray addObjectsFromArray:[self sortObjectsAccordingToInitialWith:self.friendListModel.account_list]];
+        
+        [self.smallDataArray addObjectsFromArray:self.dataArray];
         
         //抽出索引
         __block NSMutableArray *bArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -108,6 +114,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.smallDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     //设置导航栏
     [self setNavi];
     //tableView
@@ -135,18 +142,43 @@
     
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:0];
+    [self.dataArray removeAllObjects];
+    if([NSString isEmptyString:searchText])
+    {
+        [self.dataArray addObjectsFromArray:self.smallDataArray];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+        return;;
+    }
     
-    [self.dataArray enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [ar addObjectsFromArray:self.smallDataArray];
+    
+    __block NSMutableArray *bigAr = [[NSMutableArray alloc] initWithCapacity:0];
+    [ar enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj enumerateObjectsUsingBlock:^(FriendDetailModel *fobj, NSUInteger idx, BOOL * _Nonnull stop) {
             if([fobj.nickname hasPrefix:searchText])
             {
-                
+                [bigAr addObject:fobj];
             }
         }];
     }];
     
+    [self.dataArray addObjectsFromArray:[self sortObjectsAccordingToInitialWith:bigAr]];
     
-//    [self.tableView reloadData];
+    //抽出索引
+    __block NSMutableArray *bArray = [[NSMutableArray alloc] initWithCapacity:0];
+    [ar enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        FriendDetailModel *model = obj.firstObject;
+        [bArray addObject:model.name_index];
+    }];
+    self.indexView.indexArr = [bArray copy];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 - (void)setNavi {
     //中间输入框

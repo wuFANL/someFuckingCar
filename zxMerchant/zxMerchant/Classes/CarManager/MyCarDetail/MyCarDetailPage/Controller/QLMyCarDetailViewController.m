@@ -32,9 +32,58 @@
 @property (nonatomic, assign) BOOL showPrice;
 //是否显示内部价格
 @property (nonatomic, assign) BOOL showInternalPrice;
+@property (nonatomic, copy) NSString *userId;
+@property (nonatomic, copy) NSString *userType;
+@property (nonatomic, copy) NSString *carID;
+
+@property (nonatomic, strong) NSArray *zjPicArr;
+
+@property (nonatomic, copy) NSDictionary *allSourceDic;
 @end
 
 @implementation QLMyCarDetailViewController
+
+-(id)initWithUserid:(NSString *)userID carID:(NSString *)carId {
+    self = [super init];
+    if(self)
+    {
+        self.userId = userID;
+        self.carID = carId;
+    }
+    return self;
+}
+
+-(void)requestForMsgInfo
+{
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/info",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.userId,@"car_id":self.carID} success:^(id response) {
+        self.allSourceDic = [response objectForKey:@"result_info"];
+        self.headView.numLB.text = self.carID;
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForCarPicList:(NSString *)carName
+{
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/attr_list",@"car_id":self.carID,@"detecte_total_name":carName,@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        if([carName isEqualToString:@"车辆照片"])
+        {
+            self.headView.bannerArr = [[response objectForKey:@"result_info"] objectForKey:@"attr_list"];
+            [self requestForCarPicList:@"证件照片"];
+        }
+        else
+        {
+            self.zjPicArr = [[[response objectForKey:@"result_info"] objectForKey:@"attr_list"] copy];
+
+            [self.tableView reloadData];
+        }
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -43,6 +92,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"车辆详情";
+    [self requestForMsgInfo];
+    [self requestForCarPicList:@"车辆照片"];
+
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"share_green"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
     //底部
@@ -133,7 +185,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"QLVehicleDescCell" bundle:nil] forCellReuseIdentifier:@"descCell"];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
-        make.bottom.equalTo(self.bottomView.mas_top).offset(35);
+        make.bottom.equalTo(self.view);
     }];
     
     //tableViewHead
@@ -170,11 +222,19 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             QLCarDetailTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleCell" forIndexPath:indexPath];
-            
+            if(self.allSourceDic)
+            {
+                cell.titleLB.text = [[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"model"];
+            }
             return cell;
         } else if (indexPath.row == 1) {
             QLCarDetailAccInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"accInfoCell" forIndexPath:indexPath];
-            cell.iconArr = [@[@"2010年",@"13.04万公里",@"库龄123天"] mutableCopy];
+            if(self.allSourceDic)
+            {
+                NSString *age = [NSString stringWithFormat:@"库龄%@天",[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"days"]];
+                NSString *distents = [NSString stringWithFormat:@"%@万公里",[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"driving_distance"]];
+                cell.iconArr = [@[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"production_year"],distents,age] mutableCopy];
+            }
             return cell;
         } else {
             QLCarDetailPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"priceCell" forIndexPath:indexPath];
@@ -182,6 +242,13 @@
             cell.internalPriceBtn.hidden = NO;
             [cell.reduceBtn addTarget:self action:@selector(reduceBtnClick) forControlEvents:UIControlEventTouchUpInside];
             [cell.internalPriceBtn addTarget:self action:@selector(showPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            if(self.allSourceDic)
+            {
+                cell.priceLB.text = [[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"sell_price"] floatValue]];
+                cell.accPriceLB.text = [NSString stringWithFormat:@"新车指导价：%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"guide_price"] floatValue]]];
+                
+            }
+
             return cell;
         }
     } else if (indexPath.section == 1) {
@@ -198,18 +265,18 @@
             cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"在线标价";
-                cell.detailTextLabel.text = @"-";
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"sell_price"] floatValue]]];
             } else if (indexPath.row == 1) {
                 cell.textLabel.text = @"销售底价";
-                cell.detailTextLabel.text = @"-";
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"sell_min_price"] floatValue]]];
             } else {
                 if (self.showInternalPrice) {
                     if (indexPath.row == 2) {
                         cell.textLabel.text = @"批发价";
-                        cell.detailTextLabel.text = @"-";
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"wholesale_price"] floatValue]]];
                     } else if(indexPath.row == 3) {
                         cell.textLabel.text = @"采购价";
-                        cell.detailTextLabel.text = @"-";
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"procure_price"] floatValue]]];
                     }
                 }
             }
@@ -217,14 +284,22 @@
             return cell;
         } else {
             QLVehicleInstalmentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"instalmentCell" forIndexPath:indexPath];
-            
+            if(self.allSourceDic)
+            {
+                cell.priceLB.text = [NSString stringWithFormat:@"首付%@",[[QLToolsManager share] unitConversion:[[[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"sell_pre_price"] floatValue]]];
+
+            }
             return cell;
         }
         
     } else if (indexPath.section == [tableView numberOfSections]-3) {
         if (indexPath.row == 0) {
             QLVehicleConfigCell *cell = [tableView dequeueReusableCellWithIdentifier:@"configCell" forIndexPath:indexPath];
+            if(self.allSourceDic)
+            {
+                [cell updateWithDic:self.allSourceDic];
 
+            }
             return cell;
         } else {
             QLVehicleReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reportCell" forIndexPath:indexPath];
@@ -234,6 +309,18 @@
     } else if (indexPath.section == [tableView numberOfSections]-2) {
         QLVehicleDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"descCell" forIndexPath:indexPath];
         [cell.uploadControl addTarget:self action:@selector(uploadControlClick) forControlEvents:UIControlEventTouchUpInside];
+        if(self.allSourceDic)
+        {
+            NSString* titleStr = [[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"model"];
+            // 里程数
+            NSString* distance  = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"driving_distance");
+            // 首次上牌 production_year
+            NSString* production_year = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"production_year");
+            // 档位
+            NSString* transmission_case = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_param"], @"transmission_case");
+            cell.contentLB.text = [NSString stringWithFormat:@"%@,%@,%@,%@万公里",production_year,titleStr,transmission_case,distance];
+
+        }
         return cell;
     } else {
         QLHorizontalScrollCell *cell = [[QLHorizontalScrollCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"horizontalScrollCell"];
@@ -247,14 +334,14 @@
         itemModel.itemSize = CGSizeMake(74, 55);
         cell.itemModel = itemModel;
         cell.collectionViewHeight = 55;
-        cell.itemArr  = @[@"1",@"2",@"3"];
+        cell.itemArr  = self.zjPicArr;
         cell.itemSetHandler = ^(id result, NSError *error) {
             QLImageItem *item = result[@"item"];
             NSArray *dataArr = result[@"dataArr"];
             NSIndexPath *indexPath = result[@"indexPath"];
             item.backgroundColor = LightGrayColor;
-            
-            
+            NSDictionary *dic = [dataArr objectAtIndex:indexPath.row];
+            [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_url"]]];
         };
         cell.itemSelectHandler = ^(id result, NSError *error) {
             
@@ -318,6 +405,7 @@
     if (!_bottomView) {
         _bottomView = [QLMyCarDetailBottomView new];
         [_bottomView.confirmBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _bottomView.hidden = YES;
     }
     return _bottomView;
 }
