@@ -57,7 +57,11 @@
 }
 - (void)setItemArr:(NSArray *)itemArr {
     _itemArr = itemArr;
-    self.collectionView.dataArr = [itemArr mutableCopy];
+    if (itemArr.count >= 4) {
+        _itemArr = @[itemArr[0],itemArr[1],itemArr[2],itemArr[3]];
+    }
+    
+    self.collectionView.dataArr = [_itemArr mutableCopy];
 }
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {

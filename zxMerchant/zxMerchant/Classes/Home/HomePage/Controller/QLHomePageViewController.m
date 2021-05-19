@@ -117,7 +117,7 @@
     QLFunModel *fun2Model = [[QLToolsManager share].homePageModel getFun:MyStore];
     QLFunModel *fun3Model = [[QLToolsManager share].homePageModel getFun:VehicleCertificate];
     QLFunModel *fun4Model = [[QLToolsManager share].homePageModel getFun:PaymentAccount];
-    QLFunModel *fun5Model = [[QLToolsManager share].homePageModel getFun:CreditReporting];
+//    QLFunModel *fun5Model = [[QLToolsManager share].homePageModel getFun:CreditReporting];
     
     if (fun1Model) {
         [temArr addObject:fun1Model];
@@ -131,9 +131,9 @@
     if (fun4Model) {
         [temArr addObject:fun4Model];
     }
-    if (fun5Model) {
-        [temArr addObject:fun5Model];
-    }
+//    if (fun5Model) {
+//        [temArr addObject:fun5Model];
+//    }
     
     int row = temArr.count/5 > 1?2:1;
     int collectionViewHeight = 95*row;
