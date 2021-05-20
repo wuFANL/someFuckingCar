@@ -30,6 +30,13 @@
     
     return @{@"funName":title,@"imgName":imgName};
 }
+
+- (NSArray *)friendCycle {
+    if (!_friendCycle) {
+        _friendCycle = [NSArray array];
+    }
+    return _friendCycle;
+}
 @end
 
 @implementation QLBannerModel

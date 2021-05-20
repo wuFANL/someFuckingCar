@@ -70,6 +70,11 @@ typedef NS_ENUM(NSUInteger, FunctionType) {
  *功能包
  */
 @property (nonatomic, strong) NSMutableArray *function_list;
+
+
+/** 朋友圈*/
+@property (nonatomic, strong) NSArray *friendCycle;
+
 /**
  *根据ID获取功能模型
  */

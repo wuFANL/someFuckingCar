@@ -49,7 +49,13 @@
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
         //设置图片
-        [btn sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.headsArr[i], @"head_pic")] forState:UIControlStateNormal];
+        if ([self.headsArr[i] isKindOfClass:[NSString class]]) {
+            [btn sd_setImageWithURL:[NSURL URLWithString:self.headsArr[i]] forState:UIControlStateNormal];
+            
+        } else {
+            [btn sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.headsArr[i], @"head_pic")] forState:UIControlStateNormal];
+        }
+        
         
 //        if (self.headDelegate&&[self.headDelegate respondsToSelector:@selector(setItemIndex:Obj:)]) {
 //            [self.headDelegate setItemIndex:i Obj:btn];

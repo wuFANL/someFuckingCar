@@ -27,6 +27,9 @@
 @property (nonatomic, strong) QLHomeNaviView *naviView;
 @property (nonatomic, strong) QLHomePageHeadView *headView;
 @property (nonatomic, strong) QLHomePageModel *homePageModel;
+
+/** 朋友圈*/
+@property (nonatomic, strong) NSArray *friendData;
 @end
 
 @implementation QLHomePageViewController
@@ -42,6 +45,8 @@
 //    }
     [self getHomeData];
 //    [self funDataDo];
+    // 请求朋友圈数据
+    [self getFriendList];
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
@@ -80,6 +85,23 @@
         [MBProgressHUD immediatelyRemoveHUD];
         //功能数据筛选
         [weakSelf funDataDo];
+        //刷新
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+- (void)getFriendList {
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"get_visit_data",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+        NSDictionary* info = [response objectForKey:@"result_info"];
+        if ([info isKindOfClass:[NSDictionary class]]) {
+            NSArray * arr =[info objectForKey:@"pic_list"];
+            if ([arr isKindOfClass:[NSArray class]]) {
+                weakSelf.friendData = arr;
+            }
+        }
         //刷新
         [weakSelf.tableView reloadData];
     } fail:^(NSError *error) {
@@ -270,6 +292,7 @@
             QLHomeVisitListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"visitListCell" forIndexPath:indexPath];
             if (indexPath.row == 2) {
                 cell.titleLB.text = @"朋友圈";
+                cell.headListView.headsArr = self.friendData;
             } else {
                 cell.titleLB.text = @"车商友人";
                 cell.headListView.headsArr = self.homePageModel.friend_list;
@@ -351,5 +374,12 @@
         _headView.delegate = self;
     }
     return _headView;
+}
+
+- (QLHomePageModel *)homePageModel {
+    if (!_homePageModel) {
+        _homePageModel =[[ QLHomePageModel alloc]init];
+    }
+    return _homePageModel;
 }
 @end
