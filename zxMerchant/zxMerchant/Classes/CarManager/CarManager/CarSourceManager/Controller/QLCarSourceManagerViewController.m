@@ -50,20 +50,62 @@
     cell.priceBtn.selected = self.type == 2?NO:YES;
     cell.showFunView = self.type == 2?NO:YES;
     NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
-    [cell.accImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+    [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+    cell.activityStatusLB.hidden = YES;
+    if([[dic objectForKey:@"exam_status"] intValue] == 98)
+    {
+        cell.activityStatusLB.hidden = NO;
+        cell.activityStatusLB.text = @"待审核";
+        cell.activityStatusLB.backgroundColor = [UIColor lightGrayColor];
+
+    } else if ([[dic objectForKey:@"exam_status"] intValue] == 2) {
+        cell.activityStatusLB.hidden = NO;
+        cell.activityStatusLB.backgroundColor = [UIColor redColor];
+        cell.activityStatusLB.text = @"未通过";
+    }
     cell.titleLB.text = [dic objectForKey:@"model"];
     cell.desLB.text = [NSString stringWithFormat:@"%@ | %@万公里",[dic objectForKey:@"production_year"],[[dic objectForKey:@"driving_distance"] stringValue]];
     
     [cell.priceBtn setTitle:[[dic objectForKey:@"sell_price"] stringValue] forState:UIControlStateNormal];
     cell.prePriceLB.text = [NSString stringWithFormat:@"首付%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_pre_price"] floatValue]]];
+    if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"seller_id"]] && [[dic objectForKey:@"exam_status"] intValue] != 98)
+    {
+        cell.lookBtn.hidden = NO;
+        cell.callBtn.hidden = NO;
+        cell.helpBtn.hidden = NO;
+        
+        [cell.helpBtn setTitle:[[dic objectForKey:@"help_sell_num"] stringValue] forState:UIControlStateNormal];
+        [cell.callBtn setTitle:[[dic objectForKey:@"trade_num"] stringValue] forState:UIControlStateNormal];
+        [cell.lookBtn setTitle:[[dic objectForKey:@"visit_num"] stringValue] forState:UIControlStateNormal];
+    }
+    else
+    {
+        cell.lookBtn.hidden = YES;
+        cell.callBtn.hidden = YES;
+        cell.helpBtn.hidden = YES;
+    }
+    
+    if([[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"1"])
+    {
+        cell.activityStatusLB.hidden = YES;
+        cell.lookBtn.hidden = YES;
+        cell.callBtn.hidden = YES;
+        cell.helpBtn.hidden = YES;
+    }
     return cell;
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
     if (self.type != 2) {
-        QLMyCarDetailViewController *mcdVC = [QLMyCarDetailViewController new];
-        [self.navigationController pushViewController:mcdVC animated:YES];
+        NSString *fromUserID = [dic objectForKey:@"account_id"];
+        NSString *carid = [dic objectForKey:@"id"];
+        NSString *buscarid = [dic objectForKey:@"business_car_id"];
+        //上架通知 + 交易通知 + 出售通知
+        QLMyCarDetailViewController *vcdVC = [[QLMyCarDetailViewController alloc] initWithUserid:fromUserID carID:carid businessCarID:buscarid];
+        [self.navigationController pushViewController:vcdVC animated:YES];
+    
     } else {
         QLCooperativeSourceDetailPageViewController *csdpVC = [QLCooperativeSourceDetailPageViewController new];
         [self.navigationController pushViewController:csdpVC animated:YES];

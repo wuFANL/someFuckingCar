@@ -35,6 +35,8 @@
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *userType;
 @property (nonatomic, copy) NSString *carID;
+@property (nonatomic, copy) NSString *buscarID;
+
 
 @property (nonatomic, strong) NSArray *zjPicArr;
 
@@ -53,9 +55,31 @@
     return self;
 }
 
+-(id)initWithUserid:(NSString *)userID carID:(NSString *)carId businessCarID:(NSString *)busCarID{
+    self = [super init];
+    if(self)
+    {
+        self.userId = userID;
+        self.carID = carId;
+        self.buscarID = busCarID;
+    }
+    return self;
+}
+
 -(void)requestForMsgInfo
 {
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/info",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.userId,@"car_id":self.carID} success:^(id response) {
+        self.allSourceDic = [response objectForKey:@"result_info"];
+        self.headView.numLB.text = self.carID;
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForMsgList
+{
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/list_info",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.userId,@"car_id":self.carID,@"business_car_id":self.buscarID} success:^(id response) {
         self.allSourceDic = [response objectForKey:@"result_info"];
         self.headView.numLB.text = self.carID;
         [self.tableView reloadData];
@@ -75,7 +99,6 @@
         else
         {
             self.zjPicArr = [[[response objectForKey:@"result_info"] objectForKey:@"attr_list"] copy];
-
             [self.tableView reloadData];
         }
         
@@ -92,7 +115,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"车辆详情";
-    [self requestForMsgInfo];
+    if([NSString isEmptyString:self.buscarID])
+    {
+        [self requestForMsgInfo];
+    } else {
+        [self requestForMsgList];
+    }
+    
     [self requestForCarPicList:@"车辆照片"];
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"share_green"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];

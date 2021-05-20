@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="388" height="153"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u0U-8e-LXW">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u0U-8e-LXW">
                         <rect key="frame" x="15" y="15" width="140" height="94"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -41,7 +41,7 @@
                                     <constraint firstAttribute="width" secondItem="nit-8G-SvF" secondAttribute="height" multiplier="1:1" id="zVh-mg-A0d"/>
                                 </constraints>
                             </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="急降" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNq-bo-dAr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="急降" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNq-bo-dAr">
                                 <rect key="frame" x="5" y="5" width="35" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,7 +79,7 @@
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBY-kB-DtS" customClass="QLBaseButton">
+                    <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBY-kB-DtS" customClass="QLBaseButton">
                         <rect key="frame" x="316" y="54.5" width="62" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="iOW-rI-uJP"/>
@@ -182,7 +182,7 @@
                 <outlet property="accImgView" destination="cgq-QW-fsC" id="yoz-6W-aAr"/>
                 <outlet property="activityImgView" destination="nit-8G-SvF" id="cWM-bY-pVn"/>
                 <outlet property="activityPriceLB" destination="p5Z-ft-47M" id="dIk-f8-UKd"/>
-                <outlet property="activityStatusLB" destination="qNq-bo-dAr" id="2FT-dL-XMt"/>
+                <outlet property="activityStatusLB" destination="qNq-bo-dAr" id="n3S-eZ-ONe"/>
                 <outlet property="activityView" destination="akK-vV-1NM" id="tJ0-3Y-VeD"/>
                 <outlet property="callBtn" destination="CLQ-Ye-DoH" id="xlH-0d-eBw"/>
                 <outlet property="desLB" destination="JH4-aa-sf4" id="RhE-TK-4IT"/>

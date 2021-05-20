@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLMyCarDetailViewController : QLBaseTableViewController
 -(id)initWithUserid:(NSString *)userID carID:(NSString *)carId;
+-(id)initWithUserid:(NSString *)userID carID:(NSString *)carId businessCarID:(NSString *)busCarID;
 @end
 
 NS_ASSUME_NONNULL_END
