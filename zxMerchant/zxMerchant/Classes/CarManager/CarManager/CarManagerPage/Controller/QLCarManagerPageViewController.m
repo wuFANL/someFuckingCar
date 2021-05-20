@@ -13,14 +13,82 @@
 #import "QLCarSourceManagerViewController.h"
 #import "QLEditTopCarViewController.h"
 #import "QLDueProcessViewController.h"
+#import "QLParamModel.h"
 
 @interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarManagerPageHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
+@property (nonatomic, strong) QLParamModel *paramModel;
+@property (nonatomic, copy) NSString *njString; //年检
+@property (nonatomic, copy) NSString *qzxString; //强制险
+@property (nonatomic, copy) NSString *allCarNum; //总数
+@property (nonatomic, strong) NSMutableArray *allCarArray; //总数
 
+@property (nonatomic, strong) QLCarSourceManagerViewController *csm1VC;
+@property (nonatomic, strong) QLCarSourceManagerViewController *csm2VC;
+@property (nonatomic, strong) QLCarSourceManagerViewController *csm3VC;
 @end
 
 @implementation QLCarManagerPageViewController
+
+-(void)requestForList:(QLParamModel *)model
+{
+    //我的车源=1 合作车源=2  传空是全部
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        @"operation_type":@"car_list",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"local_state":model.local_state,
+        @"sort_by":model.sort_by,
+        @"brand_id":model.brand_id,
+        @"price_min":model.price_min,
+        @"price_max":model.price_max,
+        @"deal_state":model.deal_state,
+        @"page_no":model.page_no,
+        @"page_size":@"20",
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        self.allCarNum = [[response objectForKey:@"result_info"] objectForKey:@"car_num"];
+        
+        [self.allCarArray removeAllObjects];
+        [self.allCarArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"car_list"]];
+        
+        if([self.paramModel.local_state isEqualToString:@"1"])
+        {
+            //我的
+            [self.csm2VC uploadTableWithSourceArray:self.allCarArray];
+        }
+        else if ([self.paramModel.local_state isEqualToString:@"2"])
+        {
+            //合作
+            [self.csm3VC uploadTableWithSourceArray:self.allCarArray];
+        }
+        else
+        {
+            //全部
+            [self.csm1VC uploadTableWithSourceArray:self.allCarArray];
+        }
+        
+        
+
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForOverDate
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"get_merchant_car_warn",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        self.njString = [[response objectForKey:@"result_info"] objectForKey:@"mot_warn"];
+        self.qzxString = [[response objectForKey:@"result_info"] objectForKey:@"insure_warn"];
+
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -28,6 +96,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.allCarArray = [[NSMutableArray alloc] initWithCapacity:0];
+
     //头部
     [self.view addSubview:self.headView];
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -35,18 +105,32 @@
         make.height.mas_equalTo(0);
     }];
     //subView
-    QLCarSourceManagerViewController *csm1VC = [QLCarSourceManagerViewController new];
-    csm1VC.type = 0;
+    self.csm1VC = [QLCarSourceManagerViewController new];
+    self.csm1VC.type = 0;
     
-    QLCarSourceManagerViewController *csm2VC = [QLCarSourceManagerViewController new];
-    csm2VC.type = 1;
+    self.csm2VC = [QLCarSourceManagerViewController new];
+    self.csm2VC.type = 1;
     
-    QLCarSourceManagerViewController *csm3VC = [QLCarSourceManagerViewController new];
-    csm3VC.type = 2;
+    self.csm3VC = [QLCarSourceManagerViewController new];
+    self.csm3VC.type = 2;
     
-    self.subVCArr = @[csm1VC,csm2VC,csm3VC];
+    self.subVCArr = @[self.csm1VC,self.csm2VC,self.csm3VC];
     self.needGestureRecognizer = YES;
     self.delegate = self;
+    
+    //配置默认值
+    self.paramModel = [[QLParamModel alloc] init];
+    self.paramModel.brand_id = @"";
+    self.paramModel.deal_state = @"1";
+    self.paramModel.local_state = @"0";
+    self.paramModel.page_no = @"1";
+    self.paramModel.page_size = @"20";
+    self.paramModel.price_max = @"9999999";
+    self.paramModel.price_min = @"1";
+    self.paramModel.sort_by = @"1";
+    
+    [self requestForList:self.paramModel];
+    [self requestForOverDate];
 }
 - (void)viewDidLayoutSubviews {
     [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4669B5DF265563380089A677 /* QLParamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4669B5DE265563380089A677 /* QLParamModel.m */; };
 		4672051726413DA8002E946A /* MessageListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4672051626413DA8002E946A /* MessageListModel.m */; };
 		46D288A726384C3000ED5063 /* MyFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D288A626384C3000ED5063 /* MyFriendsModel.m */; };
 		8B5444E2B6065B3A620CE255 /* libPods-zxMerchant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */; };
@@ -462,6 +463,8 @@
 
 /* Begin PBXFileReference section */
 		1FC797DA817D377725364FB6 /* Pods-zxMerchant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.release.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.release.xcconfig"; sourceTree = "<group>"; };
+		4669B5DD265563380089A677 /* QLParamModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLParamModel.h; sourceTree = "<group>"; };
+		4669B5DE265563380089A677 /* QLParamModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLParamModel.m; sourceTree = "<group>"; };
 		4672051526413DA8002E946A /* MessageListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageListModel.h; sourceTree = "<group>"; };
 		4672051626413DA8002E946A /* MessageListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageListModel.m; sourceTree = "<group>"; };
 		46D288A526384C3000ED5063 /* MyFriendsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFriendsModel.h; sourceTree = "<group>"; };
@@ -2278,6 +2281,8 @@
 			children = (
 				A044AAE7251FCF6E00D1C324 /* QLCarManagerPageViewController.h */,
 				A044AAE8251FCF6E00D1C324 /* QLCarManagerPageViewController.m */,
+				4669B5DD265563380089A677 /* QLParamModel.h */,
+				4669B5DE265563380089A677 /* QLParamModel.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5189,6 +5194,7 @@
 				A00621922513DD7300A571E5 /* NSArray+Log.m in Sources */,
 				A0492F802570272900B5E23C /* QLCarDetailPriceCell.m in Sources */,
 				A03183D925AA262B007B5D3F /* QLVipPriceListView.m in Sources */,
+				4669B5DF265563380089A677 /* QLParamModel.m in Sources */,
 				A00620E52513DB2000A571E5 /* QLListSectionIndexView.m in Sources */,
 				A07CDFB8254F169B000CAB62 /* QLJoinStoreCell.m in Sources */,
 				A0499460253E010C00A1E014 /* QLCarCircleHeadView.m in Sources */,
