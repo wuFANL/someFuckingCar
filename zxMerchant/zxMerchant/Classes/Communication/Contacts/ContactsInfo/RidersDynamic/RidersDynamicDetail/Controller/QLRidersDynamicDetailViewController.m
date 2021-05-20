@@ -16,6 +16,7 @@
 
 @interface QLRidersDynamicDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLDynamicSendMsgBottomView *bottomView;
+
 @end
 
 @implementation QLRidersDynamicDetailViewController

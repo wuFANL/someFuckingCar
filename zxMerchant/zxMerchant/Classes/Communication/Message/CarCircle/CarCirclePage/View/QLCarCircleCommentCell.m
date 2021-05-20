@@ -26,6 +26,12 @@
     [super layoutSubviews];
     self.bjViewHeight.constant = self.tableViewHeight;
 }
+
+- (void)setListArr:(NSArray *)listArr {
+    _listArr = listArr;
+    
+//    [self.tableView reloadData];
+}
 #pragma mark - tableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -36,8 +42,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     QLCarCircleCommentContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentContentCell" forIndexPath:indexPath];
-    cell.model = self.listArr[indexPath.row];
+    cell.backgroundColor = self.bjView.backgroundColor;
+    if (indexPath.row < self.listArr.count) {
+        cell.model = self.listArr[indexPath.row];
+    }
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.clickHandler) {
+        self.clickHandler(self.listArr[indexPath.row],nil);
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 10;

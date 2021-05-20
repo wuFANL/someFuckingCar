@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
  *2：合作车源
  */
 @property (nonatomic, assign) NSInteger type;
+
+-(void)uploadTableWithSourceArray:(NSMutableArray *)sourceArray;
 @end
 
 NS_ASSUME_NONNULL_END

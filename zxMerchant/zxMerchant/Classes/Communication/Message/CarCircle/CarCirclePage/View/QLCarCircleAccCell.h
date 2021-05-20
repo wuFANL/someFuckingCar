@@ -14,10 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *accLB;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *moreOpenBtn;
-@property (weak, nonatomic) IBOutlet UIView *moreView;
-@property (weak, nonatomic) IBOutlet UIButton *likeBtn;
-@property (weak, nonatomic) IBOutlet UIButton *commentBtn;
-@property (weak, nonatomic) IBOutlet UIButton *moreCloseBtn;
+
 
 @end
 

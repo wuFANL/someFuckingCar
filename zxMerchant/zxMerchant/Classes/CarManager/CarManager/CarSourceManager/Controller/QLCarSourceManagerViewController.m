@@ -12,15 +12,24 @@
 #import "QLCooperativeSourceDetailPageViewController.h"
 
 @interface QLCarSourceManagerViewController ()<UITableViewDelegate,UITableViewDataSource>
-
+@property (nonatomic, strong) NSMutableArray *sourceAr;
 @end
 
 @implementation QLCarSourceManagerViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.sourceAr = [[NSMutableArray alloc] initWithCapacity:0];
     //tableView
     [self tableViewSet];
 }
+
+-(void)uploadTableWithSourceArray:(NSMutableArray *)sourceArray {
+    [self.sourceAr removeAllObjects];
+    [self.sourceAr addObjectsFromArray:sourceArray];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
@@ -34,13 +43,19 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.sourceAr count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLCarSourceManagerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"carSourceManagerCell" forIndexPath:indexPath];
     cell.priceBtn.selected = self.type == 2?NO:YES;
     cell.showFunView = self.type == 2?NO:YES;
+    NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
+    [cell.accImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+    cell.titleLB.text = [dic objectForKey:@"model"];
+    cell.desLB.text = [NSString stringWithFormat:@"%@ | %@万公里",[dic objectForKey:@"production_year"],[[dic objectForKey:@"driving_distance"] stringValue]];
     
+    [cell.priceBtn setTitle:[[dic objectForKey:@"sell_price"] stringValue] forState:UIControlStateNormal];
+    cell.prePriceLB.text = [NSString stringWithFormat:@"首付%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_pre_price"] floatValue]]];
     return cell;
 
 }

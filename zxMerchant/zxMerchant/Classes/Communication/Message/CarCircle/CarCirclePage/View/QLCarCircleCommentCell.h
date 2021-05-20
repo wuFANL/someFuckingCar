@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewHeight;
 
 @property (nonatomic, strong) NSArray *listArr;
+@property (nonatomic, strong) ResultBlock clickHandler;
 @end
 
 NS_ASSUME_NONNULL_END

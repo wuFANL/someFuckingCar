@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,57 +40,15 @@
                             <constraint firstAttribute="height" constant="30" id="iZm-0E-eoE"/>
                         </constraints>
                         <state key="normal" image="moreIcon_blue"/>
+                        <connections>
+                            <action selector="moreOpenBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Yum-zm-kwP"/>
+                        </connections>
                     </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxv-ow-LZ6">
-                        <rect key="frame" x="199" y="0.0" width="175" height="40"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLL-O7-zDJ">
-                                <rect key="frame" x="0.0" y="0.0" width="58.5" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="赞" image="likeIcon_white"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6o7-CN-pPI">
-                                <rect key="frame" x="58.5" y="0.0" width="58" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="评论" image="commentIcon_white"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQU-p6-A8X">
-                                <rect key="frame" x="116.5" y="0.0" width="58.5" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="moreIcon_white"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.19213461879999999" green="0.1921729147" blue="0.19212651250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="PQU-p6-A8X" secondAttribute="bottom" id="3Jy-RC-Xqn"/>
-                            <constraint firstItem="tLL-O7-zDJ" firstAttribute="leading" secondItem="cxv-ow-LZ6" secondAttribute="leading" id="4Ec-6g-Z7h"/>
-                            <constraint firstItem="6o7-CN-pPI" firstAttribute="top" secondItem="cxv-ow-LZ6" secondAttribute="top" id="8ha-DO-Sad"/>
-                            <constraint firstAttribute="bottom" secondItem="tLL-O7-zDJ" secondAttribute="bottom" id="ENj-eA-NoC"/>
-                            <constraint firstItem="PQU-p6-A8X" firstAttribute="width" secondItem="tLL-O7-zDJ" secondAttribute="width" id="EvM-x3-UjZ"/>
-                            <constraint firstItem="tLL-O7-zDJ" firstAttribute="top" secondItem="cxv-ow-LZ6" secondAttribute="top" id="P1I-5m-WmL"/>
-                            <constraint firstAttribute="bottom" secondItem="6o7-CN-pPI" secondAttribute="bottom" id="P6R-qz-LTs"/>
-                            <constraint firstItem="PQU-p6-A8X" firstAttribute="top" secondItem="cxv-ow-LZ6" secondAttribute="top" id="SGa-Z0-nop"/>
-                            <constraint firstAttribute="trailing" secondItem="PQU-p6-A8X" secondAttribute="trailing" id="Y5D-xG-ll7"/>
-                            <constraint firstItem="6o7-CN-pPI" firstAttribute="leading" secondItem="tLL-O7-zDJ" secondAttribute="trailing" id="ZOu-OY-Xjt"/>
-                            <constraint firstItem="PQU-p6-A8X" firstAttribute="leading" secondItem="6o7-CN-pPI" secondAttribute="trailing" id="fp6-83-Qzz"/>
-                            <constraint firstItem="6o7-CN-pPI" firstAttribute="width" secondItem="tLL-O7-zDJ" secondAttribute="width" id="ihF-5e-T7a"/>
-                            <constraint firstAttribute="width" constant="175" id="j2U-Lw-Jyi"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="cxv-ow-LZ6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="05K-qg-LUF"/>
-                    <constraint firstItem="Nea-lU-Wch" firstAttribute="trailing" secondItem="cxv-ow-LZ6" secondAttribute="trailing" id="23a-g5-wxd"/>
                     <constraint firstItem="Nea-lU-Wch" firstAttribute="centerY" secondItem="Xpw-uA-qVg" secondAttribute="centerY" id="A19-Al-ArJ"/>
                     <constraint firstItem="Xpw-uA-qVg" firstAttribute="centerY" secondItem="ltW-fP-OHr" secondAttribute="centerY" id="B4N-y2-ZHa"/>
                     <constraint firstItem="ltW-fP-OHr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="GiP-6g-lwH"/>
-                    <constraint firstAttribute="bottom" secondItem="cxv-ow-LZ6" secondAttribute="bottom" id="Mcl-4y-zlg"/>
                     <constraint firstItem="ltW-fP-OHr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="72" id="Tth-AT-sY4"/>
                     <constraint firstAttribute="bottom" secondItem="ltW-fP-OHr" secondAttribute="bottom" constant="10" id="cjg-j4-ZkO"/>
                     <constraint firstAttribute="trailing" secondItem="Nea-lU-Wch" secondAttribute="trailing" constant="15" id="fD5-6Q-Jcd"/>
@@ -100,20 +58,13 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="accLB" destination="ltW-fP-OHr" id="7YP-jp-BjZ"/>
-                <outlet property="commentBtn" destination="6o7-CN-pPI" id="MIA-u0-W2S"/>
                 <outlet property="deleteBtn" destination="Xpw-uA-qVg" id="qFr-GA-J2y"/>
-                <outlet property="likeBtn" destination="tLL-O7-zDJ" id="h2z-0Q-MaA"/>
-                <outlet property="moreCloseBtn" destination="PQU-p6-A8X" id="LUt-Kr-EE4"/>
                 <outlet property="moreOpenBtn" destination="Nea-lU-Wch" id="fEx-Gx-H95"/>
-                <outlet property="moreView" destination="cxv-ow-LZ6" id="TQt-XM-Bvl"/>
             </connections>
             <point key="canvasLocation" x="29.710144927536234" y="59.598214285714285"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="commentIcon_white" width="16" height="16"/>
-        <image name="likeIcon_white" width="15" height="12"/>
         <image name="moreIcon_blue" width="14.5" height="3.5"/>
-        <image name="moreIcon_white" width="15" height="3"/>
     </resources>
 </document>
