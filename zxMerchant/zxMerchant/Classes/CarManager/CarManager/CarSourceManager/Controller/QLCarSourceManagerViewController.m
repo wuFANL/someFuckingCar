@@ -52,11 +52,11 @@
     NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
     [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
     cell.activityStatusLB.hidden = YES;
+    cell.accImgView.hidden = YES;
     if([[dic objectForKey:@"exam_status"] intValue] == 98)
     {
-        cell.activityStatusLB.hidden = NO;
-        cell.activityStatusLB.text = @"待审核";
-        cell.activityStatusLB.backgroundColor = [UIColor lightGrayColor];
+        cell.accImgView.hidden = NO;
+        cell.accImgView.image = [UIImage imageNamed:@"daishenhe"];
 
     } else if ([[dic objectForKey:@"exam_status"] intValue] == 2) {
         cell.activityStatusLB.hidden = NO;
@@ -68,8 +68,7 @@
     
     [cell.priceBtn setTitle:[[dic objectForKey:@"sell_price"] stringValue] forState:UIControlStateNormal];
     cell.prePriceLB.text = [NSString stringWithFormat:@"首付%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_pre_price"] floatValue]]];
-    if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"seller_id"]] && [[dic objectForKey:@"exam_status"] intValue] != 98)
-    {
+    if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"seller_id"]] && [[dic objectForKey:@"exam_status"] intValue] != 98) {
         cell.lookBtn.hidden = NO;
         cell.callBtn.hidden = NO;
         cell.helpBtn.hidden = NO;
@@ -77,16 +76,13 @@
         [cell.helpBtn setTitle:[[dic objectForKey:@"help_sell_num"] stringValue] forState:UIControlStateNormal];
         [cell.callBtn setTitle:[[dic objectForKey:@"trade_num"] stringValue] forState:UIControlStateNormal];
         [cell.lookBtn setTitle:[[dic objectForKey:@"visit_num"] stringValue] forState:UIControlStateNormal];
-    }
-    else
-    {
+    } else {
         cell.lookBtn.hidden = YES;
         cell.callBtn.hidden = YES;
         cell.helpBtn.hidden = YES;
     }
     
-    if([[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"1"])
-    {
+    if([[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"1"]) {
         cell.activityStatusLB.hidden = YES;
         cell.lookBtn.hidden = YES;
         cell.callBtn.hidden = YES;

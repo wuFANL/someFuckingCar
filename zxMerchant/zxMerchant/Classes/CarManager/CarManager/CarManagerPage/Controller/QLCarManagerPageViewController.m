@@ -69,7 +69,7 @@
             [self.csm1VC uploadTableWithSourceArray:self.allCarArray];
         }
         
-        
+        self.headView.numLB.text = [NSString stringWithFormat:@"共找到%lu辆车",(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])];
 
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -179,11 +179,21 @@
                 if (type == 0&&indexPath.row >= 0) {
                     weakSelf.vcView.sort_by = indexPath.row+1;
                     weakSelf.headView.sortView.dataArr[0] = dataArr[indexPath.row];
+                    weakSelf.paramModel.sort_by = [NSString stringWithFormat:@"%ld",indexPath.row+1];
                 } else if (type == 2&&indexPath.row >= 0) {
+                    //价格
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
+                    NSString *price = dataArr[indexPath.row];
+                    NSString *minPrice = [[price componentsSeparatedByString:@"-"] firstObject];
+                    NSString *maxPrice = [[price componentsSeparatedByString:@"-"] lastObject];
+                    weakSelf.paramModel.price_min = minPrice;
+                    weakSelf.paramModel.price_max = maxPrice;
+
                 } else if (type == 3&&indexPath.row >= 0) {
+                    //在售
                     weakSelf.vcView.deal_state =  indexPath.row;
                     weakSelf.headView.sortView.dataArr[3] = dataArr[indexPath.row];
+                    weakSelf.paramModel.deal_state = indexPath.row ==0?@"1":indexPath.row ==1?@"0":@"3";
                 }
                 [weakSelf reloadData];
             } else if(indexPath.section == 1) {
@@ -193,6 +203,7 @@
                        
                     }
                 } else {
+                    //年检 + 强制险
                     QLDueProcessViewController *dpVC = [QLDueProcessViewController new];
                     dpVC.viewType = indexPath.row;
                     [weakSelf.navigationController pushViewController:dpVC animated:YES];
@@ -202,6 +213,8 @@
             //头部恢复
             weakSelf.headView.sortView.currentIndex = -1;
             [weakSelf.headView.sortView.collectionView reloadData];
+            
+            [weakSelf requestForList:weakSelf.paramModel];
         };
         [self.vcView show];
     } else {
@@ -214,6 +227,9 @@
             if (brandModel.brand_id.length != 0) {
                 weakSelf.vcView.brandModel = brandModel;
                 [weakSelf reloadData];
+                
+                weakSelf.paramModel.brand_id = brandModel.brand_id;
+                [weakSelf requestForList:weakSelf.paramModel];
             }
         };
         [self.navigationController pushViewController:cbVC animated:YES];
@@ -233,6 +249,42 @@
 //    self.headView.showResultView = index==0?NO:YES;
     
     [self viewChangeAnimation:index];
+    //我的车源=1 合作车源=2  传空是全部   此处要恢复默认
+    if(index == 0)
+    {
+        self.paramModel.local_state = @"";
+        self.paramModel.brand_id = @"";
+        self.paramModel.deal_state = @"1";
+        self.paramModel.page_no = @"1";
+        self.paramModel.page_size = @"20";
+        self.paramModel.price_max = @"9999999";
+        self.paramModel.price_min = @"1";
+        self.paramModel.sort_by = @"1";
+    }
+    else if (index == 1)
+    {
+        self.paramModel.local_state = @"1";
+        self.paramModel.brand_id = @"";
+        self.paramModel.deal_state = @"1";
+        self.paramModel.page_no = @"1";
+        self.paramModel.page_size = @"20";
+        self.paramModel.price_max = @"9999999";
+        self.paramModel.price_min = @"1";
+        self.paramModel.sort_by = @"1";
+    }
+    else
+    {
+        self.paramModel.local_state = @"2";
+        self.paramModel.brand_id = @"";
+        self.paramModel.deal_state = @"1";
+        self.paramModel.page_no = @"1";
+        self.paramModel.page_size = @"20";
+        self.paramModel.price_max = @"9999999";
+        self.paramModel.price_min = @"1";
+        self.paramModel.sort_by = @"1";
+    }
+    [self requestForList:self.paramModel];
+    
 }
 //滑动切换
 - (void)subViewChange:(UIViewController *)currentVC IndexPath:(NSInteger)index {
