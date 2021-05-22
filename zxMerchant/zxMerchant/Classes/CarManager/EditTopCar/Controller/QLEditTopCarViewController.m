@@ -14,20 +14,73 @@
 @interface QLEditTopCarViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseCollectionViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
 @property (nonatomic, strong) QLEditTopPriceView *priceView;
-
+@property (nonatomic, strong) NSMutableArray *sourceArray;
+@property (nonatomic, strong) NSMutableArray *botSourceArray;
+@property (nonatomic, assign) NSInteger currentAddIndex;
 @end
 
 @implementation QLEditTopCarViewController
+
+-(void)dataRequest
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"top_car_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"local_state":@"1",@"flag":@"0",@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        if (self.tableView.page == 1) {
+            [self.sourceArray removeAllObjects];
+        }
+        NSArray *temArr = [[response objectForKey:@"result_info"] objectForKey:@"car_list"];
+        [self.sourceArray addObjectsFromArray:temArr];
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == listShowCount) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        //刷新
+        [self.tableView reloadData];
+        
+    } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+-(void)requestForTopCarListBottom
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"top_car_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"local_state":@"1",@"flag":@"1",@"page_no":@"1",@"page_size":@"20"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.botSourceArray removeAllObjects];
+        [self.botSourceArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"car_list"]];
+        
+        self.collectionView.dataArr = self.botSourceArray;
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
    
 }
+
+-(void)requestForTopCarList
+{
+    self.tableView.page = 1;
+    [self dataRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"头条车源";
+    self.sourceArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.botSourceArray = [[NSMutableArray alloc] initWithCapacity:0];
     //collectionView
-    self.collectionView.dataArr = [@[@"1",@"2",@"3",@"4"] mutableCopy];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
@@ -35,14 +88,65 @@
     }];
     //tableView
     [self tableViewSet];
+    
+    [self requestForTopCarList];
+    [self requestForTopCarListBottom];
 }
 #pragma mark - action
 //降价确认
 - (void)confirmBtnClick:(UIButton *)sender {
+    if([NSString isEmptyString:self.priceView.textField.text])
+    {
+        [MBProgressHUD showError:@"请输入降价金额"];
+        return;
+    }
+    if(![NSString isDigitalCharacters:self.priceView.textField.text])
+    {
+        [MBProgressHUD showError:@"请输入正确的金额"];
+        return;
+    }
+    NSString *explan = @"";
+    if(![NSString isEmptyString:self.priceView.txtView.text])
+    {
+        explan = self.priceView.txtView.text;
+    }
     
+    NSDictionary *dic = [self.sourceArray objectAtIndex:self.currentAddIndex];
+
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"add_car_flag",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_car_id":[dic objectForKey:@"business_car_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"explain":explan,@"wholesale_price_old":[[dic objectForKey:@"wholesale_price"] stringValue],@"wholesale_price":self.priceView.textField.text} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        [self requestForTopCarList];
+        [self requestForTopCarListBottom];
+        [self.priceView hidden];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
+
+-(void)requestForDelete:(NSInteger)btnTag
+{
+    NSDictionary *dic = [self.botSourceArray objectAtIndex:self.currentAddIndex];
+
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"update_car_flag",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"business_car_id":[dic objectForKey:@"business_car_id"],@"flag":@"0"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self requestForTopCarList];
+        [self requestForTopCarListBottom];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 //添加头条车辆
 - (void)addBtnClick:(UIButton *)sender {
+    self.currentAddIndex = sender.tag;
+    NSDictionary *dic = [self.sourceArray objectAtIndex:sender.tag];
+    self.priceView.tradePriceLB.text = [NSString stringWithFormat:@"原批发：%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"wholesale_price"] floatValue]]];
+    self.priceView.txtView.text = [[dic objectForKey:@"business_car"] objectForKey:@"explain"];
     [self.priceView show];
 }
 #pragma mark - tableView
@@ -51,6 +155,9 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
+    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showFootRefreshControl = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLEditTopCarCell" bundle:nil] forCellReuseIdentifier:@"editTopCarCell"];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
@@ -61,12 +168,19 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.sourceArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLEditTopCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"editTopCarCell" forIndexPath:indexPath];
     cell.addBtn.tag = indexPath.row;
     [cell.addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSDictionary *dic = [self.sourceArray objectAtIndex:indexPath.row];
+    [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+    cell.titleLB.text = [dic objectForKey:@"model"];
+    cell.priceLB.text = [NSString stringWithFormat:@"批发%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"wholesale_price"] floatValue]]];
+    cell.salePriceLB.text = [NSString stringWithFormat:@"零售价%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_price"] floatValue]]];
+
     return cell;
 
 }
@@ -111,8 +225,18 @@
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     if ([baseCell isKindOfClass:[QLEditTopCarItem class]]) {
         QLEditTopCarItem *item = (QLEditTopCarItem *)baseCell;
-        
-        
+        item.deleteBtn.tag = indexPath.row;
+        [item setTapBlock:^(UIButton * _Nonnull delBtn) {
+            [[QLToolsManager share] alert:@"确认要下架头条？" handler:^(NSError *error) {
+                if(!error)
+                {
+                    [self requestForDelete:delBtn.tag];
+                }
+            }];
+        }];
+        NSDictionary *dic = [self.botSourceArray objectAtIndex:indexPath.row];
+        [item.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+        item.titleLB.text = [dic objectForKey:@"model"];
     }
 }
 

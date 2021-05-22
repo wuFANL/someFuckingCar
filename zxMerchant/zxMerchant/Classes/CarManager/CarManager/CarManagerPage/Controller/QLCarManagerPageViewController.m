@@ -14,11 +14,13 @@
 #import "QLEditTopCarViewController.h"
 #import "QLDueProcessViewController.h"
 #import "QLParamModel.h"
-
+#import "QLVehicleWarnModel.h"
 @interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarManagerPageHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
 @property (nonatomic, strong) QLParamModel *paramModel;
+@property (nonatomic, strong) QLVehicleWarnModel *warnModel;
+
 @property (nonatomic, copy) NSString *njString; //年检
 @property (nonatomic, copy) NSString *qzxString; //强制险
 @property (nonatomic, copy) NSString *allCarNum; //总数
@@ -31,8 +33,30 @@
 
 @implementation QLCarManagerPageViewController
 
+-(void)dataRequest
+{
+    [self requestForList:self.paramModel];
+}
+
 -(void)requestForList:(QLParamModel *)model
 {
+    NSString *pageNum = @"";
+    if([model.local_state isEqualToString:@"1"])
+    {
+        //我的
+        pageNum = [@(self.csm2VC.tableView.page) stringValue];
+    }
+    else if ([model.local_state isEqualToString:@"2"])
+    {
+        //合作
+        pageNum = [@(self.csm3VC.tableView.page) stringValue];
+    }
+    else
+    {
+        //全部
+        pageNum = [@(self.csm1VC.tableView.page) stringValue];
+    }
+    
     //我的车源=1 合作车源=2  传空是全部
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:BusinessPath params:@{
@@ -44,34 +68,92 @@
         @"price_min":model.price_min,
         @"price_max":model.price_max,
         @"deal_state":model.deal_state,
-        @"page_no":model.page_no,
-        @"page_size":@"20",
+        @"page_no":pageNum,
+        @"page_size":@(listShowCount)
     } success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
         self.allCarNum = [[response objectForKey:@"result_info"] objectForKey:@"car_num"];
         
-        [self.allCarArray removeAllObjects];
-        [self.allCarArray addObjectsFromArray:[[response objectForKey:@"result_info"] objectForKey:@"car_list"]];
-        
         if([self.paramModel.local_state isEqualToString:@"1"])
         {
             //我的
+            if (self.csm2VC.tableView.page == 1) {
+                [self.allCarArray removeAllObjects];
+            }
+            NSArray *temArr = [[response objectForKey:@"result_info"] objectForKey:@"car_list"];
+            [self.allCarArray addObjectsFromArray:temArr];
+            //刷新设置
+            [self.csm2VC.tableView.mj_header endRefreshing];
+            if (temArr.count == listShowCount) {
+                [self.csm2VC.tableView.mj_footer endRefreshing];
+            } else {
+                [self.csm2VC.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            //刷新
             [self.csm2VC uploadTableWithSourceArray:self.allCarArray];
         }
         else if ([self.paramModel.local_state isEqualToString:@"2"])
         {
             //合作
+            if (self.csm3VC.tableView.page == 1) {
+                [self.allCarArray removeAllObjects];
+            }
+            NSArray *temArr = [[response objectForKey:@"result_info"] objectForKey:@"car_list"];
+            [self.allCarArray addObjectsFromArray:temArr];
+            //刷新设置
+            [self.csm3VC.tableView.mj_header endRefreshing];
+            if (temArr.count == listShowCount) {
+                [self.csm3VC.tableView.mj_footer endRefreshing];
+            } else {
+                [self.csm3VC.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            //刷新
             [self.csm3VC uploadTableWithSourceArray:self.allCarArray];
         }
         else
         {
             //全部
+            if (self.csm1VC.tableView.page == 1) {
+                [self.allCarArray removeAllObjects];
+            }
+            NSArray *temArr = [[response objectForKey:@"result_info"] objectForKey:@"car_list"];
+            [self.allCarArray addObjectsFromArray:temArr];
+            //刷新设置
+            [self.csm1VC.tableView.mj_header endRefreshing];
+            if (temArr.count == listShowCount) {
+                [self.csm1VC.tableView.mj_footer endRefreshing];
+            } else {
+                [self.csm1VC.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            //刷新
             [self.csm1VC uploadTableWithSourceArray:self.allCarArray];
         }
         
         self.headView.numLB.text = [NSString stringWithFormat:@"共找到%lu辆车",(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])];
 
+        //////////////
+
+        
     } fail:^(NSError *error) {
+        if([self.paramModel.local_state isEqualToString:@"1"])
+        {
+            //我的
+            [self.csm2VC.tableView.mj_header endRefreshing];
+            [self.csm2VC.tableView.mj_footer endRefreshing];
+        }
+        else if ([self.paramModel.local_state isEqualToString:@"2"])
+        {
+            //合作
+            [self.csm3VC.tableView.mj_header endRefreshing];
+            [self.csm3VC.tableView.mj_footer endRefreshing];
+        }
+        else
+        {
+            //全部
+            [self.csm1VC.tableView.mj_header endRefreshing];
+            [self.csm1VC.tableView.mj_footer endRefreshing];
+        }
+
         [MBProgressHUD showError:error.domain];
     }];
 }
@@ -81,9 +163,12 @@
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"get_merchant_car_warn",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-        self.njString = [[response objectForKey:@"result_info"] objectForKey:@"mot_warn"];
-        self.qzxString = [[response objectForKey:@"result_info"] objectForKey:@"insure_warn"];
-
+        self.njString = [[[response objectForKey:@"result_info"] objectForKey:@"mot_warn"] stringValue];
+        self.qzxString = [[[response objectForKey:@"result_info"] objectForKey:@"insure_warn"] stringValue];
+        self.warnModel.mot_warn = self.njString?:@"0";
+        self.warnModel.insure_warn = self.qzxString?:@"0";
+        self.warnModel.assets_warn = @"0";
+        
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
@@ -96,6 +181,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.warnModel = [[QLVehicleWarnModel alloc] init];
     self.allCarArray = [[NSMutableArray alloc] initWithCapacity:0];
 
     //头部
@@ -129,8 +215,19 @@
     self.paramModel.price_min = @"1";
     self.paramModel.sort_by = @"1";
     
-    [self requestForList:self.paramModel];
     [self requestForOverDate];
+    
+    self.csm1VC.tableView.extendDelegate = self;
+    self.csm1VC.tableView.showHeadRefreshControl = YES;
+    self.csm1VC.tableView.showFootRefreshControl = YES;
+    
+    self.csm2VC.tableView.extendDelegate = self;
+    self.csm2VC.tableView.showHeadRefreshControl = YES;
+    self.csm2VC.tableView.showFootRefreshControl = YES;
+    
+    self.csm3VC.tableView.extendDelegate = self;
+    self.csm3VC.tableView.showHeadRefreshControl = YES;
+    self.csm3VC.tableView.showFootRefreshControl = YES;
 }
 - (void)viewDidLayoutSubviews {
     [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -166,6 +263,7 @@
         } else {
             dataArr = @[@"在售",@"仓库中",@"已售"];
             NSInteger row = self.vcView.deal_state;
+            self.vcView.warnModel = self.warnModel;
             selectIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
         }
         self.vcView.selectIndexPath = selectIndexPath;
