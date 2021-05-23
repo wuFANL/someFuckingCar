@@ -183,6 +183,7 @@
 - (QLCarCircleNaviView *)naviView {
     if(!_naviView) {
         _naviView = [QLCarCircleNaviView new];
+        _naviView.funBtn.hidden = YES;
         [_naviView.funBtn setImage:[UIImage imageNamed:@"msg_white"] forState:UIControlStateNormal];
         [_naviView.backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }

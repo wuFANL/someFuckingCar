@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLReleaseCarCircleStatusCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *aBtn;
-@property (weak, nonatomic) IBOutlet UIButton *bBtn;
 
 @end
 

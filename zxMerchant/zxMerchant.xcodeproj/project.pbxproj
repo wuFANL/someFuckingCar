@@ -433,8 +433,6 @@
 		A0FD3AD125926BEF00ED34A1 /* QLChangeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FD3ACF25926BEF00ED34A1 /* QLChangeMobileViewController.m */; };
 		A0FD3AD225926BEF00ED34A1 /* QLChangeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0FD3AD025926BEF00ED34A1 /* QLChangeMobileViewController.xib */; };
 		ED5145F326558AA8008E255E /* QLPhotosShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5145F226558AA8008E255E /* QLPhotosShareViewController.m */; };
-		ED5145FA26558AC3008E255E /* QLVehicleHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED5145F726558AC3008E255E /* QLVehicleHeadView.xib */; };
-		ED5145FB26558AC3008E255E /* QLVehicleHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5145F926558AC3008E255E /* QLVehicleHeadView.m */; };
 		ED51460226558B00008E255E /* QLCarPhotosCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51460026558B00008E255E /* QLCarPhotosCell.m */; };
 		ED51460326558B00008E255E /* QLCarPhotosCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED51460126558B00008E255E /* QLCarPhotosCell.xib */; };
 		ED51460926558B26008E255E /* QLVehiclePageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51460726558B26008E255E /* QLVehiclePageModel.m */; };
@@ -1189,9 +1187,6 @@
 		A0FD3AD025926BEF00ED34A1 /* QLChangeMobileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLChangeMobileViewController.xib; sourceTree = "<group>"; };
 		ED5145F126558AA8008E255E /* QLPhotosShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLPhotosShareViewController.h; sourceTree = "<group>"; };
 		ED5145F226558AA8008E255E /* QLPhotosShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLPhotosShareViewController.m; sourceTree = "<group>"; };
-		ED5145F726558AC3008E255E /* QLVehicleHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLVehicleHeadView.xib; sourceTree = "<group>"; };
-		ED5145F826558AC3008E255E /* QLVehicleHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLVehicleHeadView.h; sourceTree = "<group>"; };
-		ED5145F926558AC3008E255E /* QLVehicleHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLVehicleHeadView.m; sourceTree = "<group>"; };
 		ED5145FF26558AFF008E255E /* QLCarPhotosCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarPhotosCell.h; sourceTree = "<group>"; };
 		ED51460026558B00008E255E /* QLCarPhotosCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCarPhotosCell.m; sourceTree = "<group>"; };
 		ED51460126558B00008E255E /* QLCarPhotosCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCarPhotosCell.xib; sourceTree = "<group>"; };
@@ -1813,6 +1808,7 @@
 			children = (
 				A00621422513DC6000A571E5 /* HomePage */,
 				A0865C462631E462001B85A3 /* AddCar */,
+				A0CBFB3B265AC4A900647E3F /* PhotoShare */,
 				A09EAB1725DEBE1E007D9075 /* MyStore */,
 				A09EAADB25DEB2C4007D9075 /* VehicleCertificate */,
 				A09EAB2225DEBED2007D9075 /* PaymentAccount */,
@@ -1833,8 +1829,6 @@
 		A00621462513DCB600A571E5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				ED5145F126558AA8008E255E /* QLPhotosShareViewController.h */,
-				ED5145F226558AA8008E255E /* QLPhotosShareViewController.m */,
 				A02C930F2523A6BD0031A6D7 /* QLHomePageViewController.h */,
 				A02C93102523A6BD0031A6D7 /* QLHomePageViewController.m */,
 			);
@@ -1847,12 +1841,6 @@
 				ED51460E26558B48008E255E /* QLCollectionValueDCell.h */,
 				ED51460F26558B48008E255E /* QLCollectionValueDCell.m */,
 				ED51460D26558B48008E255E /* QLCollectionValueDCell.xib */,
-				ED5145FF26558AFF008E255E /* QLCarPhotosCell.h */,
-				ED51460026558B00008E255E /* QLCarPhotosCell.m */,
-				ED51460126558B00008E255E /* QLCarPhotosCell.xib */,
-				ED5145F826558AC3008E255E /* QLVehicleHeadView.h */,
-				ED5145F926558AC3008E255E /* QLVehicleHeadView.m */,
-				ED5145F726558AC3008E255E /* QLVehicleHeadView.xib */,
 				A02C932A2523AA2F0031A6D7 /* QLHomeNaviView.h */,
 				A02C93332523AA300031A6D7 /* QLHomeNaviView.m */,
 				A02C93302523AA300031A6D7 /* QLHomePageHeadView.h */,
@@ -2281,8 +2269,6 @@
 			children = (
 				A044AAE7251FCF6E00D1C324 /* QLCarManagerPageViewController.h */,
 				A044AAE8251FCF6E00D1C324 /* QLCarManagerPageViewController.m */,
-				4669B5DD265563380089A677 /* QLParamModel.h */,
-				4669B5DE265563380089A677 /* QLParamModel.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2831,6 +2817,7 @@
 			isa = PBXGroup;
 			children = (
 				A0208F392576B8B8002EE6F0 /* Controller */,
+				A0CBFB42265AC6AC00647E3F /* Model */,
 				A0208F3A2576B8C4002EE6F0 /* View */,
 			);
 			path = CarManagerPage;
@@ -2887,10 +2874,6 @@
 			children = (
 				ED51463326558BFE008E255E /* QLCarDetailModel.h */,
 				ED51463226558BFE008E255E /* QLCarDetailModel.m */,
-				ED51461626558B64008E255E /* QLCarInfoModel.h */,
-				ED51461526558B64008E255E /* QLCarInfoModel.m */,
-				ED51460826558B26008E255E /* QLVehiclePageModel.h */,
-				ED51460726558B26008E255E /* QLVehiclePageModel.m */,
 				A044AAF7251FD0AE00D1C324 /* QLHomePageModel.h */,
 				A044AAF6251FD0AE00D1C324 /* QLHomePageModel.m */,
 			);
@@ -4420,6 +4403,55 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A0CBFB3B265AC4A900647E3F /* PhotoShare */ = {
+			isa = PBXGroup;
+			children = (
+				A0CBFB3C265AC4DA00647E3F /* Controller */,
+				A0CBFB3E265AC50700647E3F /* Model */,
+				A0CBFB3D265AC4E600647E3F /* View */,
+			);
+			path = PhotoShare;
+			sourceTree = "<group>";
+		};
+		A0CBFB3C265AC4DA00647E3F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ED5145F126558AA8008E255E /* QLPhotosShareViewController.h */,
+				ED5145F226558AA8008E255E /* QLPhotosShareViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0CBFB3D265AC4E600647E3F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ED5145FF26558AFF008E255E /* QLCarPhotosCell.h */,
+				ED51460026558B00008E255E /* QLCarPhotosCell.m */,
+				ED51460126558B00008E255E /* QLCarPhotosCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A0CBFB3E265AC50700647E3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ED51460826558B26008E255E /* QLVehiclePageModel.h */,
+				ED51460726558B26008E255E /* QLVehiclePageModel.m */,
+				ED51461626558B64008E255E /* QLCarInfoModel.h */,
+				ED51461526558B64008E255E /* QLCarInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A0CBFB42265AC6AC00647E3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4669B5DD265563380089A677 /* QLParamModel.h */,
+				4669B5DE265563380089A677 /* QLParamModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A0DBDABD253377630090C263 /* RemarksSet */ = {
 			isa = PBXGroup;
 			children = (
@@ -4807,7 +4839,6 @@
 				A01243F025EB647500A90BAD /* QLSubListTitleCell.xib in Resources */,
 				A0DB81282547475700B2A9F5 /* QLCarCircleLikeNameItem.xib in Resources */,
 				A02C93562523AE650031A6D7 /* QLHomeCarCell.xib in Resources */,
-				ED5145FA26558AC3008E255E /* QLVehicleHeadView.xib in Resources */,
 				A09EAAF825DEB346007D9075 /* QLShareImgBottomView.xib in Resources */,
 				A0492FC32570363700B5E23C /* QLTableImgCell.xib in Resources */,
 				A0CAB8672562EFF70015FAE3 /* QLCarSourceHeadView.xib in Resources */,
@@ -5189,7 +5220,6 @@
 				A006218A2513DD7300A571E5 /* NSString+QLUtil.m in Sources */,
 				ED51460226558B00008E255E /* QLCarPhotosCell.m in Sources */,
 				A09EAB1B25DEBE1F007D9075 /* QLMyStoreViewController.m in Sources */,
-				ED5145FB26558AC3008E255E /* QLVehicleHeadView.m in Sources */,
 				A0492F1A256ACD4100B5E23C /* QLChooseBrandViewController.m in Sources */,
 				A00621922513DD7300A571E5 /* NSArray+Log.m in Sources */,
 				A0492F802570272900B5E23C /* QLCarDetailPriceCell.m in Sources */,
@@ -5393,7 +5423,7 @@
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UDSE4Z8AVF;
+				DEVELOPMENT_TEAM = ARRC2VHTJU;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5402,7 +5432,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.haleyhan.mwy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EmbellishJiao.ZXCarMerchant;
 				PRODUCT_NAME = "众享商服";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -5417,7 +5447,7 @@
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GWUURFN644;
+				DEVELOPMENT_TEAM = MB5HFY8UHY;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5426,7 +5456,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.haleyhan.mwy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EmbellishJiao.ZXCarMerchant;
 				PRODUCT_NAME = "众享商服";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;

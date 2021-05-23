@@ -60,6 +60,14 @@
         make.left.right.top.equalTo(self.view);
         make.height.mas_equalTo(44+(BottomOffset?44:20));
     }];
+    
+    [[QLLocationManager sharedLocationManager] updateCityWithCompletionHandler:^(CLPlacemark *placemark, CLLocation *location, NSError *error) {
+        if (!error) {
+            [QLToolsManager share].currentCityName = placemark.locality;
+            [QLToolsManager share].currentLocation = location;
+        }
+        
+    }];
 }
 #pragma mark - network
 //首页数据

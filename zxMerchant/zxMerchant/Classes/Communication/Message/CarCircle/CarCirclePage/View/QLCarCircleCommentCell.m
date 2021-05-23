@@ -22,15 +22,14 @@
         make.edges.equalTo(self.bjView);
     }];
 }
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.bjViewHeight.constant = self.tableViewHeight;
-}
 
 - (void)setListArr:(NSArray *)listArr {
-    _listArr = listArr;
-    
-//    [self.tableView reloadData];
+    if (![_listArr isEqualToArray:listArr]) {
+        _listArr = listArr;
+        
+        self.tableViewHeight = 0;
+        [self.tableView reloadData];
+    }
 }
 #pragma mark - tableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -42,7 +41,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     QLCarCircleCommentContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentContentCell" forIndexPath:indexPath];
-    cell.backgroundColor = self.bjView.backgroundColor;
+    cell.backgroundColor = ClearColor;
     if (indexPath.row < self.listArr.count) {
         cell.model = self.listArr[indexPath.row];
     }
@@ -52,6 +51,12 @@
     if (self.clickHandler) {
         self.clickHandler(self.listArr[indexPath.row],nil);
     }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [UIView new];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 10;
@@ -67,10 +72,9 @@
     if ([keyPath isEqualToString:@"contentSize"]&&[object isKindOfClass:[UITableView class]]) {
         UITableView *tableView = (UITableView *)object;
         CGFloat heigth  = tableView.contentSize.height;
+        
         if (self.tableViewHeight != heigth) {
             self.tableViewHeight = heigth;
-        }
-        if (self.bjViewHeight.constant != self.tableViewHeight) {
             self.bjViewHeight.constant = self.tableViewHeight;
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
@@ -90,10 +94,11 @@
 - (QLBaseTableView *)tableView {
     if(!_tableView) {
         _tableView = [[QLBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _tableView.backgroundColor = self.bjView.backgroundColor;
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"eaeaea"];
         [_tableView hideTableEmptyDataSeparatorLine];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.scrollEnabled = NO;
         [_tableView registerNib:[UINib nibWithNibName:@"QLCarCircleCommentContentCell" bundle:nil] forCellReuseIdentifier:@"commentContentCell"];
         [_tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     }

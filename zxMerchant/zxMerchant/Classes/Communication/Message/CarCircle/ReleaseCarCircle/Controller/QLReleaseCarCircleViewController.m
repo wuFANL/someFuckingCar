@@ -10,10 +10,13 @@
 #import "QLCreatStoreTVCell.h"
 #import "QLReleaseImagesCell.h"
 #import "QLReleaseCarCircleStatusCell.h"
+#import "QLFullScreenImgView.h"
 
-@interface QLReleaseCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate>
+@interface QLReleaseCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTextViewDelegate,QLReleaseImagesCellDelegate>
 @property (nonatomic, strong) QLBaseButton *rightBtn;
 @property (nonatomic, strong) NSMutableArray *imgsArr;
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, assign) BOOL wxStatus;
 
 @end
 
@@ -21,7 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,11 +39,44 @@
     
     //tableView
     [self tableViewSet];
+    
+    //位置定位
+    if ([QLToolsManager share].currentCityName.length == 0) {
+        [[QLLocationManager sharedLocationManager] updateCityWithCompletionHandler:^(CLPlacemark *placemark, CLLocation *location, NSError *error) {
+            if (!error) {
+                [QLToolsManager share].currentCityName = placemark.locality;
+                [QLToolsManager share].currentLocation = location;
+            }
+            
+        }];
+    }
+    
+    self.wxStatus = YES;
+}
+#pragma mark - network
+- (void)releaseRequest:(NSArray *)fileArr {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"send",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"address":QLNONull([QLToolsManager share].currentCityName),@"dynamic_content":self.content,@"file_array":[fileArr componentsJoinedByString:@","],@"vx_state":@(self.wxStatus)} success:^(id response) {
+        [MBProgressHUD showSuccess:@"发布成功"];
+        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - action
 //发布
 - (void)releaseBtnClick {
-    
+    if (self.content.length == 0&&self.imgsArr.count == 0) {
+        return;
+    }
+    [MBProgressHUD showCustomLoading:@""];
+    [[QLOSSManager shared] asyncUploadImages:self.imgsArr complete:^(NSArray *names, UploadImageState state) {
+        [self releaseRequest:names];
+    }];
+}
+//同步微信
+- (void)statusBtnClick:(UIButton *)sender {
+    self.wxStatus = sender.selected;
 }
 //图片变化
 - (void)imgChange:(NSMutableArray *)images {
@@ -50,7 +86,13 @@
 }
 //图片点击
 - (void)imgClick:(NSInteger)index {
-    
+    QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
+    fsiView.img = self.imgsArr[index];
+    [fsiView show];
+}
+//文本
+- (void)textViewTextChange:(UITextView *)textView {
+    self.content = textView.text;
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -63,7 +105,7 @@
     [self.tableView registerClass:[QLReleaseImagesCell class] forCellReuseIdentifier:@"imgCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLReleaseCarCircleStatusCell" bundle:nil] forCellReuseIdentifier:@"releaseCarCircleStatusCell"];
     
-   
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
@@ -77,7 +119,7 @@
         cell.tv.backgroundColor = WhiteColor;
         cell.tv.constraintLB.hidden = YES;
         cell.tv.placeholder = @"积极发动态活跃分发出去的店铺气氛";
-    
+        cell.tv.tvDelegate = self;
         return cell;
     } else if (indexPath.section == 1) {
         QLReleaseImagesCell *cell = [[QLReleaseImagesCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"imgCell"];
@@ -88,7 +130,7 @@
         return cell;
     } else {
         QLReleaseCarCircleStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"releaseCarCircleStatusCell" forIndexPath:indexPath];
-        
+        [cell.aBtn addTarget:self action:@selector(statusBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     

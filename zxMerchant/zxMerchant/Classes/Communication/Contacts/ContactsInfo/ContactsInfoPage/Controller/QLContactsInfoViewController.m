@@ -150,9 +150,9 @@
         if (indexPath.row == 0) {
             QLContactsDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsDescCell" forIndexPath:indexPath];
             [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"head_pic"]]];
-            cell.nikenameLB.text = [self.userInfoDic objectForKey:@"nickname"];
-            cell.numLB.text = [NSString stringWithFormat:@"编号: %@",[self.userInfoDic objectForKey:@"account_number"]];
-            cell.addressLB.text = [NSString stringWithFormat:@"地区: %@",[self.userInfoDic objectForKey:@"address"]];
+            cell.nikenameLB.text = QLNONull([self.userInfoDic objectForKey:@"nickname"]);
+            cell.numLB.text = [NSString stringWithFormat:@"编号: %@",QLNONull([self.userInfoDic objectForKey:@"account_number"])];
+            cell.addressLB.text = [NSString stringWithFormat:@"地区: %@",QLNONull([self.userInfoDic objectForKey:@"address"])];
             return cell;
         } else if (indexPath.row == 4) {
             QLContactsCircleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactsCircleCell" forIndexPath:indexPath];

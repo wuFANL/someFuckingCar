@@ -7,6 +7,7 @@
 //
 
 #import "QLMessagePageViewController.h"
+#import "QLCommunicationPageViewController.h"
 #import "QLSystemMessageCell.h"
 #import "QLFriendMessageCell.h"
 #import "QLMsgSettingViewController.h"
@@ -14,7 +15,7 @@
 #import "QLChatListPageViewController.h"
 #import "MessageListModel.h"
 
-@interface QLMessagePageViewController ()<UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
+@interface QLMessagePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
 @property (nonatomic, strong) MessageListModel *dataModel;
 @end
 
@@ -24,13 +25,28 @@
 {
     [super viewWillAppear:animated];
     [self requestForCircleNew];
-    [self requestForChatList];
+    self.tableView.showHeadRefreshControl = YES;
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //tableView
+    [self tableViewSet];
+    //长按手势
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];
+    [longPress setMinimumPressDuration:1.5];
+    [self.view addGestureRecognizer:longPress];
+   
+    self.tableView.showHeadRefreshControl = YES;
 }
 
 //车友圈新消息
 -(void)requestForCircleNew
 {
+    [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"to_read/count",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
         
         NSString *toreadcount = [[response objectForKey:@"result_info"] objectForKey:@"to_read_count"];
         NSString *head = [[response objectForKey:@"result_info"] objectForKey:@"head_pic"];
@@ -45,28 +61,40 @@
     }];
 }
 
--(void)requestForChatList
-{
-    [MBProgressHUD showCustomLoading:@""];
+- (void)dataRequest {
+    
     [QLNetworkingManager postWithUrl:UserPath params:@{@"operation_type":@"last_trade_deatil_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
-        [MBProgressHUD immediatelyRemoveHUD];
         self.dataModel = [MessageListModel yy_modelWithJSON:[response objectForKey:@"result_info"]];
+        
+    
+        NSInteger unreadMsgNum = 0;
+        for (MessageDetailModel *model in self.dataModel.info_list) {
+            if (model.tradeInfo) {
+                unreadMsgNum = unreadMsgNum + [model.tradeInfo[@"total_msg_account"] integerValue];
+            } else if (model.msgSet) {
+                unreadMsgNum = unreadMsgNum + [model.msgSet[@"msg_count"] integerValue];
+            }
+        }
+        QLBaseTabBarController *tabBarVC = (QLBaseTabBarController *)self.tabBarController;
+        NSInteger tabIndex = -1;
+        for (UIViewController *vc in tabBarVC.viewControllers) {
+            if ([vc isKindOfClass:[QLCommunicationPageViewController class]]) {
+                tabIndex = [tabBarVC.viewControllers indexOfObject:vc];
+            }
+        }
+        if (tabIndex != -1) {
+            QLBaseTarBarButton *btn = tabBarVC.mainTabBar.tabbarBtnArray[tabIndex];
+            btn.badgeBtn.showNum = YES;
+            btn.badgeValue = [NSString stringWithFormat:@"%ld",unreadMsgNum];
+        }
+        
+        [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
         
     } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
         [MBProgressHUD showError:error.domain];
     }];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    //tableView
-    [self tableViewSet];
-    //长按手势
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];
-    [longPress setMinimumPressDuration:1.5];
-    [self.view addGestureRecognizer:longPress];
-   
 }
 #pragma mark - action
 //pop的cell设置
@@ -104,6 +132,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.extendDelegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLSystemMessageCell" bundle:nil] forCellReuseIdentifier:@"sysMsgCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLFriendMessageCell" bundle:nil] forCellReuseIdentifier:@"friendMsgCell"];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {

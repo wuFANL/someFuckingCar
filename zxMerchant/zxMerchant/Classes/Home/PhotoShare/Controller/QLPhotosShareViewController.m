@@ -9,8 +9,8 @@
 #import "QLPhotosShareViewController.h"
 
 
-@interface QLPhotosShareViewController ()<QLVehicleHeadViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
-@property (nonatomic, strong) QLVehicleHeadView *headView;
+@interface QLPhotosShareViewController ()<QLVehicleSortViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
+@property (nonatomic, strong) QLVehicleSortView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
 //排序
 @property (nonatomic, assign) NSInteger sort_by;
@@ -25,7 +25,8 @@
 @implementation QLPhotosShareViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.hidden = NO;
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -247,9 +248,9 @@
     return 0.5;
 }
 #pragma mark- lazyLoading
-- (QLVehicleHeadView *)headView {
+- (QLVehicleSortView *)headView {
     if (!_headView) {
-        _headView = [QLVehicleHeadView new];
+        _headView = [QLVehicleSortView new];
         _headView.delegate = self;
         _headView.showStatusItem = NO;
     }
@@ -287,14 +288,5 @@
     }
     return _chooseArr;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

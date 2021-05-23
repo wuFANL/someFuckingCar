@@ -99,6 +99,7 @@
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
         _collectionView = [[QLBaseCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
+        _collectionView.scrollEnabled = NO;
         _collectionView.backgroundColor = ClearColor;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.showsHorizontalScrollIndicator = NO;

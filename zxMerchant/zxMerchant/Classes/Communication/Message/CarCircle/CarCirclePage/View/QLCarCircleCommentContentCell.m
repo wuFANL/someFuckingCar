@@ -22,8 +22,8 @@
     if ([model isKindOfClass:[QLRidersDynamicInteractModel class]]) {
         QLRidersDynamicInteractModel *iModel = model;
         
-        NSString *senderName = iModel.account_name;
-        NSString *receiverName = iModel.to_account_name;
+        NSString *senderName = QLNONull(iModel.account_name);
+        NSString *receiverName = QLNONull(iModel.to_account_name);
         NSString *content = iModel.content;
         NSString *completeContent = [NSString stringWithFormat:@"%@%@%@%@",senderName,receiverName.length==0?@":":@"回复",receiverName,content];
         

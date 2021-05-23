@@ -19,14 +19,17 @@
 #import "QLDynamicSendMsgBottomView.h"
 #import "QLReleaseCarCircleViewController.h"
 #import "QLUnreadMsgListViewController.h"
+#import "QLContactsInfoViewController.h"
 #import "QLRidersDynamicListModel.h"
 
-@interface QLCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,QLBannerViewDelegate>
+@interface QLCarCircleViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,QLBannerViewDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
 @property (nonatomic, strong) QLCarCircleHeadView *headView;
+@property (nonatomic, strong) QLCarCircleUnreadView *unreadView;
 @property (nonatomic, strong) QLCarCircleAccMoreView *accView;
 @property (nonatomic, strong) QLDynamicSendMsgBottomView *bottomView;
 
+@property (nonatomic, strong) NSDictionary *msgDic;
 @property (nonatomic, strong) NSMutableArray *listArray;
 @end
 
@@ -34,7 +37,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-   
+    self.tableView.showHeadRefreshControl = YES;
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,18 +55,34 @@
         make.bottom.equalTo(self.view).offset(BottomOffset?-34:0);
         make.height.mas_equalTo(0);
     }];
+
     //tableView
     [self tableViewSet];
     
     //点击手势
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-//    tap.numberOfTouchesRequired = 1;
-//    [self.view addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+    tap.numberOfTouchesRequired = 1;
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
+    
     //键盘通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    //车友圈最新消息
+    [self lastMsgRequest];
 }
 #pragma mark - network
+//最新消息
+- (void)lastMsgRequest {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"to_read/count",@"account_id":([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+        self.msgDic = [response objectForKey:@"result_info"];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+//列表
 - (void)dataRequest {
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"all_page_list",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
         if (self.tableView.page == 1) {
@@ -86,6 +106,8 @@
         [MBProgressHUD showError:error.domain];
     }];
 }
+
+//点赞
 - (void)likeRequest:(BOOL)isLike {
     QLRidersDynamicListModel *model = self.listArray[self.accView.tag];
     NSString *operation_type = isLike?@"praise/add":@"praise/remove";
@@ -112,15 +134,52 @@
         [MBProgressHUD showError:error.domain];
     }];
 }
+//发送评论
 - (void)sendMsgRequest:(NSString *)to_account_id {
     QLRidersDynamicListModel *model = self.listArray[self.bottomView.tag];
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"interact/add",@"dynamic_id":model.dynamic_id,@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"to_account_id":to_account_id,@"content":QLNONull(self.bottomView.tf.text)} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
+    
+        QLRidersDynamicInteractModel *interactModel = [QLRidersDynamicInteractModel new];
+        interactModel.account_id = [QLUserInfoModel getLocalInfo].account.account_id;
+        interactModel.account_name = [QLUserInfoModel getLocalInfo].account.nickname;
+        if (to_account_id.length != 0 && ![to_account_id isEqualToString:interactModel.account_id]) {
+            interactModel.to_account_id = to_account_id;
+            interactModel.to_account_name = self.bottomView.receiverName;
+        }
+        
+        interactModel.content = self.bottomView.tf.text;
+        model.interact_list = [model.interact_list arrayByAddingObject:interactModel];
+        
         self.bottomView.tf.text = @"";
-        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(0);
-        }];
+        [self bottomViewShowStatus:NO];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+//删除动态
+- (void)deleteRequest:(QLRidersDynamicListModel *)model {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"remove",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"dynamic_id":model.dynamic_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.listArray removeObject:model];
+        
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+//改背景
+- (void)changeBjRequest:(NSString *)back_pic {
+    [QLNetworkingManager postWithUrl:UserPath params:@{@"operation_type":@"update_account",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"back_pic":back_pic} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        QLUserInfoModel *model = [QLUserInfoModel getLocalInfo];
+        model.account.back_pic = back_pic;
+        [QLUserInfoModel updateUserInfoByModel:model];
+        
+        self.headView.bannerView.imagesArr = @[[QLUserInfoModel getLocalInfo].account.back_pic];
         
         [self.tableView reloadData];
     } fail:^(NSError *error) {
@@ -128,6 +187,7 @@
     }];
 }
 #pragma mark - action
+
 //发送
 - (void)sendBtnClick {
     if (self.bottomView.tf.text.length == 0) {
@@ -149,9 +209,7 @@
     self.bottomView.receiverAccountId = model.account_id;
     self.bottomView.receiverName = model.account_nickname;
     self.bottomView.tf.placeholder = @"评论";
-    [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(45);
-    }];
+    [self bottomViewShowStatus:YES];
 }
 //赞
 - (void)likeBtnClick:(UIButton *)sender {
@@ -186,10 +244,28 @@
         [self.accView layoutIfNeeded];
     }];
 }
+//底部变化
+- (void)bottomViewShowStatus:(BOOL)isShow {
+    self.bottomView.hidden = !isShow;
+    if (isShow) {
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(45);
+        }];
+    } else {
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0);
+        }];
+    }
+}
 //删除动态
 - (void)deleteMsgClick:(UIButton *)sender {
-    NSInteger section = sender.tag;
-    
+    [[QLToolsManager share] alert:@"是否确认删除动态？" handler:^(NSError *error) {
+        if (!error) {
+            NSInteger section = sender.tag;
+            QLRidersDynamicListModel *model = self.listArray[section];
+            [self deleteRequest:model];
+        }
+    }];
     
 }
 //发布动态
@@ -209,7 +285,32 @@
 }
 //轮播图点击
 - (void)bannerView:(QLBannerView *)bannerView ImageClick:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        if (img) {
+            [MBProgressHUD showCustomLoading:nil];
+            [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+                [self changeBjRequest:names.firstObject];
+            }];
+        } else {
+            [MBProgressHUD showError:@"未获取到图片"];
+        }
+    }];
+}
+//去店铺
+- (void)goStoreClick:(UIButton *)sender {
+    NSInteger index = sender.tag;
     
+    NSString *friendId;
+    if (index == -1) {
+        friendId = [QLUserInfoModel getLocalInfo].account.account_id;
+    } else {
+        QLRidersDynamicListModel *model = self.listArray[index];
+        friendId = model.account_id;
+    }
+    QLContactsInfoViewController *ciVC = [[QLContactsInfoViewController alloc] initWithFirendID:friendId];
+    ciVC.contactRelation = Friend;
+    [self.navigationController pushViewController:ciVC animated:YES];
 }
 //返回
 - (void)backBtnClick {
@@ -249,9 +350,15 @@
 //页面点击
 - (void)tapClick:(UIGestureRecognizer *)gesture {
     [self.accView hidden];
-    [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(0);
-    }];
+    [self bottomViewShowStatus:NO];
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    } else if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]) {
+        return NO;
+    }
+    return YES;
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -262,7 +369,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.extendDelegate = self;
-    self.tableView.showHeadRefreshControl = YES;
     self.tableView.showFootRefreshControl = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleTextCell" bundle:nil] forCellReuseIdentifier:@"textCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"QLCarCircleImgCell" bundle:nil] forCellReuseIdentifier:@"imgCell"];
@@ -310,6 +416,8 @@
     if (indexPath.row == 0) {
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.likeBtn.hidden = YES;
+        cell.headBtn.tag = indexPath.section;
+        [cell.headBtn addTarget:self action:@selector(goStoreClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.model = model;
         return cell;
     } else if (indexPath.row == 1&&model.file_array.count != 0) {
@@ -334,10 +442,8 @@
             self.bottomView.sendAccountName = [QLUserInfoModel getLocalInfo].account.nickname;
             self.bottomView.receiverAccountId = interactModel.account_id;
             self.bottomView.receiverName = interactModel.account_name;
-            self.bottomView.tf.placeholder = [self.bottomView.sendAccountId isEqualToString:self.bottomView.receiverAccountId]?@"评论":[NSString stringWithFormat:@"回复：%@",interactModel.account_name];
-            [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(45);
-            }];
+            self.bottomView.tf.placeholder = [self.bottomView.sendAccountId isEqualToString:self.bottomView.receiverAccountId]||self.bottomView.receiverAccountId.length == 0?@"评论":[NSString stringWithFormat:@"回复：%@",interactModel.account_name];
+            [self bottomViewShowStatus:YES];
             
         };
         return cell;
@@ -354,10 +460,12 @@
 
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        QLCarCircleUnreadView *unreadView = [QLCarCircleUnreadView new];
-        [unreadView.msgControl addTarget:self action:@selector(unreadMsgControlClick) forControlEvents:UIControlEventTouchUpInside];
-        return unreadView;
+    NSString *toreadcount = [self.msgDic objectForKey:@"to_read_count"];
+    if (section == 0&&[toreadcount integerValue] != 0) {
+        NSString *head = [self.msgDic objectForKey:@"head_pic"];
+        [self.unreadView.headBtn sd_setImageWithURL:[NSURL URLWithString:head] forState:UIControlStateNormal];
+        self.unreadView.numMsgLB.text = [NSString stringWithFormat:@"%@条新消息",toreadcount];
+        return self.unreadView;
     }
     return nil;
 }
@@ -365,16 +473,15 @@
     return 200;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return section == 0?80:15;
+    NSString *toreadcount = [self.msgDic objectForKey:@"to_read_count"];
+    return section == 0&&[toreadcount integerValue] != 0?80:15;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 15;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.accView hidden];
-    [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(0);
-    }];
+    [self bottomViewShowStatus:NO];
 }
 #pragma mark - Lazy
 - (QLCarCircleNaviView *)naviView {
@@ -390,14 +497,25 @@
     if(!_headView) {
         _headView = [[QLCarCircleHeadView alloc] init];
         _headView.nameLB.text = [QLUserInfoModel getLocalInfo].account.nickname;
-        [_headView.storeNameBtn setTitle:[QLUserInfoModel getLocalInfo].business.business_name forState:UIControlStateNormal];
+        _headView.headBtn.tag = -1;
+        _headView.storeNameBtn.tag = -1;
         [_headView.headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
+        [_headView.storeNameBtn setTitle:[QLUserInfoModel getLocalInfo].business.business_name forState:UIControlStateNormal];
+        [_headView.headBtn addTarget:self action:@selector(goStoreClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_headView.storeNameBtn addTarget:self action:@selector(goStoreClick:) forControlEvents:UIControlEventTouchUpInside];
         
         _headView.bannerView.delegate = self;
         _headView.bannerView.imagesArr = @[[QLUserInfoModel getLocalInfo].account.back_pic];
         
     }
     return _headView;
+}
+- (QLCarCircleUnreadView *)unreadView {
+    if (!_unreadView) {
+        _unreadView = [QLCarCircleUnreadView new];
+        [_unreadView.msgControl addTarget:self action:@selector(unreadMsgControlClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _unreadView;
 }
 - (QLCarCircleAccMoreView *)accView {
     if (!_accView) {

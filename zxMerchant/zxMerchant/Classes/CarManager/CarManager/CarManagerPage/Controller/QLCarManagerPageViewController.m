@@ -15,7 +15,7 @@
 #import "QLDueProcessViewController.h"
 #import "QLParamModel.h"
 #import "QLVehicleWarnModel.h"
-@interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
+@interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLBaseTableViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarManagerPageHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
 @property (nonatomic, strong) QLParamModel *paramModel;
@@ -131,7 +131,7 @@
         
         self.headView.numLB.text = [NSString stringWithFormat:@"共找到%lu辆车",(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])];
 
-        //////////////
+     
 
         
     } fail:^(NSError *error) {
@@ -240,10 +240,6 @@
     }
 }
 #pragma mark - action
-//刷新
-- (void)reloadData {
-    
-}
 //头条车源
 - (void)topCarBtnClick {
     QLEditTopCarViewController *etcVC = [QLEditTopCarViewController new];
@@ -293,7 +289,6 @@
                     weakSelf.headView.sortView.dataArr[3] = dataArr[indexPath.row];
                     weakSelf.paramModel.deal_state = indexPath.row ==0?@"1":indexPath.row ==1?@"0":@"3";
                 }
-                [weakSelf reloadData];
             } else if(indexPath.section == 1) {
                 if (indexPath.row == 2) {
                     //库龄到期
@@ -324,7 +319,6 @@
         cbVC.callback = ^(QLBrandInfoModel * _Nullable brandModel, QLSeriesModel * _Nullable seriesModel, QLTypeInfoModel * _Nullable typeModel) {
             if (brandModel.brand_id.length != 0) {
                 weakSelf.vcView.brandModel = brandModel;
-                [weakSelf reloadData];
                 
                 weakSelf.paramModel.brand_id = brandModel.brand_id;
                 [weakSelf requestForList:weakSelf.paramModel];
@@ -399,7 +393,6 @@
         _headView.sortView.delegate = self;
         
         [_headView.topBtn addTarget:self action:@selector(topCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _headView.resultView.itemArr = @[@"本田",@"20万以上"];
     }
     return _headView;
 }

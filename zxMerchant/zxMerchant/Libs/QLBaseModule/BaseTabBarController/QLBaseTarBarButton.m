@@ -55,8 +55,8 @@
     _badgeBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:_badgeBtn];
     [self.badgeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self).offset(4);
-        make.top.equalTo(self);
+        make.centerX.equalTo(self).offset(10);
+        make.top.equalTo(self.imageView).offset(8);
     }];
 }
 
