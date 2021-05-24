@@ -357,6 +357,8 @@
         return NO;
     } else if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]) {
         return NO;
+    } else if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIControl"]) {
+        return NO;
     }
     return YES;
 }
@@ -463,7 +465,7 @@
     NSString *toreadcount = [self.msgDic objectForKey:@"to_read_count"];
     if (section == 0&&[toreadcount integerValue] != 0) {
         NSString *head = [self.msgDic objectForKey:@"head_pic"];
-        [self.unreadView.headBtn sd_setImageWithURL:[NSURL URLWithString:head] forState:UIControlStateNormal];
+        [self.unreadView.headBtn sd_setImageWithURL:[NSURL URLWithString:head] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"defaultHead"]];
         self.unreadView.numMsgLB.text = [NSString stringWithFormat:@"%@条新消息",toreadcount];
         return self.unreadView;
     }

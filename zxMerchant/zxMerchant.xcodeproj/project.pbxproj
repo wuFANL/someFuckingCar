@@ -410,6 +410,8 @@
 		A0CAB85C2562EA610015FAE3 /* QLCarSourceNaviView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CAB85B2562EA610015FAE3 /* QLCarSourceNaviView.xib */; };
 		A0CAB8622562EFCA0015FAE3 /* QLCarSourceHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CAB8612562EFCA0015FAE3 /* QLCarSourceHeadView.m */; };
 		A0CAB8672562EFF70015FAE3 /* QLCarSourceHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CAB8662562EFF70015FAE3 /* QLCarSourceHeadView.xib */; };
+		A0CBFB62265C223F00647E3F /* QLStoreSharePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBFB60265C223F00647E3F /* QLStoreSharePageViewController.m */; };
+		A0CBFB6C265C2AD500647E3F /* QLUnreadMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBFB6B265C2AD500647E3F /* QLUnreadMsgModel.m */; };
 		A0CCC94C26543D9500F6F194 /* QLCarCircleAccMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CCC94B26543D9500F6F194 /* QLCarCircleAccMoreView.m */; };
 		A0CCC95126543DA200F6F194 /* QLCarCircleAccMoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC95026543DA100F6F194 /* QLCarCircleAccMoreView.xib */; };
 		A0DB81272547475700B2A9F5 /* QLCarCircleLikeNameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DB81252547475700B2A9F5 /* QLCarCircleLikeNameItem.m */; };
@@ -1148,6 +1150,10 @@
 		A0CAB8602562EFCA0015FAE3 /* QLCarSourceHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarSourceHeadView.h; sourceTree = "<group>"; };
 		A0CAB8612562EFCA0015FAE3 /* QLCarSourceHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarSourceHeadView.m; sourceTree = "<group>"; };
 		A0CAB8662562EFF70015FAE3 /* QLCarSourceHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCarSourceHeadView.xib; sourceTree = "<group>"; };
+		A0CBFB60265C223F00647E3F /* QLStoreSharePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLStoreSharePageViewController.m; sourceTree = "<group>"; };
+		A0CBFB61265C223F00647E3F /* QLStoreSharePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLStoreSharePageViewController.h; sourceTree = "<group>"; };
+		A0CBFB6A265C2AD500647E3F /* QLUnreadMsgModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLUnreadMsgModel.h; sourceTree = "<group>"; };
+		A0CBFB6B265C2AD500647E3F /* QLUnreadMsgModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLUnreadMsgModel.m; sourceTree = "<group>"; };
 		A0CCC94A26543D9500F6F194 /* QLCarCircleAccMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCircleAccMoreView.h; sourceTree = "<group>"; };
 		A0CCC94B26543D9500F6F194 /* QLCarCircleAccMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarCircleAccMoreView.m; sourceTree = "<group>"; };
 		A0CCC95026543DA100F6F194 /* QLCarCircleAccMoreView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLCarCircleAccMoreView.xib; sourceTree = "<group>"; };
@@ -2129,6 +2135,7 @@
 			isa = PBXGroup;
 			children = (
 				A01837B5254F1CC6000253FC /* Controller */,
+				A0CBFB69265C2AB200647E3F /* Model */,
 				A01837BF254F234F000253FC /* View */,
 			);
 			path = UnreadMsgList;
@@ -2287,6 +2294,7 @@
 			isa = PBXGroup;
 			children = (
 				A044AAE6251FCEEB00D1C324 /* CarManagerPage */,
+				A0CBFB5E265C223F00647E3F /* StoreSharePage */,
 				A0208F472576CB74002EE6F0 /* CarSourceManager */,
 			);
 			path = CarManager;
@@ -4452,6 +4460,32 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A0CBFB5E265C223F00647E3F /* StoreSharePage */ = {
+			isa = PBXGroup;
+			children = (
+				A0CBFB5F265C223F00647E3F /* Controller */,
+			);
+			path = StoreSharePage;
+			sourceTree = "<group>";
+		};
+		A0CBFB5F265C223F00647E3F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0CBFB61265C223F00647E3F /* QLStoreSharePageViewController.h */,
+				A0CBFB60265C223F00647E3F /* QLStoreSharePageViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0CBFB69265C2AB200647E3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0CBFB6A265C2AD500647E3F /* QLUnreadMsgModel.h */,
+				A0CBFB6B265C2AD500647E3F /* QLUnreadMsgModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A0DBDABD253377630090C263 /* RemarksSet */ = {
 			isa = PBXGroup;
 			children = (
@@ -5060,6 +5094,7 @@
 				A04994402538C8FC00A1E014 /* QLCarCircleViewController.m in Sources */,
 				A0CAB8542562EA560015FAE3 /* QLCarSourceNaviView.m in Sources */,
 				A0013150258BD41A0080EB21 /* QLCooperativeSourceDetailBottomView.m in Sources */,
+				A0CBFB6C265C2AD500647E3F /* QLUnreadMsgModel.m in Sources */,
 				A0733286254B487F00570FDB /* QLRidersDynamicViewController.m in Sources */,
 				A0733291254B490100570FDB /* QLRidersDynamicCell.m in Sources */,
 				A044AADC251FCE6500D1C324 /* QLSetPwdViewController.m in Sources */,
@@ -5183,6 +5218,7 @@
 				A00620DE2513DB2000A571E5 /* QLNavigationController.m in Sources */,
 				A00620E42513DB2000A571E5 /* QLFloatingBallView.m in Sources */,
 				A031377A25330B0F00A94019 /* QLSearchHistoryCell.m in Sources */,
+				A0CBFB62265C223F00647E3F /* QLStoreSharePageViewController.m in Sources */,
 				A02C933D2523AA310031A6D7 /* QLHomeToolHeadView.m in Sources */,
 				A09EAB4525DEBED2007D9075 /* QLEidtPayCodeViewController.m in Sources */,
 				A06D1129252DF3A700DD4673 /* QLSearchContactsViewController.m in Sources */,
@@ -5423,7 +5459,7 @@
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ARRC2VHTJU;
+				DEVELOPMENT_TEAM = SN6GCKR489;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
