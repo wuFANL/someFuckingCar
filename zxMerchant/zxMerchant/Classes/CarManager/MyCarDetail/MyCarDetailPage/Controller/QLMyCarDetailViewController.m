@@ -214,7 +214,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"QLVehicleDescCell" bundle:nil] forCellReuseIdentifier:@"descCell"];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.bottomView);
     }];
     
     //tableViewHead
@@ -434,8 +434,28 @@
     if (!_bottomView) {
         _bottomView = [QLMyCarDetailBottomView new];
         [_bottomView.confirmBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _bottomView.hidden = YES;
+//        _bottomView.hidden = YES;
     }
     return _bottomView;
+}
+
+-(void)setBottomType:(NSString *)bottomType
+{
+    if([bottomType isEqualToString:@"0"])
+    {
+        self.bottomView.openControl.hidden = NO;
+        self.bottomView.sellBtn.hidden =YES;
+        self.bottomView.editBtn.hidden = YES;
+        self.bottomView.confirmBtn.hidden = YES;
+        self.bottomView.placeholderLB.text = [NSString stringWithFormat:@"找车源上架审核失败，请点击下方编辑按钮修改后重新提交审核：%@",self.refuseStr];
+        [self.bottomView defaultOpen];
+    }
+    else if([bottomType isEqualToString:@"1"])
+    {
+        self.bottomView.openControl.hidden = YES;
+        self.bottomView.sellBtn.hidden =NO;
+        self.bottomView.editBtn.hidden = NO;
+        self.bottomView.confirmBtn.hidden = NO;
+    }
 }
 @end
