@@ -33,11 +33,11 @@
 #pragma mark - network
 //列表数据
 - (void)dataRequest {
-    [QLNetworkingManager postWithUrl:DynamicPath params:@{} success:^(id response) {
+    [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"to_read/list",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
         if (self.tableView.page == 1) {
             [self.listArr removeAllObjects];
         }
-        QLUnreadMsgModel *model = [QLUnreadMsgModel yy_modelWithJSON:response[@"result_inf"][@"to_read_list"]];
+        QLUnreadMsgModel *model = [QLUnreadMsgModel yy_modelWithJSON:response[@"result_info"][@"to_read_list"]];
         [self.listArr addObjectsFromArray:model.dynamic_response];
         if (self.listArr.count == 0) {
             self.tableView.hidden = YES;
@@ -60,10 +60,6 @@
         [MBProgressHUD showError:error.domain];
     }];
 }
-//清空
-- (void)deleteRequest {
-    
-}
 #pragma mark - action
 //更多消息
 - (void)moreBtnClick {
@@ -72,7 +68,7 @@
 //清空
 - (void)rightItemClick {
     if (self.listArr.count != 0) {
-        [self deleteRequest];
+        self.tableView.showHeadRefreshControl = YES;
     }
 }
 #pragma mark - tableView
@@ -90,6 +86,9 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLUnreadMsgListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"unreadMsgListCell" forIndexPath:indexPath];
+    cell.likeImgViewWidth.constant = 0;
+    cell.likeImgView.hidden = YES;
+    
     QLDynamicMsgModel *model = self.listArr[indexPath.row];
     [cell.headImgView sd_setImageWithURL:[NSURL URLWithString:model.account_head_pic]];
     [cell.accImgView sd_setImageWithURL:[NSURL URLWithString:model.dynamic_first_pic]];
@@ -100,7 +99,10 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    QLDynamicMsgModel *model = self.listArr[indexPath.row];
     QLRidersDynamicDetailViewController *rddVC = [QLRidersDynamicDetailViewController new];
+    rddVC.account_id = model.account_id;
+    rddVC.dynamic_id = model.dynamic_id;
     [self.navigationController pushViewController:rddVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
