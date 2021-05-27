@@ -153,6 +153,7 @@
 - (void)accBtnClick:(UIButton *)sender {
     // 去找车源
     [self.tabBarController setSelectedIndex:1];
+    
 }
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {

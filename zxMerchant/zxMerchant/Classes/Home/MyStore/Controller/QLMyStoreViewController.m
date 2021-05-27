@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"我的店铺";
-    self.loadURLStr = [NSString stringWithFormat:@"%@/personal_stores.html?merchant_id=%@",UrlPath,[QLUserInfoModel getLocalInfo].business.business_id];
+    self.loadURLStr = [NSString stringWithFormat:@"http://wx.zcars365.com/#/?merchant_id=%@",[QLUserInfoModel getLocalInfo].account.account_id];
 }
 
 
