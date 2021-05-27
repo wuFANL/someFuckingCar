@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLTransactionChooseBuyerCell : UITableViewCell
-
+@property (nonatomic, strong) IBOutlet UIButton *headerImgBtn;
 @end
 
 NS_ASSUME_NONNULL_END

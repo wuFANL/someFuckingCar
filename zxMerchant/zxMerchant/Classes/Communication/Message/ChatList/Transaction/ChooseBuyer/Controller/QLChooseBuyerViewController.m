@@ -11,10 +11,19 @@
 
 @interface QLChooseBuyerViewController ()<QLBaseSearchBarDelegate>
 @property (nonatomic, strong) QLBaseSearchBar *searchBar;
-
+@property (nonatomic, assign) BOOL isFromCarManager;
 @end
 
 @implementation QLChooseBuyerViewController
+
+-(id)initFromCarManager:(BOOL)isFromCarManager
+{
+    self = [super init];
+    if(self) {
+        self.isFromCarManager = isFromCarManager;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,14 +39,27 @@
     [self.navigationController pushViewController:scVC animated:YES];
 }
 - (void)naviSet {
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"addressAdd"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    if(!self.isFromCarManager)
+    {
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"addressAdd"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
     
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width-100, 30)];
     self.searchBar.frame = titleView.bounds;
     [titleView addSubview:self.searchBar];
     self.navigationItem.titleView = titleView;
     
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FriendDetailModel *friendModel = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if(self.cfBlock)
+    {
+        self.cfBlock(friendModel);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Lazy

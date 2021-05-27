@@ -22,6 +22,7 @@ typedef void (^MakeSureBlock) (NSString *price,NSString *content);
  *类型
  */
 @property (nonatomic, assign) TransactionType type;
+@property (nonatomic, assign) BOOL isFromCarManager; //补充 carManager进入走不同的逻辑
 /**
  *显示选择购车人
  */

@@ -20,6 +20,9 @@
 @property (nonatomic, strong) QLTransactionMoneyCell *currentMoneyCell;
 @property (nonatomic, strong) QLCreatStoreTVCell *currentStoreCell;
 
+//carManager 的合作出售选的购车人
+@property (nonatomic, strong) NSString *buyerId;
+@property (nonatomic, strong) NSString *buyerHeader;
 @end
 
 @implementation QLTransactionSubmitViewController
@@ -32,6 +35,56 @@
         self.sourceDic = [dic copy];
     }
     return self;
+}
+
+-(void)requestForSellCarInCarManager
+{
+    if(self.type == ShopSale)
+    {
+        [MBProgressHUD showCustomLoading:@""];
+        //店铺出售
+        [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/sell",
+        @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"to_account_id":@"",
+        @"car_id":[self.sourceDic objectForKey:@"id"],
+        @"sell_real_price":self.currentMoneyCell.tf.text,
+        @"sell_type":@"1"} success:^(id response){
+            [MBProgressHUD immediatelyRemoveHUD];
+            if([[response objectForKey:@"result_code"] intValue] == 0 && self.msBlock)
+            {
+                self.msBlock(@"1", @"1");
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }
+    else if(self.type == CooperativeTransaction)
+    {
+        if([NSString isEmptyString:self.buyerId])
+        {
+            [MBProgressHUD showError:@"请选择购车人"];
+            return;
+        }
+        [MBProgressHUD showCustomLoading:@""];
+        //合作出售
+        [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/sell",
+        @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"to_account_id":self.buyerId,
+        @"car_id":[self.sourceDic objectForKey:@"id"],
+        @"sell_real_price":self.currentMoneyCell.tf.text,
+        @"sell_type":@"2"} success:^(id response){
+            [MBProgressHUD immediatelyRemoveHUD];
+            if([[response objectForKey:@"result_code"] intValue] == 0 && self.msBlock)
+            {
+                self.msBlock(@"1", @"1");
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }
 }
 
 - (void)viewDidLoad {
@@ -65,16 +118,25 @@
         [MBProgressHUD showError:@"请填写价格"];
         return;
     }
-    NSString *contentStr = self.currentStoreCell.tv.text;
-    if([NSString isEmptyString:self.currentStoreCell.tv.text])
+    
+    if(self.isFromCarManager)
     {
-        contentStr = [NSString stringWithFormat:@"%@, %@, %@万公里, 过户%@次",[self.sourceDic objectForKey:@"model"],[self.sourceDic objectForKey:@"vin_code"],[[self.sourceDic objectForKey:@"driving_distance"] stringValue],[[self.sourceDic objectForKey:@"transfer_times"] stringValue]];
+        [self requestForSellCarInCarManager];
     }
-    if(self.msBlock)
+    else
     {
-        self.msBlock(self.currentMoneyCell.tf.text,contentStr);
+        NSString *contentStr = self.currentStoreCell.tv.text;
+        if([NSString isEmptyString:self.currentStoreCell.tv.text])
+        {
+            contentStr = [NSString stringWithFormat:@"%@, %@, %@万公里, 过户%@次",[self.sourceDic objectForKey:@"model"],[self.sourceDic objectForKey:@"vin_code"],[[self.sourceDic objectForKey:@"driving_distance"] stringValue],[[self.sourceDic objectForKey:@"transfer_times"] stringValue]];
+        }
+        if(self.msBlock)
+        {
+            self.msBlock(self.currentMoneyCell.tf.text,contentStr);
+        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -113,7 +175,10 @@
         return cell;
     } else if (indexPath.row == 2&&self.showBuyer) {
         QLTransactionChooseBuyerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chooseBuyerCell" forIndexPath:indexPath];
-        
+        if(![NSString isEmptyString:self.buyerHeader])
+        {
+            [cell.headerImgBtn sd_setImageWithURL:[NSURL URLWithString:self.buyerHeader] forState:UIControlStateNormal];
+        }
         return cell;
     } else if(indexPath.row == ([tableView numberOfRowsInSection:indexPath.section]-1)&&self.showDesc) {
         QLCreatStoreTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tvCell" forIndexPath:indexPath];
@@ -129,7 +194,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2&&self.showBuyer) {
         //选择购车人
-        QLChooseBuyerViewController *cbVC = [QLChooseBuyerViewController new];
+        QLChooseBuyerViewController *cbVC = [[QLChooseBuyerViewController alloc] initFromCarManager:YES];
+        WEAKSELF;
+        [cbVC setCfBlock:^(FriendDetailModel * _Nullable model) {
+            weakSelf.buyerId = model.account_id;
+            weakSelf.buyerHeader = model.head_pic;
+            [weakSelf.tableView reloadData];
+        }];
         [self.navigationController pushViewController:cbVC animated:YES];
     }
 }
