@@ -75,8 +75,8 @@
 - (void)dataRequest {
     NSArray *priceArr = [self.priceRange componentsSeparatedByString:@"-"];
     
-    NSDictionary *dic = @{@"operation_type":@"get_merchant_car_list",@"member_id":QLNONull([QLUserInfoModel getLocalInfo].member_account.account_id),@"brand_id":QLNONull(self.brand_id),@"price_min":priceArr.count==2?priceArr[0]:@"",@"price_max":priceArr.count==2?priceArr[1]:@"",@"deal_state":@"1",@"page_no":@(self.tableView.page),@"page_size":@(listShowCount),@"sort_by":@(self.sort_by)};
-    [QLNetworkingManager postWithUrl:VehiclePath params:dic success:^(id response) {
+    NSDictionary *dic = @{@"operation_type":@"car_list",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].member_account.account_id),@"brand_id":QLNONull(self.brand_id),@"price_min":priceArr.count==2?priceArr[0]:@"",@"price_max":priceArr.count==2?priceArr[1]:@"",@"deal_state":@"1",@"page_no":@(self.tableView.page),@"page_size":@(listShowCount),@"sort_by":@(self.sort_by)};
+    [QLNetworkingManager postWithUrl:BusinessPath params:dic success:^(id response) {
         self.model = [QLVehiclePageModel yy_modelWithJSON:response[@"result_info"]];
         if (self.tableView.page == 1) {
             [self.dataArr removeAllObjects];
@@ -148,6 +148,7 @@
         };
         [self.vcView show];
     } else {
+        self.headView.currentIndex = -1;
         [self.vcView hidden];
         //品牌导航
         WEAKSELF

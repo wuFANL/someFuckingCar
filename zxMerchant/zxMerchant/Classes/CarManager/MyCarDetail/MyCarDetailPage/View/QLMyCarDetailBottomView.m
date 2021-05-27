@@ -40,4 +40,8 @@
     self.height = 75;
 }
 
+-(void)defaultOpen
+{
+    [self openControlClick:nil];
+}
 @end

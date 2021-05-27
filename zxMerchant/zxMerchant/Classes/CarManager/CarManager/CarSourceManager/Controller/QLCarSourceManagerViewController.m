@@ -100,6 +100,8 @@
         NSString *buscarid = [dic objectForKey:@"business_car_id"];
         //上架通知 + 交易通知 + 出售通知
         QLMyCarDetailViewController *vcdVC = [[QLMyCarDetailViewController alloc] initWithUserid:fromUserID carID:carid businessCarID:buscarid];
+        vcdVC.refuseStr = [dic objectForKey:@"exam_remark"];
+        vcdVC.bottomType = @"1";
         [self.navigationController pushViewController:vcdVC animated:YES];
     
     } else {

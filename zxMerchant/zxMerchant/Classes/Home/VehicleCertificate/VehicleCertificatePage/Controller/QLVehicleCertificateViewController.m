@@ -92,6 +92,7 @@
         };
         [self.vcView show];
     } else if(type == 1) {
+        self.headView.currentIndex = -1;
         [self.vcView hidden];
         //品牌导航
         WEAKSELF

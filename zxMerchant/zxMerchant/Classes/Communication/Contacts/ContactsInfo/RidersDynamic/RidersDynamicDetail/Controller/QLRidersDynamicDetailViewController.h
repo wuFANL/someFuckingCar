@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLRidersDynamicDetailViewController : QLBaseTableViewController
-
+@property (nonatomic, copy) NSString *account_id;
+@property (nonatomic, copy) NSString *dynamic_id;
 @end
 
 NS_ASSUME_NONNULL_END

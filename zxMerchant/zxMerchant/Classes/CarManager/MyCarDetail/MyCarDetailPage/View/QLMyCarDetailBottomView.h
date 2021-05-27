@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *sellBtn;
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
-
+-(void)defaultOpen;
 @end
 
 NS_ASSUME_NONNULL_END

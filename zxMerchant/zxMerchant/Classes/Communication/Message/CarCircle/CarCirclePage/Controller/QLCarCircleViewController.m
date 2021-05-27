@@ -69,8 +69,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
     
-    //车友圈最新消息
-    [self lastMsgRequest];
+    
 }
 #pragma mark - network
 //最新消息
@@ -84,6 +83,10 @@
 }
 //列表
 - (void)dataRequest {
+    if (self.tableView.page == 1) {
+        //车友圈最新消息
+        [self lastMsgRequest];
+    }
     [QLNetworkingManager postWithUrl:DynamicPath params:@{@"operation_type":@"all_page_list",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
         if (self.tableView.page == 1) {
             [self.listArray removeAllObjects];
@@ -232,17 +235,23 @@
     
     self.accView.tag = section;
     [self.accView.likeBtn setTitle:myAccountId.length==0?@"赞":@"撤销点赞" forState:UIControlStateNormal];
+    self.accView.hidden = YES;
     [self.view addSubview:self.accView];
-    [self.accView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.right.left.equalTo(sender);
+    [UIView animateWithDuration:0.01 animations:^{
+        [self.accView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.right.left.equalTo(sender);
+        }];
+    } completion:^(BOOL finished) {
+        self.accView.hidden = NO;
+        [UIView animateWithDuration:animationDuration animations:^{
+            [self.accView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(sender).offset(-170);
+            }];
+            [self.view layoutIfNeeded];
+        }];
     }];
     
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.accView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(sender).offset(-170);
-        }];
-        [self.accView layoutIfNeeded];
-    }];
+    
 }
 //底部变化
 - (void)bottomViewShowStatus:(BOOL)isShow {
@@ -357,6 +366,8 @@
         return NO;
     } else if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]) {
         return NO;
+    } else if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIControl"]) {
+        return NO;
     }
     return YES;
 }
@@ -463,7 +474,7 @@
     NSString *toreadcount = [self.msgDic objectForKey:@"to_read_count"];
     if (section == 0&&[toreadcount integerValue] != 0) {
         NSString *head = [self.msgDic objectForKey:@"head_pic"];
-        [self.unreadView.headBtn sd_setImageWithURL:[NSURL URLWithString:head] forState:UIControlStateNormal];
+        [self.unreadView.headBtn sd_setImageWithURL:[NSURL URLWithString:head] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"defaultHead"]];
         self.unreadView.numMsgLB.text = [NSString stringWithFormat:@"%@条新消息",toreadcount];
         return self.unreadView;
     }
@@ -520,6 +531,7 @@
 - (QLCarCircleAccMoreView *)accView {
     if (!_accView) {
         _accView = [QLCarCircleAccMoreView new];
+        _accView.size = CGSizeMake(30, 30);
         [_accView.likeBtn addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_accView.commentBtn addTarget:self action:@selector(commentBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }

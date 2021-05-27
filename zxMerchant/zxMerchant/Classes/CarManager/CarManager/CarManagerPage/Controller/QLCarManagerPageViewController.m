@@ -13,6 +13,7 @@
 #import "QLCarSourceManagerViewController.h"
 #import "QLEditTopCarViewController.h"
 #import "QLDueProcessViewController.h"
+#import "QLStoreSharePageViewController.h"
 #import "QLParamModel.h"
 #import "QLVehicleWarnModel.h"
 @interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLBaseTableViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
@@ -240,6 +241,16 @@
     }
 }
 #pragma mark - action
+//分享列表
+- (void)shareListBtnClick {
+    
+}
+//选车分享
+- (void)chooseCarBtnClick {
+    QLStoreSharePageViewController *sspVC = [QLStoreSharePageViewController new];
+    sspVC.isChooseCar = YES;
+    [self.navigationController pushViewController:sspVC animated:YES];
+}
 //头条车源
 - (void)topCarBtnClick {
     QLEditTopCarViewController *etcVC = [QLEditTopCarViewController new];
@@ -311,6 +322,7 @@
         };
         [self.vcView show];
     } else {
+        self.headView.sortView.currentIndex = -1;
         [self.vcView hidden];
         //品牌导航
         WEAKSELF
@@ -393,6 +405,8 @@
         _headView.sortView.delegate = self;
         
         [_headView.topBtn addTarget:self action:@selector(topCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_headView.chooseCarBtn addTarget:self action:@selector(chooseCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_headView.shareListBtn addTarget:self action:@selector(shareListBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _headView;
 }

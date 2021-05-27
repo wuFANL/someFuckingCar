@@ -15,6 +15,18 @@
              @"interact_list" : [QLRidersDynamicInteractModel class],
              };
 }
+- (NSArray *)praise_list {
+    if (!_praise_list) {
+        _praise_list = [NSArray array];
+    }
+    return _praise_list;
+}
+- (NSArray *)interact_list {
+    if (!_interact_list) {
+        _interact_list = [NSArray array];
+    }
+    return _interact_list;
+}
 @end
 
 @implementation QLRidersDynamicFileModel
