@@ -11,7 +11,7 @@
 #import "QLReleaseImagesCell.h"
 #import "QLSubmitTextCell.h"
 
-@interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate>
+@interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
 @property (nonatomic, strong) NSMutableArray *imgsArr;
 
@@ -81,6 +81,8 @@
             case 0:{
                 cell.titleLB.text = @"VIN码(0/17)";
                 cell.textView.placeholder = @"输入或右边的扫一扫";
+//                textView
+                cell.textView.delegate = self;
                 [cell.actionBtn setImage:[UIImage imageNamed:@"carScan"] forState:UIControlStateNormal];
             }
                 break;
@@ -228,8 +230,13 @@
 - (QLAddCarBottomView *)bottomView {
     if (!_bottomView) {
         _bottomView = [QLAddCarBottomView new];
+        [_bottomView.submitBtn addTarget:self action:@selector(submitNewCar) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
+}
+
+- (void)submitNewCar{
+    
 }
 
 @end

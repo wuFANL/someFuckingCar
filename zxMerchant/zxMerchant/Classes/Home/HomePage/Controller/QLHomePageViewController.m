@@ -36,22 +36,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    //获取首页数据
-//    if (![QLToolsManager share].homePageModel) {
-//        [self getHomeData];
-//    } else {
-//        //功能数据筛选
-//        [self funDataDo];
-//    }
-    [self getHomeData];
-//    [self funDataDo];
-    // 请求朋友圈数据
-    [self getFriendList];
-    [self.tableView reloadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self getHomeData];
+    [self getFriendList];
     //tableView
     [self tableViewSet];
     //导航
@@ -74,18 +63,6 @@
 - (void)getHomeData {
     
     [MBProgressHUD showCustomLoading:nil];
-//    [[QLToolsManager share] getFunData:^(id result, NSError *error) {
-//        if (!error) {
-//            [MBProgressHUD immediatelyRemoveHUD];
-//            //功能数据筛选
-//            [self funDataDo];
-//            //刷新
-//            [self.tableView reloadData];
-//        } else {
-//            [MBProgressHUD showError:error.domain];
-//        }
-//    }];
-    
     WEAKSELF
     
     [QLNetworkingManager postWithUrl:HomePath params:@{@"operation_type":@"index",@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
@@ -174,7 +151,8 @@
 }
 //头部按钮
 - (void)accBtnClick:(UIButton *)sender {
-    [self.navigationController pushViewController:[QLMySubscriptionsPageViewController new] animated:YES];
+    // 去找车源
+    [self.tabBarController setSelectedIndex:1];
 }
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
@@ -284,6 +262,18 @@
                 
                 if (indexPath.row == 0) {
                     [self.navigationController pushViewController:[QLPhotosShareViewController new] animated:YES];
+                }
+                
+                if (indexPath.row == 1) {
+                    // 店铺分享
+                }
+                
+                if (indexPath.row == 2) {
+                    // 发布动态
+                }
+                
+                if (indexPath.row == 3) {
+                    // 车辆拼图
                 }
             };
             
