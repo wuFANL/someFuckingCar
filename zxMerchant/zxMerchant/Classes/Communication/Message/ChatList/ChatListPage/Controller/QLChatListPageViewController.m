@@ -53,7 +53,7 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"account_id":self.firstFriendId,
                             @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":content,@"m_type":@"4",@"status":@"0",
                             @"price":price
@@ -64,7 +64,7 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"account_id":self.firstFriendId,
                             @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":content,@"m_type":@"5",@"status":@"0",
                             @"price":price
@@ -75,7 +75,7 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"account_id":self.firstFriendId,
                             @"car_id":[self.currentDic objectForKey:@"id"]?:@"",@"car_send":@"0",
                             @"content":chatMsg,@"m_type":@"1",@"status":@"1",
                             @"t_id":[self.currentDic objectForKey:@"t_id"],
@@ -86,7 +86,7 @@
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
-                            @"account_id":[self.currentDic objectForKey:@"surveyor_id"],
+                            @"account_id":self.firstFriendId,
                             @"car_id":[self.currentDic objectForKey:@"id"]?:@"",
                             @"car_send":@"0",
                             @"file_url":imageUrl,
@@ -143,7 +143,10 @@
 
 - (void)dataRequest
 {
-    [self requestForChatList:self.currentDic];
+    if(self.currentDic)
+    {
+        [self requestForChatList:self.currentDic];
+    }
 }
 
 -(void)requestForChatList:(NSDictionary *)dic
@@ -154,7 +157,7 @@
     }
     self.currentID = [dic objectForKey:@"id"];
     [MBProgressHUD showCustomLoading:@""];
-    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":[dic objectForKey:@"surveyor_id"],@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
 
         if (self.tableView.page == 1) {
@@ -304,6 +307,7 @@
     }];
     self.tableView.showHeadRefreshControl = YES;
     self.tableView.showFootRefreshControl = YES;
+    self.tableView.extendDelegate = self;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.chatListArray count];
