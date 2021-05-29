@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -86,7 +86,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                             <inset key="titleEdgeInsets" minX="-18" minY="20" maxX="-5" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="12" minY="-15" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="微店上架" image="shangjia">
+                            <state key="normal" image="shangjia">
                                 <color key="titleColor" red="0.55294117649999996" green="0.57647058819999997" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <state key="selected" title="微店下架" image="xiajia"/>
@@ -108,6 +108,14 @@
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="出售" backgroundImage="greenBj_332"/>
                         </button>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已售出" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U98-1M-smG">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" red="0.53340363499999999" green="0.53715515140000003" blue="0.54117780920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -146,6 +154,7 @@
                 <outlet property="closeBtn" destination="c4g-bm-2y5" id="jZv-2V-4l6"/>
                 <outlet property="confirmBtn" destination="Ccw-dh-9Z6" id="I9c-st-zPs"/>
                 <outlet property="editBtn" destination="FgL-0h-9Pf" id="jvP-O3-qdR"/>
+                <outlet property="hasSellLab" destination="U98-1M-smG" id="q16-SS-mf2"/>
                 <outlet property="openControl" destination="s5S-UV-846" id="XSh-MD-d0D"/>
                 <outlet property="openControlLeft" destination="i3y-QF-i8P" id="1lH-uq-NGM"/>
                 <outlet property="placeholderLB" destination="Uua-vQ-DHe" id="vr3-AG-CrQ"/>

@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 -(id)initWithUserid:(NSString *)userID carID:(NSString *)carId businessCarID:(NSString *)busCarID;
 
 @property (nonatomic, strong) NSString *refuseStr;
+
 @property (nonatomic, strong) NSString *bottomType;
+@property (nonatomic, strong) NSString *bottomBtnTitle;
 @end
 
 NS_ASSUME_NONNULL_END

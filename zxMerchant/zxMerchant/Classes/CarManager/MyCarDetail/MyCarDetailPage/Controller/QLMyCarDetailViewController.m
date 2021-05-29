@@ -107,6 +107,29 @@
     }];
 }
 
+-(void)requestForUpLoadType:(NSString *)uploadStr
+{
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/deal",@"car_id":self.carID,@"state":uploadStr,@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+
+        if([[response objectForKey:@"result_code"] intValue] == 0)
+        {
+            [MBProgressHUD showSuccess:[[response objectForKey:@"result_info"] objectForKey:@"result"]];
+            if([uploadStr isEqualToString:@"1"])
+            {
+                [self setBottomBtnTitle:@"下架微店"];
+            }
+            else
+            {
+                [self setBottomBtnTitle:@"上架微店"];
+            }
+            
+        }
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -145,8 +168,20 @@
     sheetView.listArr = @[@"店铺出售",@"合作出售"];
     sheetView.clickHandler = ^(id result, NSError *error) {
         NSInteger index = [result integerValue];
-        
-        QLTransactionSubmitViewController *tsVC = [QLTransactionSubmitViewController new];
+        if(index == -1)
+        {
+            return;
+        }
+        QLTransactionSubmitViewController *tsVC = [[QLTransactionSubmitViewController alloc] initWithSourceDic:[self.allSourceDic objectForKey:@"car_info"]];
+        WEAKSELF;
+        [tsVC setMsBlock:^(NSString * _Nonnull price, NSString * _Nonnull content) {
+            if([price isEqualToString:@"1"])
+            {
+                //售出成功
+                [weakSelf setBottomType:@"99"];
+            }
+        }];
+        tsVC.isFromCarManager = YES;
         if (index == 0) {
             //店铺出售
             tsVC.type = ShopSale;
@@ -164,6 +199,22 @@
     };
     [sheetView show];
 }
+
+//上下架
+- (void)sellBtnClick
+{
+    if([self.bottomView.sellBtn.titleLabel.text isEqualToString:@"下架微店"])
+    {
+        //上架
+        [self requestForUpLoadType:@"2"];
+    }
+    else
+    {
+        //下架
+        [self requestForUpLoadType:@"1"];
+    }
+}
+
 //分区头部按钮
 - (void)headerAccBtnClick:(UIButton *)sender {
     NSInteger section = sender.tag;
@@ -195,7 +246,7 @@
 }
 //分享
 - (void)shareBtnClick {
-    
+
     
 }
 #pragma mark - tableView
@@ -434,6 +485,7 @@
     if (!_bottomView) {
         _bottomView = [QLMyCarDetailBottomView new];
         [_bottomView.confirmBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.sellBtn addTarget:self action:@selector(sellBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //        _bottomView.hidden = YES;
     }
     return _bottomView;
@@ -457,5 +509,24 @@
         self.bottomView.editBtn.hidden = NO;
         self.bottomView.confirmBtn.hidden = NO;
     }
+    else if([bottomType isEqualToString:@"99"])
+    {
+        //已出售
+        self.bottomView.openControl.hidden = YES;
+        self.bottomView.sellBtn.hidden =YES;
+        self.bottomView.editBtn.hidden = YES;
+        self.bottomView.confirmBtn.hidden = YES;
+        self.bottomView.hasSellLab.hidden = NO;
+    }
+    else
+    {
+        self.bottomView.hidden = YES;
+    }
 }
+
+-(void)setBottomBtnTitle:(NSString *)bottomBtnTitle
+{
+    [self.bottomView.sellBtn setTitle:bottomBtnTitle forState:UIControlStateNormal];
+}
+
 @end

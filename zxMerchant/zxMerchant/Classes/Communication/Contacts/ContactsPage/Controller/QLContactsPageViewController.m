@@ -15,7 +15,7 @@
 
 @interface QLContactsPageViewController ()<UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
 @property (nonatomic, strong) QLListSectionIndexView *indexView;
-@property (nonatomic, strong) NSMutableArray *dataArray;
+
 @property (nonatomic, strong) MyFriendsModel *friendListModel;
 @end
 

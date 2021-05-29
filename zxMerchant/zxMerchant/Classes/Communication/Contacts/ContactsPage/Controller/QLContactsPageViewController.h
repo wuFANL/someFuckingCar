@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 typedef void (^NFirendHeaderBlock) (NSString *headerPath);
 @interface QLContactsPageViewController : QLBaseTableViewController
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, copy) NFirendHeaderBlock headerBlock;
 @end
 
