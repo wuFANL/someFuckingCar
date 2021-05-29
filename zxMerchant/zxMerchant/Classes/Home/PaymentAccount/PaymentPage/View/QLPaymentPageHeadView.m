@@ -22,11 +22,17 @@
     }
     return self;
 }
-- (void)setModel:(QLPaymentPageModel *)model {
+
+
+- (void)updateModel:(QLPaymentPageModel *)model andIsWxPay:(BOOL)isweChat {
     _model = model;
-    [self.imgView sd_setImageWithURL:[NSURL URLWithString:model.merchant_account.alipay_url]];
-    
+    if (isweChat) {
+        [self.imgView sd_setImageWithURL:[NSURL URLWithString:self.model.merchant_account.weixpay_url]];
+    } else {
+        [self.imgView sd_setImageWithURL:[NSURL URLWithString:model.merchant_account.alipay_url]];
+    }
 }
+
 - (IBAction)btnClick:(UIButton *)sender {
     if (self.selectBtn != sender) {
         self.selectBtn.selected = NO;
@@ -34,8 +40,15 @@
         self.selectBtn = sender;
         if (self.selectBtn.tag == 0) {
             [self.imgView sd_setImageWithURL:[NSURL URLWithString:self.model.merchant_account.alipay_url]];
+            if (self.payTypeBlock) {
+                self.payTypeBlock(NO);
+            }
         } else {
             [self.imgView sd_setImageWithURL:[NSURL URLWithString:self.model.merchant_account.weixpay_url]];
+            
+            if (self.payTypeBlock) {
+                self.payTypeBlock(YES);
+            }
         }
     }
 }

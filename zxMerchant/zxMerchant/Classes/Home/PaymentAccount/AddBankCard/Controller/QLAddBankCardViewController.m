@@ -25,13 +25,13 @@
 }
 #pragma mark- network
 - (void)saveRequest {
-//    [MBProgressHUD showCustomLoading:nil];
-//    [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"save_merchant_bank_info",@"bank_id":QLNONull(self.bankModel.bank_id),@"real_name":self.bankModel.real_name,@"bank_card":self.bankModel.bank_card,@"bank_name":self.bankModel.bank_name,@"sub_id":[QLUserInfoModel getLocalInfo].merchant_staff.sub_id,@"member_id":[QLUserInfoModel getLocalInfo].merchant_staff.member_id} success:^(id response) {
-//        [MBProgressHUD showSuccess:@"操作成功"];
-//        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    [MBProgressHUD showCustomLoading:nil];
+    [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"save_merchant_bank_info",@"bank_id":QLNONull(self.bankModel.bank_id),@"real_name":self.bankModel.real_name,@"bank_card":self.bankModel.bank_card,@"bank_name":self.bankModel.bank_name,@"business_id":[QLUserInfoModel getLocalInfo].business.business_id} success:^(id response) {
+        [MBProgressHUD showSuccess:@"操作成功"];
+        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
     
 }
 #pragma mark- action

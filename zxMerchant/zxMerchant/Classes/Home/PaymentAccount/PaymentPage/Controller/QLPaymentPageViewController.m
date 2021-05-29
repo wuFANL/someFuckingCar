@@ -17,6 +17,9 @@
 @property (nonatomic, strong) QLBaseTableView *tableView;
 @property (nonatomic, strong) QLPaymentPageHeadView *headView;
 @property (nonatomic, strong) QLPaymentPageModel *model;
+
+// 用户是否点击了微信支付
+@property (nonatomic, assign) BOOL isSelectWechatPay;
 @end
 
 @implementation QLPaymentPageViewController
@@ -39,15 +42,28 @@
 }
 #pragma mark- network
 - (void)getData {
-//    [MBProgressHUD showCustomLoading:nil];
-//    [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"get_merchant_account",@"member_id":QLNONull([QLUserInfoModel getLocalInfo].merchant_staff.member_id)} success:^(id response) {
-//        [MBProgressHUD immediatelyRemoveHUD];
-//        self.model = [QLPaymentPageModel yy_modelWithJSON:response[@"result_info"]];
-//        self.headView.model = self.model;
-//        [self.tableView reloadData];
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    WEAKSELF
+    // 查询收款账号
+    [MBProgressHUD showCustomLoading:nil];
+    [QLNetworkingManager postWithUrl:LoanPath params:@{
+        @"operation_type":@"get_merchant_account",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        weakSelf.model = [QLPaymentPageModel yy_modelWithJSON:response[@"result_info"]];
+        
+        [weakSelf.headView updateModel:weakSelf.model andIsWxPay:weakSelf.isSelectWechatPay];
+        
+        [weakSelf.tableView reloadData];
+        // 按钮状态重置
+        if (weakSelf.isSelectWechatPay) {
+            [weakSelf.headView.bBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [weakSelf.headView.aBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
     
 }
 #pragma mark- action
@@ -115,7 +131,7 @@
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section==0?50:65;
+    return indexPath.section==0?50:70;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return section==0?10:0.5;
@@ -146,6 +162,11 @@
         _headView = [QLPaymentPageHeadView new];
         [_headView.editBtn addTarget:self action:@selector(editCodeBtn) forControlEvents:UIControlEventTouchUpInside];
         _headView.editBtn.hidden = ![[QLToolsManager share].homePageModel getFun:ZXInventory]?YES:NO;
+        
+        WEAKSELF
+        _headView.payTypeBlock = ^(BOOL isWxPay) {
+            weakSelf.isSelectWechatPay = isWxPay;
+        };
     }
     return _headView;
 }

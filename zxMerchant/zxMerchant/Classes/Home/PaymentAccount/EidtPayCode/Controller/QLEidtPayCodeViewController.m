@@ -28,24 +28,26 @@
 #pragma mark- network
 //保存图片
 - (void)saveRequest:(NSInteger)type image:(UIImage *)img {
-//    [MBProgressHUD showCustomLoading:nil];
-//    [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
-//        if (state == UploadImageSuccess) {
-//            [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"save_pay_url",@"pay_url":names.firstObject,@"type":@(type),@"sub_id":[QLUserInfoModel getLocalInfo].merchant_staff.sub_id,@"member_id":[QLUserInfoModel getLocalInfo].merchant_staff.member_id} success:^(id response) {
-//                [MBProgressHUD immediatelyRemoveHUD];
-//                if (type == 1) {
-//                    self.model.merchant_account.alipay_url = names.firstObject;
-//                } else {
-//                    self.model.merchant_account.weixpay_url = names.firstObject;
-//                }
-//                [self.tableView reloadData];
-//            } fail:^(NSError *error) {
-//                [MBProgressHUD showError:error.domain];
-//            }];
-//        } else {
-//            [MBProgressHUD showError:@"图片上传失败"];
-//        }
-//    }];
+    [MBProgressHUD showCustomLoading:nil];
+    [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+        if (state == UploadImageSuccess) {
+            [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"save_pay_url",@"pay_url":names.firstObject,@"type":@(type),@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+                [MBProgressHUD immediatelyRemoveHUD];
+                if (type == 1) {
+                    self.model.merchant_account.alipay_url = names.firstObject;
+                } else {
+                    self.model.merchant_account.weixpay_url = names.firstObject;
+                }
+                [self.tableView reloadData];
+            } fail:^(NSError *error) {
+                [MBProgressHUD showError:error.domain];
+            }];
+        } else {
+            [MBProgressHUD showError:@"图片上传失败"];
+        }
+    }];
+    
+    
 }
 //删除图片
 - (void)deleteRequest:(NSInteger)type {

@@ -28,18 +28,21 @@
     self.navigationItem.leftBarButtonItems = @[backItem,leftItem];
     //tableView
     [self tableViewSet];
+    // 右侧添加卡片
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加卡片+" style:UIBarButtonItemStylePlain target:self action:@selector(addBtnClick)];
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 #pragma mark- network
 //获取数据
 - (void)getData {
-//    [MBProgressHUD showCustomLoading:nil];
-//    [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"get_merchant_account",@"member_id":QLNONull([QLUserInfoModel getLocalInfo].merchant_staff.member_id)} success:^(id response) {
-//        [MBProgressHUD immediatelyRemoveHUD];
-//        self.bankArr = [[NSArray yy_modelArrayWithClass:[QLBankModel class] json:response[@"result_info"][@"bank_list"]] mutableCopy];
-//        [self.tableView reloadData];
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    [MBProgressHUD showCustomLoading:nil];
+    [QLNetworkingManager postWithUrl:LoanPath params:@{@"operation_type":@"get_merchant_account",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        self.bankArr = [[NSArray yy_modelArrayWithClass:[QLBankModel class] json:response[@"result_info"][@"bank_list"]] mutableCopy];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
     
 }
 //删除
