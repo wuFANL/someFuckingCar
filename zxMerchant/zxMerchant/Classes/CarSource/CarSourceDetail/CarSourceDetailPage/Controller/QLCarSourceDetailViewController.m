@@ -21,6 +21,7 @@
 #import "QLContactsStoreViewController.h"
 #import "QLCarDescViewController.h"
 #import <CLPlayerView.h>
+#import "QLChatListPageViewController.h"
 
 @interface QLCarSourceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,QLCarDetailHeadViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
@@ -28,6 +29,9 @@
 @property (nonatomic, strong) QLFunBottomView *bottomView;
 /** 车辆信息*/
 @property (nonatomic, strong) NSDictionary *carData;
+
+/** 外部入参*/
+@property (nonatomic, strong) NSDictionary *outData;
 @end
 
 @implementation QLCarSourceDetailViewController
@@ -63,6 +67,7 @@
 
 #pragma mark -- 数据更新方法
 - (void)updateVcWithData:(NSDictionary *)dic {
+    self.outData = dic;
     // 请求车辆信息
     NSDictionary *paraDic = @{
         @"operation_type":@"car/info",
@@ -108,6 +113,10 @@
 //谈价格
 - (void)priceBtnClick {
     
+    NSString *car_id = [self.outData objectForKey:@"car_id"]?[self.outData objectForKey:@"car_id"]:[self.outData objectForKey:@"id"];
+    NSString *account_id = [self.outData objectForKey:@"account_id"]?[self.outData objectForKey:@"account_id"]:[self.outData objectForKey:@"belonger"];
+    QLChatListPageViewController *vc = [[QLChatListPageViewController alloc] initWithCarID:car_id messageToID:account_id];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 //加入车库
 - (void)joinBtnClick {

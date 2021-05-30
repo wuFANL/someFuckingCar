@@ -8,6 +8,7 @@
 
 #import "QLMySubscriptionsDetailViewController.h"
 #import "QLMySubDetailTitleCell.h"
+#import "QLCarSourceDetailViewController.h"
 #import "QLHomeCarCell.h"
 
 @interface QLMySubscriptionsDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -41,7 +42,19 @@
 }
 
 - (void)deleteItemClick {
-    
+    // 删除
+    [MBProgressHUD showCustomLoading:nil];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"remove_subscribe",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"subscribe_id":EncodeStringFromDic(self.dataDic, @"subscribe_id")
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        [self.navigationController popViewControllerAnimated:YES];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 //设置导航
@@ -126,7 +139,10 @@
         }
         // 获取所有标签
         cell.iconArr = dataArr;
+        // 时间
         [cell updateTimeWithString:EncodeStringFromDic(dic, @"create_time")];
+        // 标题
+        [cell updateWithTitle:EncodeStringFromDic(dic, @"title")];
         return cell;
     } else {
         QLHomeCarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hCarCell" forIndexPath:indexPath];
@@ -141,7 +157,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSArray *tempArr = [self.dataDic objectForKey:@"car_list"];
+    QLCarSourceDetailViewController* detail = [QLCarSourceDetailViewController new];
+    [detail updateVcWithData:tempArr[indexPath.row]];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

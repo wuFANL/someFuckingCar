@@ -28,6 +28,10 @@
     self.timeLB.text = timeStr;
 }
 
+- (void)updateWithTitle:(NSString *)titleStr {
+    self.titleLB.text = titleStr;
+}
+
 #pragma mark -setter
 - (void)setIconArr:(NSMutableArray *)iconArr {
     _iconArr = iconArr;
