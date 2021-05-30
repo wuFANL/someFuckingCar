@@ -16,6 +16,8 @@
 #import "QLStoreSharePageViewController.h"
 #import "QLParamModel.h"
 #import "QLVehicleWarnModel.h"
+#import "QLAddCarPageViewController.h"
+
 @interface QLCarManagerPageViewController ()<QLBaseSubViewControllerDelegate,QLBaseTableViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarManagerPageHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
@@ -256,6 +258,12 @@
     QLEditTopCarViewController *etcVC = [QLEditTopCarViewController new];
     [self.navigationController pushViewController:etcVC animated:YES];
 }
+//发车
+- (void)topAddCarBtnClick {
+    QLAddCarPageViewController *acpVC = [QLAddCarPageViewController new];
+    [self.navigationController pushViewController:acpVC animated:YES];
+}
+
 //筛选项点击
 - (void)selectTypeBack:(NSInteger)type {
     if (type != 1) {
@@ -404,6 +412,7 @@
         _headView.sortView.showStatusItem = YES;
         _headView.sortView.delegate = self;
         
+        [_headView.carBtn addTarget:self action:@selector(topAddCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.topBtn addTarget:self action:@selector(topCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.chooseCarBtn addTarget:self action:@selector(chooseCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.shareListBtn addTarget:self action:@selector(shareListBtnClick) forControlEvents:UIControlEventTouchUpInside];
