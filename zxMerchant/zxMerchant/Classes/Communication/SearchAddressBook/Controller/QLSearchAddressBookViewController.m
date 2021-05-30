@@ -7,10 +7,10 @@
 //
 
 #import "QLSearchAddressBookViewController.h"
-#import "QLSearchHistoryCell.h"
 #import "MyFriendsModel.h"
 #import "QLListSectionIndexView.h"
 #import "QLContactsInfoViewController.h"
+
 @interface QLSearchAddressBookViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 @property (nonatomic, weak) QLBaseSearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *hotArr;

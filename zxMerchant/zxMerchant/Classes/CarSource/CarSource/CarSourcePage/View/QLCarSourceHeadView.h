@@ -14,11 +14,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarSourceHeadView : UIView
-@property (weak, nonatomic) IBOutlet QLBannerView *bannerView;
+@property (weak, nonatomic) IBOutlet UIView *bannerBjView;
 @property (weak, nonatomic) IBOutlet QLChooseHeadView *typeView;
 @property (weak, nonatomic) IBOutlet QLVehicleSortView *conditionView;
 @property (weak, nonatomic) IBOutlet QLVehicleConditionResultView *conditionResultView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *conditionResultViewHeight;
+@property (nonatomic, strong) QLBannerView *bannerView;
 /**
  *显示选择结果层
  */

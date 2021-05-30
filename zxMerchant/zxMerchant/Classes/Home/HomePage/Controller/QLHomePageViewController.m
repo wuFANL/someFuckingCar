@@ -15,6 +15,7 @@
 #import "QLHomeVisitRecordCell.h"
 #import "QLHomeVisitListCell.h"
 #import "QLHomeCarCell.h"
+#import "QLHomeSearchViewController.h"
 #import "QLAddCarPageViewController.h"
 #import "QLMyStoreViewController.h"
 #import "QLVehicleCertificateViewController.h"
@@ -52,7 +53,7 @@
     
     [[QLLocationManager sharedLocationManager] updateCityWithCompletionHandler:^(CLPlacemark *placemark, CLLocation *location, NSError *error) {
         if (!error) {
-            [QLToolsManager share].currentCityName = placemark.locality;
+            [QLToolsManager share].currentCityName = [placemark.locality stringByReplacingOccurrencesOfString:@"市" withString:@""];
             [QLToolsManager share].currentLocation = location;
         }
         
@@ -157,7 +158,7 @@
 }
 //轮播图设置
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
-    
+    [imageBtn setBackgroundImage:[UIImage imageNamed:imageArr[index]] forState:UIControlStateNormal];
 }
 //轮播图点击
 - (void)bannerView:(QLBannerView *)bannerView ImageClick:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
@@ -170,8 +171,9 @@
 }
 //搜索点击
 - (void)searchBarClick {
-   
-    
+    QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
+    hsVC.searchType = SearchCar;
+    [self.navigationController pushViewController:hsVC animated:YES];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -369,8 +371,9 @@
 - (QLHomePageHeadView *)headView {
     if(!_headView) {
         _headView = [[QLHomePageHeadView alloc] init];
-        _headView.bannerView.delegate = self;
         _headView.delegate = self;
+        _headView.bannerView.delegate = self;
+        _headView.bannerView.imagesArr = @[@"carSourceBj"];
     }
     return _headView;
 }

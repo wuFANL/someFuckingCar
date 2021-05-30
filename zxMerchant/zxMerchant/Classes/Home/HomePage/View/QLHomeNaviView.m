@@ -35,7 +35,6 @@
     self.rightBtn = btn;
     //搜索框
     QLBaseSearchBar *searchBar = [QLBaseSearchBar new];
-    searchBar.textField.enabled = NO;
     searchBar.placeholder = @"搜索";
     searchBar.placeholderColor = WhiteColor;
     [searchBar setBjColor:[UIColor groupTableViewBackgroundColor]];

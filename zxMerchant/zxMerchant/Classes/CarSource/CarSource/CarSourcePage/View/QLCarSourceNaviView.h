@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarSourceNaviView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *addressBtn;
+@property (weak, nonatomic) IBOutlet QLBaseSearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIButton *wantBtn;
 
 @end
 

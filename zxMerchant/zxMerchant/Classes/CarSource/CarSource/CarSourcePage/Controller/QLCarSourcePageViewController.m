@@ -10,12 +10,13 @@
 #import "QLCarSourceNaviView.h"
 #import "QLCarSourceHeadView.h"
 #import "QLVehicleConditionsView.h"
+#import "QLHomeSearchViewController.h"
 #import "QLChooseBrandViewController.h"
 #import "QLTopCarSourceViewController.h"
 #import "QLAllCarSourceViewController.h"
 #import "QLAdvancedScreeningViewController.h"
 
-@interface QLCarSourcePageViewController ()<QLBaseSubViewControllerDelegate,QLBannerViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
+@interface QLCarSourcePageViewController ()<QLBaseSubViewControllerDelegate,QLBaseSearchBarDelegate,QLBannerViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarSourceNaviView *naviView;
 @property (nonatomic, strong) QLCarSourceHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
@@ -67,7 +68,10 @@
         CGFloat height = 140+(BottomOffset?44:20)+(self.headView.showResultView?48:0);
         make.height.mas_equalTo(height);
     }];
-
+    
+    [self.headView.bannerView setNeedsLayout];
+    [self.headView.bannerView layoutIfNeeded];
+    
     for (UIViewController *vc in self.childViewControllers) {
         vc.view.frame = CGRectMake(0,CGRectGetMaxY(self.headView.frame), self.view.width, self.view.height-CGRectGetMaxY(self.headView.frame));
     }
@@ -96,7 +100,6 @@
         self.headView.showResultView = NO;
     }
 }
-
 
 #pragma mark - action
 //刷新
@@ -281,10 +284,17 @@
     self.headView.typeView.selectedIndex = index;
     
 }
+//搜索点击
+- (void)noEditClick {
+    QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
+    hsVC.searchType = SearchBrand;
+    [self.navigationController pushViewController:hsVC animated:YES];
+}
 #pragma mark - Lazy
 - (QLCarSourceNaviView *)naviView {
     if(!_naviView) {
         _naviView = [QLCarSourceNaviView new];
+        _naviView.searchBar.extenDelegate = self;
     }
     return _naviView;
 }

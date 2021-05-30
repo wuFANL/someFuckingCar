@@ -9,7 +9,7 @@
 #import "QLAllCarSourceViewController.h"
 #import "QLHomeCarCell.h"
 #import "QLCarSourceDetailViewController.h"
-#import <MJRefresh.h>
+
 @interface QLAllCarSourceViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -40,7 +40,7 @@
     MJWeakSelf
     
     
-    MJRefreshHeader* header =[MJRefreshHeader headerWithRefreshingBlock:^{
+    MJRefreshHeader* header =[MJDIYHeader headerWithRefreshingBlock:^{
         weakSelf.tableView.page = 0;
         [weakSelf.tableView.mj_header beginRefreshing];
         if (weakSelf.refreshBlock) {
@@ -49,7 +49,7 @@
     }];
     self.tableView.mj_header = header;
     
-    self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJDIYBackFooter footerWithRefreshingBlock:^{
         [weakSelf.tableView.mj_footer beginRefreshing];
     }];
 }

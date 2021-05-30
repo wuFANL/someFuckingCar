@@ -147,7 +147,7 @@
         
         NSArray *tempArr = [dataDic objectForKey:@"car_list"];
         if ([tempArr isKindOfClass:[NSArray class]]) {
-            [cell updateUIWithDic:tempArr[indexPath.row]];
+            [cell updateUIWithDic:tempArr[indexPath.row-1]];
         }
         return cell;
     }

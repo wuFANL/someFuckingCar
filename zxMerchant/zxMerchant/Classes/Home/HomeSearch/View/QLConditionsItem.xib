@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5t-lJ-YLy">
-                        <rect key="frame" x="5" y="25" width="92" height="0.0"/>
+                        <rect key="frame" x="5" y="25" width="84" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5u-kP-kDf">
-                        <rect key="frame" x="105" y="20" width="10" height="10"/>
+                        <rect key="frame" x="97" y="16" width="18" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="j5u-kP-kDf" secondAttribute="height" multiplier="1:1" id="IE4-dl-41f"/>
-                            <constraint firstAttribute="width" constant="10" id="jZu-7d-cSN"/>
+                            <constraint firstAttribute="width" constant="18" id="jZu-7d-cSN"/>
                         </constraints>
                         <state key="normal" image="closeBtn_black">
                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,7 +37,6 @@
                     </button>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <constraints>
                 <constraint firstItem="j5u-kP-kDf" firstAttribute="leading" secondItem="X5t-lJ-YLy" secondAttribute="trailing" constant="8" id="JL1-ne-TUs"/>
                 <constraint firstAttribute="trailing" secondItem="j5u-kP-kDf" secondAttribute="trailing" constant="5" id="LKx-V1-6IH"/>
@@ -43,6 +44,7 @@
                 <constraint firstItem="X5t-lJ-YLy" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="d7x-Fg-YgF"/>
                 <constraint firstItem="X5t-lJ-YLy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="pU9-5U-mxo"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <size key="customSize" width="120" height="50"/>
             <connections>
                 <outlet property="deleteBtn" destination="j5u-kP-kDf" id="ilc-7C-fBz"/>

@@ -21,7 +21,7 @@
     [self addCollectionView];
     
 }
-#pragma mark - action
+
 - (void)setItemArr:(NSArray *)itemArr {
     _itemArr = itemArr;
     [self.collectionView reloadData];
@@ -41,7 +41,6 @@
         }];
     }
 }
-#pragma mark - collectionView
 - (void)addCollectionView {
     QLCollectionViewFlowLayout *layout = [[QLCollectionViewFlowLayout alloc]initMinimumSpacing:QLMinimumSpacingMake(10, 10)];
     layout.dataSource = self;
@@ -93,6 +92,7 @@
            title = result;
         }
     }
+    
     return title;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

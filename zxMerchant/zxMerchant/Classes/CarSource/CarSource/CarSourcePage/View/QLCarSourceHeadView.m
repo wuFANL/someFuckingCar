@@ -16,6 +16,11 @@
     if (self) {
         self = [QLCarSourceHeadView viewFromXib];
         
+        [self.bannerBjView addSubview:self.bannerView];
+        [self.bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.bannerBjView);
+        }];
+        
         self.typeView.backgroundColor = ClearColor;
         self.typeView.column = 2;
         self.typeView.lineColor = [UIColor colorWithHexString:@"#FACD89"];
@@ -25,6 +30,7 @@
     }
     return self;
 }
+
 #pragma mark - setter
 - (void)setShowResultView:(BOOL)showResultView {
     _showResultView = showResultView;
@@ -35,5 +41,13 @@
         self.conditionResultView.hidden = YES;
         self.conditionResultViewHeight.constant = 0;
     }
+}
+#pragma mark - Lazy
+- (QLBannerView *)bannerView {
+    if (!_bannerView) {
+        _bannerView = [QLBannerView new];
+        _bannerView.havePage = NO;
+    }
+    return _bannerView;
 }
 @end

@@ -138,10 +138,6 @@
 		A02C93552523AE650031A6D7 /* QLHomeCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A02C93532523AE650031A6D7 /* QLHomeCarCell.m */; };
 		A02C93562523AE650031A6D7 /* QLHomeCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02C93542523AE650031A6D7 /* QLHomeCarCell.xib */; };
 		A02C93722527A9410031A6D7 /* QLHorizontalScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A02C93712527A9410031A6D7 /* QLHorizontalScrollCell.m */; };
-		A031377925330B0F00A94019 /* QLConditionsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A031377325330B0E00A94019 /* QLConditionsItem.m */; };
-		A031377A25330B0F00A94019 /* QLSearchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A031377525330B0E00A94019 /* QLSearchHistoryCell.m */; };
-		A031377B25330B0F00A94019 /* QLConditionsItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A031377625330B0F00A94019 /* QLConditionsItem.xib */; };
-		A031377C25330B0F00A94019 /* QLSearchHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A031377725330B0F00A94019 /* QLSearchHistoryCell.xib */; };
 		A031379925333B5300A94019 /* QLMsgSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A031379425333B5200A94019 /* QLMsgSettingViewController.m */; };
 		A031379A25333B5300A94019 /* QLMsgSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A031379725333B5200A94019 /* QLMsgSettingModel.m */; };
 		A03137A825333F1A00A94019 /* QLSysMsgListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A03137A725333F1A00A94019 /* QLSysMsgListViewController.m */; };
@@ -261,6 +257,11 @@
 		A04930222573E71300B5E23C /* QLAdvancedScreeningAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04930202573E71300B5E23C /* QLAdvancedScreeningAddCell.xib */; };
 		A0493029257402BF00B5E23C /* QLCarStyleItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0493026257402BF00B5E23C /* QLCarStyleItem.xib */; };
 		A049302A257402BF00B5E23C /* QLCarStyleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A0493027257402BF00B5E23C /* QLCarStyleItem.m */; };
+		A04990292663FF4C00929CB7 /* QLHomeSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04990212663FF4C00929CB7 /* QLHomeSearchViewController.m */; };
+		A049902A2663FF4C00929CB7 /* QLSearchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A04990232663FF4C00929CB7 /* QLSearchHistoryCell.m */; };
+		A049902B2663FF4C00929CB7 /* QLConditionsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A04990242663FF4C00929CB7 /* QLConditionsItem.m */; };
+		A049902C2663FF4C00929CB7 /* QLConditionsItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04990272663FF4C00929CB7 /* QLConditionsItem.xib */; };
+		A049902D2663FF4C00929CB7 /* QLSearchHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04990282663FF4C00929CB7 /* QLSearchHistoryCell.xib */; };
 		A04994082535F09700A1E014 /* QLMePageHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A04994072535F09700A1E014 /* QLMePageHeadView.m */; };
 		A04994102535F0A300A1E014 /* QLMePageHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A049940F2535F0A300A1E014 /* QLMePageHeadView.xib */; };
 		A04994402538C8FC00A1E014 /* QLCarCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A049943F2538C8FC00A1E014 /* QLCarCircleViewController.m */; };
@@ -701,12 +702,6 @@
 		A02C93542523AE650031A6D7 /* QLHomeCarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLHomeCarCell.xib; sourceTree = "<group>"; };
 		A02C93702527A9410031A6D7 /* QLHorizontalScrollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLHorizontalScrollCell.h; sourceTree = "<group>"; };
 		A02C93712527A9410031A6D7 /* QLHorizontalScrollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLHorizontalScrollCell.m; sourceTree = "<group>"; };
-		A031377325330B0E00A94019 /* QLConditionsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLConditionsItem.m; sourceTree = "<group>"; };
-		A031377425330B0E00A94019 /* QLConditionsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLConditionsItem.h; sourceTree = "<group>"; };
-		A031377525330B0E00A94019 /* QLSearchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLSearchHistoryCell.m; sourceTree = "<group>"; };
-		A031377625330B0F00A94019 /* QLConditionsItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLConditionsItem.xib; sourceTree = "<group>"; };
-		A031377725330B0F00A94019 /* QLSearchHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLSearchHistoryCell.xib; sourceTree = "<group>"; };
-		A031377825330B0F00A94019 /* QLSearchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLSearchHistoryCell.h; sourceTree = "<group>"; };
 		A031379425333B5200A94019 /* QLMsgSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLMsgSettingViewController.m; sourceTree = "<group>"; };
 		A031379525333B5200A94019 /* QLMsgSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLMsgSettingViewController.h; sourceTree = "<group>"; };
 		A031379725333B5200A94019 /* QLMsgSettingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLMsgSettingModel.m; sourceTree = "<group>"; };
@@ -907,6 +902,14 @@
 		A0493026257402BF00B5E23C /* QLCarStyleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLCarStyleItem.xib; sourceTree = "<group>"; };
 		A0493027257402BF00B5E23C /* QLCarStyleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCarStyleItem.m; sourceTree = "<group>"; };
 		A0493028257402BF00B5E23C /* QLCarStyleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarStyleItem.h; sourceTree = "<group>"; };
+		A04990202663FF4C00929CB7 /* QLHomeSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLHomeSearchViewController.h; sourceTree = "<group>"; };
+		A04990212663FF4C00929CB7 /* QLHomeSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLHomeSearchViewController.m; sourceTree = "<group>"; };
+		A04990232663FF4C00929CB7 /* QLSearchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLSearchHistoryCell.m; sourceTree = "<group>"; };
+		A04990242663FF4C00929CB7 /* QLConditionsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLConditionsItem.m; sourceTree = "<group>"; };
+		A04990252663FF4C00929CB7 /* QLSearchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLSearchHistoryCell.h; sourceTree = "<group>"; };
+		A04990262663FF4C00929CB7 /* QLConditionsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLConditionsItem.h; sourceTree = "<group>"; };
+		A04990272663FF4C00929CB7 /* QLConditionsItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLConditionsItem.xib; sourceTree = "<group>"; };
+		A04990282663FF4C00929CB7 /* QLSearchHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLSearchHistoryCell.xib; sourceTree = "<group>"; };
 		A04994062535F09700A1E014 /* QLMePageHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLMePageHeadView.h; sourceTree = "<group>"; };
 		A04994072535F09700A1E014 /* QLMePageHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLMePageHeadView.m; sourceTree = "<group>"; };
 		A049940F2535F0A300A1E014 /* QLMePageHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLMePageHeadView.xib; sourceTree = "<group>"; };
@@ -1813,6 +1816,7 @@
 			isa = PBXGroup;
 			children = (
 				A00621422513DC6000A571E5 /* HomePage */,
+				A049901E2663FF4C00929CB7 /* HomeSearch */,
 				A0865C462631E462001B85A3 /* AddCar */,
 				A0CBFB3B265AC4A900647E3F /* PhotoShare */,
 				A09EAB1725DEBE1E007D9075 /* MyStore */,
@@ -2469,7 +2473,6 @@
 			isa = PBXGroup;
 			children = (
 				A0369F8E2530E8D500056C3D /* Controller */,
-				A0F79522253308BB00AE7504 /* View */,
 			);
 			path = SearchAddressBook;
 			sourceTree = "<group>";
@@ -3231,6 +3234,37 @@
 				A012441025EC061C00A90BAD /* QLAddSubscriptionView.h */,
 				A012441125EC061C00A90BAD /* QLAddSubscriptionView.m */,
 				A012441625EC062B00A90BAD /* QLAddSubscriptionView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A049901E2663FF4C00929CB7 /* HomeSearch */ = {
+			isa = PBXGroup;
+			children = (
+				A049901F2663FF4C00929CB7 /* Controller */,
+				A04990222663FF4C00929CB7 /* View */,
+			);
+			path = HomeSearch;
+			sourceTree = "<group>";
+		};
+		A049901F2663FF4C00929CB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A04990202663FF4C00929CB7 /* QLHomeSearchViewController.h */,
+				A04990212663FF4C00929CB7 /* QLHomeSearchViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A04990222663FF4C00929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A04990252663FF4C00929CB7 /* QLSearchHistoryCell.h */,
+				A04990232663FF4C00929CB7 /* QLSearchHistoryCell.m */,
+				A04990282663FF4C00929CB7 /* QLSearchHistoryCell.xib */,
+				A04990262663FF4C00929CB7 /* QLConditionsItem.h */,
+				A04990242663FF4C00929CB7 /* QLConditionsItem.m */,
+				A04990272663FF4C00929CB7 /* QLConditionsItem.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4672,19 +4706,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		A0F79522253308BB00AE7504 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A031377825330B0F00A94019 /* QLSearchHistoryCell.h */,
-				A031377525330B0E00A94019 /* QLSearchHistoryCell.m */,
-				A031377725330B0F00A94019 /* QLSearchHistoryCell.xib */,
-				A031377425330B0E00A94019 /* QLConditionsItem.h */,
-				A031377325330B0E00A94019 /* QLConditionsItem.m */,
-				A031377625330B0F00A94019 /* QLConditionsItem.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4809,6 +4830,7 @@
 				A084CE34252CC97E006AE22F /* QLFriendMessageCell.xib in Resources */,
 				A0013177258FCB070080EB21 /* QLDueProcessCell.xib in Resources */,
 				A012440925EBBA9400A90BAD /* QLMySubDetailTitleCell.xib in Resources */,
+				A049902D2663FF4C00929CB7 /* QLSearchHistoryCell.xib in Resources */,
 				A09EAAE525DEB2C4007D9075 /* QLVehicleCertificateCell.xib in Resources */,
 				A00620E72513DB2100A571E5 /* QLChooseTimeView.xib in Resources */,
 				A03137B42533418500A94019 /* QLSysMsgListCell.xib in Resources */,
@@ -4843,15 +4865,14 @@
 				A0C1D45625868B46002396B3 /* QLVehicleEditPriceCell.xib in Resources */,
 				A044AAA1251FCD0800D1C324 /* refresh.gif in Resources */,
 				A05936CB2593B09F0042C86D /* QLEditAccountViewController.xib in Resources */,
-				A031377C25330B0F00A94019 /* QLSearchHistoryCell.xib in Resources */,
 				A001312B25892B300080EB21 /* QLTransactionChooseBuyerCell.xib in Resources */,
+				A049902C2663FF4C00929CB7 /* QLConditionsItem.xib in Resources */,
 				A01243F825EB6AE600A90BAD /* QLSubListMoreCell.xib in Resources */,
 				A018380C25508808000253FC /* QLReleaseCarCircleStatusCell.xib in Resources */,
 				A03183DE25AA263E007B5D3F /* QLVipPriceListView.xib in Resources */,
 				A025830B254730E200CEE15F /* QLCarCircleImgItem.xib in Resources */,
 				A09EAB4425DEBED2007D9075 /* QLBankEditCell.xib in Resources */,
 				A00620DF2513DB2000A571E5 /* QLCustomAlertView.xib in Resources */,
-				A031377B25330B0F00A94019 /* QLConditionsItem.xib in Resources */,
 				A09EAB5225DEBF90007D9075 /* QLBankCardCell.xib in Resources */,
 				A0492F9D25702E7E00B5E23C /* QLVehicleReportCell.xib in Resources */,
 				A02582FB2545EA3600CEE15F /* QLCarCircleTextCell.xib in Resources */,
@@ -5024,7 +5045,6 @@
 				A06D116F2530D6DC00DD4673 /* QLContactsTextCell.m in Sources */,
 				A01837F2255082E9000253FC /* QLReleaseCarCircleViewController.m in Sources */,
 				A044AADE251FCE6500D1C324 /* QLPreloadPageViewController.m in Sources */,
-				A031377925330B0F00A94019 /* QLConditionsItem.m in Sources */,
 				A044AAE9251FCF6E00D1C324 /* QLCarManagerPageViewController.m in Sources */,
 				A00131032587CCFF0080EB21 /* QLCarCertificateViewController.m in Sources */,
 				A04930192573E34B00B5E23C /* QLAdvancedScreeningChooseCell.m in Sources */,
@@ -5045,6 +5065,7 @@
 				A0492F54256EC81C00B5E23C /* QLCarSourceDetailViewController.m in Sources */,
 				A0CAB7FD256134410015FAE3 /* QLCarLicenseViewController.m in Sources */,
 				A07CDFAD254F1434000CAB62 /* QLApplyJoinStoreViewController.m in Sources */,
+				A04990292663FF4C00929CB7 /* QLHomeSearchViewController.m in Sources */,
 				A00620DB2513DB2000A571E5 /* QLViewController.m in Sources */,
 				A00621842513DD7300A571E5 /* UIButton+QLUtil.m in Sources */,
 				A044AA92251FCBF600D1C324 /* QLOSSManager.m in Sources */,
@@ -5055,6 +5076,7 @@
 				A09EAB1225DEB550007D9075 /* QLShareAlertView.m in Sources */,
 				A044AAE4251FCEBE00D1C324 /* QLCarSourcePageViewController.m in Sources */,
 				A01837DA254F2DCD000253FC /* QLDynamicSendMsgBottomView.m in Sources */,
+				A049902B2663FF4C00929CB7 /* QLConditionsItem.m in Sources */,
 				A00620DD2513DB2000A571E5 /* QLTabBarController.m in Sources */,
 				A0DBDAC2253377D30090C263 /* QLRemarksSetViewController.m in Sources */,
 				A0013176258FCB070080EB21 /* QLDueProcessViewController.m in Sources */,
@@ -5071,6 +5093,7 @@
 				A006207E2513DA7000A571E5 /* AppDelegate.m in Sources */,
 				A044AA93251FCBF600D1C324 /* QLConst.m in Sources */,
 				A03137B32533418500A94019 /* QLSysMsgListCell.m in Sources */,
+				A049902A2663FF4C00929CB7 /* QLSearchHistoryCell.m in Sources */,
 				A044AA90251FCBF600D1C324 /* QLUMShareManager.m in Sources */,
 				A02582FA2545EA3600CEE15F /* QLCarCircleTextCell.m in Sources */,
 				A044AAEF251FCFBF00D1C324 /* QLMessagePageViewController.m in Sources */,
@@ -5217,7 +5240,6 @@
 				ED51461726558B64008E255E /* QLCarInfoModel.m in Sources */,
 				A00620DE2513DB2000A571E5 /* QLNavigationController.m in Sources */,
 				A00620E42513DB2000A571E5 /* QLFloatingBallView.m in Sources */,
-				A031377A25330B0F00A94019 /* QLSearchHistoryCell.m in Sources */,
 				A0CBFB62265C223F00647E3F /* QLStoreSharePageViewController.m in Sources */,
 				A02C933D2523AA310031A6D7 /* QLHomeToolHeadView.m in Sources */,
 				A09EAB4525DEBED2007D9075 /* QLEidtPayCodeViewController.m in Sources */,

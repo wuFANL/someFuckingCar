@@ -9,6 +9,7 @@
 #import "QLCarManagerPageViewController.h"
 #import "QLCarManagerPageHeadView.h"
 #import "QLVehicleConditionsView.h"
+#import "QLHomeSearchViewController.h"
 #import "QLChooseBrandViewController.h"
 #import "QLCarSourceManagerViewController.h"
 #import "QLEditTopCarViewController.h"
@@ -402,11 +403,17 @@
 - (void)subViewChange:(UIViewController *)currentVC IndexPath:(NSInteger)index {
     self.headView.chooseView.selectedIndex = index;
 }
+//搜索点击
+- (void)searchBarClick {
+    QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
+    hsVC.searchType = SearchBrand;
+    [self.navigationController pushViewController:hsVC animated:YES];
+}
 #pragma mark - Lazy
 - (QLCarManagerPageHeadView *)headView {
     if (!_headView) {
         _headView = [QLCarManagerPageHeadView new];
-        
+    
         _headView.chooseView.typeDelegate = self;
         
         _headView.sortView.showStatusItem = YES;
@@ -414,6 +421,7 @@
         
         [_headView.carBtn addTarget:self action:@selector(topAddCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.topBtn addTarget:self action:@selector(topCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_headView.searchBtn addTarget:self action:@selector(searchBarClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.chooseCarBtn addTarget:self action:@selector(chooseCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.shareListBtn addTarget:self action:@selector(shareListBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
