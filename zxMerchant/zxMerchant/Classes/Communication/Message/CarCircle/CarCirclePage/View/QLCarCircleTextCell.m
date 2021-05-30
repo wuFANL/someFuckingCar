@@ -22,6 +22,7 @@
         
         [self.headBtn sd_setImageWithURL:[NSURL URLWithString:model.account_head_pic] forState:UIControlStateNormal];
         [self.nikenameBtn setTitle:model.account_nickname forState:UIControlStateNormal];
+        self.vipBtn.hidden = model.flag.integerValue ==1?YES:NO;
         self.timeLB.text = @"";
         self.textLB.text = rdlModel.dynamic_content;
         NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];

@@ -106,7 +106,14 @@
 }
 //pop的cell点击
 - (void)popClickCall:(NSInteger)index {
-    
+    if(index == 0) {
+        //置顶
+        
+        
+    } else if (index == 1) {
+        //删除
+        
+    }
 }
 //pop样式
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
