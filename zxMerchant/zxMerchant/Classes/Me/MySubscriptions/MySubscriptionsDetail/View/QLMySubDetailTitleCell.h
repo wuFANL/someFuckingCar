@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *bjView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewHeight;
 @property (nonatomic, strong) NSMutableArray *iconArr;
+- (void)updateTimeWithString:(NSString *)timeStr;
 @end
 
 NS_ASSUME_NONNULL_END

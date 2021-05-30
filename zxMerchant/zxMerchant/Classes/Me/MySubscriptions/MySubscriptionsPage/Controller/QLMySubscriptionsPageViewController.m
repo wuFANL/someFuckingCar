@@ -22,14 +22,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-    
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     //设置导航
     [self setNavi];
-    
     //背景
     self.showBackgroundView = NO;
     QLNoSubscriptionsView *subView = [QLNoSubscriptionsView new];
@@ -147,16 +146,16 @@
         
         NSArray *tempArr = [dataDic objectForKey:@"car_list"];
         if ([tempArr isKindOfClass:[NSArray class]]) {
-            [cell updateUIWithDic:tempArr[indexPath.row-1]];
+            [cell updateUIWithDic:tempArr[indexPath.row]];
         }
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 点击
-    
-    //
     QLMySubscriptionsDetailViewController *msdVC = [QLMySubscriptionsDetailViewController new];
+    // 展示详情
+    [msdVC updateWithDic:self.listArr[indexPath.section]];
     [self.navigationController pushViewController:msdVC animated:YES];
     
 }

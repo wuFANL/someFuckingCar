@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLMySubscriptionsDetailViewController : QLBaseTableViewController
-
+- (void)updateWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

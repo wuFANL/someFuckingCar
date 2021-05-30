@@ -24,6 +24,10 @@
     }];
 }
 
+- (void)updateTimeWithString:(NSString *)timeStr {
+    self.timeLB.text = timeStr;
+}
+
 #pragma mark -setter
 - (void)setIconArr:(NSMutableArray *)iconArr {
     _iconArr = iconArr;
