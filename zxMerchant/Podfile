@@ -30,5 +30,5 @@ target 'zxMerchant' do
   pod 'Bugly'
   # 播放器
   pod 'CLPlayer'
-
+  pod 'BRPickerView'
 end

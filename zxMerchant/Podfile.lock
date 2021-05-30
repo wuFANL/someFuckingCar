@@ -15,6 +15,18 @@ PODS:
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
   - AliyunOSSiOS (2.10.7)
+  - BRPickerView (2.7.3):
+    - BRPickerView/AddressPickerView (= 2.7.3)
+    - BRPickerView/Base (= 2.7.3)
+    - BRPickerView/DatePickerView (= 2.7.3)
+    - BRPickerView/StringPickerView (= 2.7.3)
+  - BRPickerView/AddressPickerView (2.7.3):
+    - BRPickerView/Base
+  - BRPickerView/Base (2.7.3)
+  - BRPickerView/DatePickerView (2.7.3):
+    - BRPickerView/Base
+  - BRPickerView/StringPickerView (2.7.3):
+    - BRPickerView/Base
   - Bugly (2.5.90)
   - CLPlayer (1.3.0):
     - Masonry
@@ -52,6 +64,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - AliyunOSSiOS (= 2.10.7)
+  - BRPickerView
   - Bugly
   - CLPlayer
   - IQKeyboardManager
@@ -73,6 +86,7 @@ SPEC REPOS:
   trunk:
     - AFNetworking
     - AliyunOSSiOS
+    - BRPickerView
     - Bugly
     - CLPlayer
     - IQKeyboardManager
@@ -94,6 +108,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
+  BRPickerView: 9cc11880ac79c4872d081ccb88f306224c1501d7
   Bugly: 88bc32c0acc6fef7b74d610f0319ee7560d6b9fe
   CLPlayer: 3ac15f89d42404a11b3919d6dfdf152ff02a4aa8
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
@@ -112,6 +127,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: aaced37407dbcf5bdcb1163cacee6ff5ec6106fb
+PODFILE CHECKSUM: 46e635d5967ce8c5e1d1e7ef4ac5a045bcd94b53
 
 COCOAPODS: 1.10.1

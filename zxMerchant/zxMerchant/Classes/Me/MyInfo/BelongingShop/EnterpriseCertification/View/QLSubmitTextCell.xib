@@ -18,9 +18,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLn-SC-A7k">
-                        <rect key="frame" x="16" y="15" width="85" height="20"/>
+                        <rect key="frame" x="16" y="15" width="99" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="L1D-1k-N5w"/>
+                            <constraint firstAttribute="width" constant="99" id="L1D-1k-N5w"/>
                             <constraint firstAttribute="height" constant="20" id="OlE-8p-k7a"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2D5-Hx-yS6" customClass="QLBaseTextView">
-                        <rect key="frame" x="109" y="10" width="146" height="29"/>
+                        <rect key="frame" x="123" y="10" width="132" height="29"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="32" id="9w9-CG-SgS"/>
@@ -56,6 +56,9 @@
                             <constraint firstAttribute="width" constant="44" id="azK-Pp-oPB"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fd5-J6-sKN">
                         <rect key="frame" x="16" y="49" width="304" height="1"/>

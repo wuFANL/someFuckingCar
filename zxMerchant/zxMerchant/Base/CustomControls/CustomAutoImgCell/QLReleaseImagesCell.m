@@ -177,13 +177,19 @@
         make.height.mas_equalTo(row*itemWidth+(row-1)*5);
     }];
     //结果代理回调
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(imgChange:)]) {
+    if (self.delegate) {
         NSMutableArray *resultArr = [NSMutableArray array];
         for (NSInteger i = self.imagesArr.count-1; i > 0; i--) {
             [resultArr addObject:self.imagesArr[i]];
         }
+        if ([self.delegate respondsToSelector:@selector(imgChange:)]) {
+            [self.delegate imgChange:resultArr];
+        }
         
-        [self.delegate imgChange:resultArr];
+        if ([self.delegate respondsToSelector:@selector(imgChange:isCarPic:)]) {
+            [self.delegate imgChange:resultArr isCarPic:self.isCarPic];
+        }
+        
     }
 }
 //删除图片
@@ -223,9 +229,22 @@
         //获取图片的方式
         [self chooseGetImgWay];
     } else {
-        if (self.delegate&&[self.delegate respondsToSelector:@selector(imgClick:)]) {
-            [self.delegate imgClick:indexPath.row];
+        //结果代理回调
+        if (self.delegate) {
+            NSMutableArray *resultArr = [NSMutableArray array];
+            for (NSInteger i = self.imagesArr.count-1; i > 0; i--) {
+                [resultArr addObject:self.imagesArr[i]];
+            }
+            if ([self.delegate respondsToSelector:@selector(imgChange:)]) {
+                [self.delegate imgChange:resultArr];
+            }
+            
+            if ([self.delegate respondsToSelector:@selector(imgChange:isCarPic:)]) {
+                [self.delegate imgChange:resultArr isCarPic:self.isCarPic];
+            }
+            
         }
+        
     }
 }
 //能否移动

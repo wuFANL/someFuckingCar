@@ -19,6 +19,8 @@
  *图片点击
  */
 - (void)imgClick:(NSInteger)index;
+
+- (void)imgChange:(NSMutableArray *)images isCarPic:(BOOL)iscar;
 @end
 @interface QLReleaseImagesCell : UITableViewCell
 /**
@@ -45,4 +47,6 @@
  *代理
  */
 @property (nonatomic, weak) id<QLReleaseImagesCellDelegate> delegate;
+
+@property (nonatomic, assign) BOOL isCarPic;
 @end
