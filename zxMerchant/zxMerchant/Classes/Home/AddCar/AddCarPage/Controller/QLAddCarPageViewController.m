@@ -735,6 +735,7 @@
         [[QLOSSManager shared] syncUploadImages:self.imgsArr1 complete:^(NSArray *names, UploadImageState state) {
             NSArray *paperArr = names;
             // 图片都传完了
+            // LSVDJ2BM6KN036465
             NSDictionary* para = @{
                 Operation_type:@"add",
                 @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
@@ -753,6 +754,7 @@
                 @"sell_min_price":weakSelf.value6?@([weakSelf.value6 floatValue]*10000):@"",
                 @"wholesale_price":weakSelf.value7?@([weakSelf.value7 floatValue]*10000):@"",
                 @"procure_price":weakSelf.value8?@([weakSelf.value8 floatValue]*10000):@"",
+                // 过户次数
                 @"transfer_times":weakSelf.value9?weakSelf.value9:@"",
                 @"transmission_case":weakSelf.speedBox[weakSelf.resultModelArr[0].index],
                 @"body_color":weakSelf.colorBox[weakSelf.resultModelArr[1].index],
@@ -762,14 +764,16 @@
                 @"mot_date":weakSelf.value12?weakSelf.value12:@"",
                 @"insure_date":weakSelf.value13?weakSelf.value13:@"",
                 @"belonger":EncodeStringFromDic(weakSelf.belongDic, @"personnel_id"),
-                @"belonger_type":@"1",
+                
+                @"belonger_type":[weakSelf.value9 integerValue] > 1?@"1":@"2",
                 @"seller_id":[QLUserInfoModel getLocalInfo].account.account_id,
                 @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
                 @"temporary_state":@"1"
             };
             
             [QLNetworkingManager postWithUrl:CarPath params:para success:^(id response) {
-                [MBProgressHUD showSuccess:@""];
+                [MBProgressHUD showSuccess:@"发布成功！"];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
             } fail:^(NSError *error) {
                 [MBProgressHUD showError:error.domain];
             }];
