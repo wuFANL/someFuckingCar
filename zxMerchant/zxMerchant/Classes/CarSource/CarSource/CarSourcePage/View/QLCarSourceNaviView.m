@@ -16,6 +16,7 @@
     if (self) {
         self = [QLCarSourceNaviView viewFromXib];
         
+        self.searchBar.noEditClick = YES;
     }
     return self;
 }

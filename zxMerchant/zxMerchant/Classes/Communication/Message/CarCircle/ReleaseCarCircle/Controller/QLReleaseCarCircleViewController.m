@@ -44,7 +44,7 @@
     if ([QLToolsManager share].currentCityName.length == 0) {
         [[QLLocationManager sharedLocationManager] updateCityWithCompletionHandler:^(CLPlacemark *placemark, CLLocation *location, NSError *error) {
             if (!error) {
-                [QLToolsManager share].currentCityName = placemark.locality;
+                [QLToolsManager share].currentCityName = [placemark.locality stringByReplacingOccurrencesOfString:@"市" withString:@""];
                 [QLToolsManager share].currentLocation = location;
             }
             

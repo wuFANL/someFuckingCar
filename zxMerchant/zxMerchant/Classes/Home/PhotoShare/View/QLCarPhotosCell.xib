@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,12 +23,12 @@
                             <constraint firstAttribute="width" priority="999" constant="20" id="Kuk-ME-W6I"/>
                             <constraint firstAttribute="width" secondItem="VoS-kL-LZm" secondAttribute="height" multiplier="1:1" id="gtn-9b-Lb0"/>
                         </constraints>
-                        <state key="normal" backgroundImage="noSelected"/>
-                        <state key="selected" backgroundImage="success"/>
+                        <state key="normal" image="noSelect_gray"/>
+                        <state key="selected" image="selectSuccess_green"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g7s-nb-K3w">
                         <rect key="frame" x="50" y="16" width="75" height="56"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="75" id="xgX-zg-38Y"/>
                         </constraints>
@@ -76,7 +76,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="noSelected" width="17" height="17"/>
-        <image name="success" width="17" height="17"/>
+        <image name="noSelect_gray" width="15" height="15"/>
+        <image name="selectSuccess_green" width="20" height="20"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

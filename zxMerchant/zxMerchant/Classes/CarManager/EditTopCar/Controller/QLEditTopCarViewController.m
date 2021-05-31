@@ -11,7 +11,7 @@
 #import "QLEditTopCarItem.h"
 #import "QLEditTopPriceView.h"
 
-@interface QLEditTopCarViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseCollectionViewDelegate>
+@interface QLEditTopCarViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,QLBaseCollectionViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
 @property (nonatomic, strong) QLEditTopPriceView *priceView;
 @property (nonatomic, strong) NSMutableArray *sourceArray;
@@ -21,8 +21,31 @@
 
 @implementation QLEditTopCarViewController
 
--(void)dataRequest
-{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+   
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.title = @"头条车源";
+    self.sourceArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.botSourceArray = [[NSMutableArray alloc] initWithCapacity:0];
+    //collectionView
+    [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.mas_equalTo(140);
+    }];
+    //tableView
+    [self tableViewSet];
+    
+    [self requestForTopCarList];
+    [self requestForTopCarListBottom];
+}
+#pragma mark - network
+-(void)dataRequest {
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"top_car_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"local_state":@"1",@"flag":@"0",@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
@@ -49,8 +72,12 @@
     }];
 }
 
--(void)requestForTopCarListBottom
-{
+-(void)requestForTopCarList {
+    self.tableView.page = 1;
+    [self dataRequest];
+}
+
+-(void)requestForTopCarListBottom {
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"top_car_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"local_state":@"1",@"flag":@"1",@"page_no":@"1",@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
@@ -62,35 +89,6 @@
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-   
-}
-
--(void)requestForTopCarList
-{
-    self.tableView.page = 1;
-    [self dataRequest];
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.navigationItem.title = @"头条车源";
-    self.sourceArray = [[NSMutableArray alloc] initWithCapacity:0];
-    self.botSourceArray = [[NSMutableArray alloc] initWithCapacity:0];
-    //collectionView
-    [self.view addSubview:self.collectionView];
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
-        make.height.mas_equalTo(140);
-    }];
-    //tableView
-    [self tableViewSet];
-    
-    [self requestForTopCarList];
-    [self requestForTopCarListBottom];
 }
 #pragma mark - action
 //降价确认

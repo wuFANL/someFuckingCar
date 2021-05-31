@@ -135,15 +135,8 @@
 - (QLBannerView *)bannerView {
     if(!_bannerView) {
         _bannerView = [[QLBannerView alloc] init];
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"carSourceBj"]];
-        [_bannerView addSubview:imageView];
-        
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(_bannerView);
-            make.bottom.mas_equalTo(_bannerView);
-            make.left.mas_equalTo(_bannerView);
-            make.right.mas_equalTo(_bannerView);
-        }];
+        _bannerView.havePage = NO;
+    
     }
     return _bannerView;
 }

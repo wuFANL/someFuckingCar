@@ -18,7 +18,7 @@
     _showDeleteBtn = showDeleteBtn;
     if (showDeleteBtn) {
         self.deleteBtn.hidden = NO;
-        self.deleteBtnWidth.constant = 10;
+        self.deleteBtnWidth.constant = 18;
         self.deleteLeftSpace.constant = 8;
     } else {
         self.deleteBtn.hidden = YES;

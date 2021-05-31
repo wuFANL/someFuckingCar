@@ -12,7 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.vipBtn.hidden = YES;
+    
 }
 
 - (void)setModel:(QLRidersDynamicListModel *)model {
