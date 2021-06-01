@@ -54,7 +54,7 @@
 #define ProductPath             [NSString stringWithFormat:@"%@/product",HOST]
 #define FirendPath              [NSString stringWithFormat:@"%@/friendship",HOST]
 #define DynamicPath              [NSString stringWithFormat:@"%@/dynamic",HOST]
-
+#define SysPath                  [NSString stringWithFormat:@"%@/sys",HOST]
 #define UrlPath                 [NSString stringWithFormat:@"http://%@/weixin/html",WEB]
 
 #define VersionId                   @"3.0"

@@ -443,6 +443,7 @@
 		ED51461126558B48008E255E /* QLCollectionValueDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51460F26558B48008E255E /* QLCollectionValueDCell.m */; };
 		ED51461726558B64008E255E /* QLCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51461526558B64008E255E /* QLCarInfoModel.m */; };
 		ED51463426558BFE008E255E /* QLCarDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51463226558BFE008E255E /* QLCarDetailModel.m */; };
+		ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1208,6 +1209,8 @@
 		ED51461626558B64008E255E /* QLCarInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarInfoModel.h; sourceTree = "<group>"; };
 		ED51463226558BFE008E255E /* QLCarDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCarDetailModel.m; sourceTree = "<group>"; };
 		ED51463326558BFE008E255E /* QLCarDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarDetailModel.h; sourceTree = "<group>"; };
+		ED78B8FA2666730600C74473 /* VinCodeIdenfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VinCodeIdenfitViewController.h; sourceTree = "<group>"; };
+		ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VinCodeIdenfitViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3767,6 +3770,8 @@
 			children = (
 				A0865C492631E49C001B85A3 /* QLAddCarPageViewController.h */,
 				A0865C4A2631E49C001B85A3 /* QLAddCarPageViewController.m */,
+				ED78B8FA2666730600C74473 /* VinCodeIdenfitViewController.h */,
+				ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5146,6 +5151,7 @@
 				A00131232587CF850080EB21 /* QLShareImgItem.m in Sources */,
 				A04930212573E71300B5E23C /* QLAdvancedScreeningAddCell.m in Sources */,
 				A0492F25256C346200B5E23C /* QLVehicleConditionResultView.m in Sources */,
+				ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */,
 				A057C75D2534CC430045B7B1 /* QLContactsStoreViewController.m in Sources */,
 				A018380B25508808000253FC /* QLReleaseCarCircleStatusCell.m in Sources */,
 				A006218C2513DD7300A571E5 /* UITableView+QLUtil.m in Sources */,

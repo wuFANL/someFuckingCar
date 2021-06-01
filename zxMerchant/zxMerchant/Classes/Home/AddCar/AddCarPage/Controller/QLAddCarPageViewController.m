@@ -13,6 +13,7 @@
 #import "QLChooseBrandViewController.h"
 #import <BRStringPickerView.h>
 #import <BRDatePickerView.h>
+#import "VinCodeIdenfitViewController.h"
 @interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
 // 车辆图片
@@ -94,7 +95,6 @@
 - (void)prepareData {
     self.speedBox = @[@"自动",@"手动"];
     self.colorBox = @[@"银灰色",@"深灰色",@"黑色",@"白色",@"红色",@"蓝色",@"咖啡色",@"香槟色",@"黄色",@"紫色",@"绿色",@"橙色",@"粉红色",@"彩色"];
-    //车型：1两厢轿车2三厢轿车3跑车4suv 5MPV 6面包车 7皮卡
     self.typeBox = @[@"两厢",@"三厢",@"跑车",@"SUV",@"MPV",@"面包车",@"皮卡"];
     self.enviBox = @[@"国六",@"国五",@"国四",@"国三"];
 }
@@ -160,6 +160,8 @@
                 
                 cell.actionBtn.hidden = NO;
                 [cell.actionBtn setImage:[UIImage imageNamed:@"carScan"] forState:UIControlStateNormal];
+                [cell.actionBtn addTarget:self action:@selector(scanImg)
+                         forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
             case 1:{
@@ -652,8 +654,7 @@
         QLBaseTextView* view = (QLBaseTextView *)textView;
         view.placeholder = @"";
     }
-    
-   
+
 }
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -779,8 +780,41 @@
             }];
         }];
     }];
-    
-    
+}
+ 
+- (void)scanImg{
+    // 点了之后选图片
+    WEAKSELF
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+        
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        // 退出一个vc 把这个img带过去
+        VinCodeIdenfitViewController *vc = [[VinCodeIdenfitViewController alloc]init];
+        vc.idBlock = ^(UIImage * _Nonnull image, NSString * _Nonnull vinCode, NSString * _Nonnull register_date) {
+            if ([vinCode isKindOfClass:[NSString class]] && vinCode.length == 17) {
+                // vin码
+                weakSelf.value1 = vinCode;
+                QLSubmitTextCell*cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                cell.titleLB.text = [NSString stringWithFormat:@"VIN码(%lu/17)",(unsigned long)vinCode];
+                cell.textView.placeholder = @"";
+                cell.textView.text = vinCode;
+                
+                // 图片
+                QLReleaseImagesCell *cell1 = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                [weakSelf.imgsArr1 insertObject:img atIndex:0];
+                cell1.setImgArr = weakSelf.imgsArr1;
+                
+                // 日期
+                weakSelf.value3 = register_date;
+                QLSubmitTextCell* cell2 = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                cell2.textView.placeholder = @"";
+                cell2.textView.text = register_date;
+                
+            }
+        };
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+        vc.selectImg = img;
+    }];
 }
 
 - (NSMutableArray *)imgsArr1 {
