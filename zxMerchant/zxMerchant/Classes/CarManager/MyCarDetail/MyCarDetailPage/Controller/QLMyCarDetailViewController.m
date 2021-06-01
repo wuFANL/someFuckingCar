@@ -229,7 +229,9 @@
 }
 //车辆描述
 - (void)uploadControlClick {
-    QLCarDescViewController *cdVC = [QLCarDescViewController new];
+    QLCarDescViewController *cdVC = [[QLCarDescViewController alloc] initWithDic:[self.allSourceDic objectForKey:@"car_param"]];
+    cdVC.carID = self.carID;
+    cdVC.car_video = [[self.allSourceDic objectForKey:@"car_param"] objectForKey:@"car_video"];
     [self.navigationController pushViewController:cdVC animated:YES];
 }
 //调价

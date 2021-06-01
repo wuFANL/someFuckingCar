@@ -23,7 +23,11 @@
         self.currentBtn = sender;
     }
     NSInteger index = sender.tag;
-    self.handler(@(index));
+    if(self.handler)
+    {
+        self.handler(@(index));
+    }
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

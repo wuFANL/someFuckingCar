@@ -17,9 +17,23 @@
 @property (nonatomic, strong) AVPlayerViewController *playerVC;
 @property (nonatomic, strong) NSMutableDictionary *videoDic;
 
+@property (nonatomic, strong) NSMutableDictionary *sourceDic;
+@property (nonatomic, strong) NSString *chooseTag;
 @end
 
 @implementation QLCarDescViewController
+
+-(id)initWithDic:(NSDictionary *)dic
+{
+    self = [super init];
+    if(self) {
+        self.sourceDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [self.sourceDic addEntriesFromDictionary:dic];
+        self.chooseTag = @"";
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -38,7 +52,22 @@
 #pragma mark - network
 //提交信息
 - (void)submitInfoRequest:(NSString *)videoUrl {
-    
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"save_car_desc",@"car_desc":self.tv.text.length>0?self.tv.text:@"",
+                                                          @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                                                          @"car_id":self.carID,
+                                                          @"car_video":videoUrl,
+                                                          @"flag_type":self.chooseTag
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        
+        [MBProgressHUD showSuccess:@"保存成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - action
 //上传视频
@@ -164,14 +193,14 @@
             if (!self.tv) {
                 QLBaseTextView *tv = [QLBaseTextView new];
                 tv.tag = 100+indexPath.row;
-                tv.placeholder = @"请填写车辆描述";
+                tv.placeholder = [self.sourceDic objectForKey:@"car_desc"];
                 tv.countLimit = 100;
-                tv.constraintLB.text = @"(0/100)";
+                NSString *str = [self.sourceDic objectForKey:@"car_desc"];
+                self.tv.constraintLB.text = [NSString stringWithFormat:@"%lu/100",(unsigned long)str.length];
                 tv.delegate = self;
                 self.tv = tv;
             }
-            
-            self.tv.text = @"";
+
             [cell.contentView addSubview:self.tv];
             [self.tv mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.mas_equalTo(UIEdgeInsetsMake(5, 15, 5, 15));
@@ -192,12 +221,31 @@
         }
     } else {
         QLCarDescTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"typeCell" forIndexPath:indexPath];
+        
+        int tag = [[self.sourceDic objectForKey:@"flag_type"] intValue];
         cell.handler = ^(id result) {
             NSNumber *res = result;
             NSInteger index = res.integerValue;
             
+            self.chooseTag =index ==0?@"103":@"105";
         };
-        [cell typeBtnClick:cell.aBtn];
+        
+        //105=低首付推荐，103=新上架推荐
+        if(tag == 105)
+        {
+            [cell typeBtnClick:cell.bBtn];
+        }
+        else if (tag ==  103)
+        {
+            [cell typeBtnClick:cell.aBtn];
+        }
+        else
+        {
+            cell.bBtn.selected = NO;
+            cell.aBtn.selected = NO;
+        }
+
+        
         return cell;
     }
     

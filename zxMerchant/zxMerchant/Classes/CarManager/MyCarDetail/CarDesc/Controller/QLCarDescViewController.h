@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarDescViewController : QLViewController
+
+-(id)initWithDic:(NSDictionary *)dic;
+@property (nonatomic, strong) NSString *carID;
 /**
  *视频地址
  */

@@ -230,7 +230,7 @@
         _constraintLB.textColor = [UIColor lightGrayColor];
         _constraintLB.textAlignment = NSTextAlignmentRight;
         _constraintLB.numberOfLines = 1;
-        _constraintLB.userInteractionEnabled = NO;
+        _constraintLB.userInteractionEnabled = YES;
     }
     return _constraintLB;
 }
