@@ -15,6 +15,7 @@
 #import "QLDistributionOrderViewController.h"
 #import "QLTransactionSubmitViewController.h"
 #import "QLCarLicenseViewController.h"
+#import "QLCarSourceDetailViewController.h"
 
 @interface QLChatListPageViewController ()<QLBaseCollectionViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -221,6 +222,19 @@
     self.navigationController.navigationBar.hidden = NO;
    
 }
+
+- (void)actionGoToCarDetail {
+    NSDictionary *carInfoData = @{
+        //    account_id    对方用户id
+        @"account_id":self.firstFriendId?:@"",
+        //    car_id        车辆id model_id
+        @"car_id":[self.currentDic objectForKey:@"id"]?:@""};
+    QLCarSourceDetailViewController *csdVC = [QLCarSourceDetailViewController new];
+    csdVC.isFromChat = YES;
+    [csdVC updateVcWithData:carInfoData];
+    [self.navigationController pushViewController:csdVC animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -342,7 +356,8 @@
         cell.msgReceiver = OtherMsg;
     }
     [cell setTapCarBlock:^{
-        
+        //纯文本按钮点击
+        [self actionGoToCarDetail];
     }];
     [cell setAOrcBlock:^(NSInteger tag, NSString * _Nonnull msg_id) {
         [self requestForAgreeOrCancel:msg_id btnTag:tag];

@@ -32,17 +32,17 @@ PODS:
     - Masonry
   - IQKeyboardManager (6.5.6)
   - JCore (2.6.2)
-  - JPush (3.6.1):
+  - JPush (3.5.2):
     - JCore (< 3.0.0, >= 2.0.0)
   - Masonry (1.1.0)
   - MBProgressHUD (1.2.0)
-  - MJRefresh (3.6.1)
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
+  - MJRefresh (3.5.0)
+  - SDWebImage (5.9.2):
+    - SDWebImage/Core (= 5.9.2)
+  - SDWebImage/Core (5.9.2)
   - TZImagePickerController (3.6.0)
   - UMAPM (1.2.1)
-  - UMCCommon (7.2.9):
+  - UMCCommon (7.2.8):
     - UMAPM
     - UMDevice
   - UMCSecurityPlugins (1.0.6)
@@ -113,14 +113,14 @@ SPEC CHECKSUMS:
   CLPlayer: 3ac15f89d42404a11b3919d6dfdf152ff02a4aa8
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
-  JPush: 507d66d7ea307faba1330666d48e4e92af611659
+  JPush: 95b78ca7b3dd56455b1de6b8488be350ea942a41
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
+  SDWebImage: 0b42b8719ab0c5257177d5894306e8a336b21cbb
   TZImagePickerController: a37d7eec87c54436e896a67947033ad2178d498b
   UMAPM: 58a98390bbb593b9d008f16a403ecd6c550229fd
-  UMCCommon: fcb46c918758f47dbb568421642e195db0d7b641
+  UMCCommon: e009dc757d88ce37774f612291d6ee2fa4a2dca0
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   UMCShare: e14e1399673fa361cddbde3a05b3743e10f673f7
   UMDevice: da050ba77e5075b1ec08303065722d25f599e483

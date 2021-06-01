@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarSourceDetailViewController : QLBaseTableViewController
+//如果从聊天详情进入 则底部右侧按钮功能变为打电话 change by hk
+@property (nonatomic, assign) BOOL isFromChat;
+
 - (void)updateVcWithData:(NSDictionary *)dic;
 @end
 

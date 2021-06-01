@@ -133,6 +133,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    [self requestForCarPicList:@"车辆照片"];
     
 }
 - (void)viewDidLoad {
@@ -144,8 +145,6 @@
     } else {
         [self requestForMsgList];
     }
-    
-    [self requestForCarPicList:@"车辆照片"];
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"share_green"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -222,8 +221,9 @@
         //车辆描述
         [self uploadControlClick];
     } else {
-        //车辆牌证
-        QLCarCertificateViewController *ccVC = [QLCarCertificateViewController new];
+        //车辆牌证self.carID
+        QLCarCertificateViewController *ccVC = [[QLCarCertificateViewController alloc] initWithArray:self.zjPicArr];
+        ccVC.carID = self.carID;
         [self.navigationController pushViewController:ccVC animated:YES];
     }
 }
