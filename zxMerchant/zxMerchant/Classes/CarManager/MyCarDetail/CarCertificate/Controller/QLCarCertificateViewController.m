@@ -17,9 +17,22 @@
 @property (nonatomic, strong) QLSubmitBottomView *bottomView;
 @property (nonatomic, strong) NSMutableArray *imgsArr;
 @property (nonatomic, assign) NSInteger maxImgCount;
+
 @end
 
 @implementation QLCarCertificateViewController
+
+-(id)initWithArray:(NSArray *)ar {
+    self = [super init];
+    if(self) {
+        self.imgsArr = [[NSMutableArray alloc] initWithCapacity:0];
+        [ar enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.imgsArr addObject:[obj objectForKey:@"pic_url"]];
+        }];
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.collectionView reloadData];
@@ -50,14 +63,48 @@
 #pragma mark - action
 //保存
 - (void)saveBtnClick {
-    
+    //组装参数
+    if(self.imgsArr && [self.imgsArr count] > 0)
+    {
+        __block NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:0];
+        [self.imgsArr enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+            [dic setObject:@"证件照片" forKey:@"detecte_total_name"];
+            [dic setObject:@"" forKey:@"detail_name"];
+            [dic setObject:obj forKey:@"image_path"];
+            [ar addObject:dic];
+        }];
+        
+        
+        [MBProgressHUD showCustomLoading:@""];
+        [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"submit_car_img_data",@"check_id":self.carID,@"staff_id":[QLUserInfoModel getLocalInfo].account.account_id,@"img_data":[ar yy_modelToJSONString]} success:^(id response) {
+            [MBProgressHUD immediatelyRemoveHUD];
+            
+            [MBProgressHUD showSuccess:@"保存成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }
 }
 //TZImagePickerController图片获取
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
-    
-    [self.imgsArr addObjectsFromArray:photos];
-    [self.collectionView reloadData];
+
+    [MBProgressHUD showCustomLoading:@""];
+    [[QLOSSManager shared] syncUploadImages:photos complete:^(NSArray *names, UploadImageState state) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        if (state == UploadImageSuccess) {
+            [self.imgsArr addObjectsFromArray:names];
+            [self.collectionView reloadData];
+        } else {
+            [MBProgressHUD showError:@"图片上传失败"];
+        }
+    }];
 }
+
+
 //长按手势
 - (void)longPressAction:(UILongPressGestureRecognizer *)longPress {
     //获取此次点击的坐标，根据坐标获取cell对应的indexPath
@@ -101,15 +148,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QLShareImgItem *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"baseCell" forIndexPath:indexPath];
     cell.chooseBtn.hidden = YES;
-    id value;
     if (indexPath.row == self.imgsArr.count) {
-        value = [UIImage imageNamed:@"addImage"];
+        cell.imgView.image = [UIImage imageNamed:@"addImage"];
     } else {
-        value = self.imgsArr[indexPath.row];
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:self.imgsArr[indexPath.row]]];
     }
-    if ([value isKindOfClass:[UIImage class]]) {
-        cell.imgView.image = value;
-    }
+
 
     return cell;
 }

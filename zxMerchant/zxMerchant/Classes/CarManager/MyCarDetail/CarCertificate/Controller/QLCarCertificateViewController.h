@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLCarCertificateViewController : QLViewController
-
+-(id)initWithArray:(NSArray *)ar;
+@property (nonatomic, strong) NSString *carID;
 @end
 
 NS_ASSUME_NONNULL_END
