@@ -17,6 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
  *数据
  */
 @property (nonatomic, strong) NSArray *itemArr;
+/**
+ *删除回调
+ */
+@property (nonatomic, strong) ResultBlock deleteHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END

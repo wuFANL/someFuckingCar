@@ -5487,7 +5487,7 @@
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UDSE4Z8AVF;
+				DEVELOPMENT_TEAM = SN6GCKR489;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";
@@ -5497,7 +5497,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.haleyhan.mwy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EmbellishJiao.ZXCarMerchant;
 				PRODUCT_NAME = "众享商服";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -5512,7 +5512,7 @@
 				CODE_SIGN_ENTITLEMENTS = "zxMerchant/众享商服.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GWUURFN644;
+				DEVELOPMENT_TEAM = SN6GCKR489;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/zxMerchant/System/Info.plist";

@@ -12,6 +12,7 @@
 #import "QLAdvancedScreeningAddCell.h"
 #import "QLSubmitBottomView.h"
 #import "QLAddSubscriptionView.h"
+#import "QLChooseBrandViewController.h"
 
 @interface QLAdvancedScreeningViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseButton *resetBtn;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) NSMutableArray *sectionArr;
 @property (nonatomic, strong) NSMutableDictionary *cellHeightDic;
 @property (nonatomic, strong) QLAddSubscriptionView *asView;
+@property (nonatomic, strong) NSMutableDictionary *conditionDic;
 @end
 
 @implementation QLAdvancedScreeningViewController
@@ -45,18 +47,60 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
 }
-
+#pragma mark - network
+- (void)addSubscribeRequest {
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{} success:^(id response) {
+        [MBProgressHUD showSuccess:@"订阅成功"];
+        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
 #pragma mark - action
+//选择品牌
+- (void)addBrandBtnClick {
+    WEAKSELF
+    QLChooseBrandViewController *cbVC = [QLChooseBrandViewController new];
+    cbVC.onlyShowBrand = YES;
+    cbVC.callback = ^(QLBrandInfoModel * _Nullable brandModel, QLSeriesModel * _Nullable seriesModel, QLTypeInfoModel * _Nullable typeModel) {
+        if (brandModel.brand_id.length != 0) {
+            
+            NSMutableArray *temArr = [NSMutableArray arrayWithArray:weakSelf.conditionDic[@"carName"]];
+            [temArr addObject:brandModel];
+            [weakSelf.conditionDic setObject:temArr forKey:@"carName"];
+            [self.tableView reloadData];
+        }
+    };
+    [self.navigationController pushViewController:cbVC animated:YES];
+}
+//排量类型选择
+- (void)displacementTypeBtnClick:(UIButton *)sender {
+    NSInteger index = sender.tag;
+    NSInteger section = [self.tableView numberOfSections]-1;
+    QLAdvancedScreeningSectionView *sectionView = [self.view viewWithTag:100+section];
+    if (sectionView.aBtn == sender) {
+        sectionView.aBtn.selected = YES;
+        sectionView.bBtn.selected = NO;
+    } else {
+        sectionView.aBtn.selected = NO;
+        sectionView.bBtn.selected = YES;
+    }
+    [self.conditionDic setObject:index==0?@"L":@"T" forKey:@"displacement_type"];
+}
 //确定
 - (void)funBtnClick {
     if (self.isSubscription) {
-        //是筛选
+        //订阅
         [self.asView show];
+    } else {
+        
     }
 }
 //重置
 - (void)resetBtnClick {
-    
+    self.conditionDic = nil;
+    [self.tableView reloadData];
 }
 //键盘将要 升起 的通知
 -(void)openKeyBoard:(NSNotification*)notification {
@@ -110,44 +154,97 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3||(indexPath.section == 4&&self.showCity)) {
         QLAdvancedScreeningAddCell *cell = [tableView dequeueReusableCellWithIdentifier:@"addCell" forIndexPath:indexPath];
-        cell.itemArr = @[@"阿斯顿马丁",@"阿斯顿马丁",@"阿斯顿马丁",@"阿斯顿马丁",@"阿斯顿马丁"];
+        [cell.addBtn addTarget:self action:@selector(addBrandBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        NSMutableArray *temArr = [NSMutableArray array];
+        for (QLBrandInfoModel *model in self.conditionDic[@"carName"]) {
+            [temArr addObject:model.brand_name];
+        }
+        cell.itemArr = temArr;
+        cell.deleteHandler = ^(id result, NSError *error) {
+            NSInteger index = [result integerValue];
+            NSMutableArray *carArr = self.conditionDic[@"carName"];
+            [carArr removeObjectAtIndex:index];
+        
+            [self.conditionDic setObject:carArr forKey:@"carName"];
+            [self.tableView reloadData];
+        };
+        
         return cell;
     } else {
         QLAdvancedScreeningChooseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chooseCell" forIndexPath:indexPath];
         cell.isChooseModel = NO;
-        NSArray *dataArr = nil;
+        NSArray * __block dataArr = nil;
+        NSString *key = @"";
         if (indexPath.section == 0) {
+            key = @"priceArea";
             dataArr = @[@"不限",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"];
         } else if (indexPath.section == 1) {
+            key = @"factory_way";
             dataArr = @[@"国产",@"德系",@"美系",@"日系",@"韩系",@"法系",@"其他"];
         } else if (indexPath.section == 2) {
+            key = @"car_type";
             cell.isChooseModel = YES;
             dataArr = @[@"两厢轿车",@"三厢轿车",@"跑车",@"SUV",@"MPV",@"面包车",@"皮卡"];
         } else if (indexPath.section == [tableView numberOfSections]-5) {
+            key = @"vehicle_age";
             dataArr = @[@"0-6年",@"6-10年",@"10-15年",@"15年以上"];
         } else if (indexPath.section == [tableView numberOfSections]-4) {
+            key = @"emission_standard";
             dataArr = @[@"不限",@"国三及以上",@"国四及以上",@"国五及以上",@"国六"];
         } else if (indexPath.section == [tableView numberOfSections]-3) {
+            key = @"transmission_case";
             dataArr = @[@"不限",@"自动",@"手动"];
         } else if (indexPath.section == [tableView numberOfSections]-2) {
+            key = @"driving_distance";
             dataArr = @[@"不限",@"0-5万公里",@"5-10万公里",@"10-15万公里",@"15-20万公里",@"20万公里以上"];
         } else if (indexPath.section == [tableView numberOfSections]-1) {
+            key = @"displacement";
             dataArr = @[@"不限",@"0-1.0",@"1.0-1.4",@"1.4-1.8",@"1.8-2.5",@"2.5以上"];
         }
         cell.collectionViewHeight = [self.cellHeightDic[indexPath] floatValue];
         cell.dataArr = dataArr;
-        cell.refreshandler = ^(id result) {
+        
+        NSString *temContent = self.conditionDic[key];
+        if (temContent) {
+            NSInteger selectIndex = [dataArr indexOfObject:temContent];
+            cell.selectIndex = selectIndex;
+        } else {
+            cell.selectIndex = 0;
+        }
+        
+        cell.clickHandler = ^(id result) {
+            NSInteger index = [result integerValue];
+            if (dataArr.count > index&&dataArr[index]) {
+                [self.conditionDic setObject:dataArr[index] forKey:key];
+            }
+        };
+        cell.refresHandler = ^(id result) {
             CGFloat height = [result floatValue];
             self.cellHeightDic[indexPath] = @(height);
             [tableView reloadData];
         };
+        
         return cell;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     QLAdvancedScreeningSectionView *sectionView = [QLAdvancedScreeningSectionView new];
+    sectionView.tag = 100+section;
     sectionView.showFunBtn = (section == [tableView numberOfSections]-1)?YES:NO;
     sectionView.titleLB.text = self.sectionArr[section];
+    [sectionView.aBtn addTarget:self action:@selector(displacementTypeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [sectionView.bBtn addTarget:self action:@selector(displacementTypeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    NSString *displacement_type = self.conditionDic[@"displacement_type"];
+    
+    if ([displacement_type isEqualToString:@"L"]) {
+        sectionView.aBtn.selected = YES;
+        sectionView.bBtn.selected = NO;
+    } else {
+        sectionView.aBtn.selected = NO;
+        sectionView.bBtn.selected = YES;
+    }
+    
     
     return sectionView;
 }
@@ -199,5 +296,12 @@
         _asView = [QLAddSubscriptionView new];
     }
     return _asView;
+}
+- (NSMutableDictionary *)conditionDic {
+    if (!_conditionDic) {
+        _conditionDic = [NSMutableDictionary dictionary];
+        _conditionDic[@"displacement_type"] = @"L";
+    }
+    return _conditionDic;
 }
 @end

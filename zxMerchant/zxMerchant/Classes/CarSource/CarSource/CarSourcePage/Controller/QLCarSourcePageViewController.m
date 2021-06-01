@@ -259,6 +259,7 @@
         //筛选
         QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
         asVC.showCity = NO;
+        asVC.isSubscription = YES;
         [self.navigationController pushViewController:asVC animated:YES];
     }
 }

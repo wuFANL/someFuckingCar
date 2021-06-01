@@ -33,13 +33,19 @@
     _itemArr = itemArr;
     [self.collectionView reloadData];
 }
+#pragma mark - action
+- (void)deleteBtnClick:(UIButton *)sender {
+    NSInteger index = sender.tag;
+    self.deleteHandler(@(index), nil);
+    
+}
 #pragma mark - collectionView
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForSectionAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.collectionView.width, 0);
 }
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = self.itemArr[indexPath.row];
-    return CGSizeMake([title widthWithFontSize:12]+10+20, 25);
+    return CGSizeMake([title widthWithFontSize:12]+10+40, 25);
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -52,7 +58,8 @@
     item.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [item roundRectCornerRadius:3 borderWidth:1 borderColor:[UIColor groupTableViewBackgroundColor]];
     item.showDeleteBtn = YES;
-    
+    item.deleteBtn.tag = indexPath.row;
+    [item.deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     item.titleLB.text = self.itemArr[indexPath.row];
    

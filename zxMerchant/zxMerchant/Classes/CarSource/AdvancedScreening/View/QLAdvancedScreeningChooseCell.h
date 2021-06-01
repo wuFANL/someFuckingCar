@@ -24,9 +24,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) CGFloat collectionViewHeight;
 /**
+ *点击下标
+ */
+@property (nonatomic, assign) NSInteger selectIndex;
+/**
  *刷新回调
  */
-@property (nonatomic, strong) resultBackBlock refreshandler;
+@property (nonatomic, strong) resultBackBlock refresHandler;
+/**
+ *点击回调
+ */
+@property (nonatomic, strong) resultBackBlock clickHandler;
 @end
 
 NS_ASSUME_NONNULL_END
