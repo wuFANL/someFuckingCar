@@ -112,11 +112,14 @@
 #pragma mark - action
 //谈价格
 - (void)priceBtnClick {
-    
-    NSString *car_id = [self.outData objectForKey:@"car_id"]?[self.outData objectForKey:@"car_id"]:[self.outData objectForKey:@"id"];
-    NSString *account_id = [self.outData objectForKey:@"account_id"]?[self.outData objectForKey:@"account_id"]:[self.outData objectForKey:@"belonger"];
-    QLChatListPageViewController *vc = [[QLChatListPageViewController alloc] initWithCarID:car_id messageToID:account_id];
-    [self.navigationController pushViewController:vc animated:YES];
+    if(self.isFromChat) {
+        [[QLToolsManager share] contactCustomerService:[[self.carData objectForKey:@"account_belong"] objectForKey:@"mobile"]];
+    } else {
+        NSString *car_id = [self.outData objectForKey:@"car_id"]?[self.outData objectForKey:@"car_id"]:[self.outData objectForKey:@"id"];
+        NSString *account_id = [self.outData objectForKey:@"account_id"]?[self.outData objectForKey:@"account_id"]:[self.outData objectForKey:@"belonger"];
+        QLChatListPageViewController *vc = [[QLChatListPageViewController alloc] initWithCarID:car_id messageToID:account_id];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 //加入车库
 - (void)joinBtnClick {
