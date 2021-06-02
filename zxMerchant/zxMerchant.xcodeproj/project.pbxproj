@@ -444,6 +444,8 @@
 		ED51461726558B64008E255E /* QLCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51461526558B64008E255E /* QLCarInfoModel.m */; };
 		ED51463426558BFE008E255E /* QLCarDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51463226558BFE008E255E /* QLCarDetailModel.m */; };
 		ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */; };
+		ED78B9442667D40900C74473 /* QLAddCarPopWIndow.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */; };
+		ED78B9492667D41E00C74473 /* QLAddCarPopWIndow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1211,6 +1213,9 @@
 		ED51463326558BFE008E255E /* QLCarDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarDetailModel.h; sourceTree = "<group>"; };
 		ED78B8FA2666730600C74473 /* VinCodeIdenfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VinCodeIdenfitViewController.h; sourceTree = "<group>"; };
 		ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VinCodeIdenfitViewController.m; sourceTree = "<group>"; };
+		ED78B9422667D40900C74473 /* QLAddCarPopWIndow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPopWIndow.h; sourceTree = "<group>"; };
+		ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLAddCarPopWIndow.m; sourceTree = "<group>"; };
+		ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLAddCarPopWIndow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3782,6 +3787,9 @@
 				A0865C7F2633365B001B85A3 /* QLAddCarBottomView.h */,
 				A0865C802633365C001B85A3 /* QLAddCarBottomView.m */,
 				A0865C8926333687001B85A3 /* QLAddCarBottomView.xib */,
+				ED78B9422667D40900C74473 /* QLAddCarPopWIndow.h */,
+				ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */,
+				ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4894,6 +4902,7 @@
 				A0492F812570272900B5E23C /* QLCarDetailPriceCell.xib in Resources */,
 				A0492FCB2570364700B5E23C /* QLCarImgShowCell.xib in Resources */,
 				A07332B4254C8DB900570FDB /* QLRidersDynamicImgItem.xib in Resources */,
+				ED78B9492667D41E00C74473 /* QLAddCarPopWIndow.xib in Resources */,
 				A0529E1B25B5FDBF00FCEF05 /* QLVipPriceItem.xib in Resources */,
 				A044AAD1251FCE6500D1C324 /* QLForgetPwdViewController.xib in Resources */,
 				A01243F025EB647500A90BAD /* QLSubListTitleCell.xib in Resources */,
@@ -5294,6 +5303,7 @@
 				A0499460253E010C00A1E014 /* QLCarCircleHeadView.m in Sources */,
 				A00621362513DB3900A571E5 /* QLBasePopViewControl.m in Sources */,
 				A0B7C1112581448900C59D05 /* QLMyCarDetailHeadView.m in Sources */,
+				ED78B9442667D40900C74473 /* QLAddCarPopWIndow.m in Sources */,
 				A012440025EBB5FE00A90BAD /* QLMySubscriptionsDetailViewController.m in Sources */,
 				A044AAD6251FCE6500D1C324 /* QLCreatStoreTVCell.m in Sources */,
 				A0E7095F2527A9F5004D7D2B /* QLHomeCarItem.m in Sources */,

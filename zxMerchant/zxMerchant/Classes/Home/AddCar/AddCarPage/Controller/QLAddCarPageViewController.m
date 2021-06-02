@@ -14,6 +14,7 @@
 #import <BRStringPickerView.h>
 #import <BRDatePickerView.h>
 #import "VinCodeIdenfitViewController.h"
+#import "QLAddCarPopWIndow.h"
 @interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
 // 车辆图片
@@ -89,8 +90,23 @@
     //tableView
     [self tableViewSet];
     
-//    [self.view addSubview:self.pickerView];
     [self prepareData];
+    
+//    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+//    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+//    backView.userInteractionEnabled = YES;
+//    QLAddCarPopWIndow* window = [[QLAddCarPopWIndow alloc]init];
+//    window.userInteractionEnabled = YES;
+//    [backView addSubview:window];
+//    [self.view addSubview:backView];
+//    [window mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(backView.mas_top).offset(10);
+//        make.width.mas_equalTo(backView.mas_width).multipliedBy(0.8);
+//        make.left.mas_equalTo(backView.mas_left).offset(backView.width * 0.1);
+//    }];
+    
+    
+    
 }
 - (void)prepareData {
     self.speedBox = @[@"自动",@"手动"];
@@ -165,7 +181,6 @@
             }
                 break;
             case 1:{
-                
                 if (self.brandModel) {
                     NSString *carName = [NSString stringWithFormat:@"%@%@",self.brandModel.brand_name,self.seriesModel.series_name];
                     cell.textView.text = carName;
@@ -174,7 +189,6 @@
                     cell.textView.placeholder = @"点击调取品牌车系车型";
                     cell.textView.text = @"";
                 }
-               
                 cell.textView.userInteractionEnabled = NO;
                 self.brandTextView = cell.textView;
             }
@@ -291,6 +305,8 @@
                 }
                 
                 cell.textView.userInteractionEnabled = NO;
+                cell.textView.text = @"";
+                cell.textView.placeholder = @"";
                 cell.titleWidth.constant = 250;
             }
                 break;
@@ -302,7 +318,7 @@
                     cell.textView.placeholder = @"非必选";
                     cell.textView.text = @"";
                 }
-                
+                cell.textView.userInteractionEnabled = NO;
                 cell.titleLB.text = @"排量";
                 
             }
@@ -481,6 +497,19 @@
            }
        } fail:^(NSError *error) {
            [MBProgressHUD showError:error.domain];
+       }];
+   } else if (indexPath.section == 1 && indexPath.row == 10) {
+       WEAKSELF
+       [BRStringPickerView showMultiPickerWithTitle:@"" dataSourceArr:@[@[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"],@[@".0",@".1",@".2",@".3",@".4",@".5",@".6",@".7",@".8",@".9"],@[@"L",@"T"]] selectIndexs:@[@(0),@(0),@(0),@(0)] resultBlock:^(NSArray<BRResultModel *> * _Nullable resultModelArr) {
+           
+           QLSubmitTextCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+           NSString *resultString = @"";
+           for (BRResultModel *model in resultModelArr) {
+               resultString = [resultString stringByAppendingString:model.value];
+           }
+           
+           cell.textView.text = resultString;
+           weakSelf.value11 = resultString;
        }];
    }
     
@@ -774,7 +803,17 @@
             
             [QLNetworkingManager postWithUrl:CarPath params:para success:^(id response) {
                 [MBProgressHUD showSuccess:@"发布成功！"];
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+                
+                if ([[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"2"] || [[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"3"]) {
+                    // 弹个弹窗
+                    [MBProgressHUD immediatelyRemoveHUD];
+                    //
+                    
+                } else {
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }
+                
+                
             } fail:^(NSError *error) {
                 [MBProgressHUD showError:error.domain];
             }];
@@ -795,10 +834,9 @@
                 // vin码
                 weakSelf.value1 = vinCode;
                 QLSubmitTextCell*cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-                cell.titleLB.text = [NSString stringWithFormat:@"VIN码(%lu/17)",(unsigned long)vinCode];
+                cell.titleLB.text = [NSString stringWithFormat:@"VIN码(%lu/17)",vinCode.length];
                 cell.textView.placeholder = @"";
                 cell.textView.text = vinCode;
-                
                 // 图片
                 QLReleaseImagesCell *cell1 = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
                 [weakSelf.imgsArr1 insertObject:img atIndex:0];
