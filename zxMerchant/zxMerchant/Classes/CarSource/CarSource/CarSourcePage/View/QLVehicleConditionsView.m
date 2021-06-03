@@ -17,7 +17,7 @@
 @property (nonatomic, strong) QLBaseCollectionView *warnCollectionView;
 @property (nonatomic, strong) QLBaseView *lineView;
 @property (nonatomic, strong) QLBaseButton *closeBtn;
-
+@property (nonatomic, strong) NSIndexPath *selectIndexPath;
 @end
 @implementation QLVehicleConditionsView
 - (instancetype)init
@@ -84,22 +84,23 @@
         make.left.top.right.equalTo(self);
         make.height.mas_equalTo(alertViewHieght);
     }];
-   
-    self.warnCollectionView.dataArr = [warns mutableCopy];
-    self.collectionView.dataArr = [conditions mutableCopy];
+
     [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.alertView);
         make.height.mas_equalTo(collectionViewHeight);
     }];
 
+    self.warnCollectionView.dataArr = [warns mutableCopy];
+    self.collectionView.dataArr = [conditions mutableCopy];
 }
 //设置点中下标
-- (void)setSelectIndexPath:(NSIndexPath *)selectIndexPath {
-    _selectIndexPath = selectIndexPath;
-    if ([self.collectionView cellForItemAtIndexPath:selectIndexPath] != nil) {
+- (void)setCurrentIndexPath:(NSIndexPath *)currentIndexPath {
+    _currentIndexPath= currentIndexPath;
+    self.selectIndexPath = currentIndexPath;
+    if ([self.collectionView cellForItemAtIndexPath:currentIndexPath] != nil) {
         [self.collectionView reloadData];
     }
-    if ([self.warnCollectionView cellForItemAtIndexPath:selectIndexPath] != nil) {
+    if ([self.warnCollectionView cellForItemAtIndexPath:currentIndexPath] != nil) {
         [self.warnCollectionView reloadData];
     }
     

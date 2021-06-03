@@ -417,7 +417,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == self.aTableView) {
-        return 30;
+        return 44;
     } else if (tableView == self.bTableView) {
         return 0.01;
     } else {

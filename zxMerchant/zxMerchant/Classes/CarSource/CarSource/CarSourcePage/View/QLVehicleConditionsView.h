@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  *选中分区
  */
-@property (nonatomic, strong) NSIndexPath *selectIndexPath;
+@property (nonatomic, strong) NSIndexPath *currentIndexPath;
 /**
  *数据
  */

@@ -201,7 +201,7 @@
             self.vcView.offY = conditionResultViewY;
         }
         
-        NSArray *dataArr = nil;
+        NSArray * __block dataArr = nil;
         NSIndexPath *selectIndexPath = nil;
         if (type == 0) {
             dataArr = @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"];
@@ -210,8 +210,9 @@
             dataArr = @[@"0-9999999",@"0-50000",@"50000-100000",@"100000-150000",@"150000-200000",@"200000-300000",@"300000-500000",@"500000-9999999"];
             selectIndexPath = [NSIndexPath indexPathForRow:[dataArr indexOfObject:self.vcView.priceRange] inSection:0];
         }
-        self.vcView.selectIndexPath = selectIndexPath;
         self.vcView.type = type==0?0:type-1;
+        self.vcView.currentIndexPath = selectIndexPath;
+        
         WEAKSELF
         self.vcView.handler = ^(id result) {
             //点击结果
@@ -255,6 +256,7 @@
         };
         [self.navigationController pushViewController:cbVC animated:YES];
     } else {
+        self.headView.conditionView.currentIndex = -1;
         [self.vcView hidden];
         //筛选
         QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];

@@ -32,7 +32,7 @@ PODS:
     - Masonry
   - IQKeyboardManager (6.5.6)
   - JCore (2.6.2)
-  - JPush (3.6.1):
+  - JPush (3.6.2):
     - JCore (< 3.0.0, >= 2.0.0)
   - Masonry (1.1.0)
   - MBProgressHUD (1.2.0)
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   CLPlayer: 3ac15f89d42404a11b3919d6dfdf152ff02a4aa8
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
-  JPush: 507d66d7ea307faba1330666d48e4e92af611659
+  JPush: 5272c18a040c5dd695053816f7c7ce33422a21b4
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1

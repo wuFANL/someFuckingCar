@@ -28,6 +28,7 @@
 }
 
 - (void)show {
+    self.textTF.text = @"";
     [KeyWindow addSubview:self];
 }
 

@@ -126,7 +126,7 @@
             dataArr = @[@"0-9999999",@"0-50000",@"50000-100000",@"100000-150000",@"150000-200000",@"200000-300000",@"300000-500000",@"500000-9999999"];
             selectIndexPath = [NSIndexPath indexPathForRow:[dataArr indexOfObject:self.priceRange] inSection:0];
         }
-        self.vcView.selectIndexPath = selectIndexPath;
+        self.vcView.currentIndexPath = selectIndexPath;
         self.vcView.type = type==0?0:type-1;
         WEAKSELF
         self.vcView.handler = ^(id result) {

@@ -12,7 +12,7 @@
 
 @interface QLAdvancedScreeningChooseCell()<QLBaseCollectionViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
-
+@property (nonatomic, assign) NSInteger selectIndex;
 
 
 @end
@@ -39,12 +39,11 @@
     }];
     
 }
-- (void)setSelectIndex:(NSInteger)selectIndex {
-    if (_selectIndex != selectIndex) {
-        _selectIndex = selectIndex;
-        [self.collectionView reloadData];
-        self.clickHandler(@(self.selectIndex));
-    }
+- (void)setCurrentSelectIndex:(NSInteger)currentSelectIndex {
+    _currentSelectIndex = currentSelectIndex;
+    self.selectIndex = currentSelectIndex;
+    [self.collectionView reloadData];
+    
 }
 #pragma mark - collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
@@ -67,7 +66,9 @@
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     self.selectIndex = indexPath.row;
+    [self.collectionView reloadData];
     
+    self.clickHandler(@{@"cell":self,@"selectIndex":@(self.selectIndex)});
 }
 //动态高度
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {

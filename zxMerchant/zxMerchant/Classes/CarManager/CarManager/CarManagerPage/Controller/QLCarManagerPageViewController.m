@@ -282,7 +282,7 @@
             self.vcView.warnModel = self.warnModel;
             selectIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
         }
-        self.vcView.selectIndexPath = selectIndexPath;
+        self.vcView.currentIndexPath = selectIndexPath;
         self.vcView.type = type==0?0:type-1;
         WEAKSELF
         self.vcView.handler = ^(id result) {

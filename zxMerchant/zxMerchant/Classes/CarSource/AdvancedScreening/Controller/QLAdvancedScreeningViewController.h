@@ -14,12 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *是否有选择城市
  */
-@property (nonatomic,assign) BOOL showCity;
+@property (nonatomic, assign) BOOL showCity;
 /**
  *是否是订阅
  */
-@property (nonatomic,assign) BOOL isSubscription;
-
+@property (nonatomic, assign) BOOL isSubscription;
+/**
+ *结果返回
+ */
+@property (nonatomic, strong) ResultBlock resultHandler;
 @end
 
 NS_ASSUME_NONNULL_END
