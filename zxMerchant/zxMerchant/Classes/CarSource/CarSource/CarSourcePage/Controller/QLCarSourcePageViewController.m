@@ -29,6 +29,9 @@
     self.navigationController.navigationBar.hidden = YES;
     
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.vcView hidden];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //头部
@@ -332,7 +335,6 @@
 - (QLVehicleConditionsView *)vcView {
     if (!_vcView) {
         _vcView = [[QLVehicleConditionsView alloc]init];
-        
     }
     return _vcView;
 }

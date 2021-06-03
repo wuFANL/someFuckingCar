@@ -157,6 +157,8 @@
 //显示
 - (void)show {
     self.window.hidden = NO;
+    CGFloat top = BottomOffset?88:64;
+    self.window.frame = CGRectMake(0, top+self.offY, ScreenWidth, ScreenHeight-top-self.offY);
     [self.window addSubview:self];
     
     [self setType:self.type];
@@ -167,21 +169,12 @@
 }
 //隐藏
 - (void)hidden {
-    [UIView animateWithDuration:0.1 animations:^{
-        [self.alertView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(35);
-        }];
-        [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(0);
-        }];
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if (self.handler) {
-            self.handler(self.selectIndexPath);
-        }
-        [self removeFromSuperview];
-        self.window.hidden = YES;
-    }];
+    
+    if (self.handler) {
+        self.handler(self.selectIndexPath);
+    }
+    [self removeFromSuperview];
+    self.window.hidden = YES;
 }
 //遮罩点击
 - (void)hiddenViewEvent {
