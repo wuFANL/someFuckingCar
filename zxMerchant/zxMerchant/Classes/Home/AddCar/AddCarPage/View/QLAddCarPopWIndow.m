@@ -10,13 +10,6 @@
 
 @implementation QLAddCarPopWIndow
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 - (instancetype)init
 {
     self = [super init];
@@ -27,6 +20,9 @@
         label.text = @"万元  ";
         self.reSetPriceTextField.rightView = label;
         
+        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, self.reSetPriceTextField.height)];
+        self.reSetPriceTextField.leftView = leftView;
+        self.reSetPriceTextField.leftViewMode = UITextFieldViewModeAlways;
         self.reSetPriceTextField.layer.cornerRadius = 8;
         self.reSetPriceTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.reSetPriceTextField.layer.borderWidth = 1;
@@ -35,9 +31,27 @@
         self.detailDesc.layer.cornerRadius = 8;
         self.detailDesc.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.detailDesc.layer.borderWidth = 1;
+        
         self.backgroundColor = [UIColor whiteColor];
     }
+    
+    [self.sureButton addTarget:self action:@selector(sureAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.cancleButton addTarget:self action:@selector(cancleAction) forControlEvents:UIControlEventTouchUpInside];
     return self;
+    
+}
+
+- (void)sureAction {
+    if (self.sureBlock) {
+        self.sureBlock(self.reSetPriceTextField.text,self.detailDesc.text);
+    }
+}
+
+- (void)cancleAction {
+    if (self.cancleBlock) {
+        self.cancleBlock();
+    }
 }
 
 @end

@@ -164,7 +164,7 @@
        [MBProgressHUD showError:[NSString stringWithFormat:@"最多选择%ld张图片",(long)self.maxImgCount]];
        return;
    }
-    [self.imagesArr addObjectsFromArray:photos];
+    [self.imagesArr addObjectsFromArray:[[photos reverseObjectEnumerator] allObjects]];
     [self.collectionView reloadData];
     //改变collectionView高度
     [self imgChangeImpactHeight];

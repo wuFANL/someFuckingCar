@@ -15,6 +15,7 @@
 #import <BRDatePickerView.h>
 #import "VinCodeIdenfitViewController.h"
 #import "QLAddCarPopWIndow.h"
+#import "QLMyCarDetailViewController.h"
 @interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
 // 车辆图片
@@ -92,21 +93,7 @@
     
     [self prepareData];
     
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
-    backView.userInteractionEnabled = YES;
-    QLAddCarPopWIndow* window = [[QLAddCarPopWIndow alloc]init];
-    window.userInteractionEnabled = YES;
-    [backView addSubview:window];
-    [self.view addSubview:backView];
-    [window mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(backView.mas_top).offset(10);
-        make.width.mas_equalTo(backView.mas_width).multipliedBy(0.8);
-        make.left.mas_equalTo(backView.mas_left).offset(backView.width * 0.1);
-    }];
-    
-    
-    
+
 }
 - (void)prepareData {
     self.speedBox = @[@"自动",@"手动"];
@@ -722,8 +709,12 @@
     if (!_bottomView) {
         _bottomView = [QLAddCarBottomView new];
         [_bottomView.submitBtn addTarget:self action:@selector(submitNewCar) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.cancelBtn addTarget:self action:@selector(saveData) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
+}
+
+- (void)saveData {
 }
 
 - (void)submitNewCar{
@@ -800,14 +791,75 @@
                 @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
                 @"temporary_state":@"1"
             };
-            
+        
             [QLNetworkingManager postWithUrl:CarPath params:para success:^(id response) {
                 [MBProgressHUD showSuccess:@"发布成功！"];
                 
                 if ([[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"2"] || [[QLUserInfoModel getLocalInfo].account.flag isEqualToString:@"3"]) {
                     // 弹个弹窗
                     [MBProgressHUD immediatelyRemoveHUD];
-                    //
+                    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.height)];
+                    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+                    backView.userInteractionEnabled = YES;
+                    QLAddCarPopWIndow* window = [[QLAddCarPopWIndow alloc]init];
+                    window.frame = CGRectMake(30, 25, backView.width - 60, backView.height*0.6);
+                    window.priceLabel.text = [weakSelf.value7 stringByAppendingString:@"万元"];
+                    window.detailDesc.text = [weakSelf.value2 stringByAppendingString:[NSString stringWithFormat:@" %@",weakSelf.value10]];
+                    
+                    window.sureBlock = ^(NSString * _Nonnull price, NSString * _Nonnull detail) {
+                        if (window.reSetPriceTextField.text.length > 0) {
+                            NSDictionary *result_info = [response objectForKey:@"result_info"];
+                            // 重新设置价格
+                            [MBProgressHUD showLoading:@"正在上传"];
+                            [QLNetworkingManager postWithUrl:BusinessPath params:@{
+                                Operation_type:@"add_car_flag",
+                                @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                                @"car_id":EncodeStringFromDic(result_info, @"car_id"),
+                                @"business_car_id":EncodeStringFromDic(result_info, @"business_car_id"),
+                                @"flag":@"1",
+                                @"explain":detail,
+                                @"wholesale_price_old":@([weakSelf.value7 floatValue]*10000),
+                                @"wholesale_price":@([price floatValue]*10000)
+                            } success:^(id response) {
+                                [MBProgressHUD immediatelyRemoveHUD];
+                                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                                
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    QLNavigationController *vc = (QLNavigationController*)[weakSelf getCurrentVC];
+                                    UITabBarController*tabvc = (UITabBarController*)vc.viewControllers[0];
+                                    [tabvc setSelectedIndex:2];
+                                    
+                                    UIViewController *vc3 = tabvc.viewControllers[2];
+                                    QLMyCarDetailViewController *detailVc = [[QLMyCarDetailViewController alloc]initWithUserid:[QLUserInfoModel getLocalInfo].account.account_id carID:EncodeStringFromDic(result_info, @"car_id") businessCarID:EncodeStringFromDic(result_info, @"business_car_id")];
+                                    [vc3.navigationController pushViewController:detailVc animated:YES];
+                                });
+                                
+                                
+                            } fail:^(NSError *error) {
+                                [MBProgressHUD showError:error.domain];
+                            }];
+                        } else {
+                            return;
+                        }
+                    };
+                    
+                    window.cancleBlock = ^{
+                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                        NSDictionary *result_info = [response objectForKey:@"result_info"];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            QLNavigationController *vc = (QLNavigationController*)[weakSelf getCurrentVC];
+                            UITabBarController*tabvc = (UITabBarController*)vc.viewControllers[0];
+                            [tabvc setSelectedIndex:2];
+                            
+                            UIViewController *vc3 = tabvc.viewControllers[2];
+                            QLMyCarDetailViewController *detailVc = [[QLMyCarDetailViewController alloc]initWithUserid:[QLUserInfoModel getLocalInfo].account.account_id carID:EncodeStringFromDic(result_info, @"car_id") businessCarID:EncodeStringFromDic(result_info, @"business_car_id")];
+                            [vc3.navigationController pushViewController:detailVc animated:YES];
+                        });
+                    };
+                    
+                    window.userInteractionEnabled = YES;
+                    [backView addSubview:window];
+                    [weakSelf.view addSubview:backView];
                     
                 } else {
                     [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -869,4 +921,25 @@
     return _imgsArr;
 }
 
+- (UIViewController *)getCurrentVC {
+    UIViewController *result = nil;
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal) {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows) {
+            if (tmpWin.windowLevel == UIWindowLevelNormal) {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    UIView *frontView = [[window subviews] objectAtIndex:0];
+    id nextResponder = [frontView nextResponder];
+    if ([nextResponder isKindOfClass:[UIViewController class]]) {
+        result = nextResponder;
+    } else {
+        result = window.rootViewController;
+    }
+    return result;
+}
 @end
