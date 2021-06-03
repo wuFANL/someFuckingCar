@@ -51,7 +51,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66h-DW-oXj">
-                    <rect key="frame" x="0.0" y="507" width="254" height="50"/>
+                    <rect key="frame" x="0.0" y="506" width="254" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="aXU-0D-aoz"/>
                     </constraints>
@@ -60,7 +60,7 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="019-kA-lzD">
-                    <rect key="frame" x="254" y="507" width="254" height="50"/>
+                    <rect key="frame" x="254" y="506" width="254" height="50"/>
                     <color key="backgroundColor" red="0.31361263989999999" green="0.66679823400000005" blue="0.29011395569999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="QBX-7Y-Hi7"/>
@@ -87,7 +87,7 @@
                 <constraint firstItem="L2h-xM-trf" firstAttribute="top" secondItem="2n3-4z-Gkx" secondAttribute="top" id="5ln-d4-rdX"/>
                 <constraint firstItem="kOu-MX-KOQ" firstAttribute="leading" secondItem="Rdd-Nu-UYQ" secondAttribute="leading" constant="20" id="67a-KS-Qs5"/>
                 <constraint firstItem="qfs-bV-ZV5" firstAttribute="leading" secondItem="Rdd-Nu-UYQ" secondAttribute="leading" constant="20" id="69h-Uj-oFr"/>
-                <constraint firstAttribute="bottom" secondItem="019-kA-lzD" secondAttribute="bottom" id="CWm-NQ-3vI"/>
+                <constraint firstAttribute="bottom" secondItem="019-kA-lzD" secondAttribute="bottom" constant="1" id="CWm-NQ-3vI"/>
                 <constraint firstItem="L2h-xM-trf" firstAttribute="leading" secondItem="Rdd-Nu-UYQ" secondAttribute="leading" id="PRu-y5-cCT"/>
                 <constraint firstItem="Rdd-Nu-UYQ" firstAttribute="trailing" secondItem="qfs-bV-ZV5" secondAttribute="trailing" id="Wtu-cE-yOQ"/>
                 <constraint firstItem="Rdd-Nu-UYQ" firstAttribute="trailing" secondItem="L2h-xM-trf" secondAttribute="trailing" id="bzq-jS-zac"/>
@@ -99,7 +99,7 @@
                 <constraint firstItem="qfs-bV-ZV5" firstAttribute="top" secondItem="lAB-mq-ES3" secondAttribute="bottom" id="gtg-zX-3Fe"/>
                 <constraint firstItem="Rdd-Nu-UYQ" firstAttribute="trailing" secondItem="85w-0i-sSJ" secondAttribute="trailing" constant="20" id="hUg-PJ-0jR"/>
                 <constraint firstAttribute="trailing" secondItem="019-kA-lzD" secondAttribute="trailing" id="i1N-2G-G3u"/>
-                <constraint firstAttribute="bottom" secondItem="66h-DW-oXj" secondAttribute="bottom" id="iws-oH-Dh3"/>
+                <constraint firstAttribute="bottom" secondItem="66h-DW-oXj" secondAttribute="bottom" constant="1" id="iws-oH-Dh3"/>
                 <constraint firstItem="019-kA-lzD" firstAttribute="width" secondItem="2n3-4z-Gkx" secondAttribute="width" multiplier="0.5" id="sGj-dx-LIZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

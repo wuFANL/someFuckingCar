@@ -446,6 +446,7 @@
 		ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */; };
 		ED78B9442667D40900C74473 /* QLAddCarPopWIndow.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */; };
 		ED78B9492667D41E00C74473 /* QLAddCarPopWIndow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */; };
+		ED78B95B26691CA600C74473 /* QLAddCarPopWindowA.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B95A26691CA600C74473 /* QLAddCarPopWindowA.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1216,6 +1217,8 @@
 		ED78B9422667D40900C74473 /* QLAddCarPopWIndow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPopWIndow.h; sourceTree = "<group>"; };
 		ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLAddCarPopWIndow.m; sourceTree = "<group>"; };
 		ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLAddCarPopWIndow.xib; sourceTree = "<group>"; };
+		ED78B95926691CA600C74473 /* QLAddCarPopWindowA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPopWindowA.h; sourceTree = "<group>"; };
+		ED78B95A26691CA600C74473 /* QLAddCarPopWindowA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLAddCarPopWindowA.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3787,6 +3790,8 @@
 				A0865C7F2633365B001B85A3 /* QLAddCarBottomView.h */,
 				A0865C802633365C001B85A3 /* QLAddCarBottomView.m */,
 				A0865C8926333687001B85A3 /* QLAddCarBottomView.xib */,
+				ED78B95926691CA600C74473 /* QLAddCarPopWindowA.h */,
+				ED78B95A26691CA600C74473 /* QLAddCarPopWindowA.m */,
 				ED78B9422667D40900C74473 /* QLAddCarPopWIndow.h */,
 				ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */,
 				ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */,
@@ -5228,6 +5233,7 @@
 				A012441225EC061C00A90BAD /* QLAddSubscriptionView.m in Sources */,
 				A046E80F2551D32F005E0124 /* QLChatListPageViewController.m in Sources */,
 				A006218E2513DD7300A571E5 /* NSObject+QLUtil.m in Sources */,
+				ED78B95B26691CA600C74473 /* QLAddCarPopWindowA.m in Sources */,
 				A0A5A1E92586981200B5CD53 /* QLUpdateVedioCell.m in Sources */,
 				A0C901B82529CA980021C069 /* QLChooseHeadView.m in Sources */,
 				A0492F1C256ACD4100B5E23C /* QLBrandCell.m in Sources */,
