@@ -38,7 +38,7 @@
     [longPress setMinimumPressDuration:1.5];
     [self.view addGestureRecognizer:longPress];
    
-    self.tableView.showHeadRefreshControl = YES;
+    [self dataRequest];
 }
 
 //车友圈新消息
