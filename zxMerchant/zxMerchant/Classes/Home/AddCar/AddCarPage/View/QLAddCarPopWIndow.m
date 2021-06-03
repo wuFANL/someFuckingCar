@@ -35,7 +35,7 @@
         self.detailDesc.layer.cornerRadius = 8;
         self.detailDesc.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.detailDesc.layer.borderWidth = 1;
-        
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }

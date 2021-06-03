@@ -92,18 +92,18 @@
     
     [self prepareData];
     
-//    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-//    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
-//    backView.userInteractionEnabled = YES;
-//    QLAddCarPopWIndow* window = [[QLAddCarPopWIndow alloc]init];
-//    window.userInteractionEnabled = YES;
-//    [backView addSubview:window];
-//    [self.view addSubview:backView];
-//    [window mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(backView.mas_top).offset(10);
-//        make.width.mas_equalTo(backView.mas_width).multipliedBy(0.8);
-//        make.left.mas_equalTo(backView.mas_left).offset(backView.width * 0.1);
-//    }];
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+    backView.userInteractionEnabled = YES;
+    QLAddCarPopWIndow* window = [[QLAddCarPopWIndow alloc]init];
+    window.userInteractionEnabled = YES;
+    [backView addSubview:window];
+    [self.view addSubview:backView];
+    [window mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(backView.mas_top).offset(10);
+        make.width.mas_equalTo(backView.mas_width).multipliedBy(0.8);
+        make.left.mas_equalTo(backView.mas_left).offset(backView.width * 0.1);
+    }];
     
     
     
