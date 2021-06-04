@@ -41,6 +41,24 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if(self.isFromCarManager)
+    {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if(self.isFromCarManager)
+    {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.naviTitle;

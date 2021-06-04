@@ -133,7 +133,7 @@
             [self.csm1VC uploadTableWithSourceArray:self.allCarArray];
         }
         
-        self.headView.numLB.text = [NSString stringWithFormat:@"共找到%lu辆车",(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])];
+        self.headView.numLB.text = [NSString stringWithFormat:@"共找到%@辆车",self.allCarNum];//(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])
 
      
 
@@ -181,6 +181,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    if([self.paramModel.local_state isEqualToString:@"2"])
+    {
+        [self requestForList:self.paramModel];
+    }
    
 }
 - (void)viewDidLoad {
@@ -343,6 +347,9 @@
                 
                 weakSelf.paramModel.brand_id = brandModel.brand_id;
                 [weakSelf requestForList:weakSelf.paramModel];
+                
+                self.headView.showResultView = YES;
+                self.headView.resultView.itemArr =@[brandModel.brand_name];
             }
         };
         [self.navigationController pushViewController:cbVC animated:YES];
@@ -358,8 +365,6 @@
 - (void)chooseSelect:(UIButton *)lastBtn CurrentBtn:(UIButton *)currentBtn Index:(NSInteger)index {
     lastBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     currentBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    
-//    self.headView.showResultView = index==0?NO:YES;
     
     [self viewChangeAnimation:index];
     //我的车源=1 合作车源=2  传空是全部   此处要恢复默认
@@ -418,6 +423,19 @@
         
         _headView.sortView.showStatusItem = YES;
         _headView.sortView.delegate = self;
+        [_headView.resultView setDataHandler:^(id result) {
+            self.paramModel.local_state = self.paramModel.local_state;
+            self.paramModel.brand_id = @"";
+            self.paramModel.deal_state = @"1";
+            self.paramModel.page_no = @"1";
+            self.paramModel.page_size = @"20";
+            self.paramModel.price_max = @"9999999";
+            self.paramModel.price_min = @"1";
+            self.paramModel.sort_by = @"1";
+            [self requestForList:self.paramModel];
+            
+            self.headView.showResultView = NO;
+        }];
         
         [_headView.carBtn addTarget:self action:@selector(topAddCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_headView.topBtn addTarget:self action:@selector(topCarBtnClick) forControlEvents:UIControlEventTouchUpInside];

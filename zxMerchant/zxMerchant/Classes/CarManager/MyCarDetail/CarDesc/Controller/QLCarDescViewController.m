@@ -193,7 +193,7 @@
             if (!self.tv) {
                 QLBaseTextView *tv = [QLBaseTextView new];
                 tv.tag = 100+indexPath.row;
-                tv.placeholder = [self.sourceDic objectForKey:@"car_desc"];
+                tv.text = [self.sourceDic objectForKey:@"car_desc"];
                 tv.countLimit = 100;
                 NSString *str = [self.sourceDic objectForKey:@"car_desc"];
                 self.tv.constraintLB.text = [NSString stringWithFormat:@"%lu/100",(unsigned long)str.length];

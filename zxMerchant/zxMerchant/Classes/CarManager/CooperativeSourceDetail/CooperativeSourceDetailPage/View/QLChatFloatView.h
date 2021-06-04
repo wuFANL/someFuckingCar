@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLB;
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
 @property (weak, nonatomic) IBOutlet QLBaseTarBarButton *headBtn;
-
+@property (weak, nonatomic) IBOutlet UIButton *bgBtn;
 @end
 
 NS_ASSUME_NONNULL_END
