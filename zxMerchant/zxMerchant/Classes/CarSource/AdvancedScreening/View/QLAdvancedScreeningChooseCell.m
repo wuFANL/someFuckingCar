@@ -91,10 +91,11 @@
     if (!_collectionView) {
         QLItemModel *model = [QLItemModel new];
         model.sectionInset = UIEdgeInsetsMake(0, 15, 0, 15);
-        model.Spacing = QLMinimumSpacingMake(15, 15);
+        model.Spacing = QLMinimumSpacingMake(12, 12);
         model.columnCount = 3;
         model.registerType = CellNibRegisterType;
-        CGFloat width = (self.width - 15*(model.columnCount+1))/model.columnCount;
+        model.scrollDirection = UICollectionViewScrollDirectionVertical;
+        CGFloat width = (ScreenWidth - 15*(model.columnCount+1))/model.columnCount;
         if (!self.isChooseModel) {
             model.itemSize = CGSizeMake(width, 44);
             model.itemName = @"QLIconItem";
