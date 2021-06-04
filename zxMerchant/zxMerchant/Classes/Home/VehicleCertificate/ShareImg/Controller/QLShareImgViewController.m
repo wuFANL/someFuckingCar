@@ -11,7 +11,7 @@
 #import "QLShareImgItem.h"
 #import "QLPicturesDetailViewController.h"
 #import "QLShareAlertView.h"
-
+#import "QLCarDetailModel.h"
 
 @interface QLShareImgViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -64,42 +64,40 @@
 }
 #pragma mark -network
 - (void)getCarAttr {
-//    NSMutableArray *car_id_s = [NSMutableArray array];
-//    for (QLCarInfoModel *model in self.carInfoArr) {
-//        if (model) {
-//            [car_id_s addObject:model.car_id];
-//        }
-//    }
-//    NSString *carIdsStr = [car_id_s componentsJoinedByString:@","];
-//    [MBProgressHUD showCustomLoading:nil];
-//    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_car_attr_list",@"car_id_s":QLNONull(carIdsStr),@"type":car_id_s.count>=2?@"1":@"-2"} success:^(id response) {
-//        [self.imgsArr removeAllObjects];
-//        //车辆图片
-//        [self.imgsArr addObjectsFromArray:[NSArray yy_modelArrayWithClass:[QLCarBannerModel class] json:response[@"result_info"][@"attr_list"]]];
-//        //记录分享
-//        [[QLToolsManager share] shareRecord:@{@"log_type":@"1002",@"about_id":QLNONull(carIdsStr)} handler:^(id result, NSError *error) {
-//             [MBProgressHUD immediatelyRemoveHUD];
-//            if (!error) {
-//                NSString *share_id = result[@"result_info"][@"share_id"];
-//                //店铺二维码
-//                if ([QLUserInfoModel getLocalInfo].merchant_staff.merchant_url.length != 0) {
-//                    self.merchant_url = [NSString stringWithFormat:@"%@&share_id=%@&id=%@&merchant_id=%@&member_sub_id=%@",[QLUserInfoModel getLocalInfo].merchant_staff.merchant_url,QLNONull(share_id),carIdsStr,[QLUserInfoModel getLocalInfo].merchant_staff.member_id,[QLUserInfoModel getLocalInfo].merchant_staff.sub_id];
-//                    UIImage *codeImg = [UIImage generateQRCodeWithString:self.merchant_url Size:88];
-//                    if (codeImg) {
-//                        if (self.imgsArr.count >= 5) {
-//                            [self.imgsArr insertObject:codeImg atIndex:4];
-//                        } else {
-//                            [self.imgsArr addObject:codeImg];
-//                        }
-//
-//                    }
-//                }
-//                [self.collectionView reloadData];
-//            }
-//        }];
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    NSMutableArray *car_id_s = [NSMutableArray array];
+    for (QLCarInfoModel *model in self.carInfoArr) {
+        if (model) {
+            [car_id_s addObject:model.car_id];
+        }
+    }
+    NSString *carIdsStr = [car_id_s componentsJoinedByString:@","];
+    [MBProgressHUD showCustomLoading:nil];
+    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_car_attr_list",@"car_id_s":QLNONull(carIdsStr),@"type":car_id_s.count>=2?@"1":@"-2"} success:^(id response) {
+        [self.imgsArr removeAllObjects];
+        //车辆图片
+        [self.imgsArr addObjectsFromArray:[NSArray yy_modelArrayWithClass:[QLCarBannerModel class] json:response[@"result_info"][@"attr_list"]]];
+        //记录分享
+        [[QLToolsManager share] shareRecord:@{@"log_type":@"1002",@"about_id":QLNONull(carIdsStr)} handler:^(id result, NSError *error) {
+             [MBProgressHUD immediatelyRemoveHUD];
+            if (!error) {
+                NSString *share_id = result[@"result_info"][@"share_id"];
+                //店铺二维码
+                self.merchant_url = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,car_id_s.count!=1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),carIdsStr,[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
+                UIImage *codeImg = [UIImage generateQRCodeWithString:self.merchant_url Size:88];
+                if (codeImg) {
+                    if (self.imgsArr.count >= 5) {
+                        [self.imgsArr insertObject:codeImg atIndex:4];
+                    } else {
+                        [self.imgsArr addObject:codeImg];
+                    }
+
+                }
+                [self.collectionView reloadData];
+            }
+        }];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark -action
 //图片合成
@@ -193,8 +191,8 @@
             return;
         }
         
-//        self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐%lu辆好车--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].merchant_staff.sub_name),(unsigned long)self.chooseArr.count,QLNONull([QLUserInfoModel getLocalInfo].merchant_staff.member_name),QLNONull([QLUserInfoModel getLocalInfo].merchant_staff.address)];
-//        [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].merchant_staff.head_pic]];
+        self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐%lu辆好车,杜绝事故，精选优质--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),(unsigned long)self.chooseArr.count,QLNONull([QLUserInfoModel getLocalInfo].account.nickname),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
+        [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
          self.shareView.tag = 0;
         [self.shareView show];
     } else {
@@ -284,12 +282,10 @@
     cell.chooseBtn.selected = [self.chooseArr containsObject:@(indexPath.row)]?YES:NO;
     id value = self.imgsArr[indexPath.row];
     
-//    if ([value isKindOfClass:[QLCarBannerModel class]]) {
-//        QLCarBannerModel *model = value;
-//        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.pic_url]];
-//    } else
-    
-    if ([value isKindOfClass:[UIImage class]]) {
+    if ([value isKindOfClass:[QLCarBannerModel class]]) {
+        QLCarBannerModel *model = value;
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.pic_url]];
+    } else if ([value isKindOfClass:[UIImage class]]) {
         cell.imgView.image = value;
     }
 
@@ -334,7 +330,7 @@
         QLItemModel *model = [QLItemModel new];
         model.columnCount = 3;
         model.sectionInset = UIEdgeInsetsMake(10, 15, 10, 15);
-        model.Spacing = QLMinimumSpacingMake(15, 15);
+        model.Spacing = QLMinimumSpacingMake(10, 10);
         model.registerType = CellNibRegisterType;
         model.itemName = @"QLShareImgItem";
         CGFloat width = (ScreenWidth-(model.columnCount+1)*15)/model.columnCount;
@@ -371,7 +367,7 @@
             UMSocialPlatformType platformType = [result integerValue];
             UMShareObject *obj = nil;
             NSString *title = weakSelf.shareView.descLB.text;
-            NSString *des = @"店铺分享";
+            NSString *des = self.type==1?@"多图分享":self.type==2?@"店铺分享":@"车辆牌证";
             UIImage *thumImage = weakSelf.shareView.headImgView.image;
             if (self.type == 1) {
                 if (weakSelf.shareView.tag == 0) {
@@ -422,14 +418,5 @@
     }
     return _chooseArr;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
