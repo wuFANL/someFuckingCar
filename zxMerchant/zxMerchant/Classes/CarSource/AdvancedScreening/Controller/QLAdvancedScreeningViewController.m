@@ -122,7 +122,7 @@
     for (QLBrandInfoModel *model in carBrandArr) {
         [temBrandArr addObject:[NSString stringWithFormat:@"{brand_id:%@,brand_name:%@}",model.brand_id,model.brand_name]];
     }
-    NSString *brandStr = [temBrandArr componentsJoinedByString:@","];
+    NSString *brandStr = StringWithFormat(@"[%@]", [temBrandArr componentsJoinedByString:@","]);
     
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithDictionary:@{
         @"operation_type":@"add_subscribe",

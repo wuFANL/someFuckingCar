@@ -19,6 +19,7 @@
         self = [QLShareAlertView viewFromXib];
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
         self.frame = [UIScreen mainScreen].bounds;
+        self.alertView.width = ScreenWidth;
         self.alertViewBottom.constant = ScreenHeight;
         self.viewDelegate = self;
         

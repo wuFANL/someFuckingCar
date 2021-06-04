@@ -7,7 +7,7 @@
 //
 
 #import "QLVehiclePageModel.h"
-#import "QLCarInfoModel.h"
+
 @implementation QLVehiclePageModel
 + (NSDictionary *)modelContainerPropertyGenericClass {
     return @{@"car_list" : [QLCarInfoModel class],

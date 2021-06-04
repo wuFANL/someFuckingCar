@@ -7,7 +7,7 @@
 //
 
 #import "QLViewController.h"
-
+#import "QLVehiclePageModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLShareImgViewController : QLViewController
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *imgsArr;
 /**
  *类型
- *0：车辆牌证   1：多图分享
+ *0：车辆牌证   1：多图分享 2：店铺分享
  */
 @property (nonatomic, assign) NSInteger type;
 /*

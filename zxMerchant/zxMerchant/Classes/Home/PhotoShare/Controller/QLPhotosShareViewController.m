@@ -224,9 +224,9 @@
     UIView *headView = [UIView new];
     //车数量
     QLBaseButton *numBtn = [QLBaseButton new];
-    [numBtn setImage:[UIImage imageNamed:@"noSelected"] forState:UIControlStateNormal];
-    [numBtn setImage:[UIImage imageNamed:@"success"] forState:UIControlStateSelected];
-    NSString *numStr = [NSString stringWithFormat:@"  共%ld辆",(long)self.model.car_num.integerValue];
+    [numBtn setImage:[UIImage imageNamed:@"noSelect_gray"] forState:UIControlStateNormal];
+    [numBtn setImage:[UIImage imageNamed:@"selectSuccess_green"] forState:UIControlStateSelected];
+    NSString *numStr = [NSString stringWithFormat:@"  选择8辆以下车辆---下载图片---分享到朋友圈"];
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:numStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15],NSForegroundColorAttributeName: [UIColor colorWithHexString:@"999999"]}];
     [numBtn setAttributedTitle:string forState:UIControlStateNormal];
     [numBtn addTarget:self action:@selector(numBtnClick:) forControlEvents:UIControlEventTouchUpInside];

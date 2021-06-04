@@ -58,8 +58,7 @@ NSString* Operation_type = @"operation_type";
 - (void)shareRecord:(NSDictionary *)param handler:(ResultBlock)result {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:param];
     dic[@"operation_type"] = @"do_share";
-    dic[@"member_id"] = [QLUserInfoModel getLocalInfo].account.business_id;
-    dic[@"member_sub_id"] = [QLUserInfoModel getLocalInfo].personnel.personnel_id;
+    dic[@"account_id"] = [QLUserInfoModel getLocalInfo].account.account_id;
     [QLNetworkingManager postWithParams:dic success:^(id response) {
         result(response,nil);
     } fail:^(NSError *error) {

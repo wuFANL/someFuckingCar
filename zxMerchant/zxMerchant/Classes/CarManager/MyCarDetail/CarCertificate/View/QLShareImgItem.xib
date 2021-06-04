@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j3w-cC-2gl">
                         <rect key="frame" x="0.0" y="0.0" width="119" height="127"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jS8-S0-vVP">
                         <rect key="frame" x="80" y="5" width="35" height="35"/>
@@ -32,6 +32,7 @@
                     </button>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <constraints>
                 <constraint firstItem="j3w-cC-2gl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Hoi-ej-cCU"/>
                 <constraint firstAttribute="bottom" secondItem="j3w-cC-2gl" secondAttribute="bottom" id="Mpe-ej-gmK"/>
@@ -40,7 +41,6 @@
                 <constraint firstAttribute="trailing" secondItem="jS8-S0-vVP" secondAttribute="trailing" constant="4" id="f8y-09-kiE"/>
                 <constraint firstAttribute="trailing" secondItem="j3w-cC-2gl" secondAttribute="trailing" id="nUt-0a-hFB"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <size key="customSize" width="119" height="127"/>
             <connections>
                 <outlet property="chooseBtn" destination="jS8-S0-vVP" id="fxb-TF-NDM"/>
@@ -52,5 +52,8 @@
     <resources>
         <image name="choose_orange" width="17" height="17"/>
         <image name="choose_white" width="17" height="17"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
