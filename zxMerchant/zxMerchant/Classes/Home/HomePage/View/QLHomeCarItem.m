@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.carImgView.clipsToBounds = YES;
 }
 
 - (void)updateWithDic:(NSDictionary *)dic {
