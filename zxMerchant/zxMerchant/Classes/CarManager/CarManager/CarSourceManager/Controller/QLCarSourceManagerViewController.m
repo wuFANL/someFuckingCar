@@ -136,7 +136,7 @@
         [self.navigationController pushViewController:vcdVC animated:YES];
     
     } else {
-        QLCooperativeSourceDetailPageViewController *csdpVC = [QLCooperativeSourceDetailPageViewController new];
+        QLCooperativeSourceDetailPageViewController *csdpVC = [[QLCooperativeSourceDetailPageViewController alloc] initWithSourceDic:dic];
         [self.navigationController pushViewController:csdpVC animated:YES];
     }
 }

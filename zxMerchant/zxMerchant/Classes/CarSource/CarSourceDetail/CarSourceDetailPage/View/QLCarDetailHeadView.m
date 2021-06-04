@@ -44,11 +44,11 @@
         if (self.bannerArr.count == 0) {
             [imageBtn setBackgroundImage:imageArr[0] forState:UIControlStateNormal];
         } else {
-            id obj = imageArr[index];
-            if ([obj isKindOfClass:[NSString class]]) {
-                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:obj] forState:UIControlStateNormal];
+            NSDictionary *obj = imageArr[index];
+            if ([[obj objectForKey:@"pic_url"] isKindOfClass:[NSString class]]) {
+                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal];
             } else {
-                [imageBtn setBackgroundImage:obj forState:UIControlStateNormal];
+                [imageBtn setBackgroundImage:[obj objectForKey:@"pic_url"] forState:UIControlStateNormal];
             }
         }
     }

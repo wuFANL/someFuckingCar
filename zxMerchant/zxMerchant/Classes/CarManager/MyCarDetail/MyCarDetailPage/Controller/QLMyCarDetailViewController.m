@@ -393,14 +393,14 @@
         [cell.uploadControl addTarget:self action:@selector(uploadControlClick) forControlEvents:UIControlEventTouchUpInside];
         if(self.allSourceDic)
         {
-            NSString* titleStr = [[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"model"];
-            // 里程数
-            NSString* distance  = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"driving_distance");
-            // 首次上牌 production_year
-            NSString* production_year = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"production_year");
-            // 档位
-            NSString* transmission_case = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_param"], @"transmission_case");
-            cell.contentLB.text = [NSString stringWithFormat:@"%@,%@,%@,%@万公里",production_year,titleStr,transmission_case,distance];
+//            NSString* titleStr = [[self.allSourceDic objectForKey:@"car_info"] objectForKey:@"model"];
+//            // 里程数
+//            NSString* distance  = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"driving_distance");
+//            // 首次上牌 production_year
+//            NSString* production_year = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_info"], @"production_year");
+//            // 档位
+//            NSString* transmission_case = EncodeStringFromDic([self.allSourceDic objectForKey:@"car_param"], @"transmission_case");
+            cell.contentLB.text = [[self.allSourceDic objectForKey:@"car_param"] objectForKey:@"car_desc"];//[NSString stringWithFormat:@"%@,%@,%@,%@万公里",production_year,titleStr,transmission_case,distance];
 
         }
         return cell;

@@ -72,7 +72,8 @@
 }
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = self.itemArr[indexPath.row];
-    return CGSizeMake([title widthWithFontSize:12]+10+30, 25);
+    return CGSizeMake([title widthWithFontSize:12]+20+20, 25);
+
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
