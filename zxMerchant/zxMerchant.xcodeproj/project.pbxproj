@@ -447,6 +447,9 @@
 		ED78B9442667D40900C74473 /* QLAddCarPopWIndow.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */; };
 		ED78B9492667D41E00C74473 /* QLAddCarPopWIndow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */; };
 		ED78B95B26691CA600C74473 /* QLAddCarPopWindowA.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B95A26691CA600C74473 /* QLAddCarPopWindowA.m */; };
+		EDB55CC5266A7B6700D18003 /* CitySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB55CC4266A7B6700D18003 /* CitySelectViewController.m */; };
+		EDB55CCC266A8C9D00D18003 /* SelectCityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */; };
+		EDD57602266A99280037BE9C /* SelectCityHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD57601266A99280037BE9C /* SelectCityHeader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1219,6 +1222,12 @@
 		ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLAddCarPopWIndow.xib; sourceTree = "<group>"; };
 		ED78B95926691CA600C74473 /* QLAddCarPopWindowA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPopWindowA.h; sourceTree = "<group>"; };
 		ED78B95A26691CA600C74473 /* QLAddCarPopWindowA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLAddCarPopWindowA.m; sourceTree = "<group>"; };
+		EDB55CC3266A7B6700D18003 /* CitySelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitySelectViewController.h; sourceTree = "<group>"; };
+		EDB55CC4266A7B6700D18003 /* CitySelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CitySelectViewController.m; sourceTree = "<group>"; };
+		EDB55CC9266A8C9D00D18003 /* SelectCityCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectCityCollectionViewCell.h; sourceTree = "<group>"; };
+		EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectCityCollectionViewCell.m; sourceTree = "<group>"; };
+		EDD57600266A99280037BE9C /* SelectCityHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectCityHeader.h; sourceTree = "<group>"; };
+		EDD57601266A99280037BE9C /* SelectCityHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectCityHeader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2805,6 +2814,7 @@
 		A044AAE0251FCEBE00D1C324 /* CarSource */ = {
 			isa = PBXGroup;
 			children = (
+				EDB55CC2266A7B5500D18003 /* AddressSelect */,
 				A044AAE1251FCEBE00D1C324 /* CarSource */,
 				A0492F10256ACD4100B5E23C /* ChooseBrand */,
 				A0492FFC25716CF900B5E23C /* AdvancedScreening */,
@@ -4724,6 +4734,20 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		EDB55CC2266A7B5500D18003 /* AddressSelect */ = {
+			isa = PBXGroup;
+			children = (
+				EDB55CC9266A8C9D00D18003 /* SelectCityCollectionViewCell.h */,
+				EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */,
+				EDB55CC3266A7B6700D18003 /* CitySelectViewController.h */,
+				EDB55CC4266A7B6700D18003 /* CitySelectViewController.m */,
+				EDD57600266A99280037BE9C /* SelectCityHeader.h */,
+				EDD57601266A99280037BE9C /* SelectCityHeader.m */,
+			);
+			name = AddressSelect;
+			path = zxMerchant/Classes/AddressSelect;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5054,6 +5078,7 @@
 				A049302A257402BF00B5E23C /* QLCarStyleItem.m in Sources */,
 				A084CE3B252CCC63006AE22F /* QLMsgGroupModel.m in Sources */,
 				A09EAC9B25DECA05007D9075 /* QLSetUpViewController.m in Sources */,
+				EDB55CCC266A8C9D00D18003 /* SelectCityCollectionViewCell.m in Sources */,
 				A09EAB4325DEBED2007D9075 /* QLBankEditCell.m in Sources */,
 				A04847CC25A8E34C00BD4596 /* QLStoreInvitationDetailViewController.m in Sources */,
 				A0CAB83925619C3B0015FAE3 /* QLPicturesDetailViewController.m in Sources */,
@@ -5209,6 +5234,7 @@
 				A0013178258FCB070080EB21 /* QLDueProcessCell.m in Sources */,
 				A0C1D45525868B46002396B3 /* QLChangePriceViewController.m in Sources */,
 				A057C7772534D7D30045B7B1 /* QLContactsStoreBottomView.m in Sources */,
+				EDD57602266A99280037BE9C /* SelectCityHeader.m in Sources */,
 				A09EAB5E25DEC176007D9075 /* QLAddBankCardViewController.m in Sources */,
 				A057C7702534D6930045B7B1 /* QLContactsStoreCarCell.m in Sources */,
 				A025830A254730E200CEE15F /* QLCarCircleImgItem.m in Sources */,
@@ -5328,6 +5354,7 @@
 				A0865C4B2631E49C001B85A3 /* QLAddCarPageViewController.m in Sources */,
 				A084CE26252CC7EB006AE22F /* QLSystemMessageCell.m in Sources */,
 				A049944A2538C99800A1E014 /* QLCarCircleNaviView.m in Sources */,
+				EDB55CC5266A7B6700D18003 /* CitySelectViewController.m in Sources */,
 				A001315E258BDACD0080EB21 /* QLChatFloatView.m in Sources */,
 				A044AAF4251FCFE400D1C324 /* QLMePageViewController.m in Sources */,
 				A0372588252871A200E061A6 /* QLHomeVisitRecordCell.m in Sources */,

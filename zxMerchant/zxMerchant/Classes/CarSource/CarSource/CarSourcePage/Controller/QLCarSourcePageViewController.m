@@ -15,6 +15,7 @@
 #import "QLTopCarSourceViewController.h"
 #import "QLAllCarSourceViewController.h"
 #import "QLAdvancedScreeningViewController.h"
+#import "CitySelectViewController.h"
 
 @interface QLCarSourcePageViewController ()<QLBaseSubViewControllerDelegate,QLBaseSearchBarDelegate,QLBannerViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarSourceNaviView *naviView;
@@ -29,9 +30,11 @@
     self.navigationController.navigationBar.hidden = YES;
     
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [self.vcView hidden];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //头部
@@ -296,11 +299,27 @@
     hsVC.searchType = SearchBrand;
     [self.navigationController pushViewController:hsVC animated:YES];
 }
+
+- (void)addressTouched {
+    // 弹出地址组件
+    CitySelectViewController* vc = [CitySelectViewController new];
+    WEAKSELF
+    vc.selectBlock = ^(NSDictionary * _Nonnull fatherDic, NSDictionary * _Nonnull subDic, NSString * _Nonnull adcode) {
+      // 更新
+        NSString *cityNam = EncodeStringFromDic(subDic, @"region_name");
+        [weakSelf.naviView.addressBtn setTitle:cityNam forState:UIControlStateNormal];
+        [weakSelf reloadSubVcData];
+    };
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - Lazy
 - (QLCarSourceNaviView *)naviView {
     if(!_naviView) {
         _naviView = [QLCarSourceNaviView new];
         _naviView.searchBar.extenDelegate = self;
+        [_naviView.addressBtn addTarget:self action:@selector(addressTouched) forControlEvents:UIControlEventTouchUpInside];
     }
     return _naviView;
 }

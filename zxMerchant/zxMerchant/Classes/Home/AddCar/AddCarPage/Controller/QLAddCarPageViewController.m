@@ -366,7 +366,7 @@
         model.registerType = CellNibRegisterType;
         model.itemName = @"QLImageItem";
         CGFloat itemWidth = (ScreenWidth-16*2-5*3)/4;
-        model.itemSize = CGSizeMake(itemWidth, 53);
+        model.itemSize = CGSizeMake(itemWidth, itemWidth);
         cell.listStyleModel = model;
         cell.canMultipleChoice = YES;
         cell.maxImgCount = 30;
@@ -384,7 +384,7 @@
         model.registerType = CellNibRegisterType;
         model.itemName = @"QLImageItem";
         CGFloat itemWidth = (ScreenWidth-16*2-5*3)/4;
-        model.itemSize = CGSizeMake(itemWidth, 53);
+        model.itemSize = CGSizeMake(itemWidth, itemWidth);
         cell.listStyleModel = model;
         cell.canMultipleChoice = YES;
         cell.maxImgCount = 30;
