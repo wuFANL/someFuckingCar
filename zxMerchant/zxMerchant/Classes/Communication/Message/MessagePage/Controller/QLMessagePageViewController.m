@@ -177,6 +177,7 @@
         cell.timeLB.text = [[model.tradeInfo objectForKey:@"last_trade_detail"] objectForKey:@"create_time"];
         cell.accLB.text = [[model.tradeInfo objectForKey:@"last_trade_detail"] objectForKey:@"content"];
         cell.badgeValue = [[model.tradeInfo objectForKey:@"total_msg_account"] intValue];
+        [cell setContentPointX];
         return cell;
     }
 }

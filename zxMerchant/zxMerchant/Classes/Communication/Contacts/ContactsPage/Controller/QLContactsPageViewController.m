@@ -170,6 +170,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     FriendDetailModel *friendModel = [[self.dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [cell.imageView roundRectCornerRadius:5 borderWidth:0 borderColor:[UIColor whiteColor]];
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:friendModel.head_pic] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (image) {
             cell.imageView.image = [UIImage drawWithImage:cell.imageView.image size:CGSizeMake(38, 38)];

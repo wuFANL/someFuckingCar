@@ -12,8 +12,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     [self.imgView roundRectCornerRadius:4 borderWidth:1 borderColor:ClearColor];
-    [self.badgeLB roundRectCornerRadius:12*0.5 borderWidth:1 borderColor:ClearColor];
+    [self.badgeLB roundRectCornerRadius:18*0.5 borderWidth:1 borderColor:ClearColor];
     
     self.badgeValue = 0;
     self.showAccImg = NO;
@@ -33,5 +34,11 @@
     _showAccImg = showAccImg;
     self.accImgView.hidden = !showAccImg;
     self.accImgWidth.constant = showAccImg?24:0;
+    [self setContentPointX];
+}
+
+-(void)setContentPointX
+{
+    self.accLB.frame = CGRectMake(0, self.accLB.frame.origin.y, self.accLB.frame.size.width, self.accLB.frame.size.height);
 }
 @end
