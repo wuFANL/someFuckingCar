@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger badgeValue;
 @property (nonatomic, assign) BOOL showAccImg;
+-(void)setContentPointX;
 @end
 
 NS_ASSUME_NONNULL_END

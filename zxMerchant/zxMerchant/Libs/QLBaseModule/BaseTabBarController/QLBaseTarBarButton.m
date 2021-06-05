@@ -56,7 +56,7 @@
     [self addSubview:_badgeBtn];
     [self.badgeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self).offset(10);
-        make.top.equalTo(self.imageView).offset(8);
+        make.top.equalTo(self.imageView).offset(2);
     }];
 }
 
@@ -123,12 +123,12 @@
     }
     self.badgeValue = badgeValue;
     //设置角标frame
-    CGFloat badgeH = self.badgeBtn.currentBackgroundImage.size.height;
-    CGFloat badgeW = self.badgeBtn.currentBackgroundImage.size.width;
+    CGFloat badgeH = self.badgeBtn.currentBackgroundImage.size.height + 5;
+    CGFloat badgeW = self.badgeBtn.currentBackgroundImage.size.width + 5;
     if (self.badgeValue.integerValue > 0&&self.badgeBtn.showNum) {
         // 文字的尺寸
-        CGFloat width = [self.badgeValue widthWithFont:self.badgeBtn.titleLabel.font] + 10;
-        badgeW = (width < 20) ? 20 : width;
+        CGFloat width = [self.badgeValue widthWithFont:self.badgeBtn.titleLabel.font] + 20;
+        badgeW = (width < 30) ? 30 : width;
         badgeH = badgeW;
     }
     [self.badgeBtn mas_updateConstraints:^(MASConstraintMaker *make) {

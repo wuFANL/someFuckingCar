@@ -25,12 +25,12 @@
                             <constraint firstAttribute="height" constant="45" id="eJ1-cd-whT"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzt-0C-tOZ">
-                        <rect key="frame" x="51" y="12" width="12" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzt-0C-tOZ">
+                        <rect key="frame" x="52" y="8" width="18" height="18"/>
                         <color key="backgroundColor" red="0.94901960780000005" green="0.0039215686269999999" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="KxP-NE-i0k"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="12" id="dEh-T0-uAg"/>
+                            <constraint firstAttribute="height" constant="18" id="KxP-NE-i0k"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="dEh-T0-uAg"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,7 +76,7 @@
                             <constraint firstItem="zpV-ch-9eQ" firstAttribute="top" secondItem="pEn-1T-uT1" secondAttribute="top" id="TPR-29-ufa"/>
                             <constraint firstItem="zpV-ch-9eQ" firstAttribute="leading" secondItem="pEn-1T-uT1" secondAttribute="leading" id="TTD-BR-Zeq"/>
                             <constraint firstAttribute="bottom" secondItem="hEz-Sy-27L" secondAttribute="bottom" id="WuH-na-emV"/>
-                            <constraint firstItem="hEz-Sy-27L" firstAttribute="leading" secondItem="zpV-ch-9eQ" secondAttribute="trailing" constant="6" id="bMs-Dz-lsi"/>
+                            <constraint firstItem="hEz-Sy-27L" firstAttribute="leading" secondItem="zpV-ch-9eQ" secondAttribute="trailing" id="bMs-Dz-lsi"/>
                             <constraint firstAttribute="trailing" secondItem="hEz-Sy-27L" secondAttribute="trailing" id="dDp-SR-98b"/>
                             <constraint firstItem="hEz-Sy-27L" firstAttribute="top" secondItem="pEn-1T-uT1" secondAttribute="top" id="oPb-eR-9nu"/>
                             <constraint firstAttribute="height" constant="24" id="xdF-CV-jRk"/>
@@ -104,7 +104,7 @@
                     <constraint firstItem="ZKy-Pi-lIc" firstAttribute="leading" secondItem="Hfc-j1-9je" secondAttribute="leading" id="FX0-7e-BGk"/>
                     <constraint firstItem="5ne-Y6-OpF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="Iox-es-uQ6"/>
                     <constraint firstItem="pEn-1T-uT1" firstAttribute="leading" secondItem="Hfc-j1-9je" secondAttribute="leading" id="KV6-0F-KpG"/>
-                    <constraint firstItem="Nzt-0C-tOZ" firstAttribute="top" secondItem="5ne-Y6-OpF" secondAttribute="top" id="PZU-PG-guO"/>
+                    <constraint firstItem="Nzt-0C-tOZ" firstAttribute="top" secondItem="5ne-Y6-OpF" secondAttribute="top" constant="-8" id="PZU-PG-guO"/>
                     <constraint firstItem="Hfc-j1-9je" firstAttribute="leading" secondItem="5ne-Y6-OpF" secondAttribute="trailing" constant="15" id="PkG-sI-k5r"/>
                     <constraint firstAttribute="trailing" secondItem="pEn-1T-uT1" secondAttribute="trailing" constant="15" id="Sa3-L7-tl1"/>
                     <constraint firstItem="VKW-U7-MxX" firstAttribute="leading" secondItem="Hfc-j1-9je" secondAttribute="leading" id="Tj6-2B-pmh"/>
@@ -112,7 +112,7 @@
                     <constraint firstItem="5ne-Y6-OpF" firstAttribute="width" secondItem="5ne-Y6-OpF" secondAttribute="height" multiplier="1:1" id="WgH-HB-wQo"/>
                     <constraint firstItem="pEn-1T-uT1" firstAttribute="top" secondItem="Hfc-j1-9je" secondAttribute="bottom" constant="8" id="Zf1-42-eUb"/>
                     <constraint firstItem="5ne-Y6-OpF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="cT2-W4-1JK"/>
-                    <constraint firstItem="Nzt-0C-tOZ" firstAttribute="trailing" secondItem="5ne-Y6-OpF" secondAttribute="trailing" id="dY3-KN-fVq"/>
+                    <constraint firstItem="Nzt-0C-tOZ" firstAttribute="trailing" secondItem="5ne-Y6-OpF" secondAttribute="trailing" constant="7" id="dY3-KN-fVq"/>
                     <constraint firstItem="u4r-nC-2SS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VKW-U7-MxX" secondAttribute="trailing" constant="8" id="gNM-pv-HhH"/>
                     <constraint firstAttribute="trailing" secondItem="u4r-nC-2SS" secondAttribute="trailing" constant="15" id="iKb-Nm-cNr"/>
                     <constraint firstAttribute="trailing" secondItem="ZKy-Pi-lIc" secondAttribute="trailing" id="v4T-w4-XHF"/>
