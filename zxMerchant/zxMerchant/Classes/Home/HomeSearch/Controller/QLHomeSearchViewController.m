@@ -219,7 +219,10 @@
     } else if (self.searchType == SearchBrand) {
         //发送通知
         NSDictionary *dic = self.listArr[indexPath.row];
-        [[NSNotificationCenter defaultCenter] postNotificationName:PostSearchkey object:nil userInfo:@{@"searchResult":QLNONull(dic[@"series_name"])}];
+        if(self.bsBlock)
+        {
+            self.bsBlock(dic);
+        }
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

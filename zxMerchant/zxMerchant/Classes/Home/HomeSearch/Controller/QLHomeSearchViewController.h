@@ -13,7 +13,10 @@ typedef NS_ENUM(NSInteger,SearchType) {
 };
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^BrandSearchBlock) (NSDictionary *dic);
+
 @interface QLHomeSearchViewController : QLViewController
+@property (nonatomic, copy) BrandSearchBlock bsBlock;
 /**
  *搜索类型
  */
