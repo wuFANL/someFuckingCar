@@ -43,8 +43,28 @@
     
 }
 
+- (IBAction)likeButtonTouched:(id)sender {
+    WEAKSELF
+    //只能添加
+    [QLNetworkingManager postWithUrl:FirendPath params:@{
+        Operation_type:@"add",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"to_account_id":EncodeStringFromDic([self.dataDic objectForKey:@"account"], @"account_id")
+    } success:^(id response) {
+        [MBProgressHUD showSuccess:@"关注成功"];
+        weakSelf.likeBtn.hidden = YES;
+        NSMutableDictionary *dic = [weakSelf.dataDic mutableCopy];
+        NSMutableDictionary *business_carDic = [[dic objectForKey:@"business_car"] mutableCopy];
+        [business_carDic setValue:@"1" forKey:@"concern"];
+        [dic setValue:business_carDic forKey:@"business_car"];
+        weakSelf.dataDic = dic;
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
 
 - (void)upDateWithDic:(NSDictionary *)dic{
+    self.dataDic = dic;
     // 头像
     if ([dic objectForKey:@"account"]) {
         if ([[dic objectForKey:@"account"] objectForKey:@"head_pic"]) {
@@ -93,7 +113,7 @@
     //是否关注字段 在business_car 对象里concern字段
     //    已关注=1，未关注=0
     
-    if ([dic objectForKey:@"business_car"] && ([[[dic objectForKey:@"business_car"] objectForKey:@"concern"] isEqual:@(1)])) {
+    if ([self.dataDic objectForKey:@"business_car"] && ([EncodeStringFromDic([self.dataDic objectForKey:@"business_car"], @"concern") isEqualToString:@"1"])) {
         self.likeBtn.hidden = YES;
     } else {
         self.likeBtn.hidden = NO;

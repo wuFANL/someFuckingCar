@@ -58,6 +58,9 @@
 
 - (void)refreshFooterDidPull {
     [self.tableView.mj_footer beginRefreshing];
+    if (self.refreshBlock) {
+        self.refreshBlock(1);
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

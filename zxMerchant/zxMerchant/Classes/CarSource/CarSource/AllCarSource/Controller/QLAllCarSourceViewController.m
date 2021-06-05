@@ -53,7 +53,12 @@
     
     self.tableView.mj_footer = [MJDIYBackFooter footerWithRefreshingBlock:^{
         [weakSelf.tableView.mj_footer beginRefreshing];
+        if (weakSelf.refreshBlock) {
+            weakSelf.refreshBlock(1);
+        }
     }];
+    
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

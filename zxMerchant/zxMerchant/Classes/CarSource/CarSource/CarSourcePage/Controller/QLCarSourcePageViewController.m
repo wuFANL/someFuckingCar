@@ -25,6 +25,9 @@
 @property (nonatomic, strong) QLCarSourceHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
 @property (nonatomic, strong) NSMutableDictionary *conditionDic;
+
+/** 城市编码*/
+@property (nonatomic, strong) NSString *cityCode;
 @end
 
 @implementation QLCarSourcePageViewController
@@ -120,7 +123,10 @@
     }
 
     NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
-    
+    // 获取新的cityCode
+    if (self.cityCode && self.cityCode.length >0) {
+        cityCode = self.cityCode;
+    }
     
     return @{
         @"sort_by":[NSString stringWithFormat:@"%lu",type],
@@ -325,6 +331,13 @@
       // 更新
         NSString *cityNam = EncodeStringFromDic(subDic, @"region_name");
         [weakSelf.naviView.addressBtn setTitle:cityNam forState:UIControlStateNormal];
+        weakSelf.cityCode = adcode;
+        QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
+        vc_all.tableView.page = 0;
+        [vc_all.dataArray removeAllObjects];
+        QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
+        vc_top.tableView.page = 0;
+        [vc_top.dataArray removeAllObjects];
         [weakSelf reloadSubVcData];
     };
     

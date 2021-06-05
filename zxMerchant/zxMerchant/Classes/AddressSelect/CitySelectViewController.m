@@ -29,10 +29,12 @@
     
     // 请求城市数据
     WEAKSELF
+    [MBProgressHUD showLoading:@""];
     [QLNetworkingManager postWithUrl:HomePath params:@{
         Operation_type:@"all_open_region",
         @"account_id":[QLUserInfoModel getLocalInfo].account.account_id
     } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
         NSDictionary *result_info = [response objectForKey:@"result_info"];
         if ([result_info isKindOfClass:[NSDictionary class]]) {
             NSArray *dataArr = [result_info objectForKey:@"region_list"];
@@ -43,6 +45,7 @@
             [weakSelf.collectionView reloadData];
         }
     } fail:^(NSError *error) {
+        [MBProgressHUD immediatelyRemoveHUD];
         [MBProgressHUD showError:error.domain];
     }];
     

@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         self = [QLCarSourceNaviView viewFromXib];
-        
+        [self.addressBtn setTitle:@"全国" forState:UIControlStateNormal];
         self.searchBar.noEditClick = YES;
     }
     return self;

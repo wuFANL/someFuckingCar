@@ -9,6 +9,7 @@
 #import "QLBaseTableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
+// 0 头 1 尾
 typedef void(^TopCarRefreshBlock)(NSUInteger page);
 @interface QLTopCarSourceViewController : QLBaseTableViewController
 /** 数据源*/

@@ -70,6 +70,9 @@
                         <state key="normal" title="关注车主" image="+_red">
                             <color key="titleColor" systemColor="labelColor"/>
                         </state>
+                        <connections>
+                            <action selector="likeButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="PWj-Ri-3q5"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKF-N1-0R6" customClass="QLBaseButton">
                         <rect key="frame" x="143" y="-1" width="22" height="22"/>
