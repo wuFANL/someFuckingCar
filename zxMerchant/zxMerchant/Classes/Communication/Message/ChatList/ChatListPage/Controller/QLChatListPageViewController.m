@@ -157,7 +157,6 @@
         self.tableView.page = 1;
     }
     self.currentID = [dic objectForKey:@"id"];
-    [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
 
@@ -183,6 +182,11 @@
         }
         
         [self.tableView reloadData];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
+            [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        });
         
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -260,8 +264,14 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
     
     [self requestForChatTop];
+}
+
+-(void)JPushNotifForChatMessage:(NSNotification *)notif
+{
+    [self dataRequest];
 }
 
 #pragma mark - action

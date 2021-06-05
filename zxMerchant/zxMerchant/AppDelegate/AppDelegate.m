@@ -96,6 +96,9 @@
 }
 //获取到推送
 - (void)receivePush:(NSDictionary *)userInfo {
+    //有推送 刷新一下聊天列表
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"JPushNotifForChatMessage" object:nil];
+    
     if (userInfo != nil&&[userInfo[@"dealType"] integerValue] != 0) {
         QLPushMsgModel *model = [QLPushMsgModel new];
         model.jump_type = userInfo[@"dealType"];
@@ -153,6 +156,7 @@
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler  API_AVAILABLE(ios(10.0)){
     // Required
     NSDictionary * userInfo = notification.request.content.userInfo;
+    [self receivePush:userInfo];
     if (@available(iOS 10.0, *)) {
         if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
             [JPUSHService handleRemoteNotification:userInfo];
