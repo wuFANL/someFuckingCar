@@ -45,9 +45,12 @@
             [imageBtn setBackgroundImage:imageArr[0] forState:UIControlStateNormal];
         } else {
             NSDictionary *obj = imageArr[index];
-            if ([[obj objectForKey:@"pic_url"] isKindOfClass:[NSString class]]) {
+            if ([obj isKindOfClass:[NSDictionary class]] && [[obj objectForKey:@"pic_url"] isKindOfClass:[NSString class]]) {
                 [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal];
-            } else {
+            } else if ([obj isKindOfClass:[NSString class]]) {
+                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:(NSString *)obj] forState:UIControlStateNormal];
+            }
+            else {
                 [imageBtn setBackgroundImage:[obj objectForKey:@"pic_url"] forState:UIControlStateNormal];
             }
         }
