@@ -135,9 +135,6 @@
         
         self.headView.numLB.text = [NSString stringWithFormat:@"共找到%@辆车",self.allCarNum];//(unsigned long)([self.allCarArray count] == 0?0:[self.allCarArray count])
 
-     
-
-        
     } fail:^(NSError *error) {
         if([self.paramModel.local_state isEqualToString:@"1"])
         {
@@ -411,6 +408,15 @@
 //搜索点击
 - (void)searchBarClick {
     QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
+    [hsVC setBsBlock:^(NSDictionary * _Nonnull dic) {
+        NSString *searchStr = [dic objectForKey:@"brand_sub_name"];
+        NSString *searchID = [dic objectForKey:@"id"];
+        self.paramModel.brand_id = searchID;
+        [self requestForList:self.paramModel];
+        
+        self.headView.showResultView = YES;
+        self.headView.resultView.itemArr =@[searchStr];
+    }];
     hsVC.searchType = SearchBrand;
     [self.navigationController pushViewController:hsVC animated:YES];
 }
@@ -418,7 +424,6 @@
 - (QLCarManagerPageHeadView *)headView {
     if (!_headView) {
         _headView = [QLCarManagerPageHeadView new];
-    
         _headView.chooseView.typeDelegate = self;
         
         _headView.sortView.showStatusItem = YES;
