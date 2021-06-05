@@ -93,11 +93,16 @@
             float wholesale_price_old = [[NSString stringWithFormat:@"%@",[dic objectForKey:@"wholesale_price_old"]] floatValue];
             cell.lingshouPrice = [[QLToolsManager share] unitConversion:wholesale_price_old];
         }
+        
+        cell.chatBlock = ^{
+            NSDictionary *accountdic = [dic objectForKey:@"account"];
+            [[QLToolsManager share] contactCustomerService:EncodeStringFromDic(accountdic, @"mobile")];
+        };
         return cell;
     } else  {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
         cell.bjViewBottom.constant = 15;
-        cell.dataType = indexPath.section/2==0?ImageType:VideoType;
+        cell.dataType = ImageType;//indexPath.section/2==0?ImageType:VideoType;
         if ([dic objectForKey:@"car_attr_list"]) {
             NSArray *array = [dic objectForKey:@"car_attr_list"];
             if ([array isKindOfClass:[NSArray class]]) {

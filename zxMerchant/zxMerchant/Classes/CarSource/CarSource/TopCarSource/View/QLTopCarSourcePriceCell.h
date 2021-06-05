@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void(^chatCellDidTouched)(void);
 @interface QLTopCarSourcePriceCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *pifaLB;
 @property (weak, nonatomic) IBOutlet UILabel *lingshouLB;
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *pifaPrice;
 @property (nonatomic, strong) NSString *lingshouPrice;
 
-//- (void)updateWithDic:(NSDictionary *)dic;
+@property (nonatomic, copy) chatCellDidTouched chatBlock;
 @end
 
 NS_ASSUME_NONNULL_END

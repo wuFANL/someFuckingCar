@@ -26,6 +26,11 @@
         self.pifaLB.attributedText = attStr;
     }
 }
+- (IBAction)chatButtonDidTOuched:(id)sender {
+    if (self.chatBlock) {
+        self.chatBlock();
+    }
+}
 - (void)setLingshouPrice:(NSString *)lingshouPrice {
     _lingshouPrice = lingshouPrice;
     if (lingshouPrice.length != 0) {

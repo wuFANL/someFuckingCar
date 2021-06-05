@@ -17,6 +17,9 @@
 #import "QLAdvancedScreeningViewController.h"
 #import "CitySelectViewController.h"
 
+#define typeStringArr @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"]
+#define priceStringArr @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万以上"]
+//NSArray *
 @interface QLCarSourcePageViewController ()<QLBaseSubViewControllerDelegate,QLBaseSearchBarDelegate,QLBannerViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarSourceNaviView *naviView;
 @property (nonatomic, strong) QLCarSourceHeadView *headView;
@@ -25,6 +28,7 @@
 @end
 
 @implementation QLCarSourcePageViewController
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -101,9 +105,12 @@
 #pragma mark - action
 //刷新
 - (NSDictionary *)currrentPara {
-    NSUInteger type = [EncodeStringFromDic(self.conditionDic, @"sort_type") integerValue];
-    NSString *brand_id = EncodeStringFromDic(self.conditionDic, @"brand_id");
-    NSString *price = EncodeStringFromDic(self.conditionDic, @"priceRange");
+     // condition无法提供数据 只能展示
+
+    NSUInteger type = self.vcView.sort_by;
+    NSString *brand_id = self.vcView.brandModel.brand_id?self.vcView.brandModel.brand_id:@"";
+    NSString *price = self.vcView.priceRange;
+
     NSString *min_price = @"0";
     NSString *max_price = @"9999999";
     if (price && [price containsString:@"-"]) {
@@ -204,7 +211,7 @@
         NSArray * __block dataArr = nil;
         NSIndexPath *selectIndexPath = nil;
         if (type == 0) {
-            dataArr = @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"];
+            dataArr = typeStringArr;
             selectIndexPath = [NSIndexPath indexPathForRow:self.vcView.sort_by-1 inSection:0];
         } else if (type == 2) {
             dataArr = @[@"0-9999999",@"0-50000",@"50000-100000",@"100000-150000",@"150000-200000",@"200000-300000",@"300000-500000",@"500000-9999999"];
@@ -224,7 +231,7 @@
                     NSString *sort_by_Str = dataArr[indexPath.row];
                     weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
                     [weakSelf.conditionDic setObject:sort_by_Str forKey:@"sort_by"];
-//                    [weakSelf.conditionDic setObject:@(indexPath.row+1) forKey:@"sort_type"];
+
                 } else if (type == 2&&indexPath.row >= 0) { // 价格
                     
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
@@ -258,7 +265,7 @@
                 
                 NSString *carName = [NSString stringWithFormat:@"%@%@",brandModel.brand_name,seriesModel.series_name];
                 [weakSelf.conditionDic setObject:carName forKey:@"carName"];
-//                [weakSelf.conditionDic setObject:brandModel.brand_id forKey:@"brand_id"];
+
                 // 页数重置
                 QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
                 vc_all.tableView.page = 0;
@@ -351,16 +358,26 @@
             NSInteger diffIndex = -1;
             for (NSString *value in weakSelf.conditionDic.allValues) {
                 if (![dataArr containsObject:value]) {
+                    //找到了要删除的值
                     diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
+                    
+                    // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
+                    if ([typeStringArr containsObject:value]) { // 排序
+                        weakSelf.vcView.sort_by = 1;
+                    } else if ([priceStringArr containsObject:value]) { // 价格
+                        weakSelf.vcView.priceRange = @"0-9999999";
+                    } else {
+                        // 品牌
+                        weakSelf.vcView.brandModel.brand_id = @"";
+                    }
+                    
                 }
             }
             [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
             // 检查是否有筛选项
             [weakSelf checkIsHasSelectItem];
             
-            // 改变当前的值
-            
-            
+           
             QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
             vc_all.tableView.page = 0;
             [vc_all.dataArray removeAllObjects];

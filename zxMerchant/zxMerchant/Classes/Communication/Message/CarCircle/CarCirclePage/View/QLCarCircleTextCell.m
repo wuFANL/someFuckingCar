@@ -13,7 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.vipBtn.hidden = YES;
-    
+    self.headBtn.layer.cornerRadius = 8;
+    self.headBtn.clipsToBounds = YES;
 }
 
 - (void)setModel:(QLRidersDynamicListModel *)model {
