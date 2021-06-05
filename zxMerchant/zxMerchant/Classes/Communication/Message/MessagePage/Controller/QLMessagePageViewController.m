@@ -29,8 +29,14 @@
     
 }
 
+-(void)JPushNotifForChatMessage:(NSNotification *)notif
+{
+    [self dataRequest];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
     //tableView
     [self tableViewSet];
     //长按手势
@@ -190,27 +196,27 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
-    //文本
-    UILabel *lb = [UILabel new];
-    lb.font = [UIFont systemFontOfSize:13];
-    lb.textColor = [UIColor darkGrayColor];
-    lb.text = @"开启消息通知,及时掌握最新信息";
-    [headerView addSubview:lb];
-    [lb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView).offset(18);
-        make.centerY.equalTo(headerView);
-    }];
-    //设置按钮
-    UIButton *btn = [UIButton new];
-    btn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [btn setTitleColor:GreenColor forState:UIControlStateNormal];
-    [btn setTitle:@"去设置" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(setBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:btn];
-    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(headerView).offset(-15);
-        make.centerY.equalTo(headerView);
-    }];
+//    //文本
+//    UILabel *lb = [UILabel new];
+//    lb.font = [UIFont systemFontOfSize:13];
+//    lb.textColor = [UIColor darkGrayColor];
+//    lb.text = @"开启消息通知,及时掌握最新信息";
+//    [headerView addSubview:lb];
+//    [lb mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(headerView).offset(18);
+//        make.centerY.equalTo(headerView);
+//    }];
+//    //设置按钮
+//    UIButton *btn = [UIButton new];
+//    btn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [btn setTitleColor:GreenColor forState:UIControlStateNormal];
+//    [btn setTitle:@"去设置" forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(setBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:btn];
+//    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(headerView).offset(-15);
+//        make.centerY.equalTo(headerView);
+//    }];
     
     return headerView;
 }
@@ -218,6 +224,6 @@
     return 100;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 10;//40;
 }
 @end
