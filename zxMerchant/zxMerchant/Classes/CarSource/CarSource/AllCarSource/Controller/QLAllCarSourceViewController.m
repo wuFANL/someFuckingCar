@@ -44,6 +44,8 @@
         weakSelf.tableView.page = 0;
         [weakSelf.tableView.mj_header beginRefreshing];
         if (weakSelf.refreshBlock) {
+            weakSelf.tableView.page = 0;
+            [weakSelf.dataArray removeAllObjects];
             weakSelf.refreshBlock(0);
         }
     }];

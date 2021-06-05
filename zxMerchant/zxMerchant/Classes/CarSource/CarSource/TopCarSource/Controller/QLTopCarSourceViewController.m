@@ -49,6 +49,9 @@
     [self.tableView.mj_header beginRefreshing];
     self.tableView.page = 0;
     if (self.refreshBlock) {
+        
+        [self.dataArray removeAllObjects];
+        self.tableView.page = 0;
         self.refreshBlock(0);
     }
 }
@@ -66,7 +69,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary *dic = @{};
-    if (indexPath.section <= self.dataArray.count) {
+    if ((indexPath.section <= self.dataArray.count)&&self.dataArray.count>0) {
         dic = self.dataArray[indexPath.section];
     }
     if (indexPath.row == 0) {

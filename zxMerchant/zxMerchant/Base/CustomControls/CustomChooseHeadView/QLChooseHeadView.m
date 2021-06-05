@@ -109,6 +109,7 @@
             if (i == 0) {
                 btn.selected = YES;
                 self.currentBtn = btn;
+                btn.titleLabel.font = [UIFont systemFontOfSize:15];
             } else if (title.length == 0) {
                 btn.enabled = NO;
             }
@@ -173,6 +174,11 @@
         }
         
         if (self.currentBtn != sender) {
+            
+            // 老板要变换字体
+            self.currentBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+            sender.titleLabel.font = [UIFont systemFontOfSize:15];
+            
             sender.selected = YES;
             self.currentBtn.selected = NO;
             self.currentBtn = sender;
