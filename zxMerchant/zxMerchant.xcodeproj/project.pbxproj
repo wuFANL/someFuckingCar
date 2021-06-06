@@ -3290,6 +3290,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A0499192266C8D1400929CB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EDB55CC3266A7B6700D18003 /* CitySelectViewController.h */,
+				EDB55CC4266A7B6700D18003 /* CitySelectViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0499196266C8EF600929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EDD57600266A99280037BE9C /* SelectCityHeader.h */,
+				EDD57601266A99280037BE9C /* SelectCityHeader.m */,
+				EDB55CC9266A8C9D00D18003 /* SelectCityCollectionViewCell.h */,
+				EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A04994042535F05700A1E014 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -4737,12 +4757,8 @@
 		EDB55CC2266A7B5500D18003 /* AddressSelect */ = {
 			isa = PBXGroup;
 			children = (
-				EDB55CC9266A8C9D00D18003 /* SelectCityCollectionViewCell.h */,
-				EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */,
-				EDB55CC3266A7B6700D18003 /* CitySelectViewController.h */,
-				EDB55CC4266A7B6700D18003 /* CitySelectViewController.m */,
-				EDD57600266A99280037BE9C /* SelectCityHeader.h */,
-				EDD57601266A99280037BE9C /* SelectCityHeader.m */,
+				A0499192266C8D1400929CB7 /* Controller */,
+				A0499196266C8EF600929CB7 /* View */,
 			);
 			name = AddressSelect;
 			path = zxMerchant/Classes/AddressSelect;
