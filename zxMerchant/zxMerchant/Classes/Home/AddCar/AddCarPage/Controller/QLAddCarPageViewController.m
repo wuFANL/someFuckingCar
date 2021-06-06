@@ -81,6 +81,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"新增车辆";
+    // 获取本地缓存数据
+    [self setUpLocalData];
+    
+    
     //底部
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -90,16 +94,46 @@
     }];
     //tableView
     [self tableViewSet];
-    
     [self prepareData];
     
-
 }
 - (void)prepareData {
     self.speedBox = @[@"自动",@"手动"];
     self.colorBox = @[@"银灰色",@"深灰色",@"黑色",@"白色",@"红色",@"蓝色",@"咖啡色",@"香槟色",@"黄色",@"紫色",@"绿色",@"橙色",@"粉红色",@"彩色"];
     self.typeBox = @[@"两厢",@"三厢",@"跑车",@"SUV",@"MPV",@"面包车",@"皮卡"];
     self.enviBox = @[@"国六",@"国五",@"国四",@"国三"];
+}
+
+- (void)setUpLocalData {
+    NSDictionary *localData = [[NSUserDefaults standardUserDefaults] objectForKey:@"QLAddCarTempData"];
+    self.value1 = EncodeStringFromDic(localData, @"value1");
+    self.value2 = EncodeStringFromDic(localData, @"value2");
+    self.value3 = EncodeStringFromDic(localData, @"value3");
+    self.value4 = EncodeStringFromDic(localData, @"value4");
+    self.value5 = EncodeStringFromDic(localData, @"value5");
+    self.value6 = EncodeStringFromDic(localData, @"value6");
+    self.value7 = EncodeStringFromDic(localData, @"value7");
+    self.value8 = EncodeStringFromDic(localData, @"value8");
+    self.value9 = EncodeStringFromDic(localData, @"value9");
+    self.value10 = EncodeStringFromDic(localData, @"value10");
+    self.value11 = EncodeStringFromDic(localData, @"value11");
+    self.value12 = EncodeStringFromDic(localData, @"value12");
+    self.value13 = EncodeStringFromDic(localData, @"value13");
+    
+    NSArray* temp1 = [localData objectForKey:@"imagArr1"];
+    NSArray* temp2 = [localData objectForKey:@"imagArr2"];
+   
+    if ([temp1 isKindOfClass:[NSArray class]]) {
+        for (NSData *imageData in temp1) {
+            [self.imgsArr addObject:[UIImage imageWithData:imageData]];
+        }
+    }
+    
+    if ([temp2 isKindOfClass:[NSArray class]]) {
+        for (NSData *imageData in temp2) {
+            [self.imgsArr1 addObject:[UIImage imageWithData:imageData]];
+        }
+    }
 }
 #pragma mark - action
 //图片变化
@@ -714,7 +748,48 @@
     return _bottomView;
 }
 
+// 本地缓存
 - (void)saveData {
+    
+    
+    [MBProgressHUD showLoading:@""];
+    NSMutableArray *temp1 = [NSMutableArray array];
+    if (self.imgsArr.count >0) {
+        for (UIImage *image in self.imgsArr) {
+            [temp1 addObject:UIImageJPEGRepresentation(image, 0.7)];
+        }
+    }
+    
+    NSMutableArray *temp2 = [NSMutableArray array];
+    if (self.imgsArr1.count >0) {
+        for (UIImage *image in self.imgsArr1) {
+            [temp2 addObject:UIImageJPEGRepresentation(image, 0.7)];
+        }
+    }
+
+    
+    NSDictionary *dataDic = @{
+        @"value1":self.value1?self.value1:@"",
+        @"value2":self.value2?self.value2:@"",
+        @"value3":self.value3?self.value3:@"",
+        @"value4":self.value4?self.value4:@"",
+        @"value5":self.value5?self.value5:@"",
+        @"value6":self.value6?self.value6:@"",
+        @"value7":self.value7?self.value7:@"",
+        @"value8":self.value8?self.value8:@"",
+        @"value9":self.value9?self.value9:@"",
+        @"value10":self.value10?self.value10:@"",
+        @"value11":self.value11?self.value11:@"",
+        @"value12":self.value12?self.value12:@"",
+        @"value13":self.value13?self.value13:@"",
+        @"imagArr1":temp1,
+        @"imagArr2":temp2
+    };
+    
+    [[NSUserDefaults standardUserDefaults] setValue:dataDic forKey:@"QLAddCarTempData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [MBProgressHUD showSuccess:@"已缓存"];
+    
 }
 
 - (void)submitNewCar{
@@ -823,7 +898,9 @@
                             } success:^(id response) {
                                 [MBProgressHUD immediatelyRemoveHUD];
                                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                                
+                                // 删除缓存
+                                [[NSUserDefaults standardUserDefaults] setValue:@{} forKey:@"QLAddCarTempData"];
+                                [[NSUserDefaults standardUserDefaults] synchronize];
                                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                     QLNavigationController *vc = (QLNavigationController*)[weakSelf getCurrentVC];
                                     UITabBarController*tabvc = (UITabBarController*)vc.viewControllers[0];
