@@ -27,7 +27,7 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         //默认添加图片
-        self.addImg = [UIImage imageNamed:@"addImage"];
+        self.addImg = [UIImage imageNamed:@"addImg"];
         //增加collectionView
         QLItemModel *model = [QLItemModel new];
         model.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);

@@ -120,7 +120,7 @@
     NSArray *carBrandArr = self.conditionDic[@"carName"];
     NSMutableArray *temBrandArr = [NSMutableArray array];
     for (QLBrandInfoModel *model in carBrandArr) {
-        [temBrandArr addObject:[NSString stringWithFormat:@"{brand_id:%@,brand_name:%@}",model.brand_id,model.brand_name]];
+        [temBrandArr addObject:[NSString stringWithFormat:@"{\"brand_id\":\"%@\",\"brand_name\":\"%@\"}",model.brand_id,model.brand_name]];
     }
     NSString *brandStr = StringWithFormat(@"[%@]", [temBrandArr componentsJoinedByString:@","]);
     

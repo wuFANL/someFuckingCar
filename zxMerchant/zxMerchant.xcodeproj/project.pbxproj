@@ -262,6 +262,21 @@
 		A049902B2663FF4C00929CB7 /* QLConditionsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A04990242663FF4C00929CB7 /* QLConditionsItem.m */; };
 		A049902C2663FF4C00929CB7 /* QLConditionsItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04990272663FF4C00929CB7 /* QLConditionsItem.xib */; };
 		A049902D2663FF4C00929CB7 /* QLSearchHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04990282663FF4C00929CB7 /* QLSearchHistoryCell.xib */; };
+		A04991CC266D2FF100929CB7 /* QLWelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04991CA266D2FF000929CB7 /* QLWelcomeViewController.xib */; };
+		A04991CD266D2FF100929CB7 /* QLWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04991CB266D2FF000929CB7 /* QLWelcomeViewController.m */; };
+		A04991D7266D309600929CB7 /* QLWelcomePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A04991D6266D309600929CB7 /* QLWelcomePageView.m */; };
+		A0499238266D5D8600929CB7 /* QLBrowseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A049921E266D5D8500929CB7 /* QLBrowseDetailViewController.m */; };
+		A0499239266D5D8600929CB7 /* QLBrowseDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A0499222266D5D8500929CB7 /* QLBrowseDetailModel.m */; };
+		A049923A266D5D8600929CB7 /* QLBrowseDetailHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0499225266D5D8500929CB7 /* QLBrowseDetailHeadView.m */; };
+		A049923B266D5D8600929CB7 /* QLBrowseDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0499226266D5D8500929CB7 /* QLBrowseDetailCell.xib */; };
+		A049923C266D5D8600929CB7 /* QLBrowseDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0499227266D5D8500929CB7 /* QLBrowseDetailCell.m */; };
+		A049923D266D5D8600929CB7 /* QLBrowseDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0499228266D5D8500929CB7 /* QLBrowseDetailHeadView.xib */; };
+		A049923E266D5D8600929CB7 /* QLShareHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A049922D266D5D8500929CB7 /* QLShareHistoryViewController.m */; };
+		A049923F266D5D8600929CB7 /* QLShareHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A049922F266D5D8500929CB7 /* QLShareHistoryModel.m */; };
+		A0499240266D5D8600929CB7 /* QLShareHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0499232266D5D8500929CB7 /* QLShareHistoryCell.m */; };
+		A0499241266D5D8600929CB7 /* QLShareHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0499233266D5D8500929CB7 /* QLShareHistoryCell.xib */; };
+		A0499242266D5D8600929CB7 /* QLShareHistoryHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0499235266D5D8500929CB7 /* QLShareHistoryHeadView.xib */; };
+		A0499243266D5D8600929CB7 /* QLShareHistoryHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0499237266D5D8500929CB7 /* QLShareHistoryHeadView.m */; };
 		A04994082535F09700A1E014 /* QLMePageHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A04994072535F09700A1E014 /* QLMePageHeadView.m */; };
 		A04994102535F0A300A1E014 /* QLMePageHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A049940F2535F0A300A1E014 /* QLMePageHeadView.xib */; };
 		A04994402538C8FC00A1E014 /* QLCarCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A049943F2538C8FC00A1E014 /* QLCarCircleViewController.m */; };
@@ -917,6 +932,31 @@
 		A04990262663FF4C00929CB7 /* QLConditionsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLConditionsItem.h; sourceTree = "<group>"; };
 		A04990272663FF4C00929CB7 /* QLConditionsItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLConditionsItem.xib; sourceTree = "<group>"; };
 		A04990282663FF4C00929CB7 /* QLSearchHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLSearchHistoryCell.xib; sourceTree = "<group>"; };
+		A04991C9266D2FF000929CB7 /* QLWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLWelcomeViewController.h; sourceTree = "<group>"; };
+		A04991CA266D2FF000929CB7 /* QLWelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLWelcomeViewController.xib; sourceTree = "<group>"; };
+		A04991CB266D2FF000929CB7 /* QLWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLWelcomeViewController.m; sourceTree = "<group>"; };
+		A04991D5266D309600929CB7 /* QLWelcomePageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLWelcomePageView.h; sourceTree = "<group>"; };
+		A04991D6266D309600929CB7 /* QLWelcomePageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLWelcomePageView.m; sourceTree = "<group>"; };
+		A049921E266D5D8500929CB7 /* QLBrowseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLBrowseDetailViewController.m; sourceTree = "<group>"; };
+		A049921F266D5D8500929CB7 /* QLBrowseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLBrowseDetailViewController.h; sourceTree = "<group>"; };
+		A0499221266D5D8500929CB7 /* QLBrowseDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLBrowseDetailModel.h; sourceTree = "<group>"; };
+		A0499222266D5D8500929CB7 /* QLBrowseDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLBrowseDetailModel.m; sourceTree = "<group>"; };
+		A0499224266D5D8500929CB7 /* QLBrowseDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLBrowseDetailCell.h; sourceTree = "<group>"; };
+		A0499225266D5D8500929CB7 /* QLBrowseDetailHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLBrowseDetailHeadView.m; sourceTree = "<group>"; };
+		A0499226266D5D8500929CB7 /* QLBrowseDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLBrowseDetailCell.xib; sourceTree = "<group>"; };
+		A0499227266D5D8500929CB7 /* QLBrowseDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLBrowseDetailCell.m; sourceTree = "<group>"; };
+		A0499228266D5D8500929CB7 /* QLBrowseDetailHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLBrowseDetailHeadView.xib; sourceTree = "<group>"; };
+		A0499229266D5D8500929CB7 /* QLBrowseDetailHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLBrowseDetailHeadView.h; sourceTree = "<group>"; };
+		A049922C266D5D8500929CB7 /* QLShareHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLShareHistoryViewController.h; sourceTree = "<group>"; };
+		A049922D266D5D8500929CB7 /* QLShareHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLShareHistoryViewController.m; sourceTree = "<group>"; };
+		A049922F266D5D8500929CB7 /* QLShareHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLShareHistoryModel.m; sourceTree = "<group>"; };
+		A0499230266D5D8500929CB7 /* QLShareHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLShareHistoryModel.h; sourceTree = "<group>"; };
+		A0499232266D5D8500929CB7 /* QLShareHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLShareHistoryCell.m; sourceTree = "<group>"; };
+		A0499233266D5D8500929CB7 /* QLShareHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLShareHistoryCell.xib; sourceTree = "<group>"; };
+		A0499234266D5D8500929CB7 /* QLShareHistoryHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLShareHistoryHeadView.h; sourceTree = "<group>"; };
+		A0499235266D5D8500929CB7 /* QLShareHistoryHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QLShareHistoryHeadView.xib; sourceTree = "<group>"; };
+		A0499236266D5D8500929CB7 /* QLShareHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLShareHistoryCell.h; sourceTree = "<group>"; };
+		A0499237266D5D8500929CB7 /* QLShareHistoryHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLShareHistoryHeadView.m; sourceTree = "<group>"; };
 		A04994062535F09700A1E014 /* QLMePageHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLMePageHeadView.h; sourceTree = "<group>"; };
 		A04994072535F09700A1E014 /* QLMePageHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLMePageHeadView.m; sourceTree = "<group>"; };
 		A049940F2535F0A300A1E014 /* QLMePageHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLMePageHeadView.xib; sourceTree = "<group>"; };
@@ -1842,6 +1882,7 @@
 				A09EAB1725DEBE1E007D9075 /* MyStore */,
 				A09EAADB25DEB2C4007D9075 /* VehicleCertificate */,
 				A09EAB2225DEBED2007D9075 /* PaymentAccount */,
+				A049921B266D5D8500929CB7 /* BrowsingHistory */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2671,6 +2712,7 @@
 			isa = PBXGroup;
 			children = (
 				A044AAC9251FCE6500D1C324 /* PreloadPage */,
+				A04991C7266D2FF000929CB7 /* Welcome */,
 				A044AAAE251FCE6500D1C324 /* Login */,
 				A044AAB6251FCE6500D1C324 /* CreatStore */,
 			);
@@ -2814,8 +2856,8 @@
 		A044AAE0251FCEBE00D1C324 /* CarSource */ = {
 			isa = PBXGroup;
 			children = (
-				EDB55CC2266A7B5500D18003 /* AddressSelect */,
 				A044AAE1251FCEBE00D1C324 /* CarSource */,
+				EDB55CC2266A7B5500D18003 /* AddressSelect */,
 				A0492F10256ACD4100B5E23C /* ChooseBrand */,
 				A0492FFC25716CF900B5E23C /* AdvancedScreening */,
 				A0492F50256EC73100B5E23C /* CarSourceDetail */,
@@ -3306,6 +3348,132 @@
 				EDD57601266A99280037BE9C /* SelectCityHeader.m */,
 				EDB55CC9266A8C9D00D18003 /* SelectCityCollectionViewCell.h */,
 				EDB55CCA266A8C9D00D18003 /* SelectCityCollectionViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A04991C7266D2FF000929CB7 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				A04991C8266D2FF000929CB7 /* Controller */,
+				A04991D4266D306100929CB7 /* View */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		A04991C8266D2FF000929CB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A04991C9266D2FF000929CB7 /* QLWelcomeViewController.h */,
+				A04991CB266D2FF000929CB7 /* QLWelcomeViewController.m */,
+				A04991CA266D2FF000929CB7 /* QLWelcomeViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A04991D4266D306100929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A04991D5266D309600929CB7 /* QLWelcomePageView.h */,
+				A04991D6266D309600929CB7 /* QLWelcomePageView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A04991F6266D589C00929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A049921B266D5D8500929CB7 /* BrowsingHistory */ = {
+			isa = PBXGroup;
+			children = (
+				A049922A266D5D8500929CB7 /* ShareHistory */,
+				A049921C266D5D8500929CB7 /* BrowseDetail */,
+			);
+			path = BrowsingHistory;
+			sourceTree = "<group>";
+		};
+		A049921C266D5D8500929CB7 /* BrowseDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A049921D266D5D8500929CB7 /* Controller */,
+				A0499220266D5D8500929CB7 /* Model */,
+				A0499223266D5D8500929CB7 /* View */,
+			);
+			path = BrowseDetail;
+			sourceTree = "<group>";
+		};
+		A049921D266D5D8500929CB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A049921F266D5D8500929CB7 /* QLBrowseDetailViewController.h */,
+				A049921E266D5D8500929CB7 /* QLBrowseDetailViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0499220266D5D8500929CB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0499221266D5D8500929CB7 /* QLBrowseDetailModel.h */,
+				A0499222266D5D8500929CB7 /* QLBrowseDetailModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A0499223266D5D8500929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A0499229266D5D8500929CB7 /* QLBrowseDetailHeadView.h */,
+				A0499225266D5D8500929CB7 /* QLBrowseDetailHeadView.m */,
+				A0499228266D5D8500929CB7 /* QLBrowseDetailHeadView.xib */,
+				A0499224266D5D8500929CB7 /* QLBrowseDetailCell.h */,
+				A0499227266D5D8500929CB7 /* QLBrowseDetailCell.m */,
+				A0499226266D5D8500929CB7 /* QLBrowseDetailCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A049922A266D5D8500929CB7 /* ShareHistory */ = {
+			isa = PBXGroup;
+			children = (
+				A049922B266D5D8500929CB7 /* Controller */,
+				A049922E266D5D8500929CB7 /* Model */,
+				A0499231266D5D8500929CB7 /* View */,
+			);
+			path = ShareHistory;
+			sourceTree = "<group>";
+		};
+		A049922B266D5D8500929CB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A049922C266D5D8500929CB7 /* QLShareHistoryViewController.h */,
+				A049922D266D5D8500929CB7 /* QLShareHistoryViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A049922E266D5D8500929CB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A049922F266D5D8500929CB7 /* QLShareHistoryModel.m */,
+				A0499230266D5D8500929CB7 /* QLShareHistoryModel.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A0499231266D5D8500929CB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A0499234266D5D8500929CB7 /* QLShareHistoryHeadView.h */,
+				A0499237266D5D8500929CB7 /* QLShareHistoryHeadView.m */,
+				A0499235266D5D8500929CB7 /* QLShareHistoryHeadView.xib */,
+				A0499236266D5D8500929CB7 /* QLShareHistoryCell.h */,
+				A0499232266D5D8500929CB7 /* QLShareHistoryCell.m */,
+				A0499233266D5D8500929CB7 /* QLShareHistoryCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4546,6 +4714,7 @@
 			isa = PBXGroup;
 			children = (
 				A0CBFB5F265C223F00647E3F /* Controller */,
+				A04991F6266D589C00929CB7 /* View */,
 			);
 			path = StoreSharePage;
 			sourceTree = "<group>";
@@ -4884,6 +5053,7 @@
 				A09EAAD125DD8C9E007D9075 /* QLSubmitSuccessViewController.xib in Resources */,
 				A03183D325AA1F6D007B5D3F /* QLVipCenterHeadView.xib in Resources */,
 				A01837C4254F2366000253FC /* QLUnreadMsgListCell.xib in Resources */,
+				A049923D266D5D8600929CB7 /* QLBrowseDetailHeadView.xib in Resources */,
 				A025832725473A5200CEE15F /* QLCarCircleAccCell.xib in Resources */,
 				A084CE34252CC97E006AE22F /* QLFriendMessageCell.xib in Resources */,
 				A0013177258FCB070080EB21 /* QLDueProcessCell.xib in Resources */,
@@ -4932,6 +5102,7 @@
 				A09EAB4425DEBED2007D9075 /* QLBankEditCell.xib in Resources */,
 				A00620DF2513DB2000A571E5 /* QLCustomAlertView.xib in Resources */,
 				A09EAB5225DEBF90007D9075 /* QLBankCardCell.xib in Resources */,
+				A04991CC266D2FF100929CB7 /* QLWelcomeViewController.xib in Resources */,
 				A0492F9D25702E7E00B5E23C /* QLVehicleReportCell.xib in Resources */,
 				A02582FB2545EA3600CEE15F /* QLCarCircleTextCell.xib in Resources */,
 				A0CAB7DF2561230C0015FAE3 /* QLTransactionInfoCell.xib in Resources */,
@@ -4960,6 +5131,7 @@
 				A087B893259BA5EA00432E8C /* QLSubmitImgConfigCell.xib in Resources */,
 				A025832F254742E000CEE15F /* QLCarCircleLikeCell.xib in Resources */,
 				A087B88A259BA47B00432E8C /* QLSubmitTextCell.xib in Resources */,
+				A0499241266D5D8600929CB7 /* QLShareHistoryCell.xib in Resources */,
 				A0013158258BD4230080EB21 /* QLCooperativeSourceDetailBottomView.xib in Resources */,
 				A04930222573E71300B5E23C /* QLAdvancedScreeningAddCell.xib in Resources */,
 				A01B49B5255DAE8D0082E6B2 /* QLHelpSellCell.xib in Resources */,
@@ -4979,10 +5151,12 @@
 				A0369F892530DF8200056C3D /* QLContactsCircleCell.xib in Resources */,
 				A02C93372523AA310031A6D7 /* QLHomeToolHeadView.xib in Resources */,
 				A07332652548910000570FDB /* QLCarCircleCommentCell.xib in Resources */,
+				A049923B266D5D8600929CB7 /* QLBrowseDetailCell.xib in Resources */,
 				A0733292254B490100570FDB /* QLRidersDynamicCell.xib in Resources */,
 				A057C7712534D6930045B7B1 /* QLContactsStoreCarCell.xib in Resources */,
 				ED51461026558B48008E255E /* QLCollectionValueDCell.xib in Resources */,
 				A0CAB5512560FBB20015FAE3 /* QLCustomSheetView.xib in Resources */,
+				A0499242266D5D8600929CB7 /* QLShareHistoryHeadView.xib in Resources */,
 				A0492FA6257030D400B5E23C /* QLCollectionValueTextCell.xib in Resources */,
 				A0492F73257020D600B5E23C /* QLCarDetailSectionView.xib in Resources */,
 				A09EAB4725DEBED2007D9075 /* QLEidtPayCodeCell.xib in Resources */,
@@ -5110,6 +5284,7 @@
 				A04930192573E34B00B5E23C /* QLAdvancedScreeningChooseCell.m in Sources */,
 				A04F065325DD82B600C471F6 /* QLRechargeView.m in Sources */,
 				A0ABB8AA255869B700A84297 /* QLChatMsgCell.m in Sources */,
+				A049923E266D5D8600929CB7 /* QLShareHistoryViewController.m in Sources */,
 				A0ABB8F0255C52B700A84297 /* QLChatMsgAContentView.m in Sources */,
 				A0492F44256C407500B5E23C /* QLTopCarSourcePriceCell.m in Sources */,
 				A006213C2513DB3900A571E5 /* QLBaseTabBar.m in Sources */,
@@ -5177,6 +5352,7 @@
 				A04994402538C8FC00A1E014 /* QLCarCircleViewController.m in Sources */,
 				A0CAB8542562EA560015FAE3 /* QLCarSourceNaviView.m in Sources */,
 				A0013150258BD41A0080EB21 /* QLCooperativeSourceDetailBottomView.m in Sources */,
+				A04991CD266D2FF100929CB7 /* QLWelcomeViewController.m in Sources */,
 				A0CBFB6C265C2AD500647E3F /* QLUnreadMsgModel.m in Sources */,
 				A0733286254B487F00570FDB /* QLRidersDynamicViewController.m in Sources */,
 				A0733291254B490100570FDB /* QLRidersDynamicCell.m in Sources */,
@@ -5185,8 +5361,10 @@
 				A07332B3254C8DB900570FDB /* QLRidersDynamicImgItem.m in Sources */,
 				A006212D2513DB3900A571E5 /* QLBaseView.m in Sources */,
 				A006218F2513DD7300A571E5 /* NSDictionary+Log.m in Sources */,
+				A0499240266D5D8600929CB7 /* QLShareHistoryCell.m in Sources */,
 				A0492F5F2570194D00B5E23C /* QLCarDetailHeadView.m in Sources */,
 				A006212B2513DB3900A571E5 /* QLBaseSubViewController.m in Sources */,
+				A049923C266D5D8600929CB7 /* QLBrowseDetailCell.m in Sources */,
 				A01837E925507F90000253FC /* QLRidersDynamicTextCell.m in Sources */,
 				A063B9F3257D506F001B1916 /* QLEditTopCarViewController.m in Sources */,
 				A09EAB3E25DEBED2007D9075 /* QLPaymentPageViewController.m in Sources */,
@@ -5209,6 +5387,7 @@
 				ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */,
 				A057C75D2534CC430045B7B1 /* QLContactsStoreViewController.m in Sources */,
 				A018380B25508808000253FC /* QLReleaseCarCircleStatusCell.m in Sources */,
+				A0499243266D5D8600929CB7 /* QLShareHistoryHeadView.m in Sources */,
 				A006218C2513DD7300A571E5 /* UITableView+QLUtil.m in Sources */,
 				A044AAD9251FCE6500D1C324 /* QLCreatStoreTFCell.m in Sources */,
 				A0F13FE225E41CC600C8F67B /* QLEditPermissionViewController.m in Sources */,
@@ -5217,6 +5396,7 @@
 				A04847B725A8DD9A00BD4596 /* QLStoreInvitationListViewController.m in Sources */,
 				A0F13FED25E41DF200C8F67B /* QLEditPermissionCell.m in Sources */,
 				A049300A2572C32100B5E23C /* QLAdvancedScreeningSectionView.m in Sources */,
+				A04991D7266D309600929CB7 /* QLWelcomePageView.m in Sources */,
 				A0492F8825702C7700B5E23C /* QLCarDetailAccInfoCell.m in Sources */,
 				A025832625473A5200CEE15F /* QLCarCircleAccCell.m in Sources */,
 				A044AD22251FDAE100D1C324 /* QLImageItem.m in Sources */,
@@ -5239,6 +5419,7 @@
 				A00621352513DB3900A571E5 /* QLBaseCollectionView.m in Sources */,
 				A0369F912530EA0E00056C3D /* QLSearchAddressBookViewController.m in Sources */,
 				A04994082535F09700A1E014 /* QLMePageHeadView.m in Sources */,
+				A0499238266D5D8600929CB7 /* QLBrowseDetailViewController.m in Sources */,
 				A00621342513DB3900A571E5 /* QLCollectionViewFlowLayout.m in Sources */,
 				A006212E2513DB3900A571E5 /* QLBaseLabel.m in Sources */,
 				A044AACE251FCE6500D1C324 /* QLAgreementDetailViewController.m in Sources */,
@@ -5265,6 +5446,7 @@
 				A00620DC2513DB2000A571E5 /* QLWebViewController.m in Sources */,
 				A0492F2E256C3BA800B5E23C /* QLTopCarSourceViewController.m in Sources */,
 				A00620E92513DB2100A571E5 /* QLBannerView.m in Sources */,
+				A0499239266D5D8600929CB7 /* QLBrowseDetailModel.m in Sources */,
 				A0B7C1202581454000C59D05 /* QLMyCarDetailBottomView.m in Sources */,
 				A09EAB4225DEBED2007D9075 /* QLBankCardListViewController.m in Sources */,
 				A09EACBC25DECB28007D9075 /* QLSysMsgCenterController.m in Sources */,
@@ -5278,6 +5460,7 @@
 				ED78B95B26691CA600C74473 /* QLAddCarPopWindowA.m in Sources */,
 				A0A5A1E92586981200B5CD53 /* QLUpdateVedioCell.m in Sources */,
 				A0C901B82529CA980021C069 /* QLChooseHeadView.m in Sources */,
+				A049923F266D5D8600929CB7 /* QLShareHistoryModel.m in Sources */,
 				A0492F1C256ACD4100B5E23C /* QLBrandCell.m in Sources */,
 				A0CAB5502560FBB20015FAE3 /* QLCustomSheetView.m in Sources */,
 				A07332642548910000570FDB /* QLCarCircleCommentCell.m in Sources */,
@@ -5292,6 +5475,7 @@
 				A02C93722527A9410031A6D7 /* QLHorizontalScrollCell.m in Sources */,
 				A00621832513DD7300A571E5 /* NSBundle+QLUtil.m in Sources */,
 				A006213A2513DB3900A571E5 /* MJDIYBackFooter.m in Sources */,
+				A049923A266D5D8600929CB7 /* QLBrowseDetailHeadView.m in Sources */,
 				A0492F9C25702E7E00B5E23C /* QLVehicleDescCell.m in Sources */,
 				A0865C812633365C001B85A3 /* QLAddCarBottomView.m in Sources */,
 				A087B892259BA5EA00432E8C /* QLSubmitImgConfigCell.m in Sources */,

@@ -23,6 +23,10 @@
 #import "QLMySubscriptionsPageViewController.h"
 #import "QLCarSourceDetailViewController.h"
 #import "QLPhotosShareViewController.h"
+#import "QLStoreSharePageViewController.h"
+#import "QLReleaseCarCircleViewController.h"
+#import "QLMyHelpSellViewController.h"
+#import "QLShareHistoryViewController.h"
 
 @interface QLHomePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLHomeNaviViewDelegate,QLBannerViewDelegate,QLHomePageHeadViewDelegate>
 @property (nonatomic, strong) QLHomeNaviView *naviView;
@@ -95,6 +99,19 @@
     }];
 }
 #pragma mark - action
+//查看
+- (void)allBtnClick:(UIButton *)sender {
+    NSInteger row = sender.tag;
+    if (row == 2) {
+        //分享记录
+        QLShareHistoryViewController *shVC = [QLShareHistoryViewController new];
+        [self.navigationController pushViewController:shVC animated:YES];
+    } else {
+        //车商友
+        
+        
+    }
+}
 //功能模块点击
 - (void)funClick:(QLFunModel *)model {
     if (model.value.integerValue == SubscriptionVehicle) {
@@ -126,7 +143,6 @@
     QLFunModel *fun2Model = [[QLToolsManager share].homePageModel getFun:MyStore];
     QLFunModel *fun3Model = [[QLToolsManager share].homePageModel getFun:VehicleCertificate];
     QLFunModel *fun4Model = [[QLToolsManager share].homePageModel getFun:PaymentAccount];
-//    QLFunModel *fun5Model = [[QLToolsManager share].homePageModel getFun:CreditReporting];
     
     if (fun1Model) {
         [temArr addObject:fun1Model];
@@ -140,9 +156,7 @@
     if (fun4Model) {
         [temArr addObject:fun4Model];
     }
-//    if (fun5Model) {
-//        [temArr addObject:fun5Model];
-//    }
+    
     
     int row = temArr.count/5 > 1?2:1;
     int collectionViewHeight = 95*row;
@@ -206,7 +220,6 @@
             return self.homePageModel.recommend_car_list.count;
             break;
     }
-//    return section==0?1:section==1?4:8;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -251,7 +264,14 @@
             itemModel.registerType = ITEM_NibRegisterType;
             itemModel.itemSize = CGSizeMake(50, 60);
             cell.itemModel = itemModel;
-            cell.itemArr  = self.homePageModel.function_list;
+        
+            NSMutableArray *temArr = [NSMutableArray array];
+            for (QLFunModel *model in self.homePageModel.function_list) {
+                if (model.value.integerValue == 101||model.value.integerValue == 102||model.value.integerValue == 103||model.value.integerValue == 111) {
+                    [temArr addObject:model];
+                }
+            }
+            cell.itemArr  = temArr;
             cell.itemSetHandler = ^(id result, NSError *error) {
                 QLImgTextItem *item = result[@"item"];
                 NSArray *dataArr = result[@"dataArr"];
@@ -269,14 +289,20 @@
                 
                 if (indexPath.row == 1) {
                     // 店铺分享
+                    QLStoreSharePageViewController *sspVC = [QLStoreSharePageViewController new];
+                    [self.navigationController pushViewController:sspVC animated:YES];
                 }
                 
                 if (indexPath.row == 2) {
                     // 发布动态
+                    QLReleaseCarCircleViewController *rccVC = [QLReleaseCarCircleViewController new];
+                    [self.navigationController pushViewController:rccVC animated:YES];
                 }
                 
                 if (indexPath.row == 3) {
-                    // 车辆拼图
+                    // 帮卖订单
+                    QLMyHelpSellViewController *hsVC = [QLMyHelpSellViewController new];
+                    [self.navigationController pushViewController:hsVC animated:YES];
                 }
             };
             
@@ -291,6 +317,7 @@
         } else {
             // 车友圈
             QLHomeVisitListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"visitListCell" forIndexPath:indexPath];
+            cell.allBtn.tag = indexPath.row;
             if (indexPath.row == 2) {
                 cell.titleLB.text = @"朋友圈";
                 cell.headListView.headsArr = self.friendData;
@@ -298,6 +325,7 @@
                 cell.titleLB.text = @"车商友人";
                 cell.headListView.headsArr = self.homePageModel.friend_list;
             }
+            [cell.allBtn addTarget:self action:@selector(allBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             
             return cell;
         }

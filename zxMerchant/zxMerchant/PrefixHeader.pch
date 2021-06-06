@@ -60,6 +60,7 @@
 #define VersionId                   @"3.0"
 
 //沙盒key
+#define LocalHasUseKey              @"localHasUse"//本地第一次使用
 #define LocalUserInfoKey            @"localUserInfo"//本地用户信息
 #define LocalSearchHistoryKey       @"localSearchHistory"//本地搜索历史
 

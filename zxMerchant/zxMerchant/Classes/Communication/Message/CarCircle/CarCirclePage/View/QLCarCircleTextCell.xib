@@ -37,7 +37,7 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里填写发布的文案,发多少显示多少一直换行这里填写发布的文案" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZ8-07-Gi6">
-                        <rect key="frame" x="72" y="55" width="233" height="36"/>
+                        <rect key="frame" x="72" y="54" width="233" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -56,7 +56,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaR-Vd-GAk">
-                        <rect key="frame" x="72" y="28" width="27" height="17"/>
+                        <rect key="frame" x="72" y="28" width="27" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.44309252500000001" green="0.44316959379999998" blue="0.44307607409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -80,7 +80,6 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="top" secondItem="jL1-fs-b1Q" secondAttribute="bottom" constant="10" id="2IG-gW-3Se"/>
                     <constraint firstItem="RaR-Vd-GAk" firstAttribute="top" secondItem="crp-Qy-Z7y" secondAttribute="bottom" constant="8" id="87p-H7-aC0"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="crp-Qy-Z7y" secondAttribute="trailing" constant="15" id="Lwg-Lj-WSD"/>
                     <constraint firstItem="RaR-Vd-GAk" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" id="NlT-6u-ekz"/>
@@ -111,6 +110,7 @@
                 <outlet property="openBtnHight" destination="588-1l-rf7" id="oGi-jF-Xjx"/>
                 <outlet property="textLB" destination="VZ8-07-Gi6" id="lda-My-o83"/>
                 <outlet property="timeLB" destination="RaR-Vd-GAk" id="q7n-L8-72F"/>
+                <outlet property="timeLBBottom" destination="lQn-eG-G3Q" id="bzf-kw-k3h"/>
                 <outlet property="vipBtn" destination="hKF-N1-0R6" id="5IN-nZ-S5L"/>
             </connections>
             <point key="canvasLocation" x="-20.289855072463769" y="93.415178571428569"/>

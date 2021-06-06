@@ -229,8 +229,7 @@
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:friendModel.head_pic] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (image) {
             cell.imageView.image = [UIImage drawWithImage:cell.imageView.image size:CGSizeMake(38, 38)];
-            NSIndexPath *indexp = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            [tableView reloadRowsAtIndexPaths:@[indexp] withRowAnimation:UITableViewRowAnimationNone];
+            [tableView reloadData];
         }
     }];
     cell.textLabel.text = friendModel.nickname;

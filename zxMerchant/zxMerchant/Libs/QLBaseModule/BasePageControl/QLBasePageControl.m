@@ -13,13 +13,12 @@
 
 @end
 @implementation QLBasePageControl
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
         self.frame = frame;
-        self.backgroundColor = [UIColor clearColor];
-        self.canClickLower = NO;
-        //kvc
-        [self addObserver:self forKeyPath:@"currentPage" options:NSKeyValueObservingOptionNew context:nil];
+        
+        [self commonInit];
     }
         return self;
 }
@@ -29,6 +28,13 @@
     [self addImageView];
     //布局
     [self currentPageChange];
+}
+
+- (void)commonInit {
+    self.backgroundColor = [UIColor clearColor];
+    self.canClickLower = NO;
+    //kvc
+    [self addObserver:self forKeyPath:@"currentPage" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)addImageView {
@@ -72,10 +78,10 @@
         UIImageView *imageView = [self viewWithTag:100+i];
         if (i == self.currentPage) {
             imageView.image = _currentImage;
-            imageView.width = _pageSize.width+_currentChange;
+            imageView.frame = CGRectMake(i *(_pageSize.width+_space), (self.height-_pageSize.height)*0.5, _pageSize.width+_currentChange, _pageSize.height);
         } else {
             imageView.image = _defaultImage;
-            imageView.width = _pageSize.width;
+            imageView.frame = CGRectMake(i *(_pageSize.width+_space)+(i<self.currentPage?0:_currentChange), (self.height-_pageSize.height)*0.5, _pageSize.width, _pageSize.height);
         }
     }
 }

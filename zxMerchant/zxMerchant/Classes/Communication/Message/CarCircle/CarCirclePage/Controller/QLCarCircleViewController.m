@@ -31,6 +31,7 @@
 
 @property (nonatomic, strong) NSDictionary *msgDic;
 @property (nonatomic, strong) NSMutableArray *listArray;
+@property (nonatomic, assign) BOOL isEditAnimation;
 @end
 
 @implementation QLCarCircleViewController
@@ -202,17 +203,21 @@
 //评论
 - (void)commentBtnClick:(UIButton *)sender {
     [self.accView hidden];
-    
-    QLRidersDynamicListModel *model = self.listArray[self.accView.tag];
-    self.bottomView.tag = self.accView.tag;
+    NSInteger section = self.accView.tag;
+    QLRidersDynamicListModel *model = self.listArray[section];
+    self.bottomView.tag = section;
     self.bottomView.msgAccountId = model.account_id;
-    
     self.bottomView.sendAccountId = [QLUserInfoModel getLocalInfo].account.account_id;
     self.bottomView.sendAccountName = [QLUserInfoModel getLocalInfo].account.nickname;
     self.bottomView.receiverAccountId = model.account_id;
     self.bottomView.receiverName = model.account_nickname;
     self.bottomView.tf.placeholder = @"评论";
     [self bottomViewShowStatus:YES];
+    //滚动到评论数据
+    self.isEditAnimation = YES;
+    NSInteger totalCellNum = [self.tableView numberOfRowsInSection:section];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:totalCellNum-1 inSection:section];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 //赞
 - (void)likeBtnClick:(UIButton *)sender {
@@ -257,10 +262,12 @@
 - (void)bottomViewShowStatus:(BOOL)isShow {
     self.bottomView.hidden = !isShow;
     if (isShow) {
+        [self.bottomView.tf becomeFirstResponder];
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(45);
         }];
     } else {
+        [self.view endEditing:YES];
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(0);
         }];
@@ -358,6 +365,7 @@
 }
 //页面点击
 - (void)tapClick:(UIGestureRecognizer *)gesture {
+    [self.view endEditing:YES];
     [self.accView hidden];
     [self bottomViewShowStatus:NO];
 }
@@ -490,9 +498,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 15;
 }
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.accView hidden];
-    [self bottomViewShowStatus:NO];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.isEditAnimation == NO) {
+        [self.accView hidden];
+        [self bottomViewShowStatus:NO];
+    } else {
+        self.isEditAnimation = NO;
+    }
+    
 }
 #pragma mark - Lazy
 - (QLCarCircleNaviView *)naviView {

@@ -70,7 +70,7 @@
 //确定
 - (void)submitBtnClick {
     if (self.chooseArr.count != 0) {
-        self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐%lu辆好车--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),(unsigned long)self.chooseArr.count,QLNONull([QLUserInfoModel getLocalInfo].business.business_name),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
+        self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐%lu辆好车,杜绝事故，精选优质--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),(unsigned long)self.chooseArr.count,QLNONull([QLUserInfoModel getLocalInfo].business.business_name),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
         [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
         [self.shareView show];
     }
@@ -85,7 +85,7 @@
         if ([sender.currentTitle isEqualToString:@"分享店铺"]) {
             self.shareType = 1;
             //分享我的店铺
-           self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐好车--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),QLNONull([QLUserInfoModel getLocalInfo].business.business_name),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
+           self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐好车,杜绝事故，精选优质--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),QLNONull([QLUserInfoModel getLocalInfo].business.business_name),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
            [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
            [self.shareView show];
         } else {
@@ -103,18 +103,11 @@
 #pragma mark- tableView
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLCarPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoCell" forIndexPath:indexPath];
+    cell.shareBtn.tag = indexPath.row;
     cell.showChooseBtn = self.isChooseCar;
     cell.chooseBtn.tag = indexPath.row;
     [cell.chooseBtn addTarget:self action:@selector(chooseBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    //分享按钮
-    cell.accessoryView = nil;
-    if (!self.isChooseCar) {
-        QLBaseButton *accBtn = [[QLBaseButton alloc] initWithFrame:CGRectMake(0, 0, 52, 20)];
-        accBtn.tag = indexPath.row;
-        [accBtn addTarget:self action:@selector(accBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [accBtn setImage:[UIImage imageNamed:@"wxShare"] forState:UIControlStateNormal];
-        cell.accessoryView = accBtn;
-    }
+    [cell.shareBtn addTarget:self action:@selector(accBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     //选择变化
     QLCarInfoModel *model = self.dataArr[indexPath.row];
        cell.chooseBtn.selected = NO;
@@ -227,10 +220,9 @@
                 //分享
                 UMShareWebpageObject *webObj = [UMShareWebpageObject shareObjectWithTitle:weakSelf.shareView.descLB.text descr:@"店铺分享" thumImage:weakSelf.shareView.headImgView.image];
                 NSString *shareUrl = @"";
-                if (self.shareType == 0) {
-                    shareUrl = [NSString stringWithFormat:@"%@/store_details.html?merchant_id=%@&member_sub_id=%@&id=%@&share_id=%@",UrlPath,QLNONull([QLUserInfoModel getLocalInfo].business.business_id),QLNONull([QLUserInfoModel getLocalInfo].account.account_id),[car_id_list componentsJoinedByString:@","],share_id];
-                } else if (self.shareType == 2) {
-                    shareUrl = [NSString stringWithFormat:@"%@/car_detail.html?merchant_id=%@&member_sub_id=%@&car_id=%@&share_id=%@",UrlPath,[QLUserInfoModel getLocalInfo].business.business_id,[QLUserInfoModel getLocalInfo].account.account_id,[car_id_list componentsJoinedByString:@","],share_id];
+                if (self.shareType == 0||self.shareType == 1) {
+                    shareUrl = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,self.shareType == 1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),[car_id_list componentsJoinedByString:@","],[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
+                    
                 } else {
                     shareUrl = [NSString stringWithFormat:@"%@/personal_stores.html?merchant_id=%@&member_sub_id=%@&share_id=%@",UrlPath,[QLUserInfoModel getLocalInfo].business.business_id,[QLUserInfoModel getLocalInfo].account.account_id,share_id];
                 }

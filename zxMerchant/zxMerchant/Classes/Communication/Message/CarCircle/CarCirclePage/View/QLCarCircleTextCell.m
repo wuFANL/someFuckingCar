@@ -15,6 +15,7 @@
     self.vipBtn.hidden = YES;
     self.headBtn.layer.cornerRadius = 8;
     self.headBtn.clipsToBounds = YES;
+
 }
 
 - (void)setModel:(QLRidersDynamicListModel *)model {
@@ -26,6 +27,7 @@
         [self.nikenameBtn setTitle:model.account_nickname forState:UIControlStateNormal];
         self.vipBtn.hidden = model.flag.integerValue ==1?YES:NO;
         self.timeLB.text = @"";
+        self.timeLBBottom.constant = 0;
         self.textLB.text = rdlModel.dynamic_content;
         NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
         self.showAllBtn = row <= 5?NO:YES;
@@ -69,7 +71,6 @@
     if ([dic objectForKey:@"account"]) {
         if ([[dic objectForKey:@"account"] objectForKey:@"head_pic"]) {
             NSString *urlStr = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"account"] objectForKey:@"head_pic"]];
-//            [self.headBtn.imageView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
             [self.headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:urlStr] forState:UIControlStateNormal];
         }
     }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="historyCell" rowHeight="99" id="KGk-i7-Jjw" customClass="QLShareHistoryCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0L-Xm-0hS">
+                        <rect key="frame" x="16" y="16" width="30" height="30"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="USu-Lm-r7E"/>
+                            <constraint firstAttribute="width" secondItem="k0L-Xm-0hS" secondAttribute="height" multiplier="1:1" id="c0U-Bw-vHf"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="别克 凯越 2011款LE凯越 2011款 1.6自舒" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgf-r6-9Oq">
+                        <rect key="frame" x="54" y="22" width="251" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89Q-Yz-A7A">
+                        <rect key="frame" x="16" y="62" width="25" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-nw-Ekm">
+                        <rect key="frame" x="235" y="61.5" width="70" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="kld-9O-ZMl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="0人看啦" image="accRightIcon_gray">
+                            <color key="titleColor" systemColor="darkTextColor"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="YqY-nw-Ekm" firstAttribute="centerY" secondItem="89Q-Yz-A7A" secondAttribute="centerY" id="Es4-3V-5dh"/>
+                    <constraint firstAttribute="trailing" secondItem="YqY-nw-Ekm" secondAttribute="trailing" constant="15" id="HDB-LH-2qY"/>
+                    <constraint firstItem="89Q-Yz-A7A" firstAttribute="leading" secondItem="k0L-Xm-0hS" secondAttribute="leading" id="NTw-Qg-9Lc"/>
+                    <constraint firstItem="Dgf-r6-9Oq" firstAttribute="leading" secondItem="k0L-Xm-0hS" secondAttribute="trailing" constant="8" id="PNs-oz-kZA"/>
+                    <constraint firstItem="k0L-Xm-0hS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Rnl-ge-fyz"/>
+                    <constraint firstItem="Dgf-r6-9Oq" firstAttribute="centerY" secondItem="k0L-Xm-0hS" secondAttribute="centerY" id="mS9-py-gcd"/>
+                    <constraint firstItem="89Q-Yz-A7A" firstAttribute="top" secondItem="k0L-Xm-0hS" secondAttribute="bottom" constant="16" id="mgk-cZ-GAj"/>
+                    <constraint firstItem="k0L-Xm-0hS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="tIU-QZ-SmL"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Dgf-r6-9Oq" secondAttribute="trailing" constant="15" id="wIz-xm-wrd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="browseBtn" destination="YqY-nw-Ekm" id="tYT-SW-9F2"/>
+                <outlet property="imgView" destination="k0L-Xm-0hS" id="4Be-TR-t36"/>
+                <outlet property="timeLB" destination="89Q-Yz-A7A" id="Rnq-Qx-TmK"/>
+                <outlet property="titleLB" destination="Dgf-r6-9Oq" id="nOQ-67-4ZW"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="105.46875"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="accRightIcon_gray" width="4.5" height="7"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

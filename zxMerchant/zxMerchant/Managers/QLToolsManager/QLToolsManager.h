@@ -53,7 +53,7 @@ extern NSString* Operation_type;
  */
 - (void)getFunData:(ResultBlock)result;
 /**
- *获取客服号码
+ *获取个人信息
  */
 - (void)getMeInfoRequest:(ResultBlock)result;
 /**

@@ -43,23 +43,31 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKR-fl-t28">
-                        <rect key="frame" x="139" y="59" width="23" height="17"/>
+                        <rect key="frame" x="139" y="59" width="157.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.95294117649999999" green="0.28627450980000002" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJw-1b-2b2">
+                        <rect key="frame" x="253" y="58" width="52" height="26"/>
+                        <state key="normal" image="wxShare"/>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="jKR-fl-t28" firstAttribute="trailing" secondItem="vwg-cU-SnW" secondAttribute="trailing" id="0Jt-i3-YhQ"/>
                     <constraint firstItem="VoS-kL-LZm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="4Lb-II-LIk"/>
                     <constraint firstItem="VoS-kL-LZm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9ZS-gU-UFV"/>
                     <constraint firstItem="vwg-cU-SnW" firstAttribute="top" secondItem="g7s-nb-K3w" secondAttribute="top" constant="-4" id="BWl-vO-2XR"/>
                     <constraint firstItem="g7s-nb-K3w" firstAttribute="width" secondItem="g7s-nb-K3w" secondAttribute="height" multiplier="75:56" id="Dxd-Ao-b8o"/>
                     <constraint firstItem="VoS-kL-LZm" firstAttribute="width" secondItem="VoS-kL-LZm" secondAttribute="height" multiplier="1:1" id="HNg-Vw-vtJ"/>
                     <constraint firstItem="jKR-fl-t28" firstAttribute="top" secondItem="vwg-cU-SnW" secondAttribute="bottom" constant="5" id="JOC-SX-iLU"/>
+                    <constraint firstAttribute="bottom" secondItem="gJw-1b-2b2" secondAttribute="bottom" constant="4" id="N94-aJ-W1m"/>
                     <constraint firstItem="g7s-nb-K3w" firstAttribute="centerY" secondItem="VoS-kL-LZm" secondAttribute="centerY" id="Ycm-Y5-xcU"/>
                     <constraint firstItem="jKR-fl-t28" firstAttribute="leading" secondItem="vwg-cU-SnW" secondAttribute="leading" id="a94-Ws-3Ta"/>
                     <constraint firstAttribute="bottom" secondItem="jKR-fl-t28" secondAttribute="bottom" constant="12" id="f8I-PM-J6f"/>
                     <constraint firstItem="vwg-cU-SnW" firstAttribute="leading" secondItem="g7s-nb-K3w" secondAttribute="trailing" constant="14" id="hg7-zS-bVZ"/>
+                    <constraint firstItem="gJw-1b-2b2" firstAttribute="top" secondItem="vwg-cU-SnW" secondAttribute="bottom" constant="4" id="kb4-0i-hev"/>
+                    <constraint firstAttribute="trailing" secondItem="gJw-1b-2b2" secondAttribute="trailing" constant="15" id="m0b-O2-T6s"/>
                     <constraint firstItem="g7s-nb-K3w" firstAttribute="leading" secondItem="VoS-kL-LZm" secondAttribute="trailing" constant="15" id="tBc-cS-Dlv"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vwg-cU-SnW" secondAttribute="trailing" constant="15" id="zce-gu-OI9"/>
                 </constraints>
@@ -70,6 +78,7 @@
                 <outlet property="chooseBtnWidth" destination="Kuk-ME-W6I" id="u7u-9J-wrv"/>
                 <outlet property="imgView" destination="g7s-nb-K3w" id="lZZ-gd-bq1"/>
                 <outlet property="priceLB" destination="jKR-fl-t28" id="eAF-az-f1o"/>
+                <outlet property="shareBtn" destination="gJw-1b-2b2" id="DzZ-QB-7hY"/>
                 <outlet property="titleLB" destination="vwg-cU-SnW" id="OdK-jF-zpI"/>
             </connections>
             <point key="canvasLocation" x="47.826086956521742" y="55.580357142857139"/>
@@ -78,6 +87,7 @@
     <resources>
         <image name="noSelect_gray" width="15" height="15"/>
         <image name="selectSuccess_green" width="20" height="20"/>
+        <image name="wxShare" width="52" height="20.5"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
