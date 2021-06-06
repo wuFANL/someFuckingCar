@@ -22,4 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *page_size;
 @end
 
+@interface QLConditionModel : NSObject
+@property (nonatomic, copy) NSString *conditionName; //showName
+@property (nonatomic, copy) NSString *sortIndex;     //0123
+@end
+
+
+
 NS_ASSUME_NONNULL_END

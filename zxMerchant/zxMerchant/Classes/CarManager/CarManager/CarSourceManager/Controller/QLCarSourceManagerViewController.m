@@ -47,7 +47,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLCarSourceManagerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"carSourceManagerCell" forIndexPath:indexPath];
-    cell.priceBtn.selected = self.type == 2?NO:YES;
+//    cell.priceBtn.selected = self.type == 2?NO:YES;
     cell.showFunView = self.type == 2?NO:YES;
     NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
     [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];

@@ -40,12 +40,13 @@
     if (self.msgReceiver != UnknowReceiver&&self.msgType != UnknowMsg) {
         if (self.msgType == TextMsg) {
             QLChatMsgAContentView *contentView = [QLChatMsgAContentView new];
-            UIFont *font = [UIFont fontWithName:@"PingFang SC" size:13];
+            UIFont *font = [UIFont fontWithName:@"PingFang SC" size:15];
 
             if([[self.sourceDic objectForKey:@"m_type"] isEqualToString:@"1"]) {
                 //纯文本
                 contentView.titleLB.text = [self.sourceDic objectForKey:@"content"];
                 contentView.titleLB.delegate = self;
+                contentView.titleLB.font = font;
                 self.msgView = contentView;
             }
             else if ([[self.sourceDic objectForKey:@"m_type"] isEqualToString:@"3"])

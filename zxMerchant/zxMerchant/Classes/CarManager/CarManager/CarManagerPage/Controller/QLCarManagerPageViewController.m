@@ -33,6 +33,9 @@
 @property (nonatomic, strong) QLCarSourceManagerViewController *csm1VC;
 @property (nonatomic, strong) QLCarSourceManagerViewController *csm2VC;
 @property (nonatomic, strong) QLCarSourceManagerViewController *csm3VC;
+
+//专门用于展示条件项的数组
+@property (nonatomic, strong) NSMutableArray *showArray;
 @end
 
 @implementation QLCarManagerPageViewController
@@ -186,6 +189,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.showArray = [[NSMutableArray alloc] initWithCapacity:0];
     self.warnModel = [[QLVehicleWarnModel alloc] init];
     self.allCarArray = [[NSMutableArray alloc] initWithCapacity:0];
 
@@ -295,6 +299,35 @@
                     weakSelf.vcView.sort_by = indexPath.row+1;
                     weakSelf.headView.sortView.dataArr[0] = dataArr[indexPath.row];
                     weakSelf.paramModel.sort_by = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+                    
+                    if([weakSelf.showArray count] > 0)
+                    {
+                        __block BOOL isHas = NO;
+                        [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if([obj.sortIndex isEqualToString:@"0"])
+                            {
+                                isHas = YES;
+                                obj.conditionName = dataArr[indexPath.row];
+                                *stop = YES;
+                            }
+                            if(idx == [weakSelf.showArray count] -1 && isHas == NO)
+                            {
+                                QLConditionModel *mod = [[QLConditionModel alloc] init];
+                                mod.conditionName = dataArr[indexPath.row];
+                                mod.sortIndex = @"0";
+                                [weakSelf.showArray addObject:mod];
+                                *stop = YES;
+                            }
+                        }];
+                    }
+                    else
+                    {
+                        QLConditionModel *mod = [[QLConditionModel alloc] init];
+                        mod.conditionName = dataArr[indexPath.row];
+                        mod.sortIndex = @"0";
+                        [weakSelf.showArray addObject:mod];
+                    }
+
                 } else if (type == 2&&indexPath.row >= 0) {
                     //价格
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
@@ -303,12 +336,71 @@
                     NSString *maxPrice = [[price componentsSeparatedByString:@"-"] lastObject];
                     weakSelf.paramModel.price_min = minPrice;
                     weakSelf.paramModel.price_max = maxPrice;
+                    
+                    
+                    if([weakSelf.showArray count] > 0)
+                    {
+                        __block BOOL isHas = NO;
+                        [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if([obj.sortIndex isEqualToString:@"2"])
+                            {
+                                isHas = YES;
+                                obj.conditionName = dataArr[indexPath.row];
+                                *stop = YES;
+                            }
+                            if(idx == [weakSelf.showArray count] -1 && isHas == NO)
+                            {
+                                QLConditionModel *mod = [[QLConditionModel alloc] init];
+                                mod.conditionName = dataArr[indexPath.row];
+                                mod.sortIndex = @"2";
+                                [weakSelf.showArray addObject:mod];
+                                *stop = YES;
+                            }
+                        }];
+                    }
+                    else
+                    {
+                        QLConditionModel *mod = [[QLConditionModel alloc] init];
+                        mod.conditionName = dataArr[indexPath.row];
+                        mod.sortIndex = @"2";
+                        [weakSelf.showArray addObject:mod];
+                    }
 
                 } else if (type == 3&&indexPath.row >= 0) {
                     //在售
                     weakSelf.vcView.deal_state =  indexPath.row;
                     weakSelf.headView.sortView.dataArr[3] = dataArr[indexPath.row];
                     weakSelf.paramModel.deal_state = indexPath.row ==0?@"1":indexPath.row ==1?@"0":@"3";
+                   
+                    
+                    if([weakSelf.showArray count] > 0)
+                    {
+                        __block BOOL isHas = NO;
+                        [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if([obj.sortIndex isEqualToString:@"3"])
+                            {
+                                isHas = YES;
+                                obj.conditionName = dataArr[indexPath.row];
+                                *stop = YES;
+                            }
+                            if(idx == [weakSelf.showArray count] -1 && isHas == NO)
+                            {
+                                QLConditionModel *mod = [[QLConditionModel alloc] init];
+                                mod.conditionName = dataArr[indexPath.row];
+                                mod.sortIndex = @"3";
+                                [weakSelf.showArray addObject:mod];
+                                *stop = YES;
+                            }
+                        }];
+                    }
+                    else
+                    {
+                        QLConditionModel *mod = [[QLConditionModel alloc] init];
+                        mod.conditionName = dataArr[indexPath.row];
+                        mod.sortIndex = @"3";
+                        [weakSelf.showArray addObject:mod];
+                    }
+                    
                 }
             } else if(indexPath.section == 1) {
                 if (indexPath.row == 2) {
@@ -323,17 +415,28 @@
                     [weakSelf.navigationController pushViewController:dpVC animated:YES];
                     
                 }
+                //头部恢复
+                weakSelf.headView.sortView.currentIndex = -1;
+                [weakSelf.headView.sortView.collectionView reloadData];
+                return;;
             }
             //头部恢复
             weakSelf.headView.sortView.currentIndex = -1;
             [weakSelf.headView.sortView.collectionView reloadData];
+            
+            weakSelf.headView.showResultView = YES;
+            __block NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:0];
+            [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [ar addObject:obj.conditionName];
+            }];
+            weakSelf.headView.resultView.itemArr = ar;
             
             [weakSelf requestForList:weakSelf.paramModel];
         };
         [self.vcView show];
     } else {
         self.headView.sortView.currentIndex = -1;
-        [self.vcView hidden];
+        [self.vcView hiddenViewEvent];
         //品牌导航
         WEAKSELF
         QLChooseBrandViewController *cbVC = [QLChooseBrandViewController new];
@@ -345,8 +448,40 @@
                 weakSelf.paramModel.brand_id = brandModel.brand_id;
                 [weakSelf requestForList:weakSelf.paramModel];
                 
-                self.headView.showResultView = YES;
-                self.headView.resultView.itemArr =@[brandModel.brand_name];
+                if([weakSelf.showArray count] > 0)
+                {
+                    __block BOOL isHas = NO;
+                    [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if([obj.sortIndex isEqualToString:@"1"])
+                        {
+                            isHas = YES;
+                            obj.conditionName = brandModel.brand_name;
+                            *stop = YES;
+                        }
+                        if(idx == [weakSelf.showArray count] -1 && isHas == NO)
+                        {
+                            QLConditionModel *mod = [[QLConditionModel alloc] init];
+                            mod.conditionName = brandModel.brand_name;
+                            mod.sortIndex = @"1";
+                            [weakSelf.showArray addObject:mod];
+                            *stop = YES;
+                        }
+                    }];
+                }
+                else
+                {
+                    QLConditionModel *mod = [[QLConditionModel alloc] init];
+                    mod.conditionName = brandModel.brand_name;
+                    mod.sortIndex = @"1";
+                    [weakSelf.showArray addObject:mod];
+                }
+
+                weakSelf.headView.showResultView = YES;
+                __block NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:0];
+                [weakSelf.showArray enumerateObjectsUsingBlock:^(QLConditionModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [ar addObject:obj.conditionName];
+                }];
+                weakSelf.headView.resultView.itemArr = ar;
             }
         };
         [self.navigationController pushViewController:cbVC animated:YES];
@@ -429,6 +564,14 @@
         _headView.sortView.showStatusItem = YES;
         _headView.sortView.delegate = self;
         [_headView.resultView setDataHandler:^(id result) {
+            //reset
+            [self.showArray removeAllObjects];
+
+            self.headView.sortView.showOriginalItem = YES;
+            self.vcView.sort_by  =1;
+            self.vcView.priceRange=@"0-9999999";
+            self.vcView.deal_state = 0;
+            
             self.paramModel.local_state = self.paramModel.local_state;
             self.paramModel.brand_id = @"";
             self.paramModel.deal_state = @"1";

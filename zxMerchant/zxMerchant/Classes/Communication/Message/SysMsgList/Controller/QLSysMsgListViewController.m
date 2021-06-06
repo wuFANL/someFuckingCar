@@ -126,6 +126,7 @@
     cell.contentLB.text = [dic objectForKey:@"content"];
     cell.titleLB.text = [dic objectForKey:@"from_user_name"];
     [cell.headBtn sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_user_head"]] forState:UIControlStateNormal];
+
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

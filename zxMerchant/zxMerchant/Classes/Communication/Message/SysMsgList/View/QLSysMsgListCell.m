@@ -12,7 +12,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.bjView roundRectCornerRadius:4 borderWidth:1 borderColor:WhiteColor];
+    [self.bjView roundRectCornerRadius:6 borderWidth:1 borderColor:WhiteColor];
+    [self.headBtn roundRectCornerRadius:6 borderWidth:1 borderColor:WhiteColor];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

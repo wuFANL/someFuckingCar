@@ -4311,8 +4311,8 @@
 		A0C901A22529C8600021C069 /* MessagePage */ = {
 			isa = PBXGroup;
 			children = (
-				A0C901A32529C8780021C069 /* Controller */,
 				A084CE38252CCC63006AE22F /* Model */,
+				A0C901A32529C8780021C069 /* Controller */,
 				A0C901A12529C7EA0021C069 /* View */,
 			);
 			path = MessagePage;
