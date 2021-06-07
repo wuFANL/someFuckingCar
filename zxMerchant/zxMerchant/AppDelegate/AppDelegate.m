@@ -9,8 +9,10 @@
 #import "AppDelegate.h"
 #import "QLNavigationController.h"
 #import "QLTabBarController.h"
-#import "QLLoginViewController.h"
+#import "QLWelcomeViewController.h"
 #import "QLPreloadPageViewController.h"
+#import "QLLoginViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -24,13 +26,24 @@
     //初始化window
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    if ([QLUserInfoModel getLocalInfo].isLogin) {
-        //数据预加载
-        [self initPreloadVC];
+    
+    BOOL hasUse = [UserDefaults boolForKey:LocalHasUseKey];
+    if (!hasUse) {
+        //去欢迎页
+        [UserDefaults setBool:YES forKey:LocalHasUseKey];
+        QLWelcomeViewController *wVC = [QLWelcomeViewController new];
+        self.window.rootViewController = wVC;
+        [self.window makeKeyAndVisible];
     } else {
-        //初始化登录
-        [self initLoginVC];
+        if ([QLUserInfoModel getLocalInfo].isLogin) {
+            //数据预加载
+            [self initPreloadVC];
+        } else {
+            //初始化登录
+            [self initLoginVC];
+        }
     }
+    
     //打开log
     [QLKitLogManager setLogEnable:YES];
     //初始友盟

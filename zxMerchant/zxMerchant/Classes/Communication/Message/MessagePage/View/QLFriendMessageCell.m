@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.imgView roundRectCornerRadius:4 borderWidth:1 borderColor:ClearColor];
+    [self.imgView roundRectCornerRadius:6 borderWidth:1 borderColor:ClearColor];
     [self.badgeLB roundRectCornerRadius:18*0.5 borderWidth:1 borderColor:ClearColor];
     
     self.badgeValue = 0;

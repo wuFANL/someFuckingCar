@@ -80,9 +80,10 @@
 //获取品牌
 - (void)getCarBrand {
     [MBProgressHUD showCustomLoading:nil];
-    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_brand_data",@"merchant_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+
+    [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"get_merchant_brand_data",@"business_id":[QLUserInfoModel getLocalInfo].account.business_id} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_list"]] mutableCopy];
+        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_group_list"]] mutableCopy];
         //索引数据
         NSMutableArray *indexArr = [NSMutableArray array];
         for (QLBrandModel *brandModel in self.aArr) {
@@ -109,9 +110,47 @@
 
             });
         }
+        
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
+    
+    
+    
+    
+    
+//    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_brand_data",@"merchant_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+//        [MBProgressHUD immediatelyRemoveHUD];
+//        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_list"]] mutableCopy];
+//        //索引数据
+//        NSMutableArray *indexArr = [NSMutableArray array];
+//        for (QLBrandModel *brandModel in self.aArr) {
+//            [indexArr addObject:brandModel.brand_group];
+//        }
+//        self.indexView.indexArr = indexArr;
+//        //刷新列表
+//        [self.aTableView reloadData];
+//        if (self.brand_id.length != 0) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //刷新完成
+//                for (QLBrandModel *brand in self.aArr) {
+//                    for (QLBrandInfoModel *infoModel in brand.brand_list) {
+//                        if ([self.brand_id isEqualToString:infoModel.brand_id]) {
+//                            NSInteger section = [self.aArr indexOfObject:brand];
+//                            NSInteger row = [brand.brand_list indexOfObject:infoModel];
+//                            self.aIndex = [NSIndexPath indexPathForRow:row inSection:section];
+//                            [self.aTableView scrollToRowAtIndexPath:self.aIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//                            [self tableView:self.aTableView didSelectRowAtIndexPath:self.aIndex];
+//                        }
+//                    }
+//                }
+//
+//
+//            });
+//        }
+//    } fail:^(NSError *error) {
+//        [MBProgressHUD showError:error.domain];
+//    }];
     
 }
 //获取系列

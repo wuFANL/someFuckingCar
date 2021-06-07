@@ -117,7 +117,7 @@ NSString* Operation_type = @"operation_type";
          result(nil,[NSError errorWithDomain:@"请输入手机号" code:-1 userInfo:nil]);
     }
 }
-#pragma mark -客服电话
+#pragma mark -获取个人信息
 - (void)getMeInfoRequest:(ResultBlock)result {
     if ([QLUserInfoModel getLocalInfo].isLogin == NO) {
         return;

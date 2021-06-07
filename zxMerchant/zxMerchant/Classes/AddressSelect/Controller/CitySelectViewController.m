@@ -20,6 +20,11 @@
 @end
 
 @implementation CitySelectViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,12 +62,6 @@
     }];
     
     [self.view addSubview:self.collectionView];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBar.hidden = NO;
 }
 
 #pragma dataSource
@@ -136,7 +135,7 @@
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 8;
         layout.headerReferenceSize = CGSizeMake(ScreenWidth, 50);
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height) collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height-(BottomOffset?44:0)) collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor whiteColor];

@@ -152,7 +152,7 @@
 }
 //关闭按钮
 - (void)closeBtnClick {
-    [self hidden];
+    [self hiddenViewEvent];
 }
 //显示
 - (void)show {
@@ -178,7 +178,8 @@
 }
 //遮罩点击
 - (void)hiddenViewEvent {
-    [self hidden];
+    [self removeFromSuperview];
+    self.window.hidden = YES;
 }
 #pragma mark -collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {

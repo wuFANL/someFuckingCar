@@ -78,6 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
  *隐藏
  */
 - (void)hidden;
+- (void)hiddenViewEvent;
 @end
 
 NS_ASSUME_NONNULL_END

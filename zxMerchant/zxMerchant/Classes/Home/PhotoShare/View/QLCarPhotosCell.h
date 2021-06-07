@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QLCarPhotosCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseBtnWidth;
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
+@property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UILabel *priceLB;

@@ -158,9 +158,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *tempArr = [self.dataDic objectForKey:@"car_list"];
-    QLCarSourceDetailViewController* detail = [QLCarSourceDetailViewController new];
-    [detail updateVcWithData:tempArr[indexPath.row]];
-    [self.navigationController pushViewController:detail animated:YES];
+    if (tempArr.count > 0) {
+        QLCarSourceDetailViewController* detail = [QLCarSourceDetailViewController new];
+        [detail updateVcWithData:tempArr[indexPath.row]];
+        [self.navigationController pushViewController:detail animated:YES];
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

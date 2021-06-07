@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLSysMsgListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *bjView;
-@property (weak, nonatomic) IBOutlet QLBaseTarBarButton *headBtn;
+@property (weak, nonatomic) IBOutlet UIButton *headBtn;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
 

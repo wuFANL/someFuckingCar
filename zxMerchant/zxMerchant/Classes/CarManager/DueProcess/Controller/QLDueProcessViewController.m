@@ -23,29 +23,94 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.listArr = [[NSMutableArray alloc] initWithCapacity:0];
     self.navigationItem.title = self.viewType == 0?@"年检到期":@"强制险到期";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    self.listArr = [@[@"1",@"2",@"3"] mutableCopy];
+    [self requestForList];
 }
 #pragma mark -network
 //列表数据
 - (void)dataRequest {
     
-    
+    [self requestForList];
 }
+
+-(void)requestForList
+{
+    [MBProgressHUD showCustomLoading:@""];
+    [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":self.viewType == 0?@"get_merchant_car_list_by_mot":@"get_merchant_car_list_by_insure",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+
+        if (self.tableView.page == 1) {
+            [self.listArr removeAllObjects];
+        }
+        NSArray *temArr = [NSArray arrayWithArray:[[response objectForKey:@"result_info"] objectForKey:@"car_list"]];
+        [self.listArr addObjectsFromArray:temArr];
+        //无数据设置
+        if (self.listArr.count == 0) {
+            self.tableView.hidden = YES;
+            self.showNoDataView = YES;
+        } else {
+            self.tableView.hidden = NO;
+            self.showNoDataView = NO;
+        }
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == 20) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 //处理数据
-- (void)doTimeRequest:(NSDictionary *)param {
- 
+- (void)doTimeRequest:(NSString *)timeStr btnIndex:(NSInteger)index{
+    NSDictionary *dic = [self.listArr objectAtIndex:index];
+    NSString *carID = [dic objectForKey:@"id"];
+    if(self.viewType == 0)
+    {
+        [MBProgressHUD showCustomLoading:@""];
+        [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"update",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"car_id":carID,@"mot_date":timeStr,@"operation_type":@"update_time"} success:^(id response) {
+            [MBProgressHUD immediatelyRemoveHUD];
+            [MBProgressHUD showSuccess:@"操作成功"];
+            
+            [self requestForList];
+
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }
+    else
+    {
+        [MBProgressHUD showCustomLoading:@""];
+        [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"update",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"car_id":carID,@"insure_date":timeStr,@"operation_type":@"update_time"} success:^(id response) {
+            [MBProgressHUD immediatelyRemoveHUD];
+            [MBProgressHUD showSuccess:@"操作成功"];
+            [self requestForList];
+
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+        
+    }
+    
+
 }
 #pragma mark -action
 //处理事件
 - (void)doBtnClick:(UIButton *)sender {
     NSInteger row = sender.tag;
-   
+    WEAKSELF
     QLChooseTimeView *ctView = [QLChooseTimeView new];
     ctView.columns = 3;
     ctView.showUnit = YES;
@@ -53,7 +118,7 @@
     ctView.currentDate = [NSDate date];
     ctView.resultBackBlock = ^(NSString *time) {
         //处理请求
-       
+        [weakSelf doTimeRequest:time btnIndex:row];
     };
     [ctView showTimeView];
 }
@@ -66,14 +131,18 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLDueProcessCell *cell = [tableView dequeueReusableCellWithIdentifier:@"dueCell" forIndexPath:indexPath];
+    
+    NSDictionary *dic = [self.listArr objectAtIndex:indexPath.row];
     cell.doBtn.tag = indexPath.row;
     [cell.doBtn setTitle:@"待处理" forState:UIControlStateNormal];
     [cell.doBtn addTarget:self action:@selector(doBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-  
-    cell.titleLB.text = @"别克 凯越 2011款 1.6自动款 1.6自舒...";
-    cell.priceLB.text = @"0.0";
+    [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
+    cell.titleLB.text = [dic objectForKey:@"model"];
+    cell.priceLB.text = [[QLToolsManager share] unitConversion:[[dic objectForKey:@"sell_price"] floatValue]];
     cell.accLB.text = self.viewType == 0?@"年检到期日":@"强制险到期日";
-    NSString *time = self.viewType == 0?@"2019.02":@"2019.02.10";
+    NSString *str = [dic objectForKey:@"mot_date"];
+    NSArray *ar = [str componentsSeparatedByString:@" "];
+    NSString *time = self.viewType == 0?[ar firstObject]:@"2019.02.10";
     cell.timeLB.text = time;
     
     
@@ -90,6 +159,8 @@
         _tableView.dataSource = self;
         _tableView.extendDelegate = self;
         [_tableView registerNib:[UINib nibWithNibName:@"QLDueProcessCell" bundle:nil] forCellReuseIdentifier:@"dueCell"];
+        _tableView.showHeadRefreshControl = YES;
+        _tableView.showFootRefreshControl = YES;
     }
     return _tableView;
 }

@@ -11,3 +11,7 @@
 @implementation QLParamModel
 
 @end
+
+@implementation QLConditionModel
+
+@end

@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *nikenameBtn;
 // 时间 + 地点
 @property (weak, nonatomic) IBOutlet UILabel *timeLB;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLBBottom;
 // 关注车主
 @property (weak, nonatomic) IBOutlet QLBaseButton *likeBtn;
 // 文案

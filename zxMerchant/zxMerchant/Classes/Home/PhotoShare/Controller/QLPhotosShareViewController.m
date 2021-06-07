@@ -202,6 +202,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLCarPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoCell" forIndexPath:indexPath];
+    cell.shareBtn.hidden = YES;
     cell.chooseBtn.tag = indexPath.row;
     [cell.chooseBtn addTarget:self action:@selector(chooseBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     QLCarInfoModel *model = self.dataArr[indexPath.row];

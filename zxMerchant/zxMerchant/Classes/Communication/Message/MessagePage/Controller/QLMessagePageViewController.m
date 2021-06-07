@@ -24,8 +24,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self requestForCircleNew];
-    self.tableView.showHeadRefreshControl = YES;
+
     
 }
 
@@ -45,6 +44,7 @@
     [self.view addGestureRecognizer:longPress];
    
     [self dataRequest];
+    [self requestForCircleNew];
 }
 
 //车友圈新消息
