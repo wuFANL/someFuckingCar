@@ -13,6 +13,7 @@
 #import "QLVehicleCertificateCell.h"
 #import "QLChooseBrandViewController.h"
 #import "QLMyCarDetailViewController.h"
+#import "QLCarDetailModel.h"
 
 @interface QLVehicleCertificateViewController()<QLVehicleSortViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLVehicleSortView *headView;
@@ -25,7 +26,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     //刷新数据
-//    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showHeadRefreshControl = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -54,7 +55,35 @@
 #pragma mrk- network
 //列表请求
 - (void)dataRequest {
-   
+    NSArray *priceArr = [self.vcView.priceRange componentsSeparatedByString:@"-"];
+    [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"get_merchant_car_cert_list",@"brand":QLNONull(self.vcView.brandModel.brand_id),@"sort":@(self.vcView.sort_by),@"account_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id),@"business_id":QLNONull([QLUserInfoModel getLocalInfo].business.business_id),@"price_min":priceArr.count==2?priceArr[0]:@"",@"price_max":priceArr.count==2?priceArr[1]:@"",@"page_no":@(self.tableView.page),@"page_size":@(listShowCount)} success:^(id response) {
+        if (self.tableView.page == 1) {
+            [self.listArr removeAllObjects];
+        }
+        NSArray *temArr = [[NSArray yy_modelArrayWithClass:[QLCarInfoModel class] json:response[@"result_info"][@"car_list"]] mutableCopy];
+        [self.listArr addObjectsFromArray:temArr];
+        //无数据设置
+        if (self.listArr.count == 0) {
+            self.tableView.hidden = YES;
+            self.showNoDataView = YES;
+        } else {
+            self.tableView.hidden = NO;
+            self.showNoDataView = NO;
+        }
+        //刷新设置
+        [self.tableView.mj_header endRefreshing];
+        if (temArr.count == listShowCount) {
+            [self.tableView.mj_footer endRefreshing];
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        //刷新
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
 }
 #pragma mark- action
 
@@ -84,7 +113,7 @@
                 } else if (type == 2&&indexPath.row >= 0) {
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
                 }
-                [weakSelf reloadData];
+                weakSelf.tableView.showHeadRefreshControl = YES;
             }
             //头部恢复
             weakSelf.headView.currentIndex = -1;
@@ -101,15 +130,11 @@
         cbVC.callback = ^(QLBrandInfoModel * _Nullable brandModel, QLSeriesModel * _Nullable seriesModel, QLTypeInfoModel * _Nullable typeModel) {
             if (brandModel.brand_id.length != 0) {
                 weakSelf.vcView.brandModel = brandModel;
-                [weakSelf reloadData];
+                weakSelf.tableView.showHeadRefreshControl = YES;
             }
         };
         [self.navigationController pushViewController:cbVC animated:YES];
     }
-}
-//刷新
-- (void)reloadData {
-    
 }
 //刷新
 - (void)rightItemClick {
@@ -118,11 +143,14 @@
     self.vcView.brandModel = nil;
     self.headView.dataArr[0] = @"智能排序";
     [self.headView.collectionView reloadData];
-//    self.tableView.showHeadRefreshControl = YES;
+    self.tableView.showHeadRefreshControl = YES;
 }
 //车辆详情
 - (void)detailBtnClick:(UIButton *)sender {
-    QLMyCarDetailViewController *vcdVC = [QLMyCarDetailViewController new];
+    NSInteger row = sender.tag;
+    QLCarInfoModel *model = self.listArr[row];
+    
+    QLMyCarDetailViewController *vcdVC = [[QLMyCarDetailViewController alloc] initWithUserid:[QLUserInfoModel getLocalInfo].account.account_id carID:model.car_id];
     [self.navigationController pushViewController:vcdVC animated:YES];
 }
 //分享证件
@@ -132,13 +160,13 @@
 }
 //去图片集合
 - (void)goShareImg:(NSInteger)row {
-//    QLCarInfoModel *model = self.listArr[row];
+    QLCarInfoModel *model = self.listArr[row];
     NSMutableArray *temArr = [NSMutableArray array];
-//    for (QLCarBannerModel *attModel in model.att_list) {
-//        if ([attModel.detecte_total_name isEqualToString:@"证件照片"]) {
-//            [temArr addObject:attModel];
-//        }
-//    }
+    for (QLCarBannerModel *attModel in model.att_list) {
+        if ([attModel.detecte_total_name isEqualToString:@"证件照片"]) {
+            [temArr addObject:attModel];
+        }
+    }
     QLShareImgViewController *siVC = [QLShareImgViewController new];
     siVC.imgsArr = temArr;
     siVC.type = 0;
@@ -149,7 +177,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.listArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLVehicleCertificateCell *cell = [tableView dequeueReusableCellWithIdentifier:@"certificateCell" forIndexPath:indexPath];
@@ -157,7 +185,7 @@
     cell.shareBtn.tag = indexPath.row;
     [cell.detailBtn addTarget:self action:@selector(detailBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [cell.shareBtn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    cell.model = self.listArr[indexPath.row];
+    cell.model = self.listArr[indexPath.row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -195,8 +223,8 @@
         _tableView.delegate = self;
         _tableView.dataSource= self;
         _tableView.extendDelegate = self;
-//        _tableView.showHeadRefreshControl = YES;
-//        _tableView.showFootRefreshControl = YES;
+        _tableView.showHeadRefreshControl = YES;
+        _tableView.showFootRefreshControl = YES;
         [_tableView registerNib:[UINib nibWithNibName:@"QLVehicleCertificateCell" bundle:nil] forCellReuseIdentifier:@"certificateCell"];
         
     }

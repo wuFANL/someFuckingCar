@@ -9,9 +9,11 @@
 #import "QLStoreSharePageViewController.h"
 #import "QLShareAlertView.h"
 #import "QLMyStoreViewController.h"
+#import "QLStoreTextView.h"
 
 @interface QLStoreSharePageViewController ()
 @property (nonatomic, strong) QLShareAlertView *shareView;
+@property (nonatomic, strong) QLStoreTextView *shareTxtView;
 //分享类型 0:选车分享  1:分享店铺 2:分享车辆详情
 @property (nonatomic, assign) NSInteger shareType;
 @end
@@ -36,11 +38,16 @@
     QLCarInfoModel *model = self.dataArr[sender.tag];
     if (model) {
         self.chooseArr = [@[model] mutableCopy];
-        //分享车辆详情
-        self.shareType = 2;
-        self.shareView.descLB.text = [NSString stringWithFormat:@"%@--%@ 地址:%@",QLNONull(model.model),QLNONull([QLUserInfoModel getLocalInfo].account.nickname),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
-        [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:model.car_img]];
-        [self.shareView show];
+        //分享车辆文本
+        WEAKSELF
+        self.shareTxtView.contentTV.text = [NSString stringWithFormat:@"【上牌时间】 %@ \n【车辆信息】 %@ \n【行驶里程】%@万公里 \n【车辆排量] %.1fT \n【车辆价格】%@万 \n【联系方式】%@ \n【诚信车商】%@",model.production_year,model.model,model.driving_distance,[model.displacement floatValue],model.sell_price,[QLUserInfoModel getLocalInfo].account.mobile,[QLUserInfoModel getLocalInfo].account.nickname];
+        self.shareTxtView.handler = ^(id result, NSError *error) {
+            UMSocialPlatformType platformType = [result integerValue];
+            
+            [weakSelf share:platformType title:model.model desc:@"车辆详情" imgae:model.car_img];
+        };
+        [self.shareTxtView show];
+        
     }
     
 }
@@ -99,6 +106,37 @@
         make.height.mas_equalTo(self.isChooseCar?44:0);
     }];
     [self.tableView reloadData];
+}
+
+- (void)share:(UMSocialPlatformType)platformType title:(NSString *)title desc:(NSString *)desc imgae:(id)image {
+    NSMutableArray *car_id_list = [NSMutableArray array];
+    for (QLCarInfoModel *model in self.chooseArr) {
+        [car_id_list addObject:model.car_id];
+    }
+    //分享记录
+    NSDictionary *dic = nil;
+    if (self.shareType == 2) {
+        dic = @{@"log_type":@"1002",@"about_id":[car_id_list componentsJoinedByString:@","]};
+    } else {
+        dic = @{@"log_type":@"1001",@"about_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)};
+    }
+    [MBProgressHUD showCustomLoading:nil];
+    [[QLToolsManager share] shareRecord:dic handler:^(id result, NSError *error) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        NSString *share_id = @"";
+        if (!error) {
+            share_id = result[@"result_info"][@"share_id"];
+        }
+        //分享
+        UMShareWebpageObject *webObj = [UMShareWebpageObject shareObjectWithTitle:title descr:desc thumImage:image];
+        NSString *shareUrl = @"";
+        if (self.shareType == 0||self.shareType == 1) {
+            shareUrl = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,self.shareType == 1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),[car_id_list componentsJoinedByString:@","],[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
+            
+        }
+        webObj.webpageUrl = shareUrl;
+        [[QLUMShareManager shareManager] shareToPlatformType:platformType shareObject:webObj currentVC:self];
+    }];
 }
 #pragma mark- tableView
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -199,39 +237,16 @@
         _shareView.handler = ^(id result, NSError *error) {
             UMSocialPlatformType platformType = [result integerValue];
             
-            NSMutableArray *car_id_list = [NSMutableArray array];
-            for (QLCarInfoModel *model in weakSelf.chooseArr) {
-                [car_id_list addObject:model.car_id];
-            }
-            //分享记录
-            NSDictionary *dic = nil;
-            if (self.shareType == 2) {
-                dic = @{@"log_type":@"1002",@"about_id":[car_id_list componentsJoinedByString:@","]};
-            } else {
-                dic = @{@"log_type":@"1001",@"about_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)};
-            }
-            [MBProgressHUD showCustomLoading:nil];
-            [[QLToolsManager share] shareRecord:dic handler:^(id result, NSError *error) {
-                [MBProgressHUD immediatelyRemoveHUD];
-                NSString *share_id = @"";
-                if (!error) {
-                    share_id = result[@"result_info"][@"share_id"];
-                }
-                //分享
-                UMShareWebpageObject *webObj = [UMShareWebpageObject shareObjectWithTitle:weakSelf.shareView.descLB.text descr:@"店铺分享" thumImage:weakSelf.shareView.headImgView.image];
-                NSString *shareUrl = @"";
-                if (self.shareType == 0||self.shareType == 1) {
-                    shareUrl = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,self.shareType == 1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),[car_id_list componentsJoinedByString:@","],[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
-                    
-                } else {
-                    shareUrl = [NSString stringWithFormat:@"%@/personal_stores.html?merchant_id=%@&member_sub_id=%@&share_id=%@",UrlPath,[QLUserInfoModel getLocalInfo].business.business_id,[QLUserInfoModel getLocalInfo].account.account_id,share_id];
-                }
-                webObj.webpageUrl = shareUrl;
-                [[QLUMShareManager shareManager] shareToPlatformType:platformType shareObject:webObj currentVC:weakSelf];
-            }];
-            
+            [weakSelf share:platformType title:weakSelf.shareView.descLB.text desc:@"店铺分享" imgae:weakSelf.shareView.headImgView.image];
+
         };
     }
     return _shareView;
+}
+- (QLStoreTextView *)shareTxtView {
+    if (!_shareTxtView) {
+        _shareTxtView = [QLStoreTextView new];
+    }
+    return _shareTxtView;
 }
 @end

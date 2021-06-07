@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QLHeadListView.h"
+#import "QLCarDetailModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
  *图片控件
  */
 @property (nonatomic, strong) QLHeadListView *hlView;
+/**
+ *数据
+ */
+@property (nonatomic, strong) QLCarInfoModel *model;
 
 @end
 

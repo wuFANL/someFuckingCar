@@ -27,6 +27,7 @@
 #import "QLReleaseCarCircleViewController.h"
 #import "QLMyHelpSellViewController.h"
 #import "QLShareHistoryViewController.h"
+#import "QLCarDealersViewController.h"
 
 @interface QLHomePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLHomeNaviViewDelegate,QLBannerViewDelegate,QLHomePageHeadViewDelegate>
 @property (nonatomic, strong) QLHomeNaviView *naviView;
@@ -108,7 +109,8 @@
         [self.navigationController pushViewController:shVC animated:YES];
     } else {
         //车商友
-        
+        QLCarDealersViewController *cdVC = [QLCarDealersViewController new];
+        [self.navigationController pushViewController:cdVC animated:YES];
         
     }
 }
