@@ -123,6 +123,9 @@
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if (!result) {
         // 其他如支付等SDK的回调
+        // 通知刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"WeChatPayBack" object:nil];
+        
         return  [WXApi handleOpenURL:url delegate:self];
     }
     return result;

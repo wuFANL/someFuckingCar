@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *tf;
 
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
+
+/** data*/
+@property (nonatomic, strong) NSMutableArray *zdataArr;
+// 当前选中的下标
+@property (nonatomic, assign) NSInteger selectIndex;
 @end
 
 NS_ASSUME_NONNULL_END

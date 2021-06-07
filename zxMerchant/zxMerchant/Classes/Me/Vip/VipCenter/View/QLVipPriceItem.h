@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *timeLB;
 @property (weak, nonatomic) IBOutlet UILabel *priceLB;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLB;
-
+- (void)upDateWithDic:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

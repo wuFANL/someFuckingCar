@@ -11,6 +11,7 @@
 #import "QLVipPriceListView.h"
 #import "QLRechargeView.h"
 #import "QLSubmitSuccessViewController.h"
+#import <WechatOpenSDK/WXApi.h>
 
 @interface QLVipCenterViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -85,18 +86,82 @@
     }];
     
     
+    [self netWorkData];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netWorkData) name:@"WeChatPayBack" object:nil];
 }
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)netWorkData {
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:UserPath params:@{
+        Operation_type:@"vip_info",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id
+    } success:^(id response) {
+        NSLog(@"%@",response);
+        NSDictionary *result_info = [response objectForKey:@"result_info"];
+        if ([result_info isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *account_info = [result_info objectForKey:@"account_info"];
+            if ([account_info isKindOfClass:[NSDictionary class]]) {
+                // 更新用户
+                [weakSelf.headView.headBtn sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(account_info, @"head_pic")] forState:UIControlStateNormal];
+                weakSelf.headView.nameLB.text = EncodeStringFromDic(account_info, @"nickname");
+                weakSelf.headView.timeLB.text = [NSString stringWithFormat:@"%@ 到期",EncodeStringFromDic(account_info, @"vip_end_date")];
+            }
+            
+            NSArray *diction_list = [result_info objectForKey:@"diction_list"];
+            if ([diction_list isKindOfClass:[NSArray class]]) {
+               // 更新会员种类
+                weakSelf.priceView.zdataArr = [diction_list mutableCopy];
+            }
+        }
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-    
     CGFloat topOffsetY = 48+(BottomOffset?44:20);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, topOffsetY+831);
 }
 //立即充值
 - (void)rechargeBtnClick {
-    QLSubmitSuccessViewController *ssVC = [QLSubmitSuccessViewController new];
-    [self.navigationController pushViewController:ssVC animated:YES];
+    // 吊起支付
+    
+    WEAKSELF
+    NSDictionary *dic = [self.priceView.zdataArr objectAtIndex:self.priceView.selectIndex];
+    [QLNetworkingManager postWithUrl:UserPath params:@{
+        Operation_type:@"pay_vip_by_weix",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"diction_id":EncodeStringFromDic(dic, @"diction_id")
+    } success:^(id response) {
+        
+        NSDictionary *result_info = [response objectForKey:@"result_info"];
+        
+        if ([result_info isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *weixin_pay = [result_info objectForKey:@"weixin_pay"];
+            PayReq*req = [[PayReq alloc]init];
+            req.partnerId = EncodeStringFromDic(weixin_pay, @"partnerid");
+            req.timeStamp = [EncodeStringFromDic(weixin_pay, @"1623084468") intValue];
+            req.prepayId = EncodeStringFromDic(weixin_pay, @"prepayid");
+            req.nonceStr = EncodeStringFromDic(weixin_pay, @"nonceStr");
+            req.package = EncodeStringFromDic(weixin_pay, @"package");
+            req.sign = EncodeStringFromDic(weixin_pay, @"paySign");
+            
+            [WXApi sendReq:req completion:^(BOOL success) {
+            }];
+        } else {
+            [MBProgressHUD showError:@"订单返回错误"];
+        }
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+    
 }
 #pragma mark - Lazy
 - (UIScrollView *)scrollView {

@@ -10,7 +10,7 @@
 #import "QLVipPriceItem.h"
 
 @interface QLVipPriceListView()<QLBaseCollectionViewDelegate>
-@property (nonatomic, assign) NSInteger selectIndex;
+
 
 @end
 @implementation QLVipPriceListView
@@ -48,16 +48,27 @@
     if ([baseCell isKindOfClass:[QLVipPriceItem class]]) {
         QLVipPriceItem *item = (QLVipPriceItem *)baseCell;
         [item roundRectCornerRadius:10 borderWidth:1 borderColor:[UIColor colorWithHexString:self.selectIndex == indexPath.row ?@"#F9E2AC":@"#CBCBCB"]];
-//        item.timeLB.textColor = 
-        
-        
+        [item upDateWithDic:self.zdataArr[indexPath.row]];
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     self.selectIndex = indexPath.row;
     [collectionView reloadData];
-    
 }
+
+
+- (void)setZdataArr:(NSMutableArray *)zdataArr {
+    _zdataArr = zdataArr;
+    self.collectionView.dataArr = zdataArr;
+    [self.collectionView reloadData];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItems:(NSInteger)section {
+    return self.zdataArr.count;
+}
+
+
+
 #pragma mark - Lazy
 - (QLBaseCollectionView *)collectionView {
     if (!_collectionView) {
