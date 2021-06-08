@@ -6,11 +6,11 @@
 //  Copyright © 2021 ql. All rights reserved.
 //
 
-#import "QLViewController.h"
+#import "QLBaseTableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QLCarDealersViewController : QLViewController
+@interface QLCarDealersViewController : QLBaseTableViewController
 
 @end
 
