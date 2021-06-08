@@ -39,7 +39,7 @@
         NSString *headerPath = [messageDic objectForKey:@"head"];
         if (headerPath.length != 0) {
             self.headView.accBtn.hidden = NO;
-            [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
+            [self.headView.accBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
             self.headView.accBtn.badgeValue = [messageDic objectForKey:@"badge"];
         } else {
             self.headView.accBtn.hidden = YES;
@@ -51,7 +51,7 @@
     [cpVC setHeaderBlock:^(NSString * _Nonnull headerPath) {
         if (headerPath.length != 0) {
             self.headView.accBtn.hidden = NO;
-            [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
+            [self.headView.accBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
         } else {
             self.headView.accBtn.hidden = YES;
         }

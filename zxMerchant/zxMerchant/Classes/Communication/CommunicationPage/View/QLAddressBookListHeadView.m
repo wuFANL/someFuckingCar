@@ -30,6 +30,8 @@
         
         self.accBtn.hidden = YES;
         self.accBtn.badgeValue = @"0";
+        [self.accBtn roundRectCornerRadius:6 borderWidth:1 borderColor:ClearColor];
+
     }
     return self;
 }

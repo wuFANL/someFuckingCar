@@ -25,7 +25,7 @@
 {
     [super viewWillAppear:animated];
 
-    
+    [self dataRequest];
 }
 
 -(void)JPushNotifForChatMessage:(NSNotification *)notif
@@ -43,7 +43,7 @@
     [longPress setMinimumPressDuration:1.5];
     [self.view addGestureRecognizer:longPress];
    
-    [self dataRequest];
+    
     [self requestForCircleNew];
 }
 
