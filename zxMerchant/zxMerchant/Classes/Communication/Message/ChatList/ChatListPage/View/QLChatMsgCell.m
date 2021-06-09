@@ -18,8 +18,13 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
+    [self.aHeadControl roundRectCornerRadius:6 borderWidth:0.0 borderColor:[UIColor whiteColor]];
+    [self.aHeadImgView roundRectCornerRadius:6 borderWidth:0.0 borderColor:[UIColor whiteColor]];
+    [self.bHeadControl roundRectCornerRadius:6 borderWidth:0.0 borderColor:[UIColor whiteColor]];
+    [self.bHeadImgView roundRectCornerRadius:6 borderWidth:0.0 borderColor:[UIColor whiteColor]];
 }
+
+
 #pragma mark - setter
 - (void)setMsgReceiver:(MsgReceiver)msgReceiver {
     _msgReceiver = msgReceiver;
@@ -78,8 +83,12 @@
         } else if (self.msgType == ImgMsg) {
             UIImageView *imgView = [[UIImageView alloc] init];
             imgView.contentMode = UIViewContentModeScaleToFill;
-            imgView.backgroundColor = [UIColor redColor];
+            imgView.backgroundColor = [UIColor clearColor];
             [imgView sd_setImageWithURL:[NSURL URLWithString:[self.sourceDic objectForKey:@"file_url"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (image) {
+                    imgView.image = [UIImage drawWithImage:image size:CGSizeMake(200, 200*image.size.height/image.size.width)];
+                }
+                
                 if (!error) {
                     if (cacheType == SDImageCacheTypeDisk) {
                         [((UITableView *)self.superview) reloadData];
@@ -119,7 +128,7 @@
         }
         
         [self.msgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(12, 15, 12, 15));
+            make.edges.mas_equalTo(UIEdgeInsetsMake(12, 10, 12, 10));
         }];
     }
 }

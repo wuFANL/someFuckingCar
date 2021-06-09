@@ -17,6 +17,7 @@
 
 @interface QLMessagePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
 @property (nonatomic, strong) MessageListModel *dataModel;
+@property (nonatomic, assign) BOOL isFirstIn;
 @end
 
 @implementation QLMessagePageViewController
@@ -25,7 +26,10 @@
 {
     [super viewWillAppear:animated];
 
-    [self dataRequest];
+    if(self.isFirstIn)
+    {
+        [self dataRequest];
+    }
 }
 
 -(void)JPushNotifForChatMessage:(NSNotification *)notif
@@ -35,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isFirstIn = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
     //tableView
     [self tableViewSet];
@@ -43,8 +48,10 @@
     [longPress setMinimumPressDuration:1.5];
     [self.view addGestureRecognizer:longPress];
    
-    
     [self requestForCircleNew];
+    [MBProgressHUD showCustomLoading:@""];
+    [self dataRequest];
+    
 }
 
 //车友圈新消息
@@ -70,8 +77,9 @@
 - (void)dataRequest {
     
     [QLNetworkingManager postWithUrl:UserPath params:@{@"operation_type":@"last_trade_deatil_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
         self.dataModel = [MessageListModel yy_modelWithJSON:[response objectForKey:@"result_info"]];
-        
+        self.isFirstIn = YES;
     
         NSInteger unreadMsgNum = 0;
         for (MessageDetailModel *model in self.dataModel.info_list) {

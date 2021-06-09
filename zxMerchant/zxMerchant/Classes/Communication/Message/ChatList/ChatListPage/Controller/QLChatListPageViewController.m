@@ -32,6 +32,10 @@
 @property (nonatomic, copy) NSString *firstCarId;
 @property (nonatomic, copy) NSString *firstFriendId;
 @property (nonatomic, strong) NSMutableDictionary *firstInDic;
+
+//虚拟字典
+@property (nonatomic, strong) NSMutableDictionary *currentVurDic;
+
 @end
 
 @implementation QLChatListPageViewController
@@ -46,6 +50,7 @@
         self.topArray = [[NSMutableArray alloc] initWithCapacity:0];
         self.chatListArray = [[NSMutableArray alloc] initWithCapacity:0];
         self.firstInDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+        self.currentVurDic = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     return self;
 }
@@ -74,6 +79,8 @@
 }
 -(void)requestForMsgSendText:(NSString *)chatMsg
 {
+    //逻辑 消息发送和数据展示同步进行
+    //发送请求
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
                             @"account_id":self.firstFriendId,
@@ -81,8 +88,14 @@
                             @"content":chatMsg,@"m_type":@"1",@"status":@"1",
                             @"t_id":[self.currentDic objectForKey:@"t_id"],
     };
-    [self requestForMsgSendWithDic:dic];
+    [QLNetworkingManager postWithUrl:FirendPath params:dic success:^(id response) {
+    } fail:^(NSError *error) {
+    }];
+    
+    //创建数据源 先放到数组里面
+    
 }
+
 -(void)requestForMsgSendImage:(NSString *)imageUrl
 {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
@@ -241,7 +254,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //虚拟字典赋值
+    [self.currentVurDic setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
+
     //导航栏
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"helpMallNaviIcon"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(rightItemClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -350,6 +365,7 @@
     cell.sourceDic = dic;
 
     [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
+    [cell.bHeadImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
     NSString *mtype = [dic objectForKey:@"m_type"];
     if([mtype isEqualToString:@"1"] || [mtype isEqualToString:@"3"] || [mtype isEqualToString:@"6"]) {
         cell.msgType = TextMsg;
@@ -369,6 +385,7 @@
         //别人发给我
         cell.msgReceiver = OtherMsg;
     }
+    
     [cell setTapCarBlock:^{
         //纯文本按钮点击
         [self actionGoToCarDetail];
