@@ -95,7 +95,6 @@
                     }
                 }
             }];
-            
             self.msgView = imgView;
         } else if (self.msgType == AskMsg) {
             self.chatContentView = [QLChatMsgBContentView new];

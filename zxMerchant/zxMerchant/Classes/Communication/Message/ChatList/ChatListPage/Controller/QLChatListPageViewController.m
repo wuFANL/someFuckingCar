@@ -40,11 +40,9 @@
 
 @implementation QLChatListPageViewController
 
--(id)initWithCarID:(NSString*)carID messageToID:(NSString *)messageTo
-{
+-(id)initWithCarID:(NSString*)carID messageToID:(NSString *)messageTo {
     self = [super init];
-    if(self)
-    {
+    if (self) {
         self.firstCarId = carID;
         self.firstFriendId = messageTo;
         self.topArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -55,8 +53,7 @@
     return self;
 }
 
--(void)requestForMsgSendJY:(NSString *)content PriceStr:(NSString *)price
-{
+-(void)requestForMsgSendJY:(NSString *)content PriceStr:(NSString *)price {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
                             @"account_id":self.firstFriendId,
@@ -66,8 +63,7 @@
     };
     [self requestForMsgSendWithDic:dic];
 }
--(void)requestForMsgSendHZ:(NSString *)content PriceStr:(NSString *)price
-{
+-(void)requestForMsgSendHZ:(NSString *)content PriceStr:(NSString *)price {
     NSDictionary *dic = @{@"operation_type":@"chat_send",
                             @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,
                             @"account_id":self.firstFriendId,
@@ -77,8 +73,8 @@
     };
     [self requestForMsgSendWithDic:dic];
 }
--(void)requestForMsgSendText:(NSString *)chatMsg
-{
+
+-(void)requestForMsgSendText:(NSString *)chatMsg {
     //逻辑 消息发送和数据展示同步进行
     //发送请求
     NSDictionary *dic = @{@"operation_type":@"chat_send",
@@ -93,7 +89,22 @@
     }];
     
     //创建数据源 先放到数组里面
+    NSMutableDictionary *dicty = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dicty setObject:chatMsg forKey:@"content"];
+    [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"my_account_id"];
+    [dicty setObject:self.firstFriendId forKey:@"account_id"];
+    [dicty setObject:[self.currentDic objectForKey:@"id"]?:@"" forKey:@"car_id"];
+    [dicty setObject:@"1" forKey:@"m_type"];
+    [dicty setObject:[NSNumber numberWithInt:1] forKey:@"status"];
+    [dicty setObject:[self.currentDic objectForKey:@"t_id"] forKey:@"t_id"];
+    [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
+    [self.chatListArray addObject:dicty];
+    [self.tableView reloadData];
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
+        [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    });
 }
 
 -(void)requestForMsgSendImage:(NSString *)imageUrl
@@ -107,7 +118,29 @@
                             @"content":@"图片",@"m_type":@"2",@"status":@"1",
                             @"t_id":[self.currentDic objectForKey:@"t_id"],
     };
-    [self requestForMsgSendWithDic:dic];
+    [QLNetworkingManager postWithUrl:FirendPath params:dic success:^(id response) {
+    } fail:^(NSError *error) {
+    }];
+    
+    //创建数据源 先放到数组里面
+    NSMutableDictionary *dicty = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dicty setObject:@"图片" forKey:@"content"];
+    [dicty setObject:imageUrl forKey:@"file_url"];
+    [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"my_account_id"];
+    [dicty setObject:self.firstFriendId forKey:@"account_id"];
+    [dicty setObject:[self.currentDic objectForKey:@"id"]?:@"" forKey:@"car_id"];
+    [dicty setObject:@"2" forKey:@"m_type"];
+    [dicty setObject:[NSNumber numberWithInt:1] forKey:@"status"];
+    [dicty setObject:[self.currentDic objectForKey:@"t_id"] forKey:@"t_id"];
+    [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
+    [self.chatListArray addObject:dicty];
+    [self.tableView reloadData];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-2];
+    [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
+        [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    });
 }
 
 -(void)requestForMsgSendWithDic:(NSDictionary *)params
@@ -284,8 +317,7 @@
     [self requestForChatTop];
 }
 
--(void)JPushNotifForChatMessage:(NSNotification *)notif
-{
+- (void)JPushNotifForChatMessage:(NSNotification *)notif {
     [self dataRequest];
 }
 
@@ -364,7 +396,10 @@
     NSDictionary *dic = [self.chatListArray objectAtIndex:indexPath.section];
     cell.sourceDic = dic;
 
-    [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
+    if([NSString isEmptyString:[dic objectForKey:@"from_head_pic"]])
+    {
+        [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
+    }
     [cell.bHeadImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
     NSString *mtype = [dic objectForKey:@"m_type"];
     if([mtype isEqualToString:@"1"] || [mtype isEqualToString:@"3"] || [mtype isEqualToString:@"6"]) {

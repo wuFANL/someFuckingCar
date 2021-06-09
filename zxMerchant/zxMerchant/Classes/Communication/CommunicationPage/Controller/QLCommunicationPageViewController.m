@@ -17,14 +17,21 @@
 
 @interface QLCommunicationPageViewController ()<QLBaseSubViewControllerDelegate,QLAddressBookListHeadViewDelegate>
 @property (nonatomic, strong) QLAddressBookListHeadView *headView;
+
+@property (nonatomic, assign) BOOL isGotoQLCarCircleViewController;
 @end
 
 @implementation QLCommunicationPageViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-   
+    if (self.isGotoQLCarCircleViewController) {
+        QLMessagePageViewController *ctl = (QLMessagePageViewController *)[self.subVCArr firstObject];
+        [ctl carCricleBackToReload];
+        self.isGotoQLCarCircleViewController = NO;
+    }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //headView
@@ -76,6 +83,7 @@
 - (void)sectionClick {
     if (self.headView.chooseView.selectedIndex == 0) {
         //车友圈
+        self.isGotoQLCarCircleViewController = YES;
         QLCarCircleViewController *ccVC = [QLCarCircleViewController new];
         [self.navigationController pushViewController:ccVC animated:YES];
         

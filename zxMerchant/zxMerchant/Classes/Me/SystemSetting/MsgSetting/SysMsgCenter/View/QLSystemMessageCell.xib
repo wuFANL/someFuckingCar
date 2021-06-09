@@ -60,7 +60,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3s-bY-4Yk">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3s-bY-4Yk">
                         <rect key="frame" x="78" y="76" width="242" height="1"/>
                         <color key="backgroundColor" red="0.9332445264" green="0.9333974719" blue="0.93321198230000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

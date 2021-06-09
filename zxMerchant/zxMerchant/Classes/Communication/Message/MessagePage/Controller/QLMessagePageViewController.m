@@ -37,9 +37,15 @@
     [self dataRequest];
 }
 
+-(void)carCricleBackToReload
+{
+    [self requestForCircleNew];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isFirstIn = NO;
+    [MBProgressHUD showCustomLoading:@""];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
     //tableView
     [self tableViewSet];
@@ -49,7 +55,6 @@
     [self.view addGestureRecognizer:longPress];
    
     [self requestForCircleNew];
-    [MBProgressHUD showCustomLoading:@""];
     [self dataRequest];
     
 }
@@ -150,7 +155,7 @@
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.extendDelegate = self;
