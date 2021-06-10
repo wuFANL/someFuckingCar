@@ -14,6 +14,7 @@
 
 @interface QLMyInfoPageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
+@property (nonatomic, strong) NSDictionary *dataDic;
 @end
 
 @implementation QLMyInfoPageViewController
@@ -27,7 +28,20 @@
     self.navigationItem.title = @"我的信息";
     //tableView
     [self tableViewSet];
-    
+    [MBProgressHUD showLoading:nil];
+    // 请求店铺信息
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"my_store",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
+    } success:^(id response) {
+        
+        weakSelf.dataDic = [[response objectForKey:@"result_info"] objectForKey:@"business_info"];
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - action
 //解除绑定
@@ -44,8 +58,6 @@
     self.initStyle = UITableViewStyleGrouped;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -69,6 +81,7 @@
             //头像
             QLBaseButton *headBtn = [[QLBaseButton alloc] init];
             headBtn.backgroundColor = [UIColor groupTableViewBackgroundColor];
+            [headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
             [headBtn roundRectCornerRadius:4 borderWidth:1 borderColor:WhiteColor];
             [headBtn addTarget:self action:@selector(headBtnClick) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:headBtn];
@@ -79,16 +92,16 @@
             }];
         } else if (indexPath.row == 1) {
             title = @"姓名";
-            acc = @"王传";
+            acc = [QLUserInfoModel getLocalInfo].account.nickname;
         } else if (indexPath.row == 2) {
             title = @"手机";
-            acc = @"18566292258";
+            acc = [QLUserInfoModel getLocalInfo].account.mobile;
         } else if (indexPath.row == 3) {
             title = @"帐号";
-            acc = @"SO5655258";
+            acc = [QLUserInfoModel getLocalInfo].account.account_number;
         } else if (indexPath.row == 4) {
             title = @"会员到期";
-            acc = @"2020-15-14";
+            acc = [QLUserInfoModel getLocalInfo].account.vip_end_date;
         } else if (indexPath.row == 5) {
             title = @"个人信息认证";
             acc = @"认证通过";
@@ -96,15 +109,15 @@
     } else {
         if (indexPath.row == 0) {
             title = @"归属店铺";
-            acc = @"将注册账号资料传过来";
+            acc = EncodeStringFromDic(self.dataDic, @"business_name");
         } else if (indexPath.row == 1) {
             cell.accessoryType = UITableViewCellAccessoryNone;
             title = @"所在地区";
-            acc = @"将注册账号资料传过来";
+            acc = EncodeStringFromDic(self.dataDic, @"business_area");
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
             title = @"门店地址";
-            acc = @"--";
+            acc = [NSString stringWithFormat:@"%@%@%@",EncodeStringFromDic(self.dataDic, @"province"),EncodeStringFromDic(self.dataDic, @"city"),EncodeStringFromDic(self.dataDic, @"county")];
         }
     }
     

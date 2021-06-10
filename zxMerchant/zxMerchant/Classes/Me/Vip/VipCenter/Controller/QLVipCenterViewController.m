@@ -151,9 +151,8 @@
             req.timeStamp = [EncodeStringFromDic(weixin_pay, @"timeStamp") intValue];
             req.prepayId = EncodeStringFromDic(weixin_pay, @"prepayid");
             req.nonceStr = EncodeStringFromDic(weixin_pay, @"nonceStr");
-            req.package = @"Sign=WXPay";
+            req.package = EncodeStringFromDic(weixin_pay, @"package");
             req.sign = EncodeStringFromDic(weixin_pay, @"paySign");
-            
             [WXApi sendReq:req completion:^(BOOL success) {}];
         } else {
             [MBProgressHUD showError:@"订单返回错误"];
