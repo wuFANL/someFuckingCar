@@ -27,4 +27,12 @@
     }
 }
 
+-(IBAction)actionTapBtn:(UIButton *)sender
+{
+    if(self.tagBlock)
+    {
+        self.tagBlock(sender.tag);
+    }
+}
+
 @end

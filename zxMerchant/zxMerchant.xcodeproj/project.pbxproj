@@ -10,6 +10,10 @@
 		4669B5DF265563380089A677 /* QLParamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4669B5DE265563380089A677 /* QLParamModel.m */; };
 		4672051726413DA8002E946A /* MessageListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4672051626413DA8002E946A /* MessageListModel.m */; };
 		46D288A726384C3000ED5063 /* MyFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D288A626384C3000ED5063 /* MyFriendsModel.m */; };
+		46EC7C7F26711352001504E5 /* QLCarCellDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EC7C7D26711352001504E5 /* QLCarCellDetailViewController.m */; };
+		46EC7C8026711352001504E5 /* QLCarCellDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46EC7C7E26711352001504E5 /* QLCarCellDetailViewController.xib */; };
+		46EC7C8726711B7B001504E5 /* QLCarCellDtlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EC7C8526711B7B001504E5 /* QLCarCellDtlCell.m */; };
+		46EC7C8826711B7B001504E5 /* QLCarCellDtlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46EC7C8626711B7B001504E5 /* QLCarCellDtlCell.xib */; };
 		8B5444E2B6065B3A620CE255 /* libPods-zxMerchant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */; };
 		A00131032587CCFF0080EB21 /* QLCarCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00131022587CCFF0080EB21 /* QLCarCertificateViewController.m */; };
 		A00131222587CF850080EB21 /* QLShareImgItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00131202587CF840080EB21 /* QLShareImgItem.xib */; };
@@ -498,6 +502,12 @@
 		4672051626413DA8002E946A /* MessageListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageListModel.m; sourceTree = "<group>"; };
 		46D288A526384C3000ED5063 /* MyFriendsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFriendsModel.h; sourceTree = "<group>"; };
 		46D288A626384C3000ED5063 /* MyFriendsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyFriendsModel.m; path = "../New Group/MyFriendsModel.m"; sourceTree = "<group>"; };
+		46EC7C7C26711352001504E5 /* QLCarCellDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCellDetailViewController.h; sourceTree = "<group>"; };
+		46EC7C7D26711352001504E5 /* QLCarCellDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarCellDetailViewController.m; sourceTree = "<group>"; };
+		46EC7C7E26711352001504E5 /* QLCarCellDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLCarCellDetailViewController.xib; sourceTree = "<group>"; };
+		46EC7C8426711B7B001504E5 /* QLCarCellDtlCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCellDtlCell.h; sourceTree = "<group>"; };
+		46EC7C8526711B7B001504E5 /* QLCarCellDtlCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QLCarCellDtlCell.m; sourceTree = "<group>"; };
+		46EC7C8626711B7B001504E5 /* QLCarCellDtlCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QLCarCellDtlCell.xib; sourceTree = "<group>"; };
 		4D6A19686CBA7D7EA17CC708 /* Pods-zxMerchant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zxMerchant.debug.xcconfig"; path = "Target Support Files/Pods-zxMerchant/Pods-zxMerchant.debug.xcconfig"; sourceTree = "<group>"; };
 		7904749E5B50F65326ADC6A7 /* libPods-zxMerchant.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zxMerchant.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00131012587CCFF0080EB21 /* QLCarCertificateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLCarCertificateViewController.h; sourceTree = "<group>"; };
@@ -2396,6 +2406,9 @@
 			children = (
 				A0208F492576CC02002EE6F0 /* QLCarSourceManagerViewController.h */,
 				A0208F4A2576CC02002EE6F0 /* QLCarSourceManagerViewController.m */,
+				46EC7C7C26711352001504E5 /* QLCarCellDetailViewController.h */,
+				46EC7C7D26711352001504E5 /* QLCarCellDetailViewController.m */,
+				46EC7C7E26711352001504E5 /* QLCarCellDetailViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2598,6 +2611,9 @@
 				A03D555F25780BCC002FED6A /* QLCarSourceManagerCell.h */,
 				A03D556025780BCC002FED6A /* QLCarSourceManagerCell.m */,
 				A03D556125780BCC002FED6A /* QLCarSourceManagerCell.xib */,
+				46EC7C8426711B7B001504E5 /* QLCarCellDtlCell.h */,
+				46EC7C8526711B7B001504E5 /* QLCarCellDtlCell.m */,
+				46EC7C8626711B7B001504E5 /* QLCarCellDtlCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5215,12 +5231,14 @@
 				A084CE25252CC7EB006AE22F /* QLSystemMessageCell.xib in Resources */,
 				A044AAA0251FCD0800D1C324 /* loading.gif in Resources */,
 				A0492F9A25702E7E00B5E23C /* QLVehicleInstalmentCell.xib in Resources */,
+				46EC7C8026711352001504E5 /* QLCarCellDetailViewController.xib in Resources */,
 				A07CDFB9254F169B000CAB62 /* QLJoinStoreCell.xib in Resources */,
 				A0369F892530DF8200056C3D /* QLContactsCircleCell.xib in Resources */,
 				A02C93372523AA310031A6D7 /* QLHomeToolHeadView.xib in Resources */,
 				A07332652548910000570FDB /* QLCarCircleCommentCell.xib in Resources */,
 				A049923B266D5D8600929CB7 /* QLBrowseDetailCell.xib in Resources */,
 				A0733292254B490100570FDB /* QLRidersDynamicCell.xib in Resources */,
+				46EC7C8826711B7B001504E5 /* QLCarCellDtlCell.xib in Resources */,
 				A057C7712534D6930045B7B1 /* QLContactsStoreCarCell.xib in Resources */,
 				ED51461026558B48008E255E /* QLCollectionValueDCell.xib in Resources */,
 				A0CAB5512560FBB20015FAE3 /* QLCustomSheetView.xib in Resources */,
@@ -5543,6 +5561,7 @@
 				A0CAB7F4256126B90015FAE3 /* QLTransactionMoneyCell.m in Sources */,
 				A0492FCC2570364700B5E23C /* QLCarImgShowCell.m in Sources */,
 				A02C93722527A9410031A6D7 /* QLHorizontalScrollCell.m in Sources */,
+				46EC7C8726711B7B001504E5 /* QLCarCellDtlCell.m in Sources */,
 				A00621832513DD7300A571E5 /* NSBundle+QLUtil.m in Sources */,
 				A006213A2513DB3900A571E5 /* MJDIYBackFooter.m in Sources */,
 				A049923A266D5D8600929CB7 /* QLBrowseDetailHeadView.m in Sources */,
@@ -5621,6 +5640,7 @@
 				A09EAB6025DEC176007D9075 /* QLAddVerificationView.m in Sources */,
 				A09EAAE425DEB2C4007D9075 /* QLVehicleCertificateCell.m in Sources */,
 				A0492F9B25702E7E00B5E23C /* QLVehicleReportCell.m in Sources */,
+				46EC7C7F26711352001504E5 /* QLCarCellDetailViewController.m in Sources */,
 				A03BC6D3266FED8300410B3E /* QLCarDealersCell.m in Sources */,
 				A00620E02513DB2000A571E5 /* QLCustomAlertView.m in Sources */,
 				A0865C4B2631E49C001B85A3 /* QLAddCarPageViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "QLCarSourceManagerCell.h"
 #import "QLMyCarDetailViewController.h"
 #import "QLCooperativeSourceDetailPageViewController.h"
+#import "QLCarCellDetailViewController.h"
 
 @interface QLCarSourceManagerViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *sourceAr;
@@ -47,9 +48,14 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QLCarSourceManagerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"carSourceManagerCell" forIndexPath:indexPath];
+    NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
+    [cell setTagBlock:^(NSInteger btnTag) {
+       // 0 1 2
+        QLCarCellDetailViewController *ctl = [[QLCarCellDetailViewController alloc] initWithSourceDic:dic withBtnIndex:btnTag];
+        [self.navigationController pushViewController:ctl animated:YES];
+    }];
 //    cell.priceBtn.selected = self.type == 2?NO:YES;
     cell.showFunView = self.type == 2?NO:YES;
-    NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
     [cell.imgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"car_img"]]];
     cell.activityStatusLB.hidden = YES;
     cell.accImgView.hidden = YES;
