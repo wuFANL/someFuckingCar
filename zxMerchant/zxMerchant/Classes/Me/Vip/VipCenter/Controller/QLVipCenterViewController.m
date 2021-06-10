@@ -13,6 +13,7 @@
 #import "QLSubmitSuccessViewController.h"
 #import <WechatOpenSDK/WXApi.h>
 
+
 @interface QLVipCenterViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) QLVipCenterHeadView *headView;
@@ -145,15 +146,15 @@
         if ([result_info isKindOfClass:[NSDictionary class]]) {
             NSDictionary *weixin_pay = [result_info objectForKey:@"weixin_pay"];
             PayReq*req = [[PayReq alloc]init];
+            req.openID = EncodeStringFromDic(weixin_pay, @"appId");
             req.partnerId = EncodeStringFromDic(weixin_pay, @"partnerid");
-            req.timeStamp = [EncodeStringFromDic(weixin_pay, @"1623084468") intValue];
+            req.timeStamp = [EncodeStringFromDic(weixin_pay, @"timeStamp") intValue];
             req.prepayId = EncodeStringFromDic(weixin_pay, @"prepayid");
             req.nonceStr = EncodeStringFromDic(weixin_pay, @"nonceStr");
-            req.package = EncodeStringFromDic(weixin_pay, @"package");
+            req.package = @"Sign=WXPay";
             req.sign = EncodeStringFromDic(weixin_pay, @"paySign");
             
-            [WXApi sendReq:req completion:^(BOOL success) {
-            }];
+            [WXApi sendReq:req completion:^(BOOL success) {}];
         } else {
             [MBProgressHUD showError:@"订单返回错误"];
         }
@@ -163,6 +164,8 @@
     }];
     
 }
+
+
 #pragma mark - Lazy
 - (UIScrollView *)scrollView {
     if (!_scrollView) {

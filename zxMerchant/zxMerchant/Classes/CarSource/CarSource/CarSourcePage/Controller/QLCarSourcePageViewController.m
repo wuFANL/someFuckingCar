@@ -344,12 +344,19 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)wantTouched {
+    QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
+    asVC.showCity = NO;
+    asVC.isSubscription = YES;
+    [self.navigationController pushViewController:asVC animated:YES];
+}
 #pragma mark - Lazy
 - (QLCarSourceNaviView *)naviView {
     if(!_naviView) {
         _naviView = [QLCarSourceNaviView new];
         _naviView.searchBar.extenDelegate = self;
         [_naviView.addressBtn addTarget:self action:@selector(addressTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_naviView.wantBtn addTarget:self action:@selector(wantTouched) forControlEvents:UIControlEventTouchUpInside];
     }
     return _naviView;
 }
