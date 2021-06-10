@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^NMessageHeaderBlock) (NSDictionary *messageDic);
 @interface QLMessagePageViewController : QLBaseTableViewController
 @property (nonatomic, copy) NMessageHeaderBlock msgBlock;
+-(void)carCricleBackToReload;
 @end
 
 NS_ASSUME_NONNULL_END

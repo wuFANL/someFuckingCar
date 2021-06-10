@@ -12,7 +12,6 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) NSMutableArray *temArr;
-@property (nonatomic, strong) NSMutableArray *btnArr;
 @property (nonatomic, weak) UIButton *currentBtn;
 @end
 @implementation QLChooseHeadView

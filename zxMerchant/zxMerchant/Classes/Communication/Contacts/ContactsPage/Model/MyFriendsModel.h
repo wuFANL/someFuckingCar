@@ -51,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *vip_end_date;
 @property (nonatomic, strong) NSString *vip_start_date;
 @property (nonatomic, strong) NSString *visit_times;
+@property (nonatomic, strong) NSString *visit_date;
+
 @end
 
 

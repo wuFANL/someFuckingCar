@@ -17,14 +17,21 @@
 
 @interface QLCommunicationPageViewController ()<QLBaseSubViewControllerDelegate,QLAddressBookListHeadViewDelegate>
 @property (nonatomic, strong) QLAddressBookListHeadView *headView;
+
+@property (nonatomic, assign) BOOL isGotoQLCarCircleViewController;
 @end
 
 @implementation QLCommunicationPageViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-   
+    if (self.isGotoQLCarCircleViewController) {
+        QLMessagePageViewController *ctl = (QLMessagePageViewController *)[self.subVCArr firstObject];
+        [ctl carCricleBackToReload];
+        self.isGotoQLCarCircleViewController = NO;
+    }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //headView
@@ -39,7 +46,7 @@
         NSString *headerPath = [messageDic objectForKey:@"head"];
         if (headerPath.length != 0) {
             self.headView.accBtn.hidden = NO;
-            [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
+            [self.headView.accBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
             self.headView.accBtn.badgeValue = [messageDic objectForKey:@"badge"];
         } else {
             self.headView.accBtn.hidden = YES;
@@ -51,7 +58,7 @@
     [cpVC setHeaderBlock:^(NSString * _Nonnull headerPath) {
         if (headerPath.length != 0) {
             self.headView.accBtn.hidden = NO;
-            [self.headView.accBtn sd_setImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
+            [self.headView.accBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:headerPath] forState:UIControlStateNormal];
         } else {
             self.headView.accBtn.hidden = YES;
         }
@@ -76,6 +83,7 @@
 - (void)sectionClick {
     if (self.headView.chooseView.selectedIndex == 0) {
         //车友圈
+        self.isGotoQLCarCircleViewController = YES;
         QLCarCircleViewController *ccVC = [QLCarCircleViewController new];
         [self.navigationController pushViewController:ccVC animated:YES];
         

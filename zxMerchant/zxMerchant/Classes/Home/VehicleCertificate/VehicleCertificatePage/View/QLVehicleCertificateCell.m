@@ -27,20 +27,20 @@
     
 }
 #pragma mark- action
-//- (void)setModel:(QLCarInfoModel *)model {
-//    _model = model;
-//    [self.imgView sd_setImageWithURL:[NSURL URLWithString:model.car_img]];
-//    self.titleLB.text = [NSString stringWithFormat:@"%@ %@ %@",model.brand,model.series,model.model];
-//    self.priceLB.text = [[QLToolsManager share] unitConversion:model.sell_price.floatValue];
-//    self.descLB.text = [NSString stringWithFormat:@"%@年|%@万公里",model.production_year,[[QLToolsManager share] unitMileage:model.driving_distance.floatValue]];
-//    NSMutableArray *temArr = [NSMutableArray array];
-//    for (QLCarBannerModel *attModel in model.att_list) {
-//        if ([attModel.detecte_total_name isEqualToString:@"证件照片"]) {
-//            [temArr addObject:attModel.pic_url];
-//        }
-//    }
-//    self.imgArr = temArr;
-//}
+- (void)setModel:(QLCarInfoModel *)model {
+    _model = model;
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:model.car_img]];
+    self.titleLB.text = [NSString stringWithFormat:@"%@ %@ %@",model.brand,model.series,model.model];
+    self.priceLB.text = [[QLToolsManager share] unitConversion:model.sell_price.floatValue];
+    self.descLB.text = [NSString stringWithFormat:@"%@年|%@万公里",model.production_year,[[QLToolsManager share] unitMileage:model.driving_distance.floatValue]];
+    NSMutableArray *temArr = [NSMutableArray array];
+    for (QLCarBannerModel *attModel in model.att_list) {
+        if ([attModel.detecte_total_name isEqualToString:@"证件照片"]) {
+            [temArr addObject:attModel.pic_url];
+        }
+    }
+    self.imgArr = temArr;
+}
 - (void)setImgArr:(NSArray *)imgArr {
     _imgArr = imgArr;
     self.hlView.headsArr = imgArr;

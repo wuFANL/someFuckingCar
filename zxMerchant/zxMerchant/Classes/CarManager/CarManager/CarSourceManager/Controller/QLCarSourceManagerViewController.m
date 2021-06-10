@@ -71,7 +71,8 @@
     cell.titleLB.text = [dic objectForKey:@"model"];
     cell.desLB.text = [NSString stringWithFormat:@"%@ | %@万公里",[dic objectForKey:@"production_year"],[[dic objectForKey:@"driving_distance"] stringValue]];
     
-    [cell.priceBtn setTitle:[[dic objectForKey:@"sell_price"] stringValue] forState:UIControlStateNormal];
+    NSString *moneyStr = [NSString stringWithFormat:@"%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_price"] floatValue]]];
+    [cell.priceBtn setTitle:moneyStr forState:UIControlStateNormal];
     cell.prePriceLB.text = [NSString stringWithFormat:@"首付%@万",[[QLToolsManager share] unitMileage:[[dic objectForKey:@"sell_pre_price"] floatValue]]];
     if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"seller_id"]] && [[dic objectForKey:@"exam_status"] intValue] != 98) {
         cell.lookBtn.hidden = NO;

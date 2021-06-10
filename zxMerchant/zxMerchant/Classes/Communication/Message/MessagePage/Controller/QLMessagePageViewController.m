@@ -17,6 +17,7 @@
 
 @interface QLMessagePageViewController ()<UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate,UIPopoverPresentationControllerDelegate,PopViewControlDelegate>
 @property (nonatomic, strong) MessageListModel *dataModel;
+@property (nonatomic, assign) BOOL isFirstIn;
 @end
 
 @implementation QLMessagePageViewController
@@ -25,7 +26,10 @@
 {
     [super viewWillAppear:animated];
 
-    
+    if(self.isFirstIn)
+    {
+        [self dataRequest];
+    }
 }
 
 -(void)JPushNotifForChatMessage:(NSNotification *)notif
@@ -33,8 +37,15 @@
     [self dataRequest];
 }
 
+-(void)carCricleBackToReload
+{
+    [self requestForCircleNew];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isFirstIn = NO;
+    [MBProgressHUD showCustomLoading:@""];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
     //tableView
     [self tableViewSet];
@@ -43,8 +54,9 @@
     [longPress setMinimumPressDuration:1.5];
     [self.view addGestureRecognizer:longPress];
    
-    [self dataRequest];
     [self requestForCircleNew];
+    [self dataRequest];
+    
 }
 
 //车友圈新消息
@@ -70,8 +82,9 @@
 - (void)dataRequest {
     
     [QLNetworkingManager postWithUrl:UserPath params:@{@"operation_type":@"last_trade_deatil_list",@"account_id":[QLUserInfoModel getLocalInfo].account.account_id} success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
         self.dataModel = [MessageListModel yy_modelWithJSON:[response objectForKey:@"result_info"]];
-        
+        self.isFirstIn = YES;
     
         NSInteger unreadMsgNum = 0;
         for (MessageDetailModel *model in self.dataModel.info_list) {
@@ -142,7 +155,7 @@
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.extendDelegate = self;

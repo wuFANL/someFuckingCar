@@ -34,7 +34,14 @@
         }
         btn.frame = rect;
         [btn roundBorderWidth:1 borderColor:[UIColor clearColor]];
+        
+        if (!CGRectContainsRect(self.bounds, btn.frame)) {
+            btn.hidden = YES;
+        } else {
+            btn.hidden = NO;
+        }
     }
+    
 }
 - (void)setHeadsArr:(NSArray *)headsArr {
     _headsArr = headsArr;
@@ -56,10 +63,9 @@
             [btn sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.headsArr[i], @"head_pic")] forState:UIControlStateNormal];
         }
         
-        
-//        if (self.headDelegate&&[self.headDelegate respondsToSelector:@selector(setItemIndex:Obj:)]) {
-//            [self.headDelegate setItemIndex:i Obj:btn];
-//        }
+        if (self.headDelegate&&[self.headDelegate respondsToSelector:@selector(setItemIndex:Obj:)]) {
+            [self.headDelegate setItemIndex:i Obj:btn];
+        }
     }
     [self setNeedsLayout];
 }

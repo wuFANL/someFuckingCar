@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) NSArray *typeArr;
 /**
+ *按钮数组
+ */
+@property (nonatomic, strong) NSMutableArray *btnArr;
+/**
  *设置选中
  */
 @property (nonatomic, assign) NSInteger selectedIndex;
