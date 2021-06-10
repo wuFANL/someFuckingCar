@@ -9,6 +9,9 @@
 #import "QLCarCellDetailViewController.h"
 #import "QLCarCellDtlCell.h"
 #import "QLMyCarDetailViewController.h"
+#import "QLContactsInfoViewController.h"
+#import "QLChatListPageViewController.h"
+
 @interface QLCarCellDetailViewController ()
 @property (nonatomic, assign) NSInteger btnIndex;
 @property (nonatomic, strong) NSDictionary *currentDic;
@@ -223,8 +226,23 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    NSDictionary *modelDic = [self.sourceAr objectAtIndex:indexPath.row];
+    if(self.btnIndex == 2)
+    {
+        //进个人中心
+        QLContactsInfoViewController *ciVC = [[QLContactsInfoViewController alloc] initWithFirendID:[modelDic objectForKey:@"account_id"]];
+        ciVC.contactRelation = Friend;
+        [self.navigationController pushViewController:ciVC animated:YES];
+    }
+    else
+    {
+        //聊天
+        QLChatListPageViewController *clpVC = [[QLChatListPageViewController alloc] initWithCarID:[self.currentDic objectForKey:@"id"] messageToID:[[modelDic objectForKey:@"buyer_info"] objectForKey:@"account_id"]];
+        clpVC.navigationItem.title = [[modelDic objectForKey:@"buyer_info"] objectForKey:@"nickname"];
+        [self.navigationController pushViewController:clpVC animated:YES];
+    }
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     return 90;
 }
