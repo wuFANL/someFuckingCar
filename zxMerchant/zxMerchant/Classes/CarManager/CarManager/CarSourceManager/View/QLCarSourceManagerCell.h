@@ -10,7 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^ThreeBtnTapBlock) (NSInteger btnTag);
+
 @interface QLCarSourceManagerCell : UITableViewCell
+@property (nonatomic, copy) ThreeBtnTapBlock tagBlock;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIImageView *accImgView;
 @property (weak, nonatomic) IBOutlet UIView *activityView;
