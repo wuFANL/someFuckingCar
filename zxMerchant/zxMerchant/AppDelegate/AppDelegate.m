@@ -124,6 +124,7 @@
 }
 #pragma mark -微信回调
 - (void)onReq:(BaseReq *)req {
+//-微信回调
     QLLog(@"%@",req);
 }
 - (void)onResp:(BaseResp *)resp {
