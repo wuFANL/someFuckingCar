@@ -19,5 +19,5 @@
 + (NSString *)currentName;
 //字符截取-> 数组
 - (NSString *)firstStringSeparatedByString:(NSString *)separeted;
-
++ (NSString *)currentNameForChatList;
 @end

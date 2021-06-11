@@ -16,6 +16,7 @@
 #import "QLTransactionSubmitViewController.h"
 #import "QLCarLicenseViewController.h"
 #import "QLCarSourceDetailViewController.h"
+#import "NSString+Extension.h"
 
 @interface QLChatListPageViewController ()<QLBaseCollectionViewDelegate,UITableViewDelegate,UITableViewDataSource,QLBaseTableViewDelegate>
 @property (nonatomic, strong) QLBaseCollectionView *collectionView;
@@ -97,6 +98,7 @@
     [dicty setObject:@"1" forKey:@"m_type"];
     [dicty setObject:[NSNumber numberWithInt:1] forKey:@"status"];
     [dicty setObject:[self.currentDic objectForKey:@"t_id"] forKey:@"t_id"];
+    [dicty setObject:[NSString currentNameForChatList] forKey:@"create_time"];
     [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
     [self.chatListArray addObject:dicty];
     [self.tableView reloadData];
@@ -132,6 +134,7 @@
     [dicty setObject:@"2" forKey:@"m_type"];
     [dicty setObject:[NSNumber numberWithInt:1] forKey:@"status"];
     [dicty setObject:[self.currentDic objectForKey:@"t_id"] forKey:@"t_id"];
+    [dicty setObject:[NSString currentNameForChatList] forKey:@"create_time"];
     [dicty setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
     [self.chatListArray addObject:dicty];
     [self.tableView reloadData];
@@ -396,7 +399,7 @@
     NSDictionary *dic = [self.chatListArray objectAtIndex:indexPath.section];
     cell.sourceDic = dic;
 
-    if([NSString isEmptyString:[dic objectForKey:@"from_head_pic"]])
+    if(![NSString isEmptyString:[dic objectForKey:@"from_head_pic"]])
     {
         [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
     }

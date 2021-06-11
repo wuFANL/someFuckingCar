@@ -73,5 +73,12 @@
     return [list firstObject];
 }
 
++ (NSString *)currentNameForChatList
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:MM:ss"];
+    NSString *currentDate = [dateFormatter stringFromDate:[NSDate date]];
+    return currentDate;
+}
 
 @end

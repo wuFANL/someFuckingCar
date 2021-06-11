@@ -98,7 +98,7 @@
     //初始化 JPush 代码
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     
-    [JPUSHService setupWithOption:launchOptions appKey:@"2c8ea5af3f409621880b139c" channel:@"App Store" apsForProduction:NO];
+    [JPUSHService setupWithOption:launchOptions appKey:@"2c8ea5af3f409621880b139c" channel:@"App Store" apsForProduction:YES];
     //远程推送的消息
     if (launchOptions) {
         NSDictionary * userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
