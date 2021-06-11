@@ -396,7 +396,7 @@
     NSDictionary *dic = [self.chatListArray objectAtIndex:indexPath.section];
     cell.sourceDic = dic;
 
-    if([NSString isEmptyString:[dic objectForKey:@"from_head_pic"]])
+    if(![NSString isEmptyString:[dic objectForKey:@"from_head_pic"]])
     {
         [cell.aHeadImgView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"from_head_pic"]]];
     }
