@@ -36,7 +36,7 @@
         @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
         @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
     } success:^(id response) {
-        
+        [MBProgressHUD immediatelyRemoveHUD];
         weakSelf.dataDic = [[response objectForKey:@"result_info"] objectForKey:@"business_info"];
         [weakSelf.tableView reloadData];
     } fail:^(NSError *error) {
