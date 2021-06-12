@@ -17,7 +17,14 @@
 @end
 
 @implementation QLBrandInfoModel
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.brand_name = @"";
+    }
+    return self;
+}
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"brand_id"  : @"id",
              };
