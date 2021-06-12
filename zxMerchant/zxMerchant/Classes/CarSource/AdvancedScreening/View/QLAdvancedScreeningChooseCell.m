@@ -17,8 +17,10 @@
 
 @end
 @implementation QLAdvancedScreeningChooseCell
+
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:@"chooseCell"];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
     }

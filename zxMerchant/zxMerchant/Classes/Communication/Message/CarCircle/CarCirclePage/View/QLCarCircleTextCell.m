@@ -95,10 +95,17 @@
         if ([[dic objectForKey:@"account"] objectForKey:@"business_area"]) {
             resultString = [resultString stringByAppendingString:[NSString stringWithFormat:@"  %@",[[dic objectForKey:@"account"] objectForKey:@"business_area"]]];
         }
+        id flag =  [[dic objectForKey:@"account"] objectForKey:@"flag"];
+        if (flag) {
+            self.vipBtn.hidden = [flag integerValue] == 1?YES:NO;
+        }
         self.timeLB.text = resultString;
        
     }
-    
+    id guide_price = [dic objectForKey:@"account"];
+    if (guide_price) {
+        
+    }
     // 描述
     if ([dic objectForKey:@"business_car"]) {
         if ([[dic objectForKey:@"business_car"] objectForKey:@"explain"]) {

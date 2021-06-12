@@ -46,6 +46,7 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 #pragma mark - network
 - (void)addSubscribeRequest {
@@ -170,28 +171,34 @@
     if (self.asView.textTF.text.length == 0) {
         return;
     }
-    [[QLToolsManager share] alert:@"是否添加订阅" handler:^(NSError *error) {
-        if (!error) {
-            [self addSubscribeRequest];
-        }
-    }];
     
+    [self addSubscribeRequest];
 }
 //确定
 - (void)funBtnClick {
+    WEAKSELF
     if (self.conditionDic.count == 1&&[self.conditionDic[@"displacement_type"] isEqualToString:@"L"]) {
         [MBProgressHUD showError:@"请选择筛选条件"];
         return;
     }
     if (self.isSubscription) {
         //订阅
-        [self.asView show];
+        [[QLToolsManager share] alert:@"是否添加订阅" handler:^(NSError *error) {
+            if (!error) {
+                [self.asView show];
+            }else{
+                if (weakSelf.resultHandler) {
+                    weakSelf.resultHandler(weakSelf.conditionDic, nil);
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }
+            }
+        }];
     } else {
         //选择条件
-        if (self.resultHandler) {
-            self.resultHandler(self.conditionDic, nil);
-        }
-        [self.navigationController popViewControllerAnimated:YES];
+//        if (self.resultHandler) {
+//            self.resultHandler(self.conditionDic, nil);
+//        }
+//        [self.navigationController popViewControllerAnimated:YES];
         
     }
 }
@@ -272,6 +279,17 @@
         make.left.right.top.equalTo(self.view);
         make.bottom.equalTo(self.bottomView.mas_top);
     }];
+    
+    
+    
+    WEAKSELF
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf.tableView reloadData];
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:weakSelf.sectionArr.count-1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        
+    });
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.sectionArr.count;
@@ -367,6 +385,7 @@
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
     QLAdvancedScreeningSectionView *sectionView = [QLAdvancedScreeningSectionView new];
     sectionView.tag = 100+section;
     sectionView.showFunBtn = (section == [tableView numberOfSections]-1)?YES:NO;
@@ -387,7 +406,7 @@
     return sectionView;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return 200;
+    return 100;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 44;
@@ -433,6 +452,7 @@
     if(!_asView) {
         _asView = [QLAddSubscriptionView new];
         [_asView.submitBtn addTarget:self action:@selector(subscriptionBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
     }
     return _asView;
 }
