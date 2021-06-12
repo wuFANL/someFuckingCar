@@ -29,6 +29,7 @@
         self.viewDelegate = self;
         self.sort_by = 1;
         self.priceRange = @"0-9999999";
+        _isShow = NO;
 
     }
     return self;
@@ -124,6 +125,7 @@
     [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.alertView);
         make.height.mas_equalTo(15);
+        make.width.mas_equalTo(self.alertView);
         make.bottom.equalTo(self.alertView).offset(-20);
     }];
     //类型选择
@@ -148,6 +150,7 @@
         make.bottom.equalTo(self.closeBtn.mas_top);
         
     }];
+    _isShow = NO;
     
 }
 //关闭按钮
@@ -166,6 +169,7 @@
     if (self.warnCollectionView) {
         [self.warnCollectionView reloadData];
     }
+    _isShow = YES;
 }
 //隐藏
 - (void)hidden {
@@ -175,11 +179,23 @@
     }
     [self removeFromSuperview];
     self.window.hidden = YES;
+    _isShow = NO;
 }
+- (void)setIsShow:(BOOL)isShow{
+    if (isShow) {
+        [self show];
+    }else{
+        [self hidden];
+    }
+    
+    _isShow = isShow;
+}
+
 //遮罩点击
 - (void)hiddenViewEvent {
-    [self removeFromSuperview];
-    self.window.hidden = YES;
+//    [self removeFromSuperview];
+//    self.window.hidden = YES;
+    self.isShow = NO;
 }
 #pragma mark -collectionView
 - (void)collectionView:(UICollectionView *)collectionView Item:(UICollectionViewCell *)baseCell IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
@@ -283,8 +299,9 @@
 }
 - (QLBaseButton *)closeBtn {
     if (!_closeBtn) {
-        _closeBtn = [QLBaseButton new];
+        _closeBtn = [QLBaseButton buttonWithType:UIButtonTypeSystem];
         [_closeBtn setImage:[UIImage imageNamed:@"closeUp"] forState:UIControlStateNormal];
+        _closeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_closeBtn addTarget:self action:@selector(closeBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _closeBtn;

@@ -144,6 +144,19 @@
         [dic setValue:brand_id forKey:@"brand_id"];
     }
     
+    for (NSString *key in self.conditionSelect.allKeys) {
+        if ([key isEqualToString:@"displacement"]) {
+            NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
+            if (arr.count>1) {
+                [dic setObject:arr[0] forKey:@"displacement_min"];
+                [dic setObject:arr[1] forKey:@"displacement_max"];
+            }
+        }else{
+            [dic setValue:self.conditionSelect[key] forKey:key];
+        }
+    }
+    
+    
     return dic.copy;
 }
 
@@ -241,6 +254,9 @@
         self.vcView.handler = ^(id result) {
             //点击结果
             NSIndexPath *indexPath = result;
+            if (indexPath.section==0&&indexPath.row==0) {
+                return;
+            }
             if (indexPath.section == 0) {
                 //选项选择
                 if (type == 0&&indexPath.row >= 0) {  // 排序种类
@@ -268,7 +284,9 @@
             [vc_top.dataArray removeAllObjects];
             [weakSelf reloadSubVcData];
         };
-        [self.vcView show];
+        
+        self.vcView.isShow = !self.vcView.isShow;
+        
     } else if(type == 1) {
         self.headView.conditionView.currentIndex = -1;
         [self.vcView hidden];

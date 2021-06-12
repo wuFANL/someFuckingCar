@@ -220,7 +220,7 @@
 }
 //排量类型选择
 - (void)displacementTypeBtnClick:(UIButton *)sender {
-    NSInteger index = sender.tag;
+//    NSInteger index = sender.tag;
     NSInteger section = [self.tableView numberOfSections]-1;
     QLAdvancedScreeningSectionView *sectionView = [self.view viewWithTag:100+section];
     if (sectionView.aBtn == sender) {
@@ -230,7 +230,7 @@
         sectionView.aBtn.selected = NO;
         sectionView.bBtn.selected = YES;
     }
-    [self.conditionDic setObject:index==0?@"L":@"T" forKey:@"displacement_type"];
+//    [self.conditionDic setObject:index==0?@"L":@"T" forKey:@"displacement_type"];
 }
 //重置
 - (void)resetBtnClick {
@@ -459,7 +459,7 @@
 - (NSMutableDictionary *)conditionDic {
     if (!_conditionDic) {
         _conditionDic = [NSMutableDictionary dictionary];
-        _conditionDic[@"displacement_type"] = @"L";
+//        _conditionDic[@"displacement_type"] = @"L";
     }
     return _conditionDic;
 }

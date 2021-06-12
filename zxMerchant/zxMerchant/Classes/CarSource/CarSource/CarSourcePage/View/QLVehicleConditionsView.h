@@ -13,6 +13,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLVehicleConditionsView : QLBaseView
+//是否显示
+@property (nonatomic, assign) BOOL isShow;
+
 /**
  *位置偏移
  */
