@@ -40,7 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *yjView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *yjViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *yjViewTop;
-
+/** vip标签*/
+@property (nonatomic, strong) UIImageView *vipTipImgV;
 
 - (void)updateData:(NSDictionary *)data;
 

@@ -11,10 +11,15 @@
 #import "QLEditAccountViewController.h"
 #import "QLBelongingShopPageViewController.h"
 #import "QLUnbindStoreView.h"
+#import "QLOSSManager.h"
 
 @interface QLMyInfoPageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) NSDictionary *dataDic;
+
+/** 头像按钮*/
+@property (nonatomic, strong) QLBaseButton *headerButton;
+
 @end
 
 @implementation QLMyInfoPageViewController
@@ -42,7 +47,18 @@
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"QLMyInfoPageViewControllerRefresh" object:nil];
 }
+
+- (void)refreshTableView {
+    [self.tableView reloadData];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - action
 //解除绑定
 - (void)unbindBtnClick {
@@ -51,7 +67,32 @@
 }
 //头像按钮
 - (void)headBtnClick {
-    
+    // 选头像
+    WEAKSELF
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        [MBProgressHUD showLoading:nil];
+        [[QLOSSManager shared] syncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+            // 上传头像
+            NSString* url = [names firstObject];
+            [QLNetworkingManager postWithUrl:UserPath params:@{
+                Operation_type:@"update_account",
+                @"acccount_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                @"head_pic":url
+            } success:^(id response) {
+                [weakSelf.headerButton setImage:img forState:UIControlStateNormal];
+                [MBProgressHUD showSuccess:@"上传成功"];
+                // 更新本地数据
+                QLUserInfoModel *model = [QLUserInfoModel getLocalInfo];
+                model.account.head_pic = url;
+                [QLUserInfoModel updateUserInfoByModel:model];
+                // 通知前一个页面刷新
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"USERCENTERREFRESH" object:nil];
+            } fail:^(NSError *error) {
+                [MBProgressHUD showError:error.domain];
+            }];
+        }];
+    }];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -80,6 +121,7 @@
             acc = @"";
             //头像
             QLBaseButton *headBtn = [[QLBaseButton alloc] init];
+            self.headerButton = headBtn;
             headBtn.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
             [headBtn roundRectCornerRadius:4 borderWidth:1 borderColor:WhiteColor];
@@ -137,6 +179,8 @@
             //换账户
             QLEditAccountViewController *eaVC = [QLEditAccountViewController new];
             [self.navigationController pushViewController:eaVC animated:YES];
+        } else if (indexPath.row == 0 ) {
+            
         }
     } else {
         if (indexPath.row == 0) {
