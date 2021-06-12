@@ -25,7 +25,8 @@
 @property (nonatomic, strong) QLCarSourceHeadView *headView;
 @property (nonatomic, strong) QLVehicleConditionsView *vcView;
 @property (nonatomic, strong) NSMutableDictionary *conditionDic;
-
+//筛选
+@property (nonatomic, strong) NSMutableDictionary *conditionSelect;
 /** 城市编码*/
 @property (nonatomic, strong) NSString *cityCode;
 @end
@@ -108,34 +109,55 @@
 #pragma mark - action
 //刷新
 - (NSDictionary *)currrentPara {
-     // condition无法提供数据 只能展示
-
+    // condition无法提供数据 只能展示
+    
     NSUInteger type = self.vcView.sort_by;
     NSString *brand_id = self.vcView.brandModel.brand_id?self.vcView.brandModel.brand_id:@"";
     NSString *price = self.vcView.priceRange;
-
-    NSString *min_price = @"0";
+    
+    NSString *min_price = @"1";
     NSString *max_price = @"9999999";
     if (price && [price containsString:@"-"]) {
         // 根据 - 分成两段
         min_price = [price componentsSeparatedByString:@"-"].firstObject;
         max_price = [price componentsSeparatedByString:@"-"].lastObject;
     }
-
+    
     NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
     // 获取新的cityCode
     if (self.cityCode && self.cityCode.length >0) {
         cityCode = self.cityCode;
     }
     
-    return @{
+    NSMutableDictionary *dic = @{
         @"sort_by":[NSString stringWithFormat:@"%lu",type],
         @"page_size":@(listShowCount),
         @"min_price":min_price,
         @"max_price":max_price,
-        @"brand_id":brand_id,
-        @"cityCode":cityCode
-    };
+        @"city_code":cityCode,
+    }.mutableCopy;
+    NSString *series_id = self.vcView.seriesModel.series_id;
+    if (series_id && [series_id isKindOfClass:[NSString class]] && ![series_id isEqualToString:@"0"]) {
+        [dic setValue:series_id forKey:@"series_id"];
+    }
+    if (brand_id && ![brand_id isEqualToString:@""]) {
+        [dic setValue:brand_id forKey:@"brand_id"];
+    }
+    
+    for (NSString *key in self.conditionSelect.allKeys) {
+        if ([key isEqualToString:@"displacement"]) {
+            NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
+            if (arr.count>1) {
+                [dic setObject:arr[0] forKey:@"displacement_min"];
+                [dic setObject:arr[1] forKey:@"displacement_max"];
+            }
+        }else{
+            [dic setValue:self.conditionSelect[key] forKey:key];
+        }
+    }
+    
+    
+    return dic.copy;
 }
 
 // 全部车源刷新
@@ -161,8 +183,8 @@
                     // 2. 对数据源拼接
                     [vc_all.dataArray addObjectsFromArray:carArray];
                     // 刷新数据
-                    [vc_all.tableView reloadData];
                 }
+                [vc_all.tableView reloadData];
             }
         }
     } fail:^(NSError *error) {
@@ -173,6 +195,7 @@
 
 // 刷新头部车源
 - (void)topCarSourceReloadData {
+    
     QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)self.subVCArr.firstObject;
     NSInteger topPage = vc_top.tableView.page;
     NSMutableDictionary *conditionDic = [[self currrentPara] mutableCopy];
@@ -194,8 +217,9 @@
                     // 2. 对数据源拼接
                     [vc_top.dataArray addObjectsFromArray:carArray];
                     // 刷新数据
-                    [vc_top.tableView reloadData];
+                    
                 }
+                [vc_top.tableView reloadData];
             }
         }
     } fail:^(NSError *error) {
@@ -230,6 +254,9 @@
         self.vcView.handler = ^(id result) {
             //点击结果
             NSIndexPath *indexPath = result;
+            if (indexPath.section==0&&indexPath.row==0) {
+                return;
+            }
             if (indexPath.section == 0) {
                 //选项选择
                 if (type == 0&&indexPath.row >= 0) {  // 排序种类
@@ -237,7 +264,7 @@
                     NSString *sort_by_Str = dataArr[indexPath.row];
                     weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
                     [weakSelf.conditionDic setObject:sort_by_Str forKey:@"sort_by"];
-
+                    
                 } else if (type == 2&&indexPath.row >= 0) { // 价格
                     
                     weakSelf.vcView.priceRange =  dataArr[indexPath.row];
@@ -257,7 +284,9 @@
             [vc_top.dataArray removeAllObjects];
             [weakSelf reloadSubVcData];
         };
-        [self.vcView show];
+        
+        self.vcView.isShow = !self.vcView.isShow;
+        
     } else if(type == 1) {
         self.headView.conditionView.currentIndex = -1;
         [self.vcView hidden];
@@ -265,23 +294,30 @@
         WEAKSELF
         QLChooseBrandViewController *cbVC = [QLChooseBrandViewController new];
         cbVC.noShowModel = YES;
+        cbVC.brand_id = self.vcView.brandModel.brand_id;
+        cbVC.series_id = self.vcView.seriesModel.series_id;
+        
         cbVC.callback = ^(QLBrandInfoModel * _Nullable brandModel, QLSeriesModel * _Nullable seriesModel, QLTypeInfoModel * _Nullable typeModel) {
-            if (brandModel.brand_id.length != 0) {
-                weakSelf.vcView.brandModel = brandModel;
-                
-                NSString *carName = [NSString stringWithFormat:@"%@%@",brandModel.brand_name,seriesModel.series_name];
-                [weakSelf.conditionDic setObject:carName forKey:@"carName"];
-
-                // 页数重置
-                QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
-                vc_all.tableView.page = 0;
-                [vc_all.dataArray removeAllObjects];
-                QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
-                vc_top.tableView.page = 0;
-                [vc_top.dataArray removeAllObjects];
-                [weakSelf reloadSubVcData];
-                
+            //            品牌导航数据刷新
+            weakSelf.vcView.brandModel = brandModel;
+            weakSelf.vcView.seriesModel = seriesModel;
+            NSString *carName = [NSString stringWithFormat:@"%@%@",brandModel.brand_name,seriesModel.series_name];
+            if ([seriesModel.series_id isKindOfClass:[NSString class]] && [seriesModel.series_id isEqualToString:@"0"]) {
+                carName = [NSString stringWithFormat:@"%@",seriesModel.series_name];
             }
+            
+            
+            [weakSelf.conditionDic setObject:carName forKey:@"carName"];
+            
+            // 页数重置
+            QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
+            vc_all.tableView.page = 0;
+            [vc_all.dataArray removeAllObjects];
+            QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
+            vc_top.tableView.page = 0;
+            [vc_top.dataArray removeAllObjects];
+            [weakSelf reloadSubVcData];
+            
         };
         [self.navigationController pushViewController:cbVC animated:YES];
     } else {
@@ -291,6 +327,29 @@
         QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
         asVC.showCity = NO;
         asVC.isSubscription = YES;
+        WEAKSELF
+        asVC.resultHandler = ^(id result, NSError *error) {
+            if (!error&& result) {
+                if ([result isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *dic = (NSDictionary *)result;
+                    NSMutableDictionary *tempDic = weakSelf.conditionDic.mutableCopy;
+                    
+                    for (NSString *key in weakSelf.conditionSelect.allKeys) {
+                        for (NSString *key2 in tempDic.allKeys) {
+                            if ([key isEqualToString:key2]) {
+                                [self.conditionDic removeObjectForKey:key2];
+                            }
+                        }
+                    }
+                    weakSelf.conditionSelect = dic.mutableCopy;
+                    for (NSString *key in weakSelf.conditionSelect.allKeys) {
+                        [weakSelf.conditionDic setValue:self.conditionSelect[key] forKey:key];
+                        
+                    }
+                    [weakSelf clearConditionToRefresh];
+                }
+            }
+        };
         [self.navigationController pushViewController:asVC animated:YES];
     }
 }
@@ -303,7 +362,7 @@
 }
 //类型标题点击
 - (void)chooseSelect:(UIButton *)lastBtn CurrentBtn:(UIButton *)currentBtn Index:(NSInteger)index {
-//    self.headView.showResultView = index==0?NO:YES;
+    //    self.headView.showResultView = index==0?NO:YES;
     [self viewChangeAnimation:index];
 }
 //轮播图
@@ -328,7 +387,7 @@
     CitySelectViewController* vc = [CitySelectViewController new];
     WEAKSELF
     vc.selectBlock = ^(NSDictionary * _Nonnull fatherDic, NSDictionary * _Nonnull subDic, NSString * _Nonnull adcode) {
-      // 更新
+        // 更新
         NSString *cityNam = EncodeStringFromDic(subDic, @"region_name");
         [weakSelf.naviView.addressBtn setTitle:cityNam forState:UIControlStateNormal];
         weakSelf.cityCode = adcode;
@@ -396,20 +455,32 @@
             [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
             // 检查是否有筛选项
             [weakSelf checkIsHasSelectItem];
+            [weakSelf clearSelect];
+            [weakSelf clearConditionToRefresh];
             
-           
-            QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
-            vc_all.tableView.page = 0;
-            [vc_all.dataArray removeAllObjects];
-            QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
-            vc_top.tableView.page = 0;
-            [vc_top.dataArray removeAllObjects];
-            [weakSelf reloadSubVcData];
-       
         };
     }
     return _headView;
 }
+- (void)clearConditionToRefresh{
+    
+    QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)self.subVCArr.lastObject;
+    vc_all.tableView.page = 0;
+    [vc_all.dataArray removeAllObjects];
+    QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)self.subVCArr.firstObject;
+    vc_top.tableView.page = 0;
+    [vc_top.dataArray removeAllObjects];
+    [self reloadSubVcData];
+    
+}
+
+
+- (void )clearSelect{
+    self.vcView.brandModel = nil;
+    self.vcView.seriesModel = nil;
+}
+
+
 - (QLVehicleConditionsView *)vcView {
     if (!_vcView) {
         _vcView = [[QLVehicleConditionsView alloc]init];
@@ -421,5 +492,11 @@
         _conditionDic = [NSMutableDictionary dictionary];
     }
     return _conditionDic;
+}
+- (NSMutableDictionary *)conditionSelect {
+    if (!_conditionSelect) {
+        _conditionSelect = [NSMutableDictionary dictionary];
+    }
+    return _conditionSelect;
 }
 @end

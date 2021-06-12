@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headBtnTop;
 // 姓名
 @property (weak, nonatomic) IBOutlet UIButton *nikenameBtn;
+
 // 时间 + 地点
 @property (weak, nonatomic) IBOutlet UILabel *timeLB;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLBBottom;

@@ -283,8 +283,8 @@ NSString* Operation_type = @"operation_type";
 }
 //价格换算
 - (NSString *)unitConversion:(float)digital {
-    NSString *price = [NSString formatFloat:(digital/10000.00)];
-    return [NSString stringWithFormat:@"%@%@",digital>=10000.00?@(price.floatValue):@(digital),digital>=10000.00?@"万元":@"元"];
+    NSString *price = [NSString formatFloat:(digital/10000.0f)];
+    return [NSString stringWithFormat:@"%@%@",digital>=10000.00?price:@(digital),digital>=10000.00?@"万元":@"元"];
 }
 #pragma mark -推出web控制器
 - (void)loadUrlInVC:(NSString *)loadUrl title:(NSString *)title currentVC:(UIViewController *)currentSelf {

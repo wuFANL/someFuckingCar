@@ -79,10 +79,10 @@
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.headBtnTop.constant = 15;
         cell.openBtnBottom.constant = 0;
-        if (!cell.dataDic) {
+//        if (!cell.dataDic) {
             cell.dataDic = dic;
             [cell upDateWithDic:dic];
-        }
+//        }
         return cell;
     } else if (indexPath.row == 1) {
         QLTopCarSourcePriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCarSourcePriceCell" forIndexPath:indexPath];
@@ -92,9 +92,9 @@
             cell.pifaPrice = [[QLToolsManager share] unitConversion:wholesale_price];
         }
         // 零售价
-        if ([dic objectForKey:@"wholesale_price_old"]) {
-            float wholesale_price_old = [[NSString stringWithFormat:@"%@",[dic objectForKey:@"wholesale_price_old"]] floatValue];
-            cell.lingshouPrice = [[QLToolsManager share] unitConversion:wholesale_price_old];
+        if ([dic objectForKey:@"sell_price"]) {
+            float sell_price = [[NSString stringWithFormat:@"%@",[dic objectForKey:@"sell_price"]] floatValue];
+            cell.lingshouPrice = [[QLToolsManager share] unitConversion:sell_price];
         }
         
         cell.chatBlock = ^{

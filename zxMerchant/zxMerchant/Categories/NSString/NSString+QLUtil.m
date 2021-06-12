@@ -444,7 +444,7 @@
 #pragma mark- /**格式化小数点后两位*/
 + (NSString *)formatFloat:(float)f {
     if (fmodf(f, 1)==0) {//如果有一位小数点
-        return [NSString stringWithFormat:@"%.0f",f];
+        return [NSString stringWithFormat:@"%.1f",f];
     } else if (fmodf(f*10, 1)==0) {//如果有两位小数点
         return [NSString stringWithFormat:@"%.1f",f];
     } else {

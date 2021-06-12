@@ -24,11 +24,12 @@
 @property (nonatomic, strong) NSMutableArray *bArr;
 @property (nonatomic, strong) NSMutableArray *cArr;
 @end
+static const CGFloat bTableLeft = 88.f;
 @implementation QLChooseBrandViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,10 +81,10 @@
 //获取品牌
 - (void)getCarBrand {
     [MBProgressHUD showCustomLoading:nil];
-
-    [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"get_merchant_brand_data",@"business_id":[QLUserInfoModel getLocalInfo].account.business_id} success:^(id response) {
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BasePath params:@{@"operation_type":@"get_brand_data",@"business_id":[QLUserInfoModel getLocalInfo].account.business_id} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_group_list"]] mutableCopy];
+        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_list"]] mutableCopy];
         //索引数据
         NSMutableArray *indexArr = [NSMutableArray array];
         for (QLBrandModel *brandModel in self.aArr) {
@@ -95,21 +96,30 @@
         if (self.brand_id.length != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //刷新完成
-                for (QLBrandModel *brand in self.aArr) {
+                for (QLBrandModel *brand in weakSelf.aArr) {
                     for (QLBrandInfoModel *infoModel in brand.brand_list) {
-                        if ([self.brand_id isEqualToString:infoModel.brand_id]) {
-                            NSInteger section = [self.aArr indexOfObject:brand];
+                        if ([weakSelf.brand_id isEqualToString:infoModel.brand_id]) {
+                            
+                            NSInteger section = [weakSelf.aArr indexOfObject:brand];
                             NSInteger row = [brand.brand_list indexOfObject:infoModel];
-                            self.aIndex = [NSIndexPath indexPathForRow:row inSection:section];
-                            [self.aTableView scrollToRowAtIndexPath:self.aIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-                            [self tableView:self.aTableView didSelectRowAtIndexPath:self.aIndex];
+                            weakSelf.aIndex = [NSIndexPath indexPathForRow:row inSection:section];
+                            [weakSelf.aTableView selectRowAtIndexPath:weakSelf.aIndex animated:YES scrollPosition:UITableViewScrollPositionNone];
+                            if (weakSelf.series_id && weakSelf.series_id!=nil) {
+                                [weakSelf openSeriesTableView];
+                            }
+                            
+                            return;
                         }
                     }
                 }
                 
-
+                
             });
         }
+        
+        
+        
+        
         
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -119,42 +129,52 @@
     
     
     
-//    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_brand_data",@"merchant_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
-//        [MBProgressHUD immediatelyRemoveHUD];
-//        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_list"]] mutableCopy];
-//        //索引数据
-//        NSMutableArray *indexArr = [NSMutableArray array];
-//        for (QLBrandModel *brandModel in self.aArr) {
-//            [indexArr addObject:brandModel.brand_group];
-//        }
-//        self.indexView.indexArr = indexArr;
-//        //刷新列表
-//        [self.aTableView reloadData];
-//        if (self.brand_id.length != 0) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //刷新完成
-//                for (QLBrandModel *brand in self.aArr) {
-//                    for (QLBrandInfoModel *infoModel in brand.brand_list) {
-//                        if ([self.brand_id isEqualToString:infoModel.brand_id]) {
-//                            NSInteger section = [self.aArr indexOfObject:brand];
-//                            NSInteger row = [brand.brand_list indexOfObject:infoModel];
-//                            self.aIndex = [NSIndexPath indexPathForRow:row inSection:section];
-//                            [self.aTableView scrollToRowAtIndexPath:self.aIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-//                            [self tableView:self.aTableView didSelectRowAtIndexPath:self.aIndex];
-//                        }
-//                    }
-//                }
-//
-//
-//            });
-//        }
-//    } fail:^(NSError *error) {
-//        [MBProgressHUD showError:error.domain];
-//    }];
+    //    [QLNetworkingManager postWithParams:@{@"operation_type":@"get_brand_data",@"merchant_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)} success:^(id response) {
+    //        [MBProgressHUD immediatelyRemoveHUD];
+    //        self.aArr = [[NSArray yy_modelArrayWithClass:[QLBrandModel class] json:response[@"result_info"][@"brand_list"]] mutableCopy];
+    //        //索引数据
+    //        NSMutableArray *indexArr = [NSMutableArray array];
+    //        for (QLBrandModel *brandModel in self.aArr) {
+    //            [indexArr addObject:brandModel.brand_group];
+    //        }
+    //        self.indexView.indexArr = indexArr;
+    //        //刷新列表
+    //        [self.aTableView reloadData];
+    //        if (self.brand_id.length != 0) {
+    //            dispatch_async(dispatch_get_main_queue(), ^{
+    //                //刷新完成
+    //                for (QLBrandModel *brand in self.aArr) {
+    //                    for (QLBrandInfoModel *infoModel in brand.brand_list) {
+    //                        if ([self.brand_id isEqualToString:infoModel.brand_id]) {
+    //                            NSInteger section = [self.aArr indexOfObject:brand];
+    //                            NSInteger row = [brand.brand_list indexOfObject:infoModel];
+    //                            self.aIndex = [NSIndexPath indexPathForRow:row inSection:section];
+    //                            [self.aTableView scrollToRowAtIndexPath:self.aIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    //                            [self tableView:self.aTableView didSelectRowAtIndexPath:self.aIndex];
+    //                        }
+    //                    }
+    //                }
+    //
+    //
+    //            });
+    //        }
+    //    } fail:^(NSError *error) {
+    //        [MBProgressHUD showError:error.domain];
+    //    }];
     
 }
+- (void )openSeriesTableView{
+    [self getCarSeries];
+    //打开列表
+    [self.bTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(bTableLeft);
+    }];
+}
+
+
 //获取系列
 - (void)getCarSeries {
+    
     [MBProgressHUD showCustomLoading:nil];
     QLBrandModel *brandModel = self.aArr[self.aIndex.section];
     QLBrandInfoModel *infoModel = brandModel.brand_list[self.aIndex.row];
@@ -169,8 +189,11 @@
                     if ([self.series_id isEqualToString:series.series_id]) {
                         NSInteger row = [self.bArr indexOfObject:series];
                         self.bIndex = [NSIndexPath indexPathForRow:row+1 inSection:0];
-                        [self tableView:self.bTableView didSelectRowAtIndexPath:self.bIndex];
-                        [self.bTableView scrollToRowAtIndexPath:self.bIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+                        [self.bTableView selectRowAtIndexPath:self.bIndex animated:YES scrollPosition:UITableViewScrollPositionNone];
+                        
+                    }else if([self.series_id isKindOfClass:[NSString class]] && [self.series_id isEqualToString:@"0"]){
+                        
+                        [self.bTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
                     }
                 }
                 
@@ -258,7 +281,8 @@
         QLBrandModel *brandModel = self.aArr[section];
         return brandModel.brand_list.count;
     } else if (tableView == self.bTableView) {
-        return 1+self.bArr.count;
+        //        多了收起 和 不限车系
+        return 2 + self.bArr.count;
     } else {
         if (section == 0) {
             return 1;
@@ -294,26 +318,35 @@
         }
     } else if (tableView == self.bTableView) {
         if (indexPath.row == 0) {
+            
             cell.textLabel.text = @"收起";
             cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
+            
+        }else if(indexPath.row == 1){
+            
+            cell.textLabel.text = @"不限车系";
+            
         } else {
-            QLSeriesModel *seriesModel = self.bArr[indexPath.row-1];
-            cell.textLabel.text = seriesModel.series_name;
-            if ([self.series_id isEqualToString:seriesModel.series_id]) {
-                self.bIndex = indexPath;
-            }
-            //图片
-            if (seriesModel.image_url.length != 0) {
-                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:seriesModel.image_url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                    if (!error) {
-                        cell.imageView.image = [UIImage drawWithImage:image size:CGSizeMake(35, 35)];
-                    }
-                }];
-            }
-            //选中颜色
-            if (indexPath == self.bIndex) {
-                cell.textLabel.textColor = WhiteColor;
-                cell.backgroundColor = GreenColor;
+            if((indexPath.row-2)< self.bArr.count ){
+                
+                QLSeriesModel *seriesModel = self.bArr[indexPath.row-2];
+                cell.textLabel.text = seriesModel.series_name;
+                if ([self.series_id isEqualToString:seriesModel.series_id]) {
+                    self.bIndex = indexPath;
+                }
+                //图片
+                if (seriesModel.image_url.length != 0) {
+                    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:seriesModel.image_url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                        if (!error) {
+                            cell.imageView.image = [UIImage drawWithImage:image size:CGSizeMake(35, 35)];
+                        }
+                    }];
+                }
+                //选中颜色
+                if (indexPath == self.bIndex) {
+                    cell.textLabel.textColor = WhiteColor;
+                    cell.backgroundColor = GreenColor;
+                }
             }
         }
     } else {
@@ -340,7 +373,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat space = 65.0;
+    CGFloat space = bTableLeft;
     if (tableView == self.aTableView) {
         if (self.aIndex != indexPath) {
             self.brand_id = @"";
@@ -360,15 +393,11 @@
             
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            //获取系列数据
-            [self getCarSeries];
-            //打开列表
-            [self.bTableView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.view).offset(space);
-            }];
+            
+            [self openSeriesTableView];
             
         }
-    
+        
     } else if (tableView == self.bTableView) {
         if (indexPath.row == 0) {
             [self.bTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -377,7 +406,9 @@
             [self.cTableView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.view).offset(self.view.width);
             }];
-        } else {
+            
+        }
+        else {
             if (self.bIndex != indexPath) {
                 self.series_id = @"";
                 self.model_id = @"";
@@ -390,10 +421,24 @@
                 //返回结果
                 QLBrandModel *brandModel = self.aArr[self.aIndex.section];
                 QLBrandInfoModel *brandInfoModel = brandModel.brand_list[self.aIndex.row];
-                //系列
-                QLSeriesModel *seriesModel = self.bArr[self.bIndex.row-1];
-                self.callback(brandInfoModel, seriesModel, nil);
+                
+                if (indexPath.row == 1){
+                    //系列
+                    QLSeriesModel *seriesModel = [[QLSeriesModel alloc]init];
+                    seriesModel.series_id = @"0";
+                    seriesModel.series_name = @"不限车系";
+                    self.callback(brandInfoModel, seriesModel, nil);
+                }else{
+                    //系列
+                    QLSeriesModel *seriesModel = [[QLSeriesModel alloc]init];
+                    if ((self.bIndex.row-2) < self.bArr.count) {
+                        seriesModel = self.bArr[self.bIndex.row -2];
+                    }
+                    self.callback(brandInfoModel, seriesModel, nil);
+                    
+                }
                 [self.navigationController popViewControllerAnimated:YES];
+                
             } else {
                 //获取型号数据
                 [self getCarModel];
@@ -414,7 +459,7 @@
             if (self.cIndex != indexPath) {
                 self.model_id = @"";
                 self.cIndex = indexPath;
-               
+                
             }
             if (self.model_id.length == 0) {
                 //品牌
@@ -498,7 +543,7 @@
 }
 - (QLBaseTableView *)aTableView {
     if (!_aTableView) {
-        _aTableView = [[QLBaseTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _aTableView = [[QLBaseTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _aTableView.delegate = self;
         _aTableView.dataSource = self;
         [_aTableView registerClass:[QLBrandCell class] forCellReuseIdentifier:@"cell"];
@@ -539,4 +584,10 @@
     }
     return _cHeadView;
 }
+
+- (void)dealloc
+{
+    QLLog(@"品牌页面dealloc");
+}
+
 @end
