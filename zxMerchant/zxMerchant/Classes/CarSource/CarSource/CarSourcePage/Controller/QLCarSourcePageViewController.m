@@ -123,7 +123,10 @@
         max_price = [price componentsSeparatedByString:@"-"].lastObject;
     }
     
-    NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
+    NSString * cityCode = @"0";
+    
+//    [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0"
+    
     // 获取新的cityCode
     if (self.cityCode && self.cityCode.length >0) {
         cityCode = self.cityCode;

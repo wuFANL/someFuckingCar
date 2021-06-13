@@ -26,9 +26,6 @@
 }
 
 - (void)updateWith:(NSDictionary *)dic {
-    if (self.dataDic) {
-        return;
-    }
     self.dataDic = dic;
     // 更新标题
     self.titleLB.text = EncodeStringFromDic(dic, @"title");
@@ -38,13 +35,6 @@
         if ([key isEqualToString:@"factory_way"] || [key isEqualToString:@"emission_standard"] || [key isEqualToString:@"transmission_case"]) {
             [dataArr addObject:EncodeStringFromDic(dic, key)];
         }
-//        if ([key isEqualToString:@"max_driving_distance"]) {
-//            NSString* driveMaxDistance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"max_driving_distance") floatValue]];
-//            if ([driveMaxDistance isEqualToString:@"9999999"]) {
-//                continue;
-//            }
-//            [dataArr addObject:[NSString stringWithFormat:@"%@万公里",driveMaxDistance]];
-//        }
         if ([key isEqualToString:@"min_price"]) {
             NSString *lowPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"min_price") floatValue]];
             NSString *maxPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"max_price") floatValue]];

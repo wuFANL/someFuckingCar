@@ -62,8 +62,9 @@
     self.navigationItem.title = @"订阅详情";
     //右导航按钮
     UIBarButtonItem *deleteItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"delete_green"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(deleteItemClick)];
-    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"editIcon"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(editItemClick)];
-    self.navigationItem.rightBarButtonItems = @[deleteItem,editItem];
+//    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"editIcon"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(editItemClick)];
+//    self.navigationItem.rightBarButtonItems = @[deleteItem,editItem];
+    self.navigationItem.rightBarButtonItems = @[deleteItem];
 }
 
 #pragma mark - tableView
@@ -94,13 +95,6 @@
             if ([key isEqualToString:@"factory_way"] || [key isEqualToString:@"emission_standard"] || [key isEqualToString:@"transmission_case"]) {
                 [dataArr addObject:EncodeStringFromDic(dic, key)];
             }
-            if ([key isEqualToString:@"max_driving_distance"]) {
-                NSString* driveMaxDistance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"max_driving_distance") floatValue]];
-                if ([driveMaxDistance isEqualToString:@"100"]) {
-                    continue;
-                }
-                [dataArr addObject:[NSString stringWithFormat:@"%@万公里",driveMaxDistance]];
-            }
             if ([key isEqualToString:@"min_price"]) {
                 NSString *lowPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"min_price") floatValue]];
                 NSString *maxPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"max_price") floatValue]];
@@ -112,7 +106,7 @@
                 NSString *energyTypeHigh = EncodeStringFromDic(dic, @"max_displacement");
                 NSString *energyTypeUnit = EncodeStringFromDic(dic, @"displacement_type");
                 
-                if ([energyTypeLow isEqualToString:@"0"] && [energyTypeHigh isEqualToString:@"10"]) {
+                if ([energyTypeLow isEqualToString:@"0"] && [energyTypeHigh isEqualToString:@"9999999"]) {
                     continue;
                 }
                 [dataArr addObject:[NSString stringWithFormat:@"%@-%@%@",energyTypeLow,energyTypeHigh,energyTypeUnit]];
@@ -120,10 +114,10 @@
             if ([key isEqualToString:@"min_driving_distance"]) {
                 // 里程
                 NSString *min_driving_distance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"min_driving_distance") floatValue]];
-                NSString *max_driving_distance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"min_driving_distance") floatValue]];
+                NSString *max_driving_distance = [[QLToolsManager share] unitMileage:[EncodeStringFromDic(dic, @"max_driving_distance") floatValue]];
                 
-                if ([min_driving_distance isEqualToString:@"0"] && [max_driving_distance isEqualToString:@"0"]) {
-                    continue;;
+                if ([EncodeStringFromDic(dic, @"min_driving_distance") isEqualToString:@"0"] && [EncodeStringFromDic(dic, @"max_driving_distance") isEqualToString:@"9999999"]) {
+                    continue;
                 }
                [dataArr addObject:[NSString stringWithFormat:@"%@-%@万公里",min_driving_distance,max_driving_distance]];
             }
@@ -131,8 +125,8 @@
             if ([key isEqualToString:@"min_vehicle_age"]) {
                 NSString *min_vehicle_age = EncodeStringFromDic(dic, @"min_vehicle_age");
                 NSString *max_vehicle_age = EncodeStringFromDic(dic, @"max_vehicle_age");
-                if ([min_vehicle_age isEqualToString:@"0"] && [max_vehicle_age isEqualToString:@"100"]) {
-                    continue;;
+                if ([min_vehicle_age isEqualToString:@"0"] && [max_vehicle_age isEqualToString:@"9999999"]) {
+                    continue;
                 }
                 [dataArr addObject:[NSString stringWithFormat:@"%@-%@年",min_vehicle_age,max_vehicle_age]];
             }
