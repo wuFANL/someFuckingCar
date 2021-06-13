@@ -79,10 +79,8 @@
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.headBtnTop.constant = 15;
         cell.openBtnBottom.constant = 0;
-//        if (!cell.dataDic) {
-            cell.dataDic = dic;
-            [cell upDateWithDic:dic];
-//        }
+        cell.dataDic = dic;
+        [cell upDateWithDic:dic];
         return cell;
     } else if (indexPath.row == 1) {
         QLTopCarSourcePriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topCarSourcePriceCell" forIndexPath:indexPath];
