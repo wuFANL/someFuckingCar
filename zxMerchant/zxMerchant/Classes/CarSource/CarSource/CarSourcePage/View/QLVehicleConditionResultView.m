@@ -58,7 +58,8 @@
 - (void)deleteBtnClick:(UIButton *)sender {
     NSInteger index = sender.tag;
     NSMutableArray *temArr = [NSMutableArray arrayWithArray:self.itemArr];
-    [self.itemArr removeObjectAtIndex:index];;
+    
+    [self.itemArr removeObjectAtIndex:index];
     self.dataHandler(temArr[index]);
    
 }

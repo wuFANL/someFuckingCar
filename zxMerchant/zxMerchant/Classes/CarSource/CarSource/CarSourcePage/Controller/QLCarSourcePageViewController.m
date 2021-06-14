@@ -251,10 +251,6 @@
             selectIndexPath = [NSIndexPath indexPathForRow:[dataArr indexOfObject:self.vcView.priceRange] inSection:0];
         }
         
-        
-            
-        
-        
         self.vcView.type = type==0?0:type-1;
         self.vcView.currentIndexPath = selectIndexPath;
         self.vcView.isShow = !self.vcView.isShow;
@@ -277,7 +273,7 @@
                 if (type == 0&&indexPath.row >= 0) {  // 排序种类
                     weakSelf.vcView.sort_by = indexPath.row+1;
                     NSString *sort_by_Str = dataArr[indexPath.row];
-                    weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
+//                    weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
                     [weakSelf.conditionDic setObject:sort_by_Str forKey:@"sort_by"];
                     
                 } else if (type == 2&&indexPath.row >= 0) { // 价格
