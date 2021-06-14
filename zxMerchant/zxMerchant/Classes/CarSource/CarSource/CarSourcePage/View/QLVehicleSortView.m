@@ -11,7 +11,7 @@
 
 @interface QLVehicleSortView()<QLBaseCollectionViewDelegate>
 
-
+@property (nonatomic, strong ) QLBaseCollectionView  *currentView;
 @end
 @implementation QLVehicleSortView
 - (instancetype)init
@@ -128,13 +128,13 @@
         if (![title isEqualToString:@"品牌"]||![title isEqualToString:@"筛选"]) {
             item.titleBtn.selected = self.currentIndex==indexPath.row?YES:NO;
         }
-
+        
     }
 }
 - (void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
     self.currentIndex = indexPath.row;
     [collectionView reloadData];
-    
+    self.currentView =(QLBaseCollectionView *) collectionView;
     if (self.delegate&&[self.delegate respondsToSelector:@selector(selectTypeBack:)]) {
         [self.delegate selectTypeBack:indexPath.row];
     }
