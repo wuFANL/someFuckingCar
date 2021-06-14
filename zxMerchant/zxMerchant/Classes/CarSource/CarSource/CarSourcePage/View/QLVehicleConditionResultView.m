@@ -51,14 +51,15 @@
 }
 #pragma mark - setter
 - (void)setItemArr:(NSMutableArray *)itemArr {
-    _itemArr = itemArr;
+    _itemArr = itemArr.mutableCopy;
     [self.collectionView reloadData];
 }
 #pragma mark - action
 - (void)deleteBtnClick:(UIButton *)sender {
     NSInteger index = sender.tag;
     NSMutableArray *temArr = [NSMutableArray arrayWithArray:self.itemArr];
-    [self.itemArr removeObjectAtIndex:index];;
+    
+    [self.itemArr removeObjectAtIndex:index];
     self.dataHandler(temArr[index]);
    
 }
