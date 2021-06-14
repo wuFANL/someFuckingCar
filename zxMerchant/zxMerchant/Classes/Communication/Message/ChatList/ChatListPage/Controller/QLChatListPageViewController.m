@@ -37,6 +37,7 @@
 //虚拟字典
 @property (nonatomic, strong) NSMutableDictionary *currentVurDic;
 
+@property (nonatomic, assign) BOOL isFirstIn;
 @end
 
 @implementation QLChatListPageViewController
@@ -224,7 +225,7 @@
         }
         //刷新设置
         [self.tableView.mj_header endRefreshing];
-        if (temArr.count == 20) {
+        if (temArr.count >= 20) {
             [self.tableView.mj_footer endRefreshing];
         } else {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
@@ -236,6 +237,7 @@
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
             [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         });
+
         
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -290,6 +292,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isFirstIn = YES;
     //虚拟字典赋值
     [self.currentVurDic setObject:[QLUserInfoModel getLocalInfo].account.account_id forKey:@"from_account_id"];
 
