@@ -133,7 +133,7 @@
     }
     
     NSMutableDictionary *dic = @{
-        @"sort_by":[NSString stringWithFormat:@"%lu",type],
+        @"sort_by":[NSString stringWithFormat:@"%lu",(unsigned long)type],
         @"page_size":@(listShowCount),
         @"min_price":min_price,
         @"max_price":max_price,

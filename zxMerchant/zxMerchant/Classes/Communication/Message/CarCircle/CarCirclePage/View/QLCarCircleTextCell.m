@@ -15,7 +15,10 @@
     self.vipBtn.hidden = YES;
     self.headBtn.layer.cornerRadius = 8;
     self.headBtn.clipsToBounds = YES;
-
+    // 增加下面的角标
+    self.vip_image = [[UIImageView alloc] init];
+    self.vip_image.frame = CGRectMake(self.headBtn.x + self.headBtn.width - 13, self.headBtn.y + self.headBtn.height , 13, 13);
+    [self.contentView addSubview:self.vip_image];
 }
 
 - (void)setModel:(QLRidersDynamicListModel *)model {
@@ -113,9 +116,19 @@
         }
     }
     
-    
+    NSNumber *vipFlag = [QLUserInfoModel getLocalInfo].personnel.flag;
     //    是否有vip 在account对象里flag字段
     //    1=无会员 2=全省会员 3=全国会员
+    if ([vipFlag isEqual:@(2)]) {
+        
+        self.vip_image.image = [UIImage imageNamed:@"vip_blue"];
+    } else if ([vipFlag isEqual:@(3)]) {
+        self.vip_image.image = [UIImage imageNamed:@"vip_orange"];
+    } else if ([vipFlag isEqual:@(1)]){
+         self.vip_image.image = [UIImage imageNamed:@""];
+    } else {
+        self.vip_image.image = [UIImage imageNamed:@""];
+    }
     
     
     //是否关注字段 在business_car 对象里concern字段
