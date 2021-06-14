@@ -369,7 +369,7 @@
         cell.clickHandler = ^(id result) {
             NSDictionary *dic = result;
             NSInteger index = [dic[@"selectIndex"] integerValue];
-            NSString *obj = [key isEqualToString:@"car_type"]?dataArr[index] : StringWithFormat(@"%ld", index);
+            NSString *obj = dataArr[index];
             if (dataArr.count > index && obj) {
                 [self.conditionDic setObject:obj forKey:key];
             }
