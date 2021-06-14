@@ -51,6 +51,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"QLMyInfoPageViewControllerRefresh" object:nil];
 }
 
+
+
 - (void)refreshTableView {
     [self.tableView reloadData];
 }
@@ -159,7 +161,8 @@
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
             title = @"门店地址";
-            acc = [NSString stringWithFormat:@"%@%@%@",EncodeStringFromDic(self.dataDic, @"province"),EncodeStringFromDic(self.dataDic, @"city"),EncodeStringFromDic(self.dataDic, @"county")];
+//            acc = [NSString stringWithFormat:@"%@%@%@",EncodeStringFromDic(self.dataDic, @"province"),EncodeStringFromDic(self.dataDic, @"city"),EncodeStringFromDic(self.dataDic, @"county")];
+            acc = EncodeStringFromDic(self.dataDic, @"address");
         }
     }
     
@@ -183,11 +186,12 @@
             
         }
     } else {
-        if (indexPath.row == 0) {
-            //归属店铺
-            QLBelongingShopPageViewController *bspVC = [QLBelongingShopPageViewController new];
-            [self.navigationController pushViewController:bspVC animated:YES];
-        }
+//        if (indexPath.row == 0) {
+//
+//        }
+        //归属店铺
+        QLBelongingShopPageViewController *bspVC = [QLBelongingShopPageViewController new];
+        [self.navigationController pushViewController:bspVC animated:YES];
     }
 }
 

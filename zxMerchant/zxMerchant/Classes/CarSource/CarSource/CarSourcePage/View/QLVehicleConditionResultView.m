@@ -51,7 +51,7 @@
 }
 #pragma mark - setter
 - (void)setItemArr:(NSMutableArray *)itemArr {
-    _itemArr = itemArr;
+    _itemArr = itemArr.mutableCopy;
     [self.collectionView reloadData];
 }
 #pragma mark - action
