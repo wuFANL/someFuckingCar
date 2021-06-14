@@ -50,7 +50,7 @@
     }];
 }
 #pragma mark - setter
-- (void)setItemArr:(NSArray *)itemArr {
+- (void)setItemArr:(NSMutableArray *)itemArr {
     _itemArr = itemArr;
     [self.collectionView reloadData];
 }
@@ -58,13 +58,14 @@
 - (void)deleteBtnClick:(UIButton *)sender {
     NSInteger index = sender.tag;
     NSMutableArray *temArr = [NSMutableArray arrayWithArray:self.itemArr];
-    [temArr removeObjectAtIndex:index];
-    self.itemArr = temArr;
-    self.dataHandler(self.itemArr);
+    [self.itemArr removeObjectAtIndex:index];;
+    self.dataHandler(temArr[index]);
+   
 }
 - (void)resetBtnClick {
     self.itemArr = nil;
-    self.dataHandler(self.itemArr);
+//    重置
+    self.dataHandler(nil);
 }
 #pragma mark - collectionView
 - (CGSize)layout:(QLCollectionViewFlowLayout *)collectionViewLayout sizeForSectionAtIndexPath:(NSIndexPath *)indexPath {

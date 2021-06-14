@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
  *代理
  */
 @property (nonatomic, weak) id<QLVehicleSortViewDelegate> delegate;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
