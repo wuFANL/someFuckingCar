@@ -37,7 +37,12 @@
 //虚拟字典
 @property (nonatomic, strong) NSMutableDictionary *currentVurDic;
 
+
 @property (nonatomic, assign) BOOL isFirstIn;
+
+//第一次获取数据
+@property (nonatomic, assign) BOOL noFirstLoadData;
+
 @end
 
 @implementation QLChatListPageViewController
@@ -162,7 +167,6 @@
 {
     [MBProgressHUD showCustomLoading:@""];
     [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_top",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"car_id":self.firstCarId?:@""} success:^(id response) {
-        [MBProgressHUD immediatelyRemoveHUD];
         [self.firstInDic removeAllObjects];
         [self.firstInDic addEntriesFromDictionary:[response objectForKey:@"result_info"]];
         
@@ -209,7 +213,6 @@
     self.currentID = [dic objectForKey:@"id"];
     [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-
         if (self.tableView.page == 1) {
             [self.chatListArray removeAllObjects];
         }
@@ -233,12 +236,21 @@
         
         [self.tableView reloadData];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
-            [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-        });
 
+        if (!self.noFirstLoadData) {
+            [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height)];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                
+                
+                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
+                [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    
+            });
+        }
         
+        self.noFirstLoadData = YES;
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
@@ -272,12 +284,6 @@
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-   
-}
-
 - (void)actionGoToCarDetail {
     NSDictionary *carInfoData = @{
         //    account_id    对方用户id
@@ -289,7 +295,18 @@
     [csdVC updateVcWithData:carInfoData];
     [self.navigationController pushViewController:csdVC animated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+   
+    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+}
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isFirstIn = YES;
@@ -319,6 +336,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JPushNotifForChatMessage:) name:@"JPushNotifForChatMessage" object:nil];
+    
     
     [self requestForChatTop];
 }
@@ -386,8 +404,8 @@
         make.top.equalTo(self.collectionView.mas_bottom);
         make.bottom.equalTo(self.bottomView.mas_top);
     }];
+    
     self.tableView.showHeadRefreshControl = YES;
-    self.tableView.showFootRefreshControl = YES;
     self.tableView.extendDelegate = self;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -451,7 +469,7 @@
     return headerView;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200;
+    return UITableViewAutomaticDimension;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
@@ -482,6 +500,7 @@
     }
 }
 -(void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
+    self.noFirstLoadData = NO;
     self.chooseTypeIndex = indexPath.row;
     self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];
     [self requestForChatList:[self.topArray objectAtIndex:indexPath.row]];
