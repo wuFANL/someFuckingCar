@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *数据
  */
-@property (nonatomic, strong) NSArray * __nullable itemArr;
+@property (nonatomic, strong) NSMutableArray * __nullable itemArr;
 /**
  *数据变化回调
  */

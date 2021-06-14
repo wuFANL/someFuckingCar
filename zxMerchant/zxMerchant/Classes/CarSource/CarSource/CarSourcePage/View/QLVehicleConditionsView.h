@@ -73,6 +73,10 @@ NS_ASSUME_NONNULL_BEGIN
  *结果返回
  */
 @property (nonatomic, strong) resultBackBlock handler;
+//清除选择的row
+- (void )clearSeletRow;
+
+
 /*
  *显示
  */

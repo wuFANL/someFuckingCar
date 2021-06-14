@@ -181,6 +181,11 @@
     self.window.hidden = YES;
     _isShow = NO;
 }
+- (void )clearSeletRow{
+    self.selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+}
+
+
 - (void)setIsShow:(BOOL)isShow{
     if (isShow) {
         [self show];

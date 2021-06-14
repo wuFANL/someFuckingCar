@@ -247,9 +247,21 @@
             dataArr = @[@"0-9999999",@"0-50000",@"50000-100000",@"100000-150000",@"150000-200000",@"200000-300000",@"300000-500000",@"500000-9999999"];
             selectIndexPath = [NSIndexPath indexPathForRow:[dataArr indexOfObject:self.vcView.priceRange] inSection:0];
         }
+        
+        
+            
+        
+        
         self.vcView.type = type==0?0:type-1;
         self.vcView.currentIndexPath = selectIndexPath;
-        
+        self.vcView.isShow = !self.vcView.isShow;
+        if (self.vcView.isShow) {
+            self.headView.conditionView.currentIndex = type;
+           
+        }else{
+            self.headView.conditionView.currentIndex = -1;
+        }
+        [self.headView.conditionView.collectionView reloadData];
         WEAKSELF
         self.vcView.handler = ^(id result) {
             //点击结果
@@ -285,7 +297,7 @@
             [weakSelf reloadSubVcData];
         };
         
-        self.vcView.isShow = !self.vcView.isShow;
+      
         
     } else if(type == 1) {
         self.headView.conditionView.currentIndex = -1;
@@ -432,27 +444,58 @@
         _headView.conditionView.delegate = self;
         WEAKSELF
         _headView.conditionResultView.dataHandler = ^(id result) {
-            NSArray *dataArr = result;
+            NSString *condition = result;
             //数据变化回调
             NSInteger diffIndex = -1;
             for (NSString *value in weakSelf.conditionDic.allValues) {
-                if (![dataArr containsObject:value]) {
-                    //找到了要删除的值
-                    diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
+//                重置
+                if (!result) {
+                    [weakSelf.conditionDic removeAllObjects];
+                    [weakSelf.vcView clearSeletRow];
+                    //价格最低
+                    weakSelf.vcView.sort_by = 1;
+                    //                   价格区间
+                    weakSelf.vcView.priceRange = @"0-9999999";
+                    // 品牌
+                    weakSelf.vcView.brandModel.brand_id = @"";
+                    weakSelf.vcView.seriesModel.series_id = @"";
+                    //                    筛选
+                    [weakSelf.conditionSelect removeAllObjects];
                     
-                    // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
-                    if ([typeStringArr containsObject:value]) { // 排序
-                        weakSelf.vcView.sort_by = 1;
-                    } else if ([priceStringArr containsObject:value]) { // 价格
-                        weakSelf.vcView.priceRange = @"0-9999999";
-                    } else {
-                        // 品牌
-                        weakSelf.vcView.brandModel.brand_id = @"";
+                }else{
+                    if ([condition isKindOfClass:[NSString class]]&&
+                        [condition isEqualToString:value]) {
+                        //找到了要删除的值
+                        diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
+                        BOOL isBrand = NO;
+                        
+                        for (NSString *str in weakSelf.conditionSelect.allValues) {
+                            if (str && [str isKindOfClass:[NSString class]] && [str isEqualToString:value]) {
+                                NSInteger index = [weakSelf.conditionSelect.allValues indexOfObject:str];
+                                [weakSelf.conditionSelect removeObjectAtIndex:index];
+                                isBrand = YES;
+                            }
+                        }
+                        
+                        // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
+                        if ([typeStringArr containsObject:value]) { // 排序
+                            weakSelf.vcView.sort_by = 0;
+                        } else if ([priceStringArr containsObject:value]) { // 价格
+                            weakSelf.vcView.priceRange = @"0-9999999";
+                        }else if(isBrand){
+                            
+                        }else {
+                            // 品牌
+                            weakSelf.vcView.brandModel.brand_id = @"";
+                        }
+                        [weakSelf.vcView clearSeletRow];
+                        [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
                     }
                     
                 }
+               
             }
-            [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
+            
             // 检查是否有筛选项
             [weakSelf checkIsHasSelectItem];
             [weakSelf clearSelect];
