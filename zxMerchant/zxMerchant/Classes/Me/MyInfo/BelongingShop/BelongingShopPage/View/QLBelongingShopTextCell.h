@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QLBelongingShopTextCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
-@property (weak, nonatomic) IBOutlet UILabel *accLB;
-@property (weak, nonatomic) IBOutlet UIButton *authBtn;
+
 
 @end
 

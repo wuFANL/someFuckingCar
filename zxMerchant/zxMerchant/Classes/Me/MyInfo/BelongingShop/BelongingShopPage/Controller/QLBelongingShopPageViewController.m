@@ -17,7 +17,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,32 +53,25 @@
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0?1:4;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        QLBelongingShopInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopInfoCell" forIndexPath:indexPath];
-        
-        return cell;
-    } else {
-        QLBelongingShopTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopTextCell" forIndexPath:indexPath];
-        
-        
-        NSArray *titles = @[@"店铺归属人",@"联系方式",@"店铺认证",@"企业认证"];
-        
-        
+
+    QLBelongingShopTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopTextCell" forIndexPath:indexPath];
+    NSArray *titles = @[@"门店信息",@"所在地区",@"详细地址",@"照片信息"];
+    if (indexPath.row < 4) {
         cell.titleLB.text = titles[indexPath.row];
-        cell.accLB.text = @"--";
-        cell.authBtn.hidden = indexPath.row == ([tableView numberOfRowsInSection:indexPath.section]-1)?NO:YES;
-        [cell.authBtn addTarget:self action:@selector(authBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
     }
+//    cell.authBtn.hidden = YES;
+//    [cell.authBtn addTarget:self action:@selector(authBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
+    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
+    if (section == 0) {
         UIView *header = [UIView new];
         
         UILabel *lb = [UILabel new];
@@ -99,7 +92,8 @@
     return 200;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return section==0?0.01:40;
+
+    return 40;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
