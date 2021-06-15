@@ -47,6 +47,10 @@
     [self tableViewSet];
     
 }
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
 #pragma mark - action
 //企业认证
 - (void)authBtnClick {
@@ -129,6 +133,7 @@
     footerView.userInteractionEnabled = YES;
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 0, 100, 100)];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
     if (self.changeImageUrl) {
         [imageView sd_setImageWithURL:[NSURL URLWithString:self.changeImageUrl]];
     } else {

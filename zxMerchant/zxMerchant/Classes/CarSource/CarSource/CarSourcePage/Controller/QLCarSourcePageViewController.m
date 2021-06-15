@@ -550,7 +550,7 @@
                         
                         // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
                         if ([typeStringArr containsObject:value]) { // 排序
-                            weakSelf.vcView.sort_by = 0;
+                            weakSelf.vcView.sort_by = 1;
                         } else if ([priceStringArr containsObject:value]) { // 价格
                             weakSelf.vcView.priceRange = @"0-9999999";
                         }else if(isBrand){

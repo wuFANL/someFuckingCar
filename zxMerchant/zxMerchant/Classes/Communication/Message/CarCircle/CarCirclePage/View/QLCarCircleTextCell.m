@@ -32,8 +32,8 @@
         self.timeLB.text = @"";
         self.timeLBBottom.constant = 0;
         self.textLB.text = rdlModel.dynamic_content;
-        NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
-        self.showAllBtn = row <= 5?NO:YES;
+//        NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
+        self.showAllBtn = NO;//row <= 5?NO:YES;
     }
 }
 - (void)setShowAllBtn:(BOOL)showAllBtn {
@@ -70,6 +70,7 @@
 
 - (void)upDateWithDic:(NSDictionary *)dic{
     self.dataDic = dic;
+    self.showAllBtn = NO;
     // 头像
     if ([dic objectForKey:@"account"]) {
         if ([[dic objectForKey:@"account"] objectForKey:@"head_pic"]) {
