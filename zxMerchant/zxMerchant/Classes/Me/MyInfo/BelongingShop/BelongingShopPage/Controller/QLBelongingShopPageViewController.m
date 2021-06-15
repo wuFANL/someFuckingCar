@@ -176,10 +176,7 @@
                 } fail:^(NSError *error) {
                     [MBProgressHUD showError:error.domain];
                 }];
-                
-                
-                
-                
+            
             } else {
                 [MBProgressHUD showError:@"图片上传失败"];
             }
@@ -239,13 +236,43 @@
 
 - (void)sendNeedRefresh {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QLMyInfoPageViewControllerRefresh" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"USERCENTERREFRESH" object:nil];
 }
+
+- (void)cancelAction {
+    
+    WEAKSELF
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否确认解绑" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        // 确认删除
+        [QLNetworkingManager postWithUrl:BusinessPath params:@{
+            @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+            @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+            @"state":@"2",
+            @"operation_type":@"update_personal_state"
+        } success:^(id response) {
+            [MBProgressHUD showSuccess:@"解绑成功"];
+            [weakSelf sendNeedRefresh];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }];
+    
+    [alert addAction:action];
+    [alert addAction:action1];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 #pragma mark - Lazy
 - (QLBelongingShopBottomView *)bottomView {
     if (!_bottomView) {
         _bottomView = [QLBelongingShopBottomView new];
         [_bottomView.editBtn addTarget:self action:@selector(saveButton) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.cancelBtn addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
 }

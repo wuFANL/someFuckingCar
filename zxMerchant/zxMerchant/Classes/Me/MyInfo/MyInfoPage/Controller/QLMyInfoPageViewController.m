@@ -54,7 +54,18 @@
 
 
 - (void)refreshTableView {
-    [self.tableView reloadData];
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"my_store",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
+        weakSelf.dataDic = [[response objectForKey:@"result_info"] objectForKey:@"business_info"];
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 
 - (void)dealloc {
@@ -214,24 +225,24 @@
     return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 1) {
-        UIView *footer = [UIView new];
-        
-        UIButton *btn = [UIButton new];
-        btn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        [btn setTitle:@"解绑店铺" forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"accRightIcon_gray"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(unbindBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [btn layoutButtonWithEdgeInsetsStyle:QLButtonEdgeInsetsStyleRight imageTitleSpace:10];
-        [footer addSubview:btn];
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.height.equalTo(footer);
-            make.width.mas_equalTo(65);
-        }];
-        
-        return footer;
-    }
+//    if (section == 1) {
+//        UIView *footer = [UIView new];
+//
+//        UIButton *btn = [UIButton new];
+//        btn.titleLabel.font = [UIFont systemFontOfSize:13];
+//        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+//        [btn setTitle:@"解绑店铺" forState:UIControlStateNormal];
+//        [btn setImage:[UIImage imageNamed:@"accRightIcon_gray"] forState:UIControlStateNormal];
+//        [btn addTarget:self action:@selector(unbindBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//        [btn layoutButtonWithEdgeInsetsStyle:QLButtonEdgeInsetsStyleRight imageTitleSpace:10];
+//        [footer addSubview:btn];
+//        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.center.height.equalTo(footer);
+//            make.width.mas_equalTo(65);
+//        }];
+//
+//        return footer;
+//    }
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
