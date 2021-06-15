@@ -306,7 +306,7 @@
     if (type == 0||type == 2) {
         CGFloat conditionResultViewY = CGRectGetMaxY(self.headView.conditionResultView.frame)-(BottomOffset?88:64);
         if (conditionResultViewY != self.vcView.offY) {
-            self.vcView.offY = conditionResultViewY;
+            self.vcView.offY = 96;
         }
         
         NSArray * __block dataArr = nil;
@@ -547,7 +547,7 @@
                         
                         // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
                         if ([typeStringArr containsObject:value]) { // 排序
-                            weakSelf.vcView.sort_by = 0;
+                            weakSelf.vcView.sort_by = 1;
                         } else if ([priceStringArr containsObject:value]) { // 价格
                             weakSelf.vcView.priceRange = @"0-9999999";
                         }else if(isBrand){
