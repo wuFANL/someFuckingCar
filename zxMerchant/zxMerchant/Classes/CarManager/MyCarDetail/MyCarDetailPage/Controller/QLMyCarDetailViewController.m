@@ -24,6 +24,7 @@
 #import "QLCarCertificateViewController.h"
 #import "QLCustomSheetView.h"
 #import "QLTransactionSubmitViewController.h"
+#import "QLAddCarPageViewController.h"
 
 @interface QLMyCarDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLMyCarDetailHeadView *headView;
@@ -488,6 +489,7 @@
         _bottomView = [QLMyCarDetailBottomView new];
         [_bottomView.confirmBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView.sellBtn addTarget:self action:@selector(sellBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.editBtn addTarget:self action:@selector(actionEdit) forControlEvents:UIControlEventTouchUpInside];
 //        _bottomView.hidden = YES;
     }
     return _bottomView;
@@ -529,6 +531,12 @@
 -(void)setBottomBtnTitle:(NSString *)bottomBtnTitle
 {
     [self.bottomView.sellBtn setTitle:bottomBtnTitle forState:UIControlStateNormal];
+}
+
+-(void)actionEdit
+{
+    QLAddCarPageViewController *con = [[QLAddCarPageViewController alloc] initWithEditMoudle:self.allSourceDic carImageAr:self.headView.bannerArr personPicAr:self.zjPicArr];
+    [self.navigationController pushViewController:con animated:YES];
 }
 
 @end

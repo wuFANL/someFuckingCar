@@ -70,21 +70,50 @@
 @property (nonatomic, strong) NSString *value13;
 // 归属人
 @property (nonatomic, strong) NSDictionary *belongDic;
+
+@property (nonatomic, strong) NSDictionary *sourceDic;
+@property (nonatomic, assign) BOOL isEditModule;
+
+// 车辆图片url
+@property (nonatomic, strong) NSMutableArray *imgsUrlArr;
+// 车辆牌证url
+@property (nonatomic, strong) NSMutableArray *imgsUrlArr1;
 @end
 
 @implementation QLAddCarPageViewController
+
+-(id)initWithEditMoudle:(NSDictionary *)dic carImageAr:(NSArray *)carAr personPicAr:(NSArray *)personAr {
+    self = [super init];
+    if (self) {
+        self.isEditModule = YES;
+        self.sourceDic = [dic copy];
+        self.imgsUrlArr = [[NSMutableArray alloc] initWithCapacity:0];
+        [self.imgsUrlArr addObjectsFromArray:carAr];
+        self.imgsUrlArr1 = [[NSMutableArray alloc] initWithCapacity:0];
+        [self.imgsUrlArr1 addObjectsFromArray:personAr];
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"新增车辆";
-    // 获取本地缓存数据
-    [self setUpLocalData];
-    
-    
+    if(self.isEditModule)
+    {
+        self.navigationItem.title = @"编辑车辆";
+        [self setUpOldData];
+    }
+    else
+    {
+        self.navigationItem.title = @"新增车辆";
+        // 获取本地缓存数据
+        [self setUpLocalData];
+    }
     //底部
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -95,8 +124,8 @@
     //tableView
     [self tableViewSet];
     [self prepareData];
-    
 }
+
 - (void)prepareData {
     self.speedBox = @[@"自动",@"手动"];
     self.colorBox = @[@"银灰色",@"深灰色",@"黑色",@"白色",@"红色",@"蓝色",@"咖啡色",@"香槟色",@"黄色",@"紫色",@"绿色",@"橙色",@"粉红色",@"彩色"];
@@ -135,6 +164,121 @@
         }
     }
 }
+
+-(void)setUpOldData
+{
+    self.value1 = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"vin_code"];
+    
+    self.brandModel = [[QLBrandInfoModel alloc] init];
+    self.brandModel.brand_id = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"brand_id"];
+    self.brandModel.brand_name =[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"brand"];
+    self.seriesModel = [[QLSeriesModel alloc] init];
+    self.seriesModel.series_id = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"series_id"];
+    self.seriesModel.series_name = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"series"];
+    
+    self.value3 = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"production_year"];
+    self.value4 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"driving_distance"] stringValue];
+    self.value5 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"sell_price"] stringValue];
+    self.value6 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"sell_min_price"] stringValue];
+    self.value7 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"wholesale_price"] stringValue];
+    self.value8 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"procure_price"] stringValue];
+    self.value9 = [[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"transfer_times"] stringValue];
+    self.value10 = [NSString stringWithFormat:@"%@/%@/%@/%@",
+                   [[self.sourceDic objectForKey:@"car_param"] objectForKey:@"transmission_case"],
+                   [[self.sourceDic objectForKey:@"car_param"] objectForKey:@"body_color"],
+                   [self getCarMsg:[[self.sourceDic objectForKey:@"car_param"] objectForKey:@"car_type"]],
+                   [[self.sourceDic objectForKey:@"car_param"] objectForKey:@"emission_standard"]];
+    self.value11 = [NSString stringWithFormat:@"%@%@",[[self.sourceDic objectForKey:@"car_param"] objectForKey:@"displacement"],[[self.sourceDic objectForKey:@"car_param"] objectForKey:@"displacement_unit"]];
+    self.value12 = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"mot_date"];
+    self.value13 = [[self.sourceDic objectForKey:@"car_info"] objectForKey:@"insure_date"];
+    self.belongDic = @{@"personnel_nickname":[[self.sourceDic objectForKey:@"car_info"] objectForKey:@"seller_name"]};
+    
+    if ([self.imgsUrlArr count] > 0) {
+        __block NSMutableArray *tem1 = [[NSMutableArray alloc] initWithCapacity:0];
+        __block NSInteger num = 0;
+        for (NSDictionary *imageUrlDic in self.imgsUrlArr) {
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[imageUrlDic objectForKey:@"pic_url"]] completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+                [tem1 addObject:image];
+                num = num + 1;
+                if(num == [self.imgsUrlArr count])
+                {
+                    [self.imgsArr addObjectsFromArray:tem1];
+                    [UIView performWithoutAnimation:^{
+                            NSIndexSet *reloadSet = [NSIndexSet indexSetWithIndex:0];
+                            [self.tableView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationNone];
+                    }];
+                }
+
+            }];
+        }
+    }
+    
+    if ([self.imgsUrlArr1 count] > 0) {
+        __block NSMutableArray *tem1 = [[NSMutableArray alloc] initWithCapacity:0];
+        __block NSInteger num = 0;
+        for (NSDictionary *imageUrlDic in self.imgsUrlArr1) {
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[imageUrlDic objectForKey:@"pic_url"]] completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+                [tem1 addObject:image];
+                num = num + 1;
+                if(num == [self.imgsUrlArr1 count])
+                {
+                    [self.imgsArr1 addObjectsFromArray:tem1];
+                    [UIView performWithoutAnimation:^{
+                            NSIndexSet *reloadSet = [NSIndexSet indexSetWithIndex:2];
+                            [self.tableView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationNone];
+                    }];
+                }
+
+            }];
+        }
+    }
+}
+
+-(NSString *)getCarMsg:(NSString *)carIndex
+{
+    switch ([carIndex intValue]) {
+        case 1:
+        {
+            return @"两厢";
+        }
+            break;
+        case 2:
+        {
+            return @"三厢";
+        }
+            break;
+        case 3:
+        {
+            return @"跑车";
+        }
+            break;
+        case 4:
+        {
+            return @"suv";
+        }
+            break;
+        case 5:
+        {
+            return @"MPV";
+        }
+            break;
+        case 6:
+        {
+            return @"面包车";
+        }
+            break;
+        case 7:
+        {
+            return @"皮卡";
+        }
+            break;
+            
+        default:
+            return @"";
+            break;
+    }
+}
+
 #pragma mark - action
 //图片变化
 - (void)imgChange:(NSMutableArray *)images isCarPic:(BOOL)iscar{
@@ -202,11 +346,11 @@
             }
                 break;
             case 1:{
+                cell.titleLB.text = @"品牌/车系";
                 if (self.brandModel) {
                     NSString *carName = [NSString stringWithFormat:@"%@%@",self.brandModel.brand_name,self.seriesModel.series_name];
                     cell.textView.text = carName;
                 } else {
-                    cell.titleLB.text = @"品牌/车系";
                     cell.textView.placeholder = @"点击调取品牌车系车型";
                     cell.textView.text = @"";
                 }
