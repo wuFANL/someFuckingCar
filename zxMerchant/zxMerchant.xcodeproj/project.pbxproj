@@ -468,6 +468,7 @@
 		ED51461126558B48008E255E /* QLCollectionValueDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51460F26558B48008E255E /* QLCollectionValueDCell.m */; };
 		ED51461726558B64008E255E /* QLCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51461526558B64008E255E /* QLCarInfoModel.m */; };
 		ED51463426558BFE008E255E /* QLCarDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED51463226558BFE008E255E /* QLCarDetailModel.m */; };
+		ED5346972678F5730043C323 /* QLCardSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5346952678F5730043C323 /* QLCardSelectModel.m */; };
 		ED78B8FC2666730600C74473 /* VinCodeIdenfitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */; };
 		ED78B9442667D40900C74473 /* QLAddCarPopWIndow.m in Sources */ = {isa = PBXBuildFile; fileRef = ED78B9432667D40900C74473 /* QLAddCarPopWIndow.m */; };
 		ED78B9492667D41E00C74473 /* QLAddCarPopWIndow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED78B9482667D41E00C74473 /* QLAddCarPopWIndow.xib */; };
@@ -1281,6 +1282,8 @@
 		ED51461626558B64008E255E /* QLCarInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarInfoModel.h; sourceTree = "<group>"; };
 		ED51463226558BFE008E255E /* QLCarDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCarDetailModel.m; sourceTree = "<group>"; };
 		ED51463326558BFE008E255E /* QLCarDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCarDetailModel.h; sourceTree = "<group>"; };
+		ED5346952678F5730043C323 /* QLCardSelectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCardSelectModel.m; sourceTree = "<group>"; };
+		ED5346962678F5730043C323 /* QLCardSelectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCardSelectModel.h; sourceTree = "<group>"; };
 		ED78B8FA2666730600C74473 /* VinCodeIdenfitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VinCodeIdenfitViewController.h; sourceTree = "<group>"; };
 		ED78B8FB2666730600C74473 /* VinCodeIdenfitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VinCodeIdenfitViewController.m; sourceTree = "<group>"; };
 		ED78B9422667D40900C74473 /* QLAddCarPopWIndow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QLAddCarPopWIndow.h; sourceTree = "<group>"; };
@@ -3156,6 +3159,8 @@
 			children = (
 				A0492EE7256A667A00B5E23C /* QLVehicleWarnModel.h */,
 				A0492EE8256A667A00B5E23C /* QLVehicleWarnModel.m */,
+				ED5346962678F5730043C323 /* QLCardSelectModel.h */,
+				ED5346952678F5730043C323 /* QLCardSelectModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5600,6 +5605,7 @@
 				A09EAB4025DEBED2007D9075 /* QLPaymentPageHeadView.m in Sources */,
 				A02C933A2523AA310031A6D7 /* QLAppointmentCountView.m in Sources */,
 				A02C93472523AC4E0031A6D7 /* QLImgTextItem.m in Sources */,
+				ED5346972678F5730043C323 /* QLCardSelectModel.m in Sources */,
 				A087B86B259BA1A800432E8C /* QLEnterpriseCertificationViewController.m in Sources */,
 				A04847C225A8DF2E00BD4596 /* QLStoreInvitationListCell.m in Sources */,
 				A0492F6725701F9E00B5E23C /* QLCarDetailTextCell.m in Sources */,
