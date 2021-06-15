@@ -13,6 +13,7 @@
 #import "QLSubmitBottomView.h"
 #import "QLAddSubscriptionView.h"
 #import "QLChooseBrandViewController.h"
+#import "QLCardSelectModel.h"
 
 @interface QLAdvancedScreeningViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLBaseButton *resetBtn;
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) NSMutableDictionary *cellHeightDic;
 @property (nonatomic, strong) QLAddSubscriptionView *asView;
 @property (nonatomic, strong) NSMutableDictionary *conditionDic;
+@property (nonatomic, strong) QLCardSelectModel *cardSelectModel;
 @end
 
 @implementation QLAdvancedScreeningViewController
@@ -325,17 +327,17 @@
         NSString * __block key = @"";
         if (indexPath.section == 0) {
             key = @"priceArea";
-            dataArr = @[@"不限",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"];
+            dataArr = self.cardSelectModel.priceArea;
         } else if (indexPath.section == 1) {
             key = @"factory_way";
             dataArr = @[@"不限",@"国产",@"德系",@"美系",@"日系",@"韩系",@"法系",@"其他"];
         } else if (indexPath.section == 2) {
             key = @"car_type";
             cell.isChooseModel = YES;
-            dataArr = @[@"不限",@"两厢轿车",@"三厢轿车",@"跑车",@"SUV",@"MPV",@"面包车",@"皮卡"];
+            dataArr = self.cardSelectModel.car_type;
         } else if (indexPath.section == [tableView numberOfSections]-5) {
             key = @"vehicle_age";
-            dataArr = @[@"不限",@"0-6年",@"6-10年",@"10-15年",@"15年以上"];
+            dataArr = self.cardSelectModel.vehicle_age;
         } else if (indexPath.section == [tableView numberOfSections]-4) {
             key = @"emission_standard";
             dataArr = @[@"不限",@"国三及以上",@"国四及以上",@"国五及以上",@"国六"];
@@ -344,7 +346,7 @@
             dataArr = @[@"不限",@"自动",@"手动"];
         } else if (indexPath.section == [tableView numberOfSections]-2) {
             key = @"driving_distance";
-            dataArr = @[@"不限",@"0-5万公里",@"5-10万公里",@"10-15万公里",@"15-20万公里",@"20万公里以上"];
+            dataArr = self.cardSelectModel.driving_distance;
         } else if (indexPath.section == [tableView numberOfSections]-1) {
             key = @"displacement";
             dataArr = @[@"不限",@"0-1.0",@"1.0-1.4",@"1.4-1.8",@"1.8-2.5",@"2.5以上"];
@@ -462,5 +464,11 @@
 //        _conditionDic[@"displacement_type"] = @"L";
     }
     return _conditionDic;
+}
+- (QLCardSelectModel *)cardSelectModel {
+    if (!_cardSelectModel) {
+        _cardSelectModel = [[QLCardSelectModel alloc]init];
+    }
+    return _cardSelectModel;
 }
 @end

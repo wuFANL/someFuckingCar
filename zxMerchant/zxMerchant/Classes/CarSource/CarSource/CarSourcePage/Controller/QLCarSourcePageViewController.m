@@ -16,7 +16,7 @@
 #import "QLAllCarSourceViewController.h"
 #import "QLAdvancedScreeningViewController.h"
 #import "CitySelectViewController.h"
-
+#import "QLCardSelectModel.h"
 #define typeStringArr @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"]
 #define priceStringArr @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万以上"]
 //NSArray *
@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSMutableDictionary *conditionSelect;
 /** 城市编码*/
 @property (nonatomic, strong) NSString *cityCode;
+@property (nonatomic, strong) QLCardSelectModel *carSelectModel;
+
 @end
 
 @implementation QLCarSourcePageViewController
@@ -146,7 +148,6 @@
     if (brand_id && ![brand_id isEqualToString:@""]) {
         [dic setValue:brand_id forKey:@"brand_id"];
     }
-    
     for (NSString *key in self.conditionSelect.allKeys) {
         if ([key isEqualToString:@"displacement"]) {
             NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
@@ -154,7 +155,77 @@
                 [dic setObject:arr[0] forKey:@"displacement_min"];
                 [dic setObject:arr[1] forKey:@"displacement_max"];
             }
-        }else{
+        }else if ([key isEqualToString:@"vehicle_age"]) {
+            if (key==self.carSelectModel.vehicle_age.lastObject) {
+                [dic setValue:@"15" forKey:@"production_year_min"];
+                [dic setValue:@"9999" forKey:@"production_year_max"];
+            }else if(key!=self.carSelectModel.vehicle_age.firstObject){
+                NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
+                if (arr.count>1) {
+                    NSString *min = arr[0];
+                    NSString *max = arr[1];
+                    min = [min stringByReplacingOccurrencesOfString:@"年" withString:@""];
+                    max = [max stringByReplacingOccurrencesOfString:@"年" withString:@""];
+                    
+                    [dic setValue:min forKey:@"production_year_min"];
+                    [dic setValue:max forKey:@"production_year_max"];
+                }
+            }
+        }else if ([key isEqualToString:@"car_type"]) {
+            NSInteger value = [self.carSelectModel.car_type indexOfObject:self.conditionSelect[key]];
+            [dic setValue:@(value) forKey:@"car_type"];
+        }else if ([key isEqualToString:@"priceArea"]){
+            NSString *value = self.conditionSelect[key];
+            if ([value isEqualToString:@"5万以内"]) {
+                [dic setValue:@"0" forKey:@"price_min"];
+                [dic setValue:@"50000" forKey:@"price_max"];
+            }else if (value == self.carSelectModel.priceArea.lastObject){
+                [dic setValue:@"500000" forKey:@"price_min"];
+                [dic setValue:@"999999999" forKey:@"price_max"];
+            }else{
+                NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
+                if (arr.count>1) {
+                    NSString *min = arr[0];
+                    NSString *max = arr[1];
+                    min = [min stringByReplacingOccurrencesOfString:@"万" withString:@""];
+                    max = [max stringByReplacingOccurrencesOfString:@"万" withString:@""];
+                    NSInteger   minInt=[min intValue]*10000;
+                    NSInteger maxInt = [max intValue]*10000;
+                    
+                    
+                    [dic setValue:@(minInt) forKey:@"price_min"];
+                    [dic setValue:@(maxInt) forKey:@"price_max"];
+                }
+            }
+//            driving_distance_max    50000
+//            driving_distance    0-5万公里
+            
+        }else if ([key isEqualToString:@"driving_distance"]){
+            NSString *value = self.conditionSelect[key];
+            if (value == self.carSelectModel.driving_distance.lastObject) {
+                
+                [dic setValue:@"200000" forKey:@"driving_distance_min"];
+                [dic setValue:@"99999999" forKey:@"driving_distance_max"];
+                
+            }else{
+                NSArray *arr = [self.conditionSelect[key]  componentsSeparatedByString:@"-"];
+                if (arr.count>1) {
+                    NSString *min = arr[0];
+                    NSString *max = arr[1];
+                    min = [min stringByReplacingOccurrencesOfString:@"万公里" withString:@""];
+                    max = [max stringByReplacingOccurrencesOfString:@"万公里" withString:@""];
+                    NSInteger minInt = [min intValue]*10000;
+                    NSInteger maxInt = [max intValue]*10000;
+                    [dic setValue:@(minInt) forKey:@"driving_distance_min"];
+                    [dic setValue:@(maxInt) forKey:@"driving_distance_max"];
+                    
+                }
+                
+            }
+            
+        }
+        
+        else{
             [dic setValue:self.conditionSelect[key] forKey:key];
         }
     }
@@ -256,7 +327,7 @@
         self.vcView.isShow = !self.vcView.isShow;
         if (self.vcView.isShow) {
             self.headView.conditionView.currentIndex = type;
-           
+            
         }else{
             self.headView.conditionView.currentIndex = -1;
         }
@@ -273,7 +344,7 @@
                 if (type == 0&&indexPath.row >= 0) {  // 排序种类
                     weakSelf.vcView.sort_by = indexPath.row+1;
                     NSString *sort_by_Str = dataArr[indexPath.row];
-//                    weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
+                    //                    weakSelf.headView.conditionView.dataArr[0] = sort_by_Str;
                     [weakSelf.conditionDic setObject:sort_by_Str forKey:@"sort_by"];
                     
                 } else if (type == 2&&indexPath.row >= 0) { // 价格
@@ -296,7 +367,7 @@
             [weakSelf reloadSubVcData];
         };
         
-      
+        
         
     } else if(type == 1) {
         self.headView.conditionView.currentIndex = -1;
@@ -447,7 +518,7 @@
             //数据变化回调
             NSInteger diffIndex = -1;
             for (NSString *value in weakSelf.conditionDic.allValues) {
-//                重置
+                //                重置
                 if (!result) {
                     [weakSelf.conditionDic removeAllObjects];
                     [weakSelf.vcView clearSeletRow];
@@ -467,11 +538,12 @@
                         //找到了要删除的值
                         diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
                         BOOL isBrand = NO;
-                        
+//                        从筛选而来
                         for (NSString *str in weakSelf.conditionSelect.allValues) {
                             if (str && [str isKindOfClass:[NSString class]] && [str isEqualToString:value]) {
                                 NSInteger index = [weakSelf.conditionSelect.allValues indexOfObject:str];
-                                [weakSelf.conditionSelect removeObjectAtIndex:index];
+//                                [weakSelf.conditionSelect removeObjectAtIndex:index];
+                                [weakSelf.conditionSelect removeObjectForKey:weakSelf.conditionSelect.allKeys[index]];
                                 isBrand = YES;
                             }
                         }
@@ -492,7 +564,7 @@
                     }
                     
                 }
-               
+                
             }
             
             // 检查是否有筛选项
@@ -540,5 +612,11 @@
         _conditionSelect = [NSMutableDictionary dictionary];
     }
     return _conditionSelect;
+}
+- (QLCardSelectModel *)carSelectModel {
+    if (!_carSelectModel) {
+        _carSelectModel = [[QLCardSelectModel alloc]init];
+    }
+    return _carSelectModel;
 }
 @end
