@@ -106,7 +106,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = [self.sourceAr objectAtIndex:indexPath.row];
-    if (self.type != 2) {
+    if ([[dic objectForKey:@"local_state"] intValue] != 2) {
         NSString *fromUserID = [dic objectForKey:@"account_id"];
         NSString *carid = [dic objectForKey:@"id"];
         NSString *buscarid = [dic objectForKey:@"business_car_id"];

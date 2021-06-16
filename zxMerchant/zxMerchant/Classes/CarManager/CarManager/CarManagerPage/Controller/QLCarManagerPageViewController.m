@@ -172,6 +172,15 @@
         self.warnModel.mot_warn = self.njString?:@"0";
         self.warnModel.insure_warn = self.qzxString?:@"0";
         self.warnModel.assets_warn = @"0";
+        if([self.njString intValue] > 0 || [self.qzxString intValue] > 0)
+        {
+            //显示图片
+            self.headView.sortView.showWarn = YES;
+        }
+        else
+        {
+            self.headView.sortView.showWarn = NO;
+        }
         
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
