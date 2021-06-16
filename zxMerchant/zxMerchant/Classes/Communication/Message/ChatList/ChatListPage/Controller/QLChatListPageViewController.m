@@ -36,7 +36,8 @@
 
 //虚拟字典
 @property (nonatomic, strong) NSMutableDictionary *currentVurDic;
-
+@property (nonatomic, strong) NSString *flagId;
+@property (nonatomic, strong) NSString *msgID;
 
 @property (nonatomic, assign) BOOL isFirstIn;
 
@@ -177,7 +178,7 @@
         if([self.collectionView.dataArr count] > 0)
         {
             self.currentDic = [[self.collectionView.dataArr firstObject] copy];
-            [self requestForChatList:[self.collectionView.dataArr firstObject]];
+            [self requestForChatList:[self.collectionView.dataArr firstObject] flag:@"1" msg_id:@""];
             [self requestForIsMyCar];
         }
     } fail:^(NSError *error) {
@@ -200,24 +201,57 @@
 {
     if(self.currentDic)
     {
-        [self requestForChatList:self.currentDic];
+        if(self.flagId.length > 0 && self.msgID.length > 1)
+        {
+            [self requestForChatList:self.currentDic flag:self.flagId msg_id:self.msgID];
+
+        }
+        else
+        {
+            self.flagId = @"";
+            self.msgID = @"";
+            [self requestForChatList:self.currentDic flag:@"1" msg_id:@""];
+
+        }
     }
 }
 
--(void)requestForChatList:(NSDictionary *)dic
+- (void)loadNew
+{
+    if([self.chatListArray count] > 0)
+    {
+        NSDictionary *dic = [self.chatListArray firstObject];
+        self.flagId = @"0";
+        self.msgID = [[dic objectForKey:@"msg_id"] stringValue];
+    }
+}
+
+-(void)requestForChatList:(NSDictionary *)dic flag:(NSString *)flagStr msg_id:(NSString *)msgId
 {
     if(![[dic objectForKey:@"id"] isEqualToString:self.currentID])
     {
         self.tableView.page = 1;
     }
     self.currentID = [dic objectForKey:@"id"];
-    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":@"1",@"page_no":@(self.tableView.page),@"page_size":@"20"} success:^(id response) {
+    //@"flag":@"1" 则msg_id=@""   历史@"flag":@"0" 则msg_id=@"最上面一条"
+    [QLNetworkingManager postWithUrl:FirendPath params:@{@"operation_type":@"chat_page_list",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.firstFriendId,@"trade_id":[dic objectForKey:@"t_id"],@"car_id":[dic objectForKey:@"id"],@"flag":flagStr,@"page_no":@(self.tableView.page),@"page_size":@"10",@"msg_id":msgId} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
-        if (self.tableView.page == 1) {
+        if ([flagStr isEqualToString:@"1"]) {
             [self.chatListArray removeAllObjects];
         }
         NSArray *temArr = [NSArray arrayWithArray:[[response objectForKey:@"result_info"] objectForKey:@"detail_list"]];
-        [self.chatListArray addObjectsFromArray:temArr];
+        if([flagStr isEqualToString:@"1"])
+        {
+            [self.chatListArray addObjectsFromArray:temArr];
+        }
+        else
+        {
+            //历史 则插入
+            NSMutableIndexSet  *indexes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [temArr count])];
+
+            [self.chatListArray insertObjects:temArr atIndexes:indexes];
+        }
+        
         //无数据设置 
         if (self.chatListArray.count == 0) {
             self.tableView.hidden = YES;
@@ -228,28 +262,24 @@
         }
         //刷新设置
         [self.tableView.mj_header endRefreshing];
-        if (temArr.count >= 20) {
-            [self.tableView.mj_footer endRefreshing];
+        if (temArr.count < 10) {
+            self.tableView.showHeadRefreshControl = NO;
         } else {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            self.tableView.showHeadRefreshControl = YES;
         }
-        
         [self.tableView reloadData];
-        
-
+        if([flagStr isEqualToString:@"0"])
+        {
+            return;
+        }
         if (!self.noFirstLoadData) {
             [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height)];
-            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-                
-                
                 NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:self.chatListArray.count-1];
                 [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     
             });
         }
-        
         self.noFirstLoadData = YES;
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -503,7 +533,7 @@
     self.noFirstLoadData = NO;
     self.chooseTypeIndex = indexPath.row;
     self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];
-    [self requestForChatList:[self.topArray objectAtIndex:indexPath.row]];
+    [self requestForChatList:[self.topArray objectAtIndex:indexPath.row] flag:@"1" msg_id:@""];
     [self requestForIsMyCar];
     [collectionView reloadData];
 }
