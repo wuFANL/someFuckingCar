@@ -101,7 +101,7 @@
     if (hasSelect) {
         // show
         self.headView.showResultView = YES;
-        self.headView.conditionResultView.itemArr = self.conditionDic.allValues;
+        self.headView.conditionResultView.itemArr = self.conditionDic.allValues.mutableCopy;
     } else {
         // hide
         self.headView.showResultView = NO;
@@ -194,8 +194,8 @@
                     [dic setValue:@(maxInt) forKey:@"price_max"];
                 }
             }
-//            driving_distance_max    50000
-//            driving_distance    0-5万公里
+            //            driving_distance_max    50000
+            //            driving_distance    0-5万公里
             
         }else if ([key isEqualToString:@"driving_distance"]){
             NSString *value = self.conditionSelect[key];
@@ -380,15 +380,98 @@
             //            品牌导航数据刷新
             weakSelf.vcView.brandModel = brandModel;
             weakSelf.vcView.seriesModel = seriesModel;
-            NSString *carName = [NSString stringWithFormat:@"%@%@",brandModel.brand_name,seriesModel.series_name];
-            if ([seriesModel.series_id isKindOfClass:[NSString class]] && [seriesModel.series_id isEqualToString:@"0"]) {
-                carName = [NSString stringWithFormat:@"%@",seriesModel.series_name];
+            NSString *carName = @"";
+            
+            if ([brandModel.brand_id isKindOfClass:[NSString class]] && ![brandModel.brand_id isEqualToString:@""]) {
+                carName = [NSString stringWithFormat:@"%@",brandModel.brand_name];
             }
-            
-            
             [weakSelf.conditionDic setObject:carName forKey:@"carName"];
-            
-            // 页数重置
+            if ([seriesModel.series_id isKindOfClass:[NSString class]]){
+                NSString *series_name = [NSString stringWithFormat:@"%@",seriesModel.series_name];
+                [weakSelf.conditionDic setObject:series_name forKey:@"series_name"];
+            }
+                // 页数重置
+                QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
+                vc_all.tableView.page = 0;
+                [vc_all.dataArray removeAllObjects];
+                QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
+                vc_top.tableView.page = 0;
+                [vc_top.dataArray removeAllObjects];
+                [weakSelf reloadSubVcData];
+                
+            };
+            [self.navigationController pushViewController:cbVC animated:YES];
+        } else {
+            self.headView.conditionView.currentIndex = -1;
+            [self.vcView hidden];
+            //筛选
+            QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
+            asVC.showCity = NO;
+            asVC.isSubscription = YES;
+            WEAKSELF
+            asVC.resultHandler = ^(id result, NSError *error) {
+                if (!error&& result) {
+                    if ([result isKindOfClass:[NSDictionary class]]) {
+                        NSDictionary *dic = (NSDictionary *)result;
+                        NSMutableDictionary *tempDic = weakSelf.conditionDic.mutableCopy;
+                        
+                        for (NSString *key in weakSelf.conditionSelect.allKeys) {
+                            for (NSString *key2 in tempDic.allKeys) {
+                                if ([key isEqualToString:key2]) {
+                                    [self.conditionDic removeObjectForKey:key2];
+                                }
+                            }
+                        }
+                        weakSelf.conditionSelect = dic.mutableCopy;
+                        for (NSString *key in weakSelf.conditionSelect.allKeys) {
+                            [weakSelf.conditionDic setValue:self.conditionSelect[key] forKey:key];
+                            
+                        }
+                        [weakSelf clearConditionToRefresh];
+                    }
+                }
+            };
+            [self.navigationController pushViewController:asVC animated:YES];
+        }
+    }
+    //类型标题设置
+    - (void)chooseTitleStyle:(UIButton *)chooseBtn Index:(NSInteger)index {
+        NSString *title = self.headView.typeView.typeArr[index];
+        [chooseBtn setTitleColor:WhiteColor forState:UIControlStateNormal];
+        [chooseBtn setTitleColor:WhiteColor forState:UIControlStateSelected];
+        [chooseBtn setTitle:title forState:UIControlStateNormal];
+    }
+    //类型标题点击
+    - (void)chooseSelect:(UIButton *)lastBtn CurrentBtn:(UIButton *)currentBtn Index:(NSInteger)index {
+        //    self.headView.showResultView = index==0?NO:YES;
+        [self viewChangeAnimation:index];
+    }
+    //轮播图
+    - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
+        
+        [imageBtn setBackgroundImage:[UIImage imageNamed:imageArr[index]] forState:UIControlStateNormal];
+    }
+    //滑动切换
+    - (void)subViewChange:(UIViewController *)currentVC IndexPath:(NSInteger)index {
+        self.headView.typeView.selectedIndex = index;
+        
+    }
+    //搜索点击
+    - (void)noEditClick {
+        QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
+        hsVC.searchType = SearchBrand;
+        [self.navigationController pushViewController:hsVC animated:YES];
+    }
+    
+    - (void)addressTouched {
+        // 弹出地址组件
+        CitySelectViewController* vc = [CitySelectViewController new];
+        WEAKSELF
+        vc.selectBlock = ^(NSDictionary * _Nonnull fatherDic, NSDictionary * _Nonnull subDic, NSString * _Nonnull adcode) {
+            // 更新
+            NSString *cityNam = EncodeStringFromDic(subDic, @"region_name");
+            [weakSelf.naviView.addressBtn setTitle:cityNam forState:UIControlStateNormal];
+            weakSelf.cityCode = adcode;
             QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
             vc_all.tableView.page = 0;
             [vc_all.dataArray removeAllObjects];
@@ -396,224 +479,147 @@
             vc_top.tableView.page = 0;
             [vc_top.dataArray removeAllObjects];
             [weakSelf reloadSubVcData];
-            
         };
-        [self.navigationController pushViewController:cbVC animated:YES];
-    } else {
-        self.headView.conditionView.currentIndex = -1;
-        [self.vcView hidden];
-        //筛选
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+    - (void)wantTouched {
         QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
         asVC.showCity = NO;
         asVC.isSubscription = YES;
-        WEAKSELF
-        asVC.resultHandler = ^(id result, NSError *error) {
-            if (!error&& result) {
-                if ([result isKindOfClass:[NSDictionary class]]) {
-                    NSDictionary *dic = (NSDictionary *)result;
-                    NSMutableDictionary *tempDic = weakSelf.conditionDic.mutableCopy;
-                    
-                    for (NSString *key in weakSelf.conditionSelect.allKeys) {
-                        for (NSString *key2 in tempDic.allKeys) {
-                            if ([key isEqualToString:key2]) {
-                                [self.conditionDic removeObjectForKey:key2];
-                            }
-                        }
-                    }
-                    weakSelf.conditionSelect = dic.mutableCopy;
-                    for (NSString *key in weakSelf.conditionSelect.allKeys) {
-                        [weakSelf.conditionDic setValue:self.conditionSelect[key] forKey:key];
-                        
-                    }
-                    [weakSelf clearConditionToRefresh];
-                }
-            }
-        };
         [self.navigationController pushViewController:asVC animated:YES];
     }
-}
-//类型标题设置
-- (void)chooseTitleStyle:(UIButton *)chooseBtn Index:(NSInteger)index {
-    NSString *title = self.headView.typeView.typeArr[index];
-    [chooseBtn setTitleColor:WhiteColor forState:UIControlStateNormal];
-    [chooseBtn setTitleColor:WhiteColor forState:UIControlStateSelected];
-    [chooseBtn setTitle:title forState:UIControlStateNormal];
-}
-//类型标题点击
-- (void)chooseSelect:(UIButton *)lastBtn CurrentBtn:(UIButton *)currentBtn Index:(NSInteger)index {
-    //    self.headView.showResultView = index==0?NO:YES;
-    [self viewChangeAnimation:index];
-}
-//轮播图
-- (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
-    
-    [imageBtn setBackgroundImage:[UIImage imageNamed:imageArr[index]] forState:UIControlStateNormal];
-}
-//滑动切换
-- (void)subViewChange:(UIViewController *)currentVC IndexPath:(NSInteger)index {
-    self.headView.typeView.selectedIndex = index;
-    
-}
-//搜索点击
-- (void)noEditClick {
-    QLHomeSearchViewController *hsVC = [QLHomeSearchViewController new];
-    hsVC.searchType = SearchBrand;
-    [self.navigationController pushViewController:hsVC animated:YES];
-}
-
-- (void)addressTouched {
-    // 弹出地址组件
-    CitySelectViewController* vc = [CitySelectViewController new];
-    WEAKSELF
-    vc.selectBlock = ^(NSDictionary * _Nonnull fatherDic, NSDictionary * _Nonnull subDic, NSString * _Nonnull adcode) {
-        // 更新
-        NSString *cityNam = EncodeStringFromDic(subDic, @"region_name");
-        [weakSelf.naviView.addressBtn setTitle:cityNam forState:UIControlStateNormal];
-        weakSelf.cityCode = adcode;
-        QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)weakSelf.subVCArr.lastObject;
-        vc_all.tableView.page = 0;
-        [vc_all.dataArray removeAllObjects];
-        QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)weakSelf.subVCArr.firstObject;
-        vc_top.tableView.page = 0;
-        [vc_top.dataArray removeAllObjects];
-        [weakSelf reloadSubVcData];
-    };
-    
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)wantTouched {
-    QLAdvancedScreeningViewController *asVC = [QLAdvancedScreeningViewController new];
-    asVC.showCity = NO;
-    asVC.isSubscription = YES;
-    [self.navigationController pushViewController:asVC animated:YES];
-}
 #pragma mark - Lazy
-- (QLCarSourceNaviView *)naviView {
-    if(!_naviView) {
-        _naviView = [QLCarSourceNaviView new];
-        _naviView.searchBar.extenDelegate = self;
-        [_naviView.addressBtn addTarget:self action:@selector(addressTouched) forControlEvents:UIControlEventTouchUpInside];
-        [_naviView.wantBtn addTarget:self action:@selector(wantTouched) forControlEvents:UIControlEventTouchUpInside];
+    - (QLCarSourceNaviView *)naviView {
+        if(!_naviView) {
+            _naviView = [QLCarSourceNaviView new];
+            _naviView.searchBar.extenDelegate = self;
+            [_naviView.addressBtn addTarget:self action:@selector(addressTouched) forControlEvents:UIControlEventTouchUpInside];
+            [_naviView.wantBtn addTarget:self action:@selector(wantTouched) forControlEvents:UIControlEventTouchUpInside];
+        }
+        return _naviView;
     }
-    return _naviView;
-}
-- (QLCarSourceHeadView *)headView {
-    if (!_headView) {
-        _headView = [QLCarSourceHeadView new];
-        _headView.bannerView.delegate = self;
-        _headView.bannerView.imagesArr = @[@"carSourceBj"];
-        
-        _headView.typeView.typeDelegate = self;
-        _headView.typeView.typeArr = @[@"头条车源",@"全部"];
-        
-        _headView.conditionView.showScreenItem = YES;
-        _headView.conditionView.delegate = self;
-        WEAKSELF
-        _headView.conditionResultView.dataHandler = ^(id result) {
-            NSString *condition = result;
-            //数据变化回调
-            NSInteger diffIndex = -1;
-            for (NSString *value in weakSelf.conditionDic.allValues) {
-                //                重置
-                if (!result) {
-                    [weakSelf.conditionDic removeAllObjects];
-                    [weakSelf.vcView clearSeletRow];
-                    //价格最低
-                    weakSelf.vcView.sort_by = 1;
-                    //                   价格区间
-                    weakSelf.vcView.priceRange = @"0-9999999";
-                    // 品牌
-                    weakSelf.vcView.brandModel.brand_id = @"";
-                    weakSelf.vcView.seriesModel.series_id = @"";
-                    //                    筛选
-                    [weakSelf.conditionSelect removeAllObjects];
-                    
-                }else{
-                    if ([condition isKindOfClass:[NSString class]]&&
-                        [condition isEqualToString:value]) {
-                        //找到了要删除的值
-                        diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
-                        BOOL isBrand = NO;
-//                        从筛选而来
-                        for (NSString *str in weakSelf.conditionSelect.allValues) {
-                            if (str && [str isKindOfClass:[NSString class]] && [str isEqualToString:value]) {
-                                NSInteger index = [weakSelf.conditionSelect.allValues indexOfObject:str];
-//                                [weakSelf.conditionSelect removeObjectAtIndex:index];
-                                [weakSelf.conditionSelect removeObjectForKey:weakSelf.conditionSelect.allKeys[index]];
-                                isBrand = YES;
+    - (QLCarSourceHeadView *)headView {
+        if (!_headView) {
+            _headView = [QLCarSourceHeadView new];
+            _headView.bannerView.delegate = self;
+            _headView.bannerView.imagesArr = @[@"carSourceBj"];
+            
+            _headView.typeView.typeDelegate = self;
+            _headView.typeView.typeArr = @[@"头条车源",@"全部"];
+            
+            _headView.conditionView.showScreenItem = YES;
+            _headView.conditionView.delegate = self;
+            WEAKSELF
+            _headView.conditionResultView.dataHandler = ^(id result) {
+                NSString *condition = result;
+                //数据变化回调
+                NSInteger diffIndex = -1;
+                for (NSString *value in weakSelf.conditionDic.allValues) {
+                    //                重置
+                    if (!result) {
+                        [weakSelf.conditionDic removeAllObjects];
+                        [weakSelf.vcView clearSeletRow];
+                        //价格最低
+                        weakSelf.vcView.sort_by = 1;
+                        //                   价格区间
+                        weakSelf.vcView.priceRange = @"0-9999999";
+                        // 品牌
+                        weakSelf.vcView.brandModel.brand_id = @"";
+                        weakSelf.vcView.seriesModel.series_id = @"";
+                        //                    筛选
+                        [weakSelf.conditionSelect removeAllObjects];
+                        
+                    }else{
+                        if ([condition isKindOfClass:[NSString class]]&&
+                            [condition isEqualToString:value]) {
+                            //找到了要删除的值
+                            diffIndex = [weakSelf.conditionDic.allValues indexOfObject:value];
+                            BOOL isBrand = NO;
+                            //                        从筛选而来
+                            for (NSString *str in weakSelf.conditionSelect.allValues) {
+                                if (str && [str isKindOfClass:[NSString class]] && [str isEqualToString:value]) {
+                                    NSInteger index = [weakSelf.conditionSelect.allValues indexOfObject:str];
+                                    //                                [weakSelf.conditionSelect removeObjectAtIndex:index];
+                                    [weakSelf.conditionSelect removeObjectForKey:weakSelf.conditionSelect.allKeys[index]];
+                                    isBrand = YES;
+                                }
                             }
+                            
+                            // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
+                            if ([typeStringArr containsObject:value]) { // 排序
+                                weakSelf.vcView.sort_by = 1;
+                            } else if ([priceStringArr containsObject:value]) { // 价格
+                                weakSelf.vcView.priceRange = @"0-9999999";
+                            }else if(isBrand){
+                                
+                            }else {
+                                // 品牌
+                                if ([weakSelf.vcView.brandModel.brand_name isEqualToString:value]) {
+                                    weakSelf.vcView.brandModel = nil;
+                                }else if ([weakSelf.vcView.seriesModel.series_name isEqualToString:value]){
+                                    weakSelf.vcView.seriesModel = nil;
+                                }
+                            }
+                            [weakSelf.vcView clearSeletRow];
+                            [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
                         }
                         
-                        // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
-                        if ([typeStringArr containsObject:value]) { // 排序
-                            weakSelf.vcView.sort_by = 1;
-                        } else if ([priceStringArr containsObject:value]) { // 价格
-                            weakSelf.vcView.priceRange = @"0-9999999";
-                        }else if(isBrand){
-                            
-                        }else {
-                            // 品牌
-                            weakSelf.vcView.brandModel.brand_id = @"";
-                        }
-                        [weakSelf.vcView clearSeletRow];
-                        [weakSelf.conditionDic removeObjectAtIndex:diffIndex];
                     }
                     
                 }
                 
-            }
-            
-            // 检查是否有筛选项
-            [weakSelf checkIsHasSelectItem];
-            [weakSelf clearSelect];
-            [weakSelf clearConditionToRefresh];
-            
-        };
+                // 检查是否有筛选项
+                [weakSelf checkIsHasSelectItem];
+                [weakSelf clearSelect];
+                [weakSelf clearConditionToRefresh];
+                
+            };
+        }
+        return _headView;
     }
-    return _headView;
-}
-- (void)clearConditionToRefresh{
+    - (void)clearConditionToRefresh{
+        
+        QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)self.subVCArr.lastObject;
+        vc_all.tableView.page = 0;
+        [vc_all.dataArray removeAllObjects];
+        QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)self.subVCArr.firstObject;
+        vc_top.tableView.page = 0;
+        [vc_top.dataArray removeAllObjects];
+        [self reloadSubVcData];
+        
+    }
     
-    QLAllCarSourceViewController*vc_all = (QLAllCarSourceViewController *)self.subVCArr.lastObject;
-    vc_all.tableView.page = 0;
-    [vc_all.dataArray removeAllObjects];
-    QLTopCarSourceViewController*vc_top = (QLTopCarSourceViewController *)self.subVCArr.firstObject;
-    vc_top.tableView.page = 0;
-    [vc_top.dataArray removeAllObjects];
-    [self reloadSubVcData];
     
-}
-
-
-- (void )clearSelect{
-    self.vcView.brandModel = nil;
-    self.vcView.seriesModel = nil;
-}
-
-
-- (QLVehicleConditionsView *)vcView {
-    if (!_vcView) {
-        _vcView = [[QLVehicleConditionsView alloc]init];
+    - (void )clearSelect{
+        self.vcView.brandModel = nil;
+        self.vcView.seriesModel = nil;
     }
-    return _vcView;
-}
-- (NSMutableDictionary *)conditionDic {
-    if (!_conditionDic) {
-        _conditionDic = [NSMutableDictionary dictionary];
+    
+    
+    - (QLVehicleConditionsView *)vcView {
+        if (!_vcView) {
+            _vcView = [[QLVehicleConditionsView alloc]init];
+        }
+        return _vcView;
     }
-    return _conditionDic;
-}
-- (NSMutableDictionary *)conditionSelect {
-    if (!_conditionSelect) {
-        _conditionSelect = [NSMutableDictionary dictionary];
+    - (NSMutableDictionary *)conditionDic {
+        if (!_conditionDic) {
+            _conditionDic = [NSMutableDictionary dictionary];
+        }
+        return _conditionDic;
     }
-    return _conditionSelect;
-}
-- (QLCardSelectModel *)carSelectModel {
-    if (!_carSelectModel) {
-        _carSelectModel = [[QLCardSelectModel alloc]init];
+    - (NSMutableDictionary *)conditionSelect {
+        if (!_conditionSelect) {
+            _conditionSelect = [NSMutableDictionary dictionary];
+        }
+        return _conditionSelect;
     }
-    return _carSelectModel;
-}
-@end
+    - (QLCardSelectModel *)carSelectModel {
+        if (!_carSelectModel) {
+            _carSelectModel = [[QLCardSelectModel alloc]init];
+        }
+        return _carSelectModel;
+    }
+    @end
