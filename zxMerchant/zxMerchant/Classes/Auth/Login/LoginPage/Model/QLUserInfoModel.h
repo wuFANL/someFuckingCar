@@ -117,7 +117,7 @@
  */
 @property (nonatomic, strong) NSString *flag;
 /**
- *营业执照图片
+ *头像
  */
 @property (nonatomic, strong) NSString *head_pic;
 /**

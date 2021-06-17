@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLAddCarPageViewController : QLBaseTableViewController
-
+-(id)initWithEditMoudle:(NSDictionary *)dic carImageAr:(NSArray *)carAr personPicAr:(NSArray *)personAr;
 @end
 
 NS_ASSUME_NONNULL_END

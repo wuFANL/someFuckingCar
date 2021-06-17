@@ -7,6 +7,13 @@ inhibit_all_warnings!
 #账号：15066655192
 #密码：123456
 
+# 状态为审核中  判断 state 99 98
+# 19999999999
+# 123456
+
+# 19988888888 状态为未申请
+# 123456
+
 target 'zxMerchant' do
   pod 'AFNetworking'
   pod 'MBProgressHUD'

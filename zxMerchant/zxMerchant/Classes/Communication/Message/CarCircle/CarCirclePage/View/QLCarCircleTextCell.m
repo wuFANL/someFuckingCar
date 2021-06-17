@@ -15,7 +15,10 @@
     self.vipBtn.hidden = YES;
     self.headBtn.layer.cornerRadius = 8;
     self.headBtn.clipsToBounds = YES;
-
+    // 增加下面的角标
+    self.vip_image = [[UIImageView alloc] init];
+    self.vip_image.frame = CGRectMake(self.headBtn.x + self.headBtn.width - 13, self.headBtn.y + self.headBtn.height , 13, 13);
+    [self.contentView addSubview:self.vip_image];
 }
 
 - (void)setModel:(QLRidersDynamicListModel *)model {
@@ -29,8 +32,8 @@
         self.timeLB.text = @"";
         self.timeLBBottom.constant = 0;
         self.textLB.text = rdlModel.dynamic_content;
-        NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
-        self.showAllBtn = row <= 5?NO:YES;
+//        NSInteger row = [rdlModel.dynamic_content rowsOfStringWithFont:self.textLB.font withWidth:self.textLB.width];
+        self.showAllBtn = NO;//row <= 5?NO:YES;
     }
 }
 - (void)setShowAllBtn:(BOOL)showAllBtn {
@@ -67,6 +70,7 @@
 
 - (void)upDateWithDic:(NSDictionary *)dic{
     self.dataDic = dic;
+    self.showAllBtn = NO;
     // 头像
     if ([dic objectForKey:@"account"]) {
         if ([[dic objectForKey:@"account"] objectForKey:@"head_pic"]) {
@@ -113,9 +117,19 @@
         }
     }
     
-    
+    NSNumber *vipFlag = [QLUserInfoModel getLocalInfo].personnel.flag;
     //    是否有vip 在account对象里flag字段
     //    1=无会员 2=全省会员 3=全国会员
+    if ([vipFlag isEqual:@(2)]) {
+        
+        self.vip_image.image = [UIImage imageNamed:@"vip_blue"];
+    } else if ([vipFlag isEqual:@(3)]) {
+        self.vip_image.image = [UIImage imageNamed:@"vip_orange"];
+    } else if ([vipFlag isEqual:@(1)]){
+         self.vip_image.image = [UIImage imageNamed:@""];
+    } else {
+        self.vip_image.image = [UIImage imageNamed:@""];
+    }
     
     
     //是否关注字段 在business_car 对象里concern字段

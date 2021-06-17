@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.imgView.layer.masksToBounds = YES;
     // Initialization code
 }
 #pragma mark - setter

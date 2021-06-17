@@ -36,11 +36,11 @@
         return cell;
     } else {
         QLBelongingShopTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopTextCell" forIndexPath:indexPath];
-        cell.authBtn.hidden = YES;
+//        cell.authBtn.hidden = YES;
         
         NSArray *titles = @[@"邀请时间",@"通过时间"];
         cell.titleLB.text = titles[indexPath.row];
-        cell.accLB.text = @"--";
+//        cell.accLB.text = @"--";
         
         return cell;
     }

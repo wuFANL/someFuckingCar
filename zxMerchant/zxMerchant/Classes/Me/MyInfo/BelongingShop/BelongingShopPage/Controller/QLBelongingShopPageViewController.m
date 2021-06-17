@@ -10,18 +10,32 @@
 #import "QLEnterpriseCertificationViewController.h"
 
 @interface QLBelongingShopPageViewController ()<UITableViewDelegate,UITableViewDataSource>
+#pragma mark -- 下面都是更新过的
+/** 更新后的url*/
+@property (nonatomic, strong) NSString *changeImageUrl;
+/** 店铺名称*/
+@property (nonatomic, strong) NSString *storeName;
+/** 所在地区*/
+@property (nonatomic, strong) NSString *area;
+/** 详细地址*/
+@property (nonatomic, strong) NSString *detailInfo;
 
+
+@property (nonatomic, strong) UITextField *t1;
+@property (nonatomic, strong) UITextField *t2;
+@property (nonatomic, strong) UITextField *t3;
 @end
 
 @implementation QLBelongingShopPageViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"店铺详情";
+    self.view.backgroundColor = [UIColor whiteColor];
     //底部
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -33,6 +47,10 @@
     [self tableViewSet];
     
 }
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
 #pragma mark - action
 //企业认证
 - (void)authBtnClick {
@@ -42,7 +60,7 @@
 #pragma mark - tableView
 - (void)tableViewSet {
     self.initStyle = UITableViewStyleGrouped;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QLBelongingShopInfoCell" bundle:nil] forCellReuseIdentifier:@"belongingShopInfoCell"];
@@ -53,32 +71,46 @@
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0?1:4;
+    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        QLBelongingShopInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopInfoCell" forIndexPath:indexPath];
-        
-        return cell;
-    } else {
-        QLBelongingShopTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopTextCell" forIndexPath:indexPath];
-        
-        
-        NSArray *titles = @[@"店铺归属人",@"联系方式",@"店铺认证",@"企业认证"];
-        
-        
-        cell.titleLB.text = titles[indexPath.row];
-        cell.accLB.text = @"--";
-        cell.authBtn.hidden = indexPath.row == ([tableView numberOfRowsInSection:indexPath.section]-1)?NO:YES;
-        [cell.authBtn addTarget:self action:@selector(authBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
+
+    QLBelongingShopTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belongingShopTextCell" forIndexPath:indexPath];
+    NSArray *titles = @[@"门店信息",@"所在地区",@"详细地址",@"照片信息"];
+    
+    cell.titleLB.text = titles[indexPath.row];
+    switch (indexPath.row) {
+        case 0:
+        {
+            self.t1 = cell.TextField;
+            cell.TextField.text = self.storeName?self.storeName:[QLUserInfoModel getLocalInfo].business.business_name;
+        }
+            break;
+        case 1:
+        {
+            self.t2 = cell.TextField;
+            cell.TextField.text = self.storeName?self.storeName:[QLUserInfoModel getLocalInfo].business.business_area;
+        }
+            break;
+        case 2:
+        {
+            self.t3 = cell.TextField;
+            cell.TextField.text = self.detailInfo?self.detailInfo:[QLUserInfoModel getLocalInfo].business.detailAddress;
+        }
+            break;
+        default:{
+            cell.TextField.text = @"";
+        }
+            break;
     }
+    
+    return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
+    if (section == 0) {
         UIView *header = [UIView new];
         
         UILabel *lb = [UILabel new];
@@ -95,20 +127,157 @@
     }
     return nil;
 }
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 140)];
+    footerView.userInteractionEnabled = YES;
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 0, 100, 100)];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
+    if (self.changeImageUrl) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:self.changeImageUrl]];
+    } else {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].business.business_pic]];
+    }
+    [footerView addSubview:imageView];
+    
+    footerView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *titleLabe = [[UILabel alloc]initWithFrame:CGRectMake(imageView.frame.origin.x, 100, ScreenWidth, 40)];
+    titleLabe.text = @"店铺门头照片";
+    [footerView addSubview:titleLabe];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(sendImage)];
+    [footerView addGestureRecognizer:tap];
+    return footerView;
+}
+
+- (void)sendImage {
+
+    WEAKSELF
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+        [MBProgressHUD showCustomLoading:nil];
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        [[QLOSSManager shared] asyncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+            [MBProgressHUD immediatelyRemoveHUD];
+            if (state == UploadImageSuccess) {
+                // 更新本地数据
+                [QLNetworkingManager postWithUrl:BusinessPath params:@{
+                    Operation_type:@"update_business",
+                    @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                    @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+                    @"business_name":[QLUserInfoModel getLocalInfo].business.business_name,
+                    @"business_area":[QLUserInfoModel getLocalInfo].business.business_area,
+                    @"address":[QLUserInfoModel getLocalInfo].business.detailAddress,
+                    @"cover_image":[names firstObject]
+                } success:^(id response) {
+                    [MBProgressHUD showSuccess:@"图片修改成功"];
+                    
+                    QLUserInfoModel *model = [QLUserInfoModel getLocalInfo];
+                    model.business.business_pic = [names firstObject];
+                    [QLUserInfoModel updateUserInfoByModel:model];
+                    weakSelf.changeImageUrl = [names firstObject];
+                    [weakSelf.tableView reloadData];
+                    [weakSelf sendNeedRefresh];
+                } fail:^(NSError *error) {
+                    [MBProgressHUD showError:error.domain];
+                }];
+            
+            } else {
+                [MBProgressHUD showError:@"图片上传失败"];
+            }
+        }];
+        
+    }];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 140;;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200;
+    return 100;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return section==0?0.01:40;
+    return 40;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.01;
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 45;
 }
+
+- (void)saveButton {
+    
+    if (!self.t1.text || !self.t2.text || !self.t3.text) {
+        [MBProgressHUD showError:@"请填写完整"];
+        return;
+    }
+    
+    WEAKSELF
+    [MBProgressHUD showLoading:nil];
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"update_business",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+        @"business_name":self.t1.text,
+        @"business_area":self.t2.text,
+        @"address":self.t3.text,
+        @"cover_image":[QLUserInfoModel getLocalInfo].business.business_pic
+    } success:^(id response) {
+        [MBProgressHUD showSuccess:@"修改成功"];
+        
+        QLUserInfoModel *model = [QLUserInfoModel getLocalInfo];
+        model.business.business_name = weakSelf.t1.text;
+        model.business.business_area = weakSelf.t2.text;
+        model.business.detailAddress = weakSelf.t3.text;
+        [QLUserInfoModel updateUserInfoByModel:model];
+        [weakSelf.tableView reloadData];
+        
+        // 通知刷新
+        [weakSelf sendNeedRefresh];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+}
+
+- (void)sendNeedRefresh {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QLMyInfoPageViewControllerRefresh" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"USERCENTERREFRESH" object:nil];
+}
+
+- (void)cancelAction {
+    
+    WEAKSELF
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否确认解绑" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        // 确认删除
+        [QLNetworkingManager postWithUrl:BusinessPath params:@{
+            @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+            @"business_id":[QLUserInfoModel getLocalInfo].business.business_id,
+            @"state":@"2",
+            @"operation_type":@"update_personal_state"
+        } success:^(id response) {
+            [MBProgressHUD showSuccess:@"解绑成功"];
+            [weakSelf sendNeedRefresh];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } fail:^(NSError *error) {
+            [MBProgressHUD showError:error.domain];
+        }];
+    }];
+    
+    [alert addAction:action];
+    [alert addAction:action1];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 #pragma mark - Lazy
 - (QLBelongingShopBottomView *)bottomView {
     if (!_bottomView) {
         _bottomView = [QLBelongingShopBottomView new];
+        [_bottomView.editBtn addTarget:self action:@selector(saveButton) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.cancelBtn addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
 }

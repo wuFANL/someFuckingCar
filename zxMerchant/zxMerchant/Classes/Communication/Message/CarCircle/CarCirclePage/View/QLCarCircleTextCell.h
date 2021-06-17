@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnHight;
 
+// 会员角标
+@property (nonatomic, strong) UIImageView *vip_image;
+
 @property (nonatomic, strong) QLRidersDynamicListModel *model;
 @property (nonatomic, strong) NSDictionary *dataDic;
 - (void)upDateWithDic:(NSDictionary *)dic;

@@ -37,12 +37,12 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这里填写发布的文案,发多少显示多少一直换行这里填写发布的文案" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZ8-07-Gi6">
-                        <rect key="frame" x="72" y="54" width="233" height="36"/>
+                        <rect key="frame" x="15" y="54" width="290" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJk-6m-WGi">
-                        <rect key="frame" x="72" y="110" width="30" height="25"/>
+                        <rect key="frame" x="15" y="110" width="30" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="588-1l-rf7"/>
                         </constraints>
@@ -91,7 +91,7 @@
                     <constraint firstItem="jL1-fs-b1Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ctL-cP-VxS"/>
                     <constraint firstItem="hKF-N1-0R6" firstAttribute="centerY" secondItem="crp-Qy-Z7y" secondAttribute="centerY" id="gCR-Bg-Ekr"/>
                     <constraint firstAttribute="trailing" secondItem="VZ8-07-Gi6" secondAttribute="trailing" constant="15" id="iOn-Uj-69G"/>
-                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" id="ic9-fm-Qh2"/>
+                    <constraint firstItem="VZ8-07-Gi6" firstAttribute="leading" secondItem="crp-Qy-Z7y" secondAttribute="leading" constant="-57" id="ic9-fm-Qh2"/>
                     <constraint firstAttribute="bottom" secondItem="SJk-6m-WGi" secondAttribute="bottom" constant="10" id="k7L-nH-UwJ"/>
                     <constraint firstItem="jL1-fs-b1Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="lCf-qO-E7O"/>
                     <constraint firstItem="VZ8-07-Gi6" firstAttribute="top" secondItem="RaR-Vd-GAk" secondAttribute="bottom" constant="10" id="lQn-eG-G3Q"/>

@@ -11,10 +11,15 @@
 #import "QLEditAccountViewController.h"
 #import "QLBelongingShopPageViewController.h"
 #import "QLUnbindStoreView.h"
+#import "QLOSSManager.h"
 
 @interface QLMyInfoPageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) NSDictionary *dataDic;
+
+/** 头像按钮*/
+@property (nonatomic, strong) QLBaseButton *headerButton;
+
 @end
 
 @implementation QLMyInfoPageViewController
@@ -36,13 +41,37 @@
         @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
         @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
     } success:^(id response) {
-        
+        [MBProgressHUD immediatelyRemoveHUD];
+        weakSelf.dataDic = [[response objectForKey:@"result_info"] objectForKey:@"business_info"];
+        [weakSelf.tableView reloadData];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"QLMyInfoPageViewControllerRefresh" object:nil];
+}
+
+
+
+- (void)refreshTableView {
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"my_store",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"business_id":[QLUserInfoModel getLocalInfo].business.business_id
+    } success:^(id response) {
+        [MBProgressHUD immediatelyRemoveHUD];
         weakSelf.dataDic = [[response objectForKey:@"result_info"] objectForKey:@"business_info"];
         [weakSelf.tableView reloadData];
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];
 }
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - action
 //解除绑定
 - (void)unbindBtnClick {
@@ -51,7 +80,32 @@
 }
 //头像按钮
 - (void)headBtnClick {
-    
+    // 选头像
+    WEAKSELF
+    [[QLToolsManager share] getPhotoAlbum:self resultBack:^(UIImagePickerController *picker, NSDictionary *info) {
+        UIImage *img = info[UIImagePickerControllerOriginalImage];
+        [MBProgressHUD showLoading:nil];
+        [[QLOSSManager shared] syncUploadImage:img complete:^(NSArray *names, UploadImageState state) {
+            // 上传头像
+            NSString* url = [names firstObject];
+            [QLNetworkingManager postWithUrl:UserPath params:@{
+                Operation_type:@"update_account",
+                @"acccount_id":[QLUserInfoModel getLocalInfo].account.account_id,
+                @"head_pic":url
+            } success:^(id response) {
+                [weakSelf.headerButton setImage:img forState:UIControlStateNormal];
+                [MBProgressHUD showSuccess:@"上传成功"];
+                // 更新本地数据
+                QLUserInfoModel *model = [QLUserInfoModel getLocalInfo];
+                model.account.head_pic = url;
+                [QLUserInfoModel updateUserInfoByModel:model];
+                // 通知前一个页面刷新
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"USERCENTERREFRESH" object:nil];
+            } fail:^(NSError *error) {
+                [MBProgressHUD showError:error.domain];
+            }];
+        }];
+    }];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -80,6 +134,7 @@
             acc = @"";
             //头像
             QLBaseButton *headBtn = [[QLBaseButton alloc] init];
+            self.headerButton = headBtn;
             headBtn.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [headBtn sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic] forState:UIControlStateNormal];
             [headBtn roundRectCornerRadius:4 borderWidth:1 borderColor:WhiteColor];
@@ -117,7 +172,8 @@
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
             title = @"门店地址";
-            acc = [NSString stringWithFormat:@"%@%@%@",EncodeStringFromDic(self.dataDic, @"province"),EncodeStringFromDic(self.dataDic, @"city"),EncodeStringFromDic(self.dataDic, @"county")];
+//            acc = [NSString stringWithFormat:@"%@%@%@",EncodeStringFromDic(self.dataDic, @"province"),EncodeStringFromDic(self.dataDic, @"city"),EncodeStringFromDic(self.dataDic, @"county")];
+            acc = EncodeStringFromDic(self.dataDic, @"address");
         }
     }
     
@@ -137,13 +193,16 @@
             //换账户
             QLEditAccountViewController *eaVC = [QLEditAccountViewController new];
             [self.navigationController pushViewController:eaVC animated:YES];
+        } else if (indexPath.row == 0 ) {
+            
         }
     } else {
-        if (indexPath.row == 0) {
-            //归属店铺
-            QLBelongingShopPageViewController *bspVC = [QLBelongingShopPageViewController new];
-            [self.navigationController pushViewController:bspVC animated:YES];
-        }
+//        if (indexPath.row == 0) {
+//
+//        }
+        //归属店铺
+        QLBelongingShopPageViewController *bspVC = [QLBelongingShopPageViewController new];
+        [self.navigationController pushViewController:bspVC animated:YES];
     }
 }
 
@@ -166,24 +225,24 @@
     return nil;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 1) {
-        UIView *footer = [UIView new];
-        
-        UIButton *btn = [UIButton new];
-        btn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        [btn setTitle:@"解绑店铺" forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"accRightIcon_gray"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(unbindBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [btn layoutButtonWithEdgeInsetsStyle:QLButtonEdgeInsetsStyleRight imageTitleSpace:10];
-        [footer addSubview:btn];
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.height.equalTo(footer);
-            make.width.mas_equalTo(65);
-        }];
-        
-        return footer;
-    }
+//    if (section == 1) {
+//        UIView *footer = [UIView new];
+//
+//        UIButton *btn = [UIButton new];
+//        btn.titleLabel.font = [UIFont systemFontOfSize:13];
+//        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+//        [btn setTitle:@"解绑店铺" forState:UIControlStateNormal];
+//        [btn setImage:[UIImage imageNamed:@"accRightIcon_gray"] forState:UIControlStateNormal];
+//        [btn addTarget:self action:@selector(unbindBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//        [btn layoutButtonWithEdgeInsetsStyle:QLButtonEdgeInsetsStyleRight imageTitleSpace:10];
+//        [footer addSubview:btn];
+//        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.center.height.equalTo(footer);
+//            make.width.mas_equalTo(65);
+//        }];
+//
+//        return footer;
+//    }
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

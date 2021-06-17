@@ -125,7 +125,10 @@
         max_price = [price componentsSeparatedByString:@"-"].lastObject;
     }
     
-    NSString * cityCode = [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0";
+    NSString * cityCode = @"0";
+    
+//    [QLUserInfoModel getLocalInfo].account.last_city_code?[QLUserInfoModel getLocalInfo].account.last_city_code:@"0"
+    
     // 获取新的cityCode
     if (self.cityCode && self.cityCode.length >0) {
         cityCode = self.cityCode;
@@ -546,7 +549,6 @@
                                     isBrand = YES;
                                 }
                             }
-                            
                             // 这里需要判断下删除的是哪个值 是排序种类 还是品牌 还是价格
                             if ([typeStringArr containsObject:value]) { // 排序
                                 weakSelf.vcView.sort_by = 1;

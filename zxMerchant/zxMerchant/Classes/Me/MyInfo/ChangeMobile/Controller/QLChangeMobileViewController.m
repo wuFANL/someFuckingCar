@@ -45,12 +45,34 @@
 #pragma mark - action
 //确认
 - (IBAction)confirmBtnClick:(id)sender {
-    
-    
+    [MBProgressHUD showLoading:nil];
+    WEAKSELF
+    [QLNetworkingManager postWithUrl:UserPath params:@{
+        Operation_type:@"change_mobile",
+        @"account_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"account_number":[QLUserInfoModel getLocalInfo].account.account_number,
+        @"password":[self.pwdTF.text md5Str],
+        @"mobile":self.mobileTF.text,
+        @"code":self.codeTF.text
+    } success:^(id response) {
+        [MBProgressHUD showSuccess:@"更换成功"];
+        // 更新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"QLMyInfoPageViewControllerRefresh" object:nil];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 //获取验证码
 - (IBAction)getCodeBtnClick:(UIButton *)sender {
-    
+    WEAKSELF
+    [[QLToolsManager share] getCodeByMobile:self.mobileTF.text handler:^(id result, NSError *error) {
+        if (!error) {
+            [[QLToolsManager share] codeBtnCountdown:weakSelf.getCodeBtn Pattern:1];
+        } else {
+            [MBProgressHUD showError:error.domain];
+        }
+    }];
 }
 //退出
 - (IBAction)closeBtnClick:(id)sender {
