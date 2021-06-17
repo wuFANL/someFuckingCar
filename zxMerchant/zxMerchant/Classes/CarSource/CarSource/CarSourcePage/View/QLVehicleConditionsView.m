@@ -150,7 +150,7 @@
         make.bottom.equalTo(self.closeBtn.mas_top);
         
     }];
-    _isShow = NO;
+
     
 }
 //关闭按钮
@@ -178,7 +178,11 @@
         self.handler(self.selectIndexPath);
     }
     [self removeFromSuperview];
+    
+    [self.window removeFromSuperview];
     self.window.hidden = YES;
+    self.window = nil;
+    _offY = 0;
     _isShow = NO;
 }
 - (void )clearSeletRow{
@@ -192,8 +196,6 @@
     }else{
         [self hidden];
     }
-    
-    _isShow = isShow;
 }
 
 //遮罩点击
