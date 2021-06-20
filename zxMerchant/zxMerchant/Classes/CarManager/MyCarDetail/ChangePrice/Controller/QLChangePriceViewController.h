@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QLChangePriceViewController : QLViewController
+-(id)initWithSourceDic:(NSDictionary *)sourceDic;
 //是否显示内部价格
 @property (nonatomic, assign) BOOL showInternalPrice;
 

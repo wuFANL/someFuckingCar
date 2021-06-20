@@ -237,7 +237,7 @@
 }
 //调价
 - (void)reduceBtnClick {
-    QLChangePriceViewController *cpVC = [QLChangePriceViewController new];
+    QLChangePriceViewController *cpVC = [[QLChangePriceViewController alloc] initWithSourceDic:self.allSourceDic];
     cpVC.showInternalPrice = YES;
     [self.navigationController pushViewController:cpVC animated:YES];
 }
