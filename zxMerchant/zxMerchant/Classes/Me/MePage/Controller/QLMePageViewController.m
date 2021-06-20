@@ -70,10 +70,36 @@
         QLVipAuditView *vaView = [QLVipAuditView new];
         [vaView.rView.czBtn addTarget:self action:@selector(openVipVc:) forControlEvents:UIControlEventTouchUpInside];
         [vaView.resumeBtn addTarget:self action:@selector(storeReSubmit:) forControlEvents:UIControlEventTouchUpInside];
+        [vaView.cancelBtn addTarget:self action:@selector(cancleAction:) forControlEvents:UIControlEventTouchUpInside];
+        
         [vaView show];
     } else {
         QLVipCenterViewController *vcVC = [QLVipCenterViewController new];
         [self.navigationController pushViewController:vcVC animated:YES];
+    }
+}
+
+- (void)cancleAction:(id)sender {
+    WEAKSELF
+    // 取消申请
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"opinion",
+        @"business_personnel_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"state":@"2"
+    } success:^(id response) {
+        [MBProgressHUD showSuccess:@"已取消"];
+        [weakSelf getInfo];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+    
+    UIButton *button = sender;
+    if ([button isKindOfClass:[UIButton class]]) {
+        if (button.superview.superview) {
+            QLVipAuditView* vip = (QLVipAuditView *)button.superview.superview;
+            [vip hidden];
+        }
     }
 }
 

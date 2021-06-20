@@ -44,12 +44,19 @@
     NSString *stateStr = [QLUserInfoModel getLocalInfo].account.state;
     //审核中  state 99 98
     // 1 就判断flag
-    if ([stateStr isEqualToString:@"99"] || [stateStr isEqualToString:@"98"]) {
-        // 申请中
-        [self.vipStatusBtn setTitle:@"申请中" forState:UIControlStateNormal];
-        [self.numBtn setTitle:@"" forState:UIControlStateNormal];
+    if ([stateStr isEqualToString:@"99"] || [stateStr isEqualToString:@"98"] || [stateStr isEqualToString:@"3"] || [stateStr isEqualToString:@"2"]) {
         self.vipTipImgV.image = [UIImage imageNamed:@""];
-    } else if ([stateStr isEqualToString:@"99"]) {
+        
+        if ([stateStr isEqualToString:@"2"]) {
+            [self.vipStatusBtn setTitle:@"已取消" forState:UIControlStateNormal];
+        } else if ([stateStr isEqualToString:@"99"]) {
+            [self.vipStatusBtn setTitle:@"申请中" forState:UIControlStateNormal];
+        } else if ([stateStr isEqualToString:@"98"]) {
+            [self.vipStatusBtn setTitle:@"申请中" forState:UIControlStateNormal];
+        } else {
+            [self.vipStatusBtn setTitle:@"拒绝邀请" forState:UIControlStateNormal];
+        }
+        [self.numBtn setTitle:@"" forState:UIControlStateNormal];
         
     } else {
         //    flag=2是全省vip flag=3是全国vip
