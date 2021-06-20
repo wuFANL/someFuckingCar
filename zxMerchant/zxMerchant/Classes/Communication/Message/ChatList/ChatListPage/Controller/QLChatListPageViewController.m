@@ -267,7 +267,19 @@
         } else {
             self.tableView.showHeadRefreshControl = YES;
         }
-        [self.tableView reloadData];
+        if(![flagStr isEqualToString:@"1"] && [temArr count] > 0)
+        {
+            [self.tableView reloadData];
+            NSIndexPath *indexP = [NSIndexPath indexPathForRow:0 inSection:[temArr count] -1];
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexP];
+            [self.tableView setContentOffset:CGPointMake(0, cellRect.origin.y)];
+        }
+        else
+        {
+            [self.tableView reloadData];
+        }
+        
+
         if([flagStr isEqualToString:@"0"])
         {
             return;
