@@ -65,7 +65,12 @@ static NSTimeInterval requestTimeout = 20;//请求超时时间
     if (url == nil) {
         url = [NSString stringWithFormat:@"http://%@/index/%@.do",HOST,mutableParam[@"operation_type"]];
     } else {
-        url = [NSString stringWithFormat:@"http://%@/%@.do",url,mutableParam[@"operation_type"]];
+        // 多图分享 单独判断
+        NSString *opStr = [NSString stringWithFormat:@"%@",mutableParam[@"operation_type"]];
+        if ([opStr isEqualToString:@"multigraph"]) {
+            opStr = @"do_share";
+        }
+        url = [NSString stringWithFormat:@"http://%@/%@.do",url,opStr];
     }
     QLLog(@"请求地址----%@\n    请求参数----%@",url,mutableParam);
     //处理中文和空格问题

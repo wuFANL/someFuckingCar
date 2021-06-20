@@ -19,7 +19,8 @@
 @property (nonatomic, strong) NSString *merchant_url;
 @property (nonatomic, strong) QLShareAlertView *shareView;
 @property (nonatomic, strong) NSMutableArray *chooseArr;
-
+/** 生成好的shareid*/
+@property (nonatomic, strong) NSString *shareId;
 @end
 
 @implementation QLShareImgViewController
@@ -77,10 +78,11 @@
         //车辆图片
         [self.imgsArr addObjectsFromArray:[NSArray yy_modelArrayWithClass:[QLCarBannerModel class] json:response[@"result_info"][@"attr_list"]]];
         //记录分享
-        [[QLToolsManager share] shareRecord:@{@"log_type":@"1002",@"about_id":QLNONull(carIdsStr)} handler:^(id result, NSError *error) {
+        [[QLToolsManager share] newShareRecord:@{@"log_type":@"1002",@"about_id":QLNONull(carIdsStr),@"operation_type":@"multigraph"} handler:^(id result, NSError *error) {
              [MBProgressHUD immediatelyRemoveHUD];
             if (!error) {
                 NSString *share_id = result[@"result_info"][@"share_id"];
+                self.shareId = share_id;
                 //店铺二维码
                 self.merchant_url = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,car_id_s.count!=1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),carIdsStr,[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
                 UIImage *codeImg = [UIImage generateQRCodeWithString:self.merchant_url Size:88];
@@ -190,6 +192,12 @@
             [MBProgressHUD showError:@"请选择分享图片"];
             return;
         }
+        
+        // 调一次接口
+        if (self.shareId) {
+            [[QLToolsManager share] newShareRecord:@{@"share_id":self.shareId} handler:^(id result, NSError *error) {}];
+        }
+        
         
         self.shareView.descLB.text = [NSString stringWithFormat:@"%@向您推荐%lu辆好车,杜绝事故，精选优质--%@ 地址:%@",QLNONull([QLUserInfoModel getLocalInfo].account.nickname),(unsigned long)self.chooseArr.count,QLNONull([QLUserInfoModel getLocalInfo].account.nickname),QLNONull([QLUserInfoModel getLocalInfo].business.address)];
         [self.shareView.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];

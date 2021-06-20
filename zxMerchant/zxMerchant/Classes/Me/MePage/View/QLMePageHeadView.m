@@ -39,29 +39,45 @@
     self.cNumLB.text = EncodeStringFromDic(data, @"subscribe_count");
     //    business_name
     [self.storeNameBtn setTitle:[QLUserInfoModel getLocalInfo].business.business_name forState:UIControlStateNormal];
+   
     
-    //    flag=2是全省vip flag=3是全国vip
-    //    flag=1是无会员
-    NSNumber *vipFlag = [QLUserInfoModel getLocalInfo].personnel.flag;
-    //
-    if ([vipFlag isEqual:@(2)]) {
-        [self.vipStatusBtn setTitle:@"已通过" forState:UIControlStateNormal];
-        [self.numBtn setTitle:@"vip" forState:UIControlStateNormal];
-        self.vipTipImgV.image = [UIImage imageNamed:@"vip_blue"];
-    } else if ([vipFlag isEqual:@(3)]) {
-        [self.vipStatusBtn setTitle:@"已通过" forState:UIControlStateNormal];
-        [self.numBtn setTitle:@"vip" forState:UIControlStateNormal];
-        self.vipTipImgV.image = [UIImage imageNamed:@"vip_orange"];
-    } else if ([vipFlag isEqual:@(1)]){
-        [self.vipStatusBtn setTitle:@"非会员" forState:UIControlStateNormal];
+    NSString *stateStr = [QLUserInfoModel getLocalInfo].account.state;
+    //审核中  state 99 98
+    // 1 就判断flag
+    if ([stateStr isEqualToString:@"99"] || [stateStr isEqualToString:@"98"]) {
+        // 申请中
+        [self.vipStatusBtn setTitle:@"申请中" forState:UIControlStateNormal];
         [self.numBtn setTitle:@"" forState:UIControlStateNormal];
         self.vipTipImgV.image = [UIImage imageNamed:@""];
+    } else if ([stateStr isEqualToString:@"99"]) {
+        
     } else {
-        [self.vipStatusBtn setTitle:@"会员待审" forState:UIControlStateNormal];
-        [self.numBtn setTitle:@"" forState:UIControlStateNormal];
-        self.vipTipImgV.image = [UIImage imageNamed:@""];
+        //    flag=2是全省vip flag=3是全国vip
+        //    flag=1是无会员
+        NSNumber *vipFlag = [QLUserInfoModel getLocalInfo].personnel.flag;
+        //
+        if ([vipFlag isEqual:@(2)]) {
+            [self.vipStatusBtn setTitle:@"已通过" forState:UIControlStateNormal];
+            [self.numBtn setTitle:@"vip" forState:UIControlStateNormal];
+            self.vipTipImgV.image = [UIImage imageNamed:@"vip_blue"];
+        } else if ([vipFlag isEqual:@(3)]) {
+            [self.vipStatusBtn setTitle:@"已通过" forState:UIControlStateNormal];
+            [self.numBtn setTitle:@"vip" forState:UIControlStateNormal];
+            self.vipTipImgV.image = [UIImage imageNamed:@"vip_orange"];
+        } else if ([vipFlag isEqual:@(1)]){
+            [self.vipStatusBtn setTitle:@"非会员" forState:UIControlStateNormal];
+            [self.numBtn setTitle:@"" forState:UIControlStateNormal];
+            self.vipTipImgV.image = [UIImage imageNamed:@""];
+        } else {
+            [self.vipStatusBtn setTitle:@"会员待审" forState:UIControlStateNormal];
+            [self.numBtn setTitle:@"" forState:UIControlStateNormal];
+            self.vipTipImgV.image = [UIImage imageNamed:@""];
+        }
+        
     }
     
+    
+   
     
 }
 

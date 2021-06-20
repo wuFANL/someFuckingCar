@@ -20,7 +20,10 @@
         self = [QLVipAuditView viewFromXib];
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
         self.viewDelegate = self;
+        [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[QLUserInfoModel getLocalInfo].account.head_pic]];
         
+        self.headImgView.layer.masksToBounds = YES;
+        self.headImgView.layer.cornerRadius = self.headImgView.width / 2;
         
         [self.czView addSubview:self.rView];
         [self.rView mas_makeConstraints:^(MASConstraintMaker *make) {

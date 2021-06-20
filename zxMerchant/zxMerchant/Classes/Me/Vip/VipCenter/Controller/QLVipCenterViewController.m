@@ -132,8 +132,6 @@
 //立即充值
 - (void)rechargeBtnClick {
     // 吊起支付
-    
-    WEAKSELF
     NSDictionary *dic = [self.priceView.zdataArr objectAtIndex:self.priceView.selectIndex];
     [QLNetworkingManager postWithUrl:UserPath params:@{
         Operation_type:@"pay_vip_by_weix",
