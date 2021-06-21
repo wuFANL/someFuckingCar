@@ -435,6 +435,7 @@
     if (indexPath.row == 0) {
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.likeBtn.hidden = YES;
+        cell.textLBLeft.constant = 0;
         cell.headBtn.tag = indexPath.section;
         [cell.headBtn addTarget:self action:@selector(goStoreClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.model = model;

@@ -112,7 +112,7 @@
         model.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
         
         if (self.dataType == ImageType) {
-            model.Spacing = QLMinimumSpacingMake(8, 8);
+            model.Spacing = QLMinimumSpacingMake(10, 10);
             model.columnCount = 3;
             CGFloat width = (self.bjView.width-(model.Spacing.minimumLineSpacing*(model.columnCount-1)))/model.columnCount;
             model.itemSize = CGSizeMake(width, width);
@@ -122,7 +122,7 @@
             CGFloat width = (self.bjView.width-(model.Spacing.minimumLineSpacing*(model.columnCount-1)))/model.columnCount;
             model.itemSize = CGSizeMake(width, width*0.75);
         }
-        model.registerType = CellNibRegisterType;
+        model.registerType = ITEM_NibRegisterType;
         model.itemName = @"QLCarCircleImgItem";
         model.scrollDirection = UICollectionViewScrollDirectionVertical;
         _collectionView = [[QLBaseCollectionView alloc]initWithFrame:self.bjView.frame ItemModel:model];

@@ -46,7 +46,7 @@
     [super viewWillAppear:animated];
     if(self.isFromCarManager)
     {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBar.hidden = NO;
     }
 }
 
@@ -55,7 +55,7 @@
     [super viewWillDisappear:animated];
     if(self.isFromCarManager)
     {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];;
+        self.navigationController.navigationBar.hidden = YES;
     }
 }
 

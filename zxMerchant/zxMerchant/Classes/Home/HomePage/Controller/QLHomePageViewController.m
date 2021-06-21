@@ -42,10 +42,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    
+    [self getHomeData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getHomeData];
+    
     [self getFriendList];
     //tableView
     [self tableViewSet];
