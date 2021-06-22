@@ -442,6 +442,7 @@
         return cell;
     } else if (indexPath.row == 1&&model.file_array.count != 0) {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
+        cell.bjViewLeft.constant = 72;
         cell.dataType = ImageType;
         cell.dataArr = [model.file_array mutableCopy];
         return cell;

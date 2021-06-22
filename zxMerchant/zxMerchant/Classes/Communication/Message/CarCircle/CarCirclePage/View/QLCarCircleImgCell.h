@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger,QLCarCircleDataType) {
 @interface QLCarCircleImgCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *bjView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bjViewHeight;
 /**
  *数据类型

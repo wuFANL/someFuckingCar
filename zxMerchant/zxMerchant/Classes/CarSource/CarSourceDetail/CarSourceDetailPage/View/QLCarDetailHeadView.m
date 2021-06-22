@@ -40,15 +40,28 @@
 }
 #pragma mark - bannerView
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
+    imageBtn.contentMode = UIViewContentModeScaleAspectFit;
     if (self.bannerView == bannerView) {
         if (self.bannerArr.count == 0) {
             [imageBtn setBackgroundImage:imageArr[0] forState:UIControlStateNormal];
         } else {
             NSDictionary *obj = imageArr[index];
             if ([obj isKindOfClass:[NSDictionary class]] && [[obj objectForKey:@"pic_url"] isKindOfClass:[NSString class]]) {
-                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal];
+                [imageBtn sd_setImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    if (image) {
+                        imageBtn.contentMode =  UIViewContentModeScaleAspectFill;
+                        imageBtn.clipsToBounds  = YES;
+                    }
+                    
+                }];
             } else if ([obj isKindOfClass:[NSString class]]) {
-                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:(NSString *)obj] forState:UIControlStateNormal];
+                [imageBtn sd_setImageWithURL:[NSURL URLWithString:(NSString *)obj] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    if (image) {
+        
+                        imageBtn.contentMode =  UIViewContentModeScaleAspectFill;
+                        imageBtn.clipsToBounds  = YES;
+                    }
+                }];
             }
             else {
                 [imageBtn setBackgroundImage:[obj objectForKey:@"pic_url"] forState:UIControlStateNormal];

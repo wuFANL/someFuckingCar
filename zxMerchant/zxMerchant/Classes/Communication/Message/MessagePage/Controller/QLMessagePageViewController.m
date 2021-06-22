@@ -106,6 +106,9 @@
             btn.badgeBtn.showNum = YES;
             btn.badgeValue = [NSString stringWithFormat:@"%ld",unreadMsgNum];
         }
+        //app角标设置
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMsgNum];
+        [JPUSHService setBadge:unreadMsgNum];
         
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
