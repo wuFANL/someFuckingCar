@@ -53,7 +53,20 @@
 }
 #pragma mark - network
 - (void)changePriceRequest {
-    
+    [MBProgressHUD showCustomLoading:nil];
+
+    [QLNetworkingManager postWithUrl:VehiclePath params:@{@"operation_type":@"save_price",
+                                                          @"sell_price":QLNONull(self.aTF.text),
+                                                          @"sell_min_price":QLNONull(self.bTF.text),
+                                                          @"wholesale_price":QLNONull(self.cTF.text),
+                                                          @"procure_price":QLNONull(self.dTF.text),
+                                                          @"business_id":QLNONull([[self.sourceDic objectForKey:@"car_info"] objectForKey:@"business_id"]),
+                                                          @"car_id":QLNONull([[self.sourceDic objectForKey:@"car_info"] objectForKey:@"id"])} success:^(id response) {
+        [MBProgressHUD showSuccess:@"调价成功"];
+        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
 }
 #pragma mark - action
 //是否包含过户费

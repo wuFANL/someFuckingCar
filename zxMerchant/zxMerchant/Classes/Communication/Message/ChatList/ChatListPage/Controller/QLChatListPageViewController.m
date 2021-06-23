@@ -262,11 +262,11 @@
         }
         //刷新设置
         [self.tableView.mj_header endRefreshing];
-        if (temArr.count < 10) {
-            self.tableView.showHeadRefreshControl = NO;
-        } else {
-            self.tableView.showHeadRefreshControl = YES;
-        }
+//        if (temArr.count < 10) {
+//            self.tableView.showHeadRefreshControl = NO;
+//        } else {
+//            self.tableView.showHeadRefreshControl = YES;
+//        }
         if(![flagStr isEqualToString:@"1"] && [temArr count] > 0)
         {
             [self.tableView reloadData];
@@ -542,6 +542,7 @@
     }
 }
 -(void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
+    self.flagId = @"1";
     self.noFirstLoadData = NO;
     self.chooseTypeIndex = indexPath.row;
     self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];

@@ -113,10 +113,32 @@
         //上架通知 + 交易通知 + 出售通知
         QLMyCarDetailViewController *vcdVC = [[QLMyCarDetailViewController alloc] initWithUserid:fromUserID carID:carid businessCarID:buscarid];
         vcdVC.refuseStr = [dic objectForKey:@"exam_remark"];
+        
+        if([[dic objectForKey:@"exam_status"] intValue] == 1)
+        {
+            //通过
+            vcdVC.bottomType = @"1";
+        }
+        else if([[dic objectForKey:@"exam_status"] intValue] == 2)
+        {
+            //拒绝
+            vcdVC.bottomType = @"2";
+        }
+        else if([[dic objectForKey:@"exam_status"] intValue] == 99)
+        {
+            //出售
+            vcdVC.bottomType = @"99";
+        }
+        else
+        {
+            //审核中
+            vcdVC.bottomType = @"98";
+        }
+        
         //0 拒绝  1自己 显示底部   2非自己 隐藏底部
         if([[QLUserInfoModel getLocalInfo].account.account_id isEqualToString:[dic objectForKey:@"seller_id"]])
         {
-            vcdVC.bottomType = @"1";
+            //自己的车 展示
             if([[dic objectForKey:@"deal_state"] intValue] ==  1)
             {
                 //1=上架状态（显示下架微店）
@@ -129,15 +151,12 @@
 
             }
         }
-        else if([[dic objectForKey:@"exam_status"] intValue] == 2)
-        {
-            vcdVC.bottomType = @"0";
+        else{
+            //影藏
+            vcdVC.bottomType = @"100";
         }
-        else
-        {
-            vcdVC.bottomType = @"2";
+        
 
-        }
         
         if([dic objectForKey:@"seller_id"])
         [self.navigationController pushViewController:vcdVC animated:YES];
