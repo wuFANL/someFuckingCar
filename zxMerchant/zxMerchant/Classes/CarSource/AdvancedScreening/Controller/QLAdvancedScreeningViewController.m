@@ -134,7 +134,7 @@
         @"min_price":min_price,
         @"max_price":max_price,
         @"factory_way":QLNONull([self.conditionDic[@"factory_way"] isEqualToString:@"不限"]?@"":self.conditionDic[@"factory_way"]),
-        @"car_type":QLNONull([self.conditionDic[@"car_type"] isEqualToString:@"0"]?@"":self.conditionDic[@"car_type"]),
+        @"car_type":QLNONull([self.conditionDic[@"car_type"] isEqualToString:@"不限"]?@"":[self carTypeChange:self.conditionDic[@"car_type"]]),
         @"brand_data":QLNONull(brandStr),
         @"min_vehicle_age":min_vehicle_age,
         @"max_vehicle_age":max_vehicle_age,
@@ -166,6 +166,27 @@
         [MBProgressHUD showError:error.domain];
     }];
 }
+- (NSString *)carTypeChange:(NSString *)type{
+    NSString *result = @"";
+//    1两厢轿车2三厢轿车3跑车4suv 5MPV 6面包车 7皮卡
+    if ([type isEqualToString:@"两厢轿车"]) {
+        return @"1";
+    } else if ([type isEqualToString:@"三厢轿车"]) {
+        return @"2";
+    }else if ([type isEqualToString:@"跑车"]) {
+        return @"3";
+    }else if ([type isEqualToString:@"SUV"]) {
+        return @"4";
+    }else if ([type isEqualToString:@"MPV"]) {
+        return @"5";
+    }else if ([type isEqualToString:@"面包车"]) {
+        return @"6";
+    }else if ([type isEqualToString:@"皮卡"]) {
+        return @"7";
+    }
+    return result;
+}
+
 #pragma mark - action
 //订阅
 - (void)subscriptionBtnClick {
@@ -222,7 +243,6 @@
 }
 //排量类型选择
 - (void)displacementTypeBtnClick:(UIButton *)sender {
-//    NSInteger index = sender.tag;
     NSInteger section = [self.tableView numberOfSections]-1;
     QLAdvancedScreeningSectionView *sectionView = [self.view viewWithTag:100+section];
     if (sectionView.aBtn == sender) {
@@ -232,7 +252,6 @@
         sectionView.aBtn.selected = NO;
         sectionView.bBtn.selected = YES;
     }
-//    [self.conditionDic setObject:index==0?@"L":@"T" forKey:@"displacement_type"];
 }
 //重置
 - (void)resetBtnClick {

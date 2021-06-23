@@ -98,7 +98,17 @@
             if ([key isEqualToString:@"min_price"]) {
                 NSString *lowPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"min_price") floatValue]];
                 NSString *maxPrice = [[QLToolsManager share] unitConversion:[EncodeStringFromDic(dic, @"max_price") floatValue]];
+                if ([lowPrice isEqualToString:@"0元"] && [maxPrice isEqualToString:@"1000.00万"]) {
+                    continue;
+                }
                 [dataArr addObject:[NSString stringWithFormat:@"%@-%@",lowPrice,maxPrice]];
+            }
+            
+            if ([key isEqualToString:@"car_type"]) {
+                NSString *type = [self carTypeChange:EncodeStringFromDic(dic, @"car_type")];
+                if (type.length > 0) {
+                    [dataArr addObject:type];
+                }
             }
             if ([key isEqualToString:@"min_displacement"]) {
                 // 动力型号
@@ -149,7 +159,26 @@
         return cell;
     }
 }
-
+- (NSString *)carTypeChange:(NSString *)type{
+    NSString *result = @"";
+//    1两厢轿车2三厢轿车3跑车4suv 5MPV 6面包车 7皮卡
+    if ([type isEqualToString:@"1"]) {
+        return @"两厢轿车";
+    } else if ([type isEqualToString:@"2"]) {
+        return @"三厢轿车";
+    }else if ([type isEqualToString:@"3"]) {
+        return @"跑车";
+    }else if ([type isEqualToString:@"4"]) {
+        return @"SUV";
+    }else if ([type isEqualToString:@"5"]) {
+        return @"MPV";
+    }else if ([type isEqualToString:@"6"]) {
+        return @"面包车";
+    }else if ([type isEqualToString:@"7"]) {
+        return @"皮卡";
+    }
+    return result;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *tempArr = [self.dataDic objectForKey:@"car_list"];
     if (tempArr.count > 0) {
