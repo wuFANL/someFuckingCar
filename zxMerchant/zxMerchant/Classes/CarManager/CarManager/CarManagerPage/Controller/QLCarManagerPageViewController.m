@@ -298,6 +298,7 @@
         }
         self.vcView.currentIndexPath = selectIndexPath;
         self.vcView.type = type==0?0:type-1;
+       
         WEAKSELF
         self.vcView.handler = ^(id result) {
             //点击结果
@@ -442,7 +443,11 @@
             
             [weakSelf requestForList:weakSelf.paramModel];
         };
-        [self.vcView show];
+//        [self.vcView show];
+        if (!self.vcView.isShow) {
+            self.vcView.offY = self.headView.sortView.y-(BottomOffset?44:20);
+        }
+        self.vcView.isShow = !self.vcView.isShow;
     } else {
         self.headView.sortView.currentIndex = -1;
         [self.vcView hiddenViewEvent];
