@@ -340,15 +340,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
-    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+    if(self.isFirstIn)
+    {
+        [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+        self.isFirstIn = NO;
+    }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isFirstIn = YES;
@@ -384,6 +387,9 @@
 }
 
 - (void)JPushNotifForChatMessage:(NSNotification *)notif {
+    self.flagId = @"1";
+    self.noFirstLoadData = NO;
+    self.msgID = @"";
     [self dataRequest];
 }
 
