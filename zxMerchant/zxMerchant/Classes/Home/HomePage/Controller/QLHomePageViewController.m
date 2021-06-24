@@ -161,6 +161,11 @@
         [temArr addObject:fun4Model];
     }
     
+    if (![[QLUserInfoModel getLocalInfo].account.state isEqualToString:@"1"]) {
+        if ([temArr containsObject:fun1Model]) {
+            [temArr removeObject:fun1Model];
+        }
+    }
     
     int row = temArr.count/5 > 1?2:1;
     int collectionViewHeight = 95*row;
