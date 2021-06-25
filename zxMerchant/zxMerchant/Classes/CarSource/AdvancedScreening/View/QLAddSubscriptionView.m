@@ -29,6 +29,7 @@
 
 - (void)show {
     self.textTF.text = @"";
+    [self.textTF becomeFirstResponder];
     [KeyWindow addSubview:self];
 }
 

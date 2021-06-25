@@ -18,7 +18,7 @@
 #import "CitySelectViewController.h"
 #import "QLCardSelectModel.h"
 #define typeStringArr @[@"智能排序",@"价格最低",@"价格最高",@"车龄最短",@"里程最少"]
-#define priceStringArr @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万以上"]
+#define priceStringArr @[@"不限价格",@"5万以内",@"5万-10万",@"10万-15万",@"15万-20万",@"20万-30万",@"30万-50万",@"50万以上"]
 //NSArray *
 @interface QLCarSourcePageViewController ()<QLBaseSubViewControllerDelegate,QLBaseSearchBarDelegate,QLBannerViewDelegate,QLChooseHeadViewDelegate,QLVehicleSortViewDelegate>
 @property (nonatomic, strong) QLCarSourceNaviView *naviView;
