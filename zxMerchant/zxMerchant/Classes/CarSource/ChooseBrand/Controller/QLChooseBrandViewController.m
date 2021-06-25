@@ -181,6 +181,10 @@ static const CGFloat bTableLeft = 88.f;
     [QLNetworkingManager postWithParams:@{@"operation_type":@"get_series_data",@"brand_id":infoModel.brand_id} success:^(id response) {
         [MBProgressHUD immediatelyRemoveHUD];
         self.bArr = [[NSArray yy_modelArrayWithClass:[QLSeriesModel class] json:response[@"result_info"][@"series_list"]] mutableCopy];
+        QLSeriesModel *seriesModel = [[QLSeriesModel alloc]init];
+        seriesModel.series_id = @"0";
+        seriesModel.series_name = @"不限车系";
+        [self.bArr insertObject:seriesModel atIndex:0];
         [self.bTableView reloadData];
         if (self.series_id.length != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -282,7 +286,7 @@ static const CGFloat bTableLeft = 88.f;
         return brandModel.brand_list.count;
     } else if (tableView == self.bTableView) {
         //        多了收起 和 不限车系
-        return 2 + self.bArr.count;
+        return 1 + self.bArr.count;
     } else {
         if (section == 0) {
             return 1;
@@ -322,14 +326,11 @@ static const CGFloat bTableLeft = 88.f;
             cell.textLabel.text = @"收起";
             cell.imageView.image = [UIImage imageNamed:@"reportAcc_selected"];
             
-        }else if(indexPath.row == 1){
+        }else{
             
-            cell.textLabel.text = @"不限车系";
-            
-        } else {
-            if((indexPath.row-2)< self.bArr.count ){
+            if((indexPath.row-1)< self.bArr.count ){
                 
-                QLSeriesModel *seriesModel = self.bArr[indexPath.row-2];
+                QLSeriesModel *seriesModel = self.bArr[indexPath.row-1];
                 cell.textLabel.text = seriesModel.series_name;
                 if ([self.series_id isEqualToString:seriesModel.series_id]) {
                     self.bIndex = indexPath;
@@ -431,8 +432,8 @@ static const CGFloat bTableLeft = 88.f;
                 }else{
                     //系列
                     QLSeriesModel *seriesModel = [[QLSeriesModel alloc]init];
-                    if ((self.bIndex.row-2) < self.bArr.count) {
-                        seriesModel = self.bArr[self.bIndex.row -2];
+                    if ((self.bIndex.row-1) < self.bArr.count) {
+                        seriesModel = self.bArr[self.bIndex.row-1];
                     }
                     self.callback(brandInfoModel, seriesModel, nil);
                     

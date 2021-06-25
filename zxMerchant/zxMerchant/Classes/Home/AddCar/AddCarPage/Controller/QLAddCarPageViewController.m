@@ -74,9 +74,7 @@
 //销售归属人
 @property (nonatomic, strong ) NSString  *value14;
 //销售归属人数据模型
-@property (nonatomic, strong ) QLAddCarPageModel  *belongModel;
-
-
+@property (nonatomic, strong ) QLAddCarPageModel  *carPageModel;
 // 归属人
 @property (nonatomic, strong) NSDictionary *belongDic;
 
@@ -152,7 +150,7 @@
         @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id
     };
     WEAKSELF
-    [self.belongModel queryData:para complet:^(BOOL result) {
+    [self.carPageModel queryData:para complet:^(BOOL result) {
         if (result) {
             [weakSelf matchBelongData];
         }
@@ -163,11 +161,13 @@
     // 选中了销售归属人
     NSIndexPath *indePath = [NSIndexPath indexPathForRow:13 inSection:1];
     if ([self.value14 isKindOfClass:[NSString class]] && ![self.value14 isEqualToString:@""]) {
-    NSInteger index = [self.belongModel.nameArr indexOfObject:self.value14];
-        if (index<self.belongModel.belongArr.count) {
-            self.belongDic = self.belongModel.belongArr[index];
+        
+    NSInteger index = [self.carPageModel.nameArr indexOfObject:self.value14];
+        if (index<self.carPageModel.belongArr.count) {
+            self.belongDic = self.carPageModel.belongArr[index];
             QLSubmitTextCell *cell = [self.tableView cellForRowAtIndexPath:indePath];
             cell.textView.text = self.value14;
+            self.belongDic = self.carPageModel.belongArr[index];
         }
     }
 }
@@ -371,6 +371,7 @@
         cell.textView.tag = 999 + indexPath.row;
         cell.textView.delegate = self;
         cell.textView.keyboardType = UIKeyboardTypeDefault;
+        cell.titleWidth.constant = 100;
         switch (indexPath.row) {
             case 0:{
                 if (self.value1.length > 0) {
@@ -695,14 +696,14 @@
            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id
        };
        WEAKSELF
-       [self.belongModel queryData:para complet:^(BOOL result) {
+       [self.carPageModel queryData:para complet:^(BOOL result) {
            if (result) {
-               [BRStringPickerView showPickerWithTitle:@"选择销售归属人" dataSourceArr:weakSelf.belongModel.nameArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
+               [BRStringPickerView showPickerWithTitle:@"选择销售归属人" dataSourceArr:weakSelf.carPageModel.nameArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
                   // 选中了销售归属人
                    QLSubmitTextCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                    cell.textView.text = resultModel.value;
                    weakSelf.value14 = resultModel.value;
-                   weakSelf.belongDic = weakSelf.belongModel.belongArr[resultModel.index];
+                   weakSelf.belongDic = weakSelf.carPageModel.belongArr[resultModel.index];
                }];
            }
        }];
@@ -712,9 +713,9 @@
        NSArray *list2 = @[@".0",@".1",@".2",@".3",@".4",@".5",@".6",@".7",@".8",@".9"];
        NSArray *list3 = @[@"L",@"T"];
        
-       NSInteger index1 = [list1 indexOfObject:self.belongModel.displacement1];
-       NSInteger index2 = [list2 indexOfObject:self.belongModel.displacement2];
-       NSInteger index3 = [list3 indexOfObject:self.belongModel.displacement3];
+       NSInteger index1 = [list1 indexOfObject:self.carPageModel.displacement1];
+       NSInteger index2 = [list2 indexOfObject:self.carPageModel.displacement2];
+       NSInteger index3 = [list3 indexOfObject:self.carPageModel.displacement3];
        
        [BRStringPickerView showMultiPickerWithTitle:@"" dataSourceArr:@[list1,list2,list3] selectIndexs:@[@(index1),@(index2),@(index3),@(0)] resultBlock:^(NSArray<BRResultModel *> * _Nullable resultModelArr) {
            
@@ -727,17 +728,17 @@
                switch (index) {
                    case 0:
                    {
-                       self.belongModel.displacement1 = model.value;
+                       self.carPageModel.displacement1 = model.value;
                    }
                        break;
                    case 1:
                    {
-                       self.belongModel.displacement2 = model.value;
+                       self.carPageModel.displacement2 = model.value;
                    }
                        break;
                    case 2:
                    {
-                       self.belongModel.displacement3 = model.value;
+                       self.carPageModel.displacement3 = model.value;
                    }
                        break;
                        
@@ -1240,11 +1241,11 @@
     return result;
 }
 
-- (QLAddCarPageModel *)belongModel {
-    if (!_belongModel) {
-        _belongModel = [[QLAddCarPageModel alloc]init];
+- (QLAddCarPageModel *)carPageModel {
+    if (!_carPageModel) {
+        _carPageModel = [[QLAddCarPageModel alloc]init];
     }
-    return _belongModel;
+    return _carPageModel;
 }
 
 @end
