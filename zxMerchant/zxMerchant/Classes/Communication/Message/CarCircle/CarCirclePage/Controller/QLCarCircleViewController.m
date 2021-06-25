@@ -435,12 +435,14 @@
     if (indexPath.row == 0) {
         QLCarCircleTextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         cell.likeBtn.hidden = YES;
+        cell.textLBLeft.constant = 0;
         cell.headBtn.tag = indexPath.section;
         [cell.headBtn addTarget:self action:@selector(goStoreClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.model = model;
         return cell;
     } else if (indexPath.row == 1&&model.file_array.count != 0) {
         QLCarCircleImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imgCell" forIndexPath:indexPath];
+        cell.bjViewLeft.constant = 72;
         cell.dataType = ImageType;
         cell.dataArr = [model.file_array mutableCopy];
         return cell;

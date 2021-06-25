@@ -65,6 +65,21 @@ NSString* Operation_type = @"operation_type";
         result(nil,error);
     }];
 }
+
+
+- (void)newShareRecord:(NSDictionary *)param handler:(ResultBlock)result {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:param];
+    if (![dic.allKeys containsObject:@"operation_type"]) {
+        dic[@"operation_type"] = @"do_share";
+    }
+    dic[@"account_id"] = [QLUserInfoModel getLocalInfo].account.account_id;
+    [QLNetworkingManager postWithUrl:BasePath params:dic success:^(id response) {
+        result(response,nil);
+    } fail:^(NSError *error) {
+        result(nil,error);
+    }];
+}
+
 #pragma mark -业务员名下车商
 - (void)getDealers:(ResultBlock)result {
     [QLNetworkingManager postWithParams:@{@"operation_type":@"get_merchant_list_with_staff",@"staff_id":[QLUserInfoModel getLocalInfo].personnel.personnel_id} success:^(id response) {

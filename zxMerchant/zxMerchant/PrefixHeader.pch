@@ -40,6 +40,8 @@
 //API
 #define HOST                    @"interface.zcars365.com"
 #define WEB                     @"wx.zcars365.com"
+#define WechatShareUrl          @"http://wx.zcars365.com/#/pages/judge/judge?url="
+#define WechatShareDetail       @"http://wx.zcars365.com/#/pages/car-detail/car-detail?"
 
 #define TradePath              [NSString stringWithFormat:@"%@/trade",HOST]
 #define BasePath                [NSString stringWithFormat:@"%@/index",HOST]

@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet QLBaseButton *likeBtn;
 // 文案
 @property (weak, nonatomic) IBOutlet UILabel *textLB;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textLBLeft;
 // 点击全文
 @property (weak, nonatomic) IBOutlet UIButton *openBtn;
 @property (weak, nonatomic) IBOutlet QLBaseButton *vipBtn;

@@ -112,6 +112,10 @@
 #pragma mark - action
 //谈价格
 - (void)priceBtnClick {
+    if ([[self.outData objectForKey:@"account_id"] isEqualToString:[QLUserInfoModel getLocalInfo].account.account_id]) {
+        [MBProgressHUD showError:@"不能与自己聊天"];
+        return;
+    }
     if(self.isFromChat) {
         [[QLToolsManager share] contactCustomerService:[[self.carData objectForKey:@"account_belong"] objectForKey:@"mobile"]];
     } else {
@@ -186,8 +190,13 @@
                 [blackView removeFromSuperview];
                 blackView = nil;
             }];
+        } else {
+            QLCarDescViewController *cdVC = [[QLCarDescViewController alloc] initWithDic:[self.carData objectForKey:@"car_param"]];
+            cdVC.carID = [self.outData objectForKey:@"car_id"];
+            cdVC.car_video = [[self.carData objectForKey:@"car_param"] objectForKey:@"car_video"];
+            [self.navigationController pushViewController:cdVC animated:YES];
         }
-    }
+    } 
 }
 //分区头更多按钮点击
 - (void)headerAccBtnClick:(UIButton *)sender {
@@ -204,6 +213,7 @@
         @"accID":EncodeStringFromDic([[self.carData objectForKey:@"car_info"] objectForKey:@"business_car"], @"account_id")
     };
     QLContactsStoreViewController* vc = [[QLContactsStoreViewController alloc]initWithDic:para];
+    vc.isFromCarManager = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 //轮播图点击

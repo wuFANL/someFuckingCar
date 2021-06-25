@@ -135,17 +135,18 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     [self requestForCarPicList:@"车辆照片"];
-    
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.navigationItem.title = @"车辆详情";
     if([NSString isEmptyString:self.buscarID])
     {
         [self requestForMsgInfo];
     } else {
         [self requestForMsgList];
     }
+    
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.title = @"车辆详情";
+
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"share_green"] originalImage] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -237,7 +238,7 @@
 }
 //调价
 - (void)reduceBtnClick {
-    QLChangePriceViewController *cpVC = [QLChangePriceViewController new];
+    QLChangePriceViewController *cpVC = [[QLChangePriceViewController alloc] initWithSourceDic:self.allSourceDic];
     cpVC.showInternalPrice = YES;
     [self.navigationController pushViewController:cpVC animated:YES];
 }
@@ -497,17 +498,19 @@
 
 -(void)setBottomType:(NSString *)bottomType
 {
-    if([bottomType isEqualToString:@"0"])
+    if([bottomType isEqualToString:@"2"])
     {
+        //拒绝
         self.bottomView.openControl.hidden = NO;
-        self.bottomView.sellBtn.hidden =YES;
-        self.bottomView.editBtn.hidden = YES;
-        self.bottomView.confirmBtn.hidden = YES;
+//        self.bottomView.sellBtn.hidden =YES;
+//        self.bottomView.editBtn.hidden = YES;
+//        self.bottomView.confirmBtn.hidden = YES;
         self.bottomView.placeholderLB.text = [NSString stringWithFormat:@"找车源上架审核失败，请点击下方编辑按钮修改后重新提交审核：%@",self.refuseStr];
         [self.bottomView defaultOpen];
     }
     else if([bottomType isEqualToString:@"1"])
     {
+        //通过
         self.bottomView.openControl.hidden = YES;
         self.bottomView.sellBtn.hidden =NO;
         self.bottomView.editBtn.hidden = NO;
@@ -522,8 +525,17 @@
         self.bottomView.confirmBtn.hidden = YES;
         self.bottomView.hasSellLab.hidden = NO;
     }
+    else if([bottomType isEqualToString:@"98"])
+    {
+        //98在审核
+        self.bottomView.openControl.hidden = YES;
+        self.bottomView.sellBtn.hidden =NO;
+        self.bottomView.editBtn.hidden = NO;
+        self.bottomView.confirmBtn.hidden = NO;
+    }
     else
     {
+        //其他隐藏
         self.bottomView.hidden = YES;
     }
 }

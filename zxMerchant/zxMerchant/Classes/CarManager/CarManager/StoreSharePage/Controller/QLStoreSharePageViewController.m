@@ -109,6 +109,9 @@
 }
 
 - (void)share:(UMSocialPlatformType)platformType title:(NSString *)title desc:(NSString *)desc imgae:(id)image {
+    
+    // 0:选车分享  1:分享店铺 2:分享车辆详情
+    // 1001店铺分享1002选车分享1003车辆详情
     NSMutableArray *car_id_list = [NSMutableArray array];
     for (QLCarInfoModel *model in self.chooseArr) {
         [car_id_list addObject:model.car_id];
@@ -116,24 +119,38 @@
     //分享记录
     NSDictionary *dic = nil;
     if (self.shareType == 2) {
-        dic = @{@"log_type":@"1002",@"about_id":[car_id_list componentsJoinedByString:@","]};
-    } else {
+        dic = @{@"log_type":@"1003",@"about_id":[car_id_list componentsJoinedByString:@","]};
+    } else if (self.shareType == 1){
         dic = @{@"log_type":@"1001",@"about_id":QLNONull([QLUserInfoModel getLocalInfo].account.account_id)};
+    } else {
+        // 单辆车的详情
+        dic = @{@"log_type":@"1002",@"about_id":[car_id_list componentsJoinedByString:@","]};
     }
+    
+    WEAKSELF
     [MBProgressHUD showCustomLoading:nil];
-    [[QLToolsManager share] shareRecord:dic handler:^(id result, NSError *error) {
+    [[QLToolsManager share] newShareRecord:dic handler:^(id result, NSError *error) {
         [MBProgressHUD immediatelyRemoveHUD];
         NSString *share_id = @"";
+        NSString *app_id = @"";
         if (!error) {
             share_id = result[@"result_info"][@"share_id"];
+            app_id = result[@"result_info"][@"appid"];
         }
         //分享
         UMShareWebpageObject *webObj = [UMShareWebpageObject shareObjectWithTitle:title descr:desc thumImage:image];
         NSString *shareUrl = @"";
-        if (self.shareType == 0||self.shareType == 1) {
-            shareUrl = [NSString stringWithFormat:@"http://%@/#/pages/%@?share_id=%@&id=%@&merchant_id=%@&flag=%@",WEB,self.shareType == 1?@"store/store":@"car-detail/car-detail",QLNONull(share_id),[car_id_list componentsJoinedByString:@","],[QLUserInfoModel getLocalInfo].account.account_id,[QLUserInfoModel getLocalInfo].account.flag];
+        if (weakSelf.shareType == 0) {
+//            shareUrl = [NSString stringWithFormat:@"%@2&merchant_id=%@&car_ids=%@&share_id=%@&appid=%@&flag=%@",WechatShareUrl,[QLUserInfoModel getLocalInfo].account.account_id,[car_id_list componentsJoinedByString:@","],share_id,app_id,[QLUserInfoModel getLocalInfo].account.flag];
+//
             
+            shareUrl = [NSString stringWithFormat:@"%@&merchant_id=%@&share_id=%@&id=%@&flag=%@",WechatShareDetail,[QLUserInfoModel getLocalInfo].account.account_id,share_id,[car_id_list componentsJoinedByString:@","],[QLUserInfoModel getLocalInfo].account.flag];
+        } else if (weakSelf.shareType == 1) {
+            shareUrl = [NSString stringWithFormat:@"%@1&merchant_id=%@&share_id=%@&flag=%@&appid=%@",WechatShareUrl,[QLUserInfoModel getLocalInfo].account.account_id,share_id,[QLUserInfoModel getLocalInfo].account.flag,app_id];
+        } else {
+            shareUrl = [NSString stringWithFormat:@"%@3&id=%@&share_id=%@&merchant_id=%@&appid=%@&flag=%@",WechatShareUrl,[car_id_list componentsJoinedByString:@","],share_id,[QLUserInfoModel getLocalInfo].account.account_id,app_id,[QLUserInfoModel getLocalInfo].account.flag];
         }
+        
         webObj.webpageUrl = shareUrl;
         [[QLUMShareManager shareManager] shareToPlatformType:platformType shareObject:webObj currentVC:self];
     }];

@@ -367,6 +367,7 @@
         cell.unitLB.hidden = YES;
         cell.textView.tag = 999 + indexPath.row;
         cell.textView.delegate = self;
+        cell.textView.keyboardType = UIKeyboardTypeDefault;
         switch (indexPath.row) {
             case 0:{
                 if (self.value1.length > 0) {
@@ -425,6 +426,7 @@
                 cell.titleLB.text = @"表显里程";
                 cell.unitLB.text = @"万公里";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeDecimalPad;
             }
                 break;
             case 4:{
@@ -441,6 +443,7 @@
                
                 cell.unitLB.text = @"万元";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeDecimalPad;
             }
                 break;
             case 5:{
@@ -455,6 +458,7 @@
                 cell.titleLB.text = @"销售低价";
                 cell.unitLB.text = @"万元";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeDecimalPad;
             }
                 break;
             case 6:{
@@ -470,6 +474,7 @@
                 
                 cell.unitLB.text = @"万元";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeDecimalPad;
             }
                 break;
             case 7:{
@@ -484,6 +489,7 @@
                 cell.titleLB.text = @"采购价";
                 cell.unitLB.text = @"万元";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeDecimalPad;
             }
                 break;
             case 8:{
@@ -499,6 +505,7 @@
                 cell.titleLB.text = @"过户次数";
                 cell.unitLB.text = @"次";
                 cell.unitLB.hidden = NO;
+                cell.textView.keyboardType = UIKeyboardTypeNumberPad;
             }
                 break;
             case 9:{
@@ -513,6 +520,7 @@
                 cell.textView.text = @"";
                 cell.textView.placeholder = @"";
                 cell.titleWidth.constant = 250;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
                 break;
             case 10:{
@@ -525,7 +533,7 @@
                 }
                 cell.textView.userInteractionEnabled = NO;
                 cell.titleLB.text = @"排量";
-                
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
                 break;
             case 11:{
@@ -540,7 +548,7 @@
                 }
                 
                 cell.titleLB.text = @"年检到期";
-                
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.textView.userInteractionEnabled = NO;
             }
                 break;
@@ -555,6 +563,7 @@
                 }
                 cell.titleLB.text = @"强制险到期";
                 cell.textView.userInteractionEnabled = NO;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
                 break;
             default:

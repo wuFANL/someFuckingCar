@@ -44,6 +44,7 @@ extern NSString* Operation_type;
  *分享记录
  */
 - (void)shareRecord:(NSDictionary *)param handler:(ResultBlock)result;
+- (void)newShareRecord:(NSDictionary *)param handler:(ResultBlock)result;
 /**
  *业务员名下车商
  */

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -41,21 +41,21 @@
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2u-8G-wir" customClass="QLBaseButton">
-                            <rect key="frame" x="101.66666666666669" y="243" width="142" height="35"/>
+                            <rect key="frame" x="112" y="243" width="121" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="hYJ-U9-iCL"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="申请中..." image="more_green">
+                            <state key="normal" title="申请中" image="more_green">
                                 <color key="titleColor" red="0.34133166069999998" green="0.70949989560000004" blue="0.33758312460000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
-                            <state key="selected" title="审核未通过" image="close_red">
+                            <state key="selected" image="close_red">
                                 <color key="titleColor" red="0.93094885350000001" green="0.28227692840000002" blue="0.1857053638" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weR-fJ-Atr">
-                            <rect key="frame" x="160" y="298" width="25" height="15"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="平台正在为您加急审核中。。。" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weR-fJ-Atr">
+                            <rect key="frame" x="86.666666666666686" y="298" width="172" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="u7S-Rl-6d3"/>
                             </constraints>

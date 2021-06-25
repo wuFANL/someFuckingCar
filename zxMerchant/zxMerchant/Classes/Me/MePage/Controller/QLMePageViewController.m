@@ -17,7 +17,8 @@
 #import "QLVipCenterViewController.h"
 #import "QLStaffListViewController.h"
 #import "QLSetUpViewController.h"
-
+#import "QLSubmitSuccessViewController.h"
+#import "QLCreatStoreViewController.h"
 
 @interface QLMePageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) QLMePageHeadView *headView;
@@ -63,17 +64,76 @@
 }
 //会员中心
 - (void)vipStatusBtnClick {
-    //    QLVipAuditView *vaView = [QLVipAuditView new];
-    //    [vaView show];
     
+    // 判断state
+    if ([[QLUserInfoModel getLocalInfo].account.state isEqualToString:@"99"] || [[QLUserInfoModel getLocalInfo].account.state isEqualToString:@"98"]) {
+        QLVipAuditView *vaView = [QLVipAuditView new];
+        [vaView.rView.czBtn addTarget:self action:@selector(openVipVc:) forControlEvents:UIControlEventTouchUpInside];
+        [vaView.resumeBtn addTarget:self action:@selector(storeReSubmit:) forControlEvents:UIControlEventTouchUpInside];
+        [vaView.cancelBtn addTarget:self action:@selector(cancleAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [vaView show];
+    } else {
+        QLVipCenterViewController *vcVC = [QLVipCenterViewController new];
+        [self.navigationController pushViewController:vcVC animated:YES];
+    }
+}
+
+- (void)cancleAction:(id)sender {
+    WEAKSELF
+    // 取消申请
+    [QLNetworkingManager postWithUrl:BusinessPath params:@{
+        Operation_type:@"opinion",
+        @"business_personnel_id":[QLUserInfoModel getLocalInfo].account.account_id,
+        @"state":@"2"
+    } success:^(id response) {
+        [MBProgressHUD showSuccess:@"已取消"];
+        [weakSelf getInfo];
+        
+    } fail:^(NSError *error) {
+        [MBProgressHUD showError:error.domain];
+    }];
+    
+    UIButton *button = sender;
+    if ([button isKindOfClass:[UIButton class]]) {
+        if (button.superview.superview) {
+            QLVipAuditView* vip = (QLVipAuditView *)button.superview.superview;
+            [vip hidden];
+        }
+    }
+}
+
+- (void)openVipVc:(id)sender {
     QLVipCenterViewController *vcVC = [QLVipCenterViewController new];
     [self.navigationController pushViewController:vcVC animated:YES];
+    
+    UIButton *button = sender;
+    if ([button isKindOfClass:[UIButton class]]) {
+        if (button.superview.superview.superview.superview) {
+            QLVipAuditView* vip = (QLVipAuditView *)button.superview.superview.superview.superview;
+            [vip hidden];
+        }
+    }
 }
+
 //店铺邀请列表
 - (void)storeInvitationBtnClick {
     QLStoreInvitationListViewController *silVC = [QLStoreInvitationListViewController new];
     [self.navigationController pushViewController:silVC animated:YES];
 }
+
+- (void)storeReSubmit:(id)sender {
+    QLCreatStoreViewController *vc = [QLCreatStoreViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+    UIButton *button = sender;
+    if ([button isKindOfClass:[UIButton class]]) {
+        if (button.superview.superview) {
+            QLVipAuditView* vip = (QLVipAuditView *)button.superview.superview;
+            [vip hidden];
+        }
+    }
+}
+
 //头部功能按钮
 - (void)headControlClick:(UIButton *)sender {
     if (sender == self.headView.aControl) {
@@ -185,6 +245,8 @@
         make.top.equalTo(self.view);
     }];
 }
+
+
 #pragma mark - Lazy
 - (QLMePageHeadView *)headView {
     if(!_headView) {

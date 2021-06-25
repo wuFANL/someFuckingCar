@@ -38,6 +38,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    
+    // 判断state
+    if ([[QLUserInfoModel getLocalInfo].account.state isEqualToString:@"1"]) {
+        // 充过钱了 隐藏
+        
+    } else {
+        // 展示弹框
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

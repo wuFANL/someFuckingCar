@@ -262,12 +262,24 @@
         }
         //刷新设置
         [self.tableView.mj_header endRefreshing];
-        if (temArr.count < 10) {
-            self.tableView.showHeadRefreshControl = NO;
-        } else {
-            self.tableView.showHeadRefreshControl = YES;
+//        if (temArr.count < 10) {
+//            self.tableView.showHeadRefreshControl = NO;
+//        } else {
+//            self.tableView.showHeadRefreshControl = YES;
+//        }
+        if(![flagStr isEqualToString:@"1"] && [temArr count] > 0)
+        {
+            [self.tableView reloadData];
+            NSIndexPath *indexP = [NSIndexPath indexPathForRow:0 inSection:[temArr count] -1];
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexP];
+            [self.tableView setContentOffset:CGPointMake(0, cellRect.origin.y)];
         }
-        [self.tableView reloadData];
+        else
+        {
+            [self.tableView reloadData];
+        }
+        
+
         if([flagStr isEqualToString:@"0"])
         {
             return;
@@ -328,15 +340,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-   
-    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+    if(self.isFirstIn)
+    {
+        [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+        self.isFirstIn = NO;
+    }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isFirstIn = YES;
@@ -372,6 +387,9 @@
 }
 
 - (void)JPushNotifForChatMessage:(NSNotification *)notif {
+    self.flagId = @"1";
+    self.noFirstLoadData = NO;
+    self.msgID = @"";
     [self dataRequest];
 }
 
@@ -530,6 +548,7 @@
     }
 }
 -(void)collectionViewSelect:(UICollectionView *)collectionView IndexPath:(NSIndexPath *)indexPath Data:(NSMutableArray *)dataArr {
+    self.flagId = @"1";
     self.noFirstLoadData = NO;
     self.chooseTypeIndex = indexPath.row;
     self.currentDic = [[self.topArray objectAtIndex:indexPath.row] copy];
