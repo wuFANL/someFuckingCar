@@ -16,6 +16,8 @@
 #import "VinCodeIdenfitViewController.h"
 #import "QLAddCarPopWIndow.h"
 #import "QLMyCarDetailViewController.h"
+#import "QLFullScreenImgView.h"
+#import "QLAddCarPageModel.h"
 @interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
 // 车辆图片
@@ -68,6 +70,12 @@
 @property (nonatomic, strong) NSString *value12;
 // 强制险到期
 @property (nonatomic, strong) NSString *value13;
+//销售归属人
+@property (nonatomic, strong ) NSString  *value14;
+//销售归属人数据模型
+@property (nonatomic, strong ) QLAddCarPageModel  *belongModel;
+
+
 // 归属人
 @property (nonatomic, strong) NSDictionary *belongDic;
 
@@ -124,6 +132,7 @@
     //tableView
     [self tableViewSet];
     [self prepareData];
+    [self requestBelongData];
 }
 
 - (void)prepareData {
@@ -131,6 +140,35 @@
     self.colorBox = @[@"银灰色",@"深灰色",@"黑色",@"白色",@"红色",@"蓝色",@"咖啡色",@"香槟色",@"黄色",@"紫色",@"绿色",@"橙色",@"粉红色",@"彩色"];
     self.typeBox = @[@"两厢",@"三厢",@"跑车",@"SUV",@"MPV",@"面包车",@"皮卡"];
     self.enviBox = @[@"国六",@"国五",@"国四",@"国三"];
+}
+
+
+/// 匹配接口数据  销售归属人占存
+- (void )requestBelongData{
+    
+    NSDictionary * para = @{
+        @"operation_type":@"personnel_list",
+        @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id
+    };
+    WEAKSELF
+    [self.belongModel queryData:para complet:^(BOOL result) {
+        if (result) {
+            [weakSelf matchBelongData];
+        }
+    }];
+}
+- (void )matchBelongData{
+    
+    // 选中了销售归属人
+    NSIndexPath *indePath = [NSIndexPath indexPathForRow:13 inSection:1];
+    if ([self.value14 isKindOfClass:[NSString class]] && ![self.value14 isEqualToString:@""]) {
+    NSInteger index = [self.belongModel.nameArr indexOfObject:self.value14];
+        if (index<self.belongModel.belongArr.count) {
+            self.belongDic = self.belongModel.belongArr[index];
+            QLSubmitTextCell *cell = [self.tableView cellForRowAtIndexPath:indePath];
+            cell.textView.text = self.value14;
+        }
+    }
 }
 
 - (void)setUpLocalData {
@@ -148,7 +186,7 @@
     self.value11 = EncodeStringFromDic(localData, @"value11");
     self.value12 = EncodeStringFromDic(localData, @"value12");
     self.value13 = EncodeStringFromDic(localData, @"value13");
-    
+    self.value14 = EncodeStringFromDic(localData, @"value14");
     NSArray* temp1 = [localData objectForKey:@"imagArr1"];
     NSArray* temp2 = [localData objectForKey:@"imagArr2"];
    
@@ -294,7 +332,9 @@
 }
 //图片点击
 - (void)imgClick:(NSInteger)index {
-    
+    QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
+    fsiView.img = self.imgsArr[index];
+    [fsiView show];
 }
 #pragma mark - tableView
 - (void)tableViewSet {
@@ -643,25 +683,16 @@
            @"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id
        };
        WEAKSELF
-       [MBProgressHUD showCustomLoading:nil];
-       [QLNetworkingManager postWithUrl:BusinessPath params:para success:^(id response) {
-           [MBProgressHUD immediatelyRemoveHUD];
-           NSArray *dataArr = [[response objectForKey:@"result_info"] objectForKey:@"at_work_personnel_list"];
-           if ([dataArr isKindOfClass:[NSArray class]]) {
-               NSMutableArray* nameArr = [NSMutableArray array];
-               for (NSDictionary* dic in dataArr) {
-                   [nameArr addObject:EncodeStringFromDic(dic, @"personnel_nickname")];
-               }
-               
-               [BRStringPickerView showPickerWithTitle:@"选择销售归属人" dataSourceArr:nameArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
+       [self.belongModel queryData:para complet:^(BOOL result) {
+           if (result) {
+               [BRStringPickerView showPickerWithTitle:@"选择销售归属人" dataSourceArr:weakSelf.belongModel.nameArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
                   // 选中了销售归属人
                    QLSubmitTextCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                    cell.textView.text = resultModel.value;
-                   weakSelf.belongDic = dataArr[resultModel.index];
+                   weakSelf.value14 = resultModel.value;
+                   weakSelf.belongDic = weakSelf.belongModel.belongArr[resultModel.index];
                }];
            }
-       } fail:^(NSError *error) {
-           [MBProgressHUD showError:error.domain];
        }];
    } else if (indexPath.section == 1 && indexPath.row == 10) {
        WEAKSELF
@@ -926,6 +957,7 @@
         @"value11":self.value11?self.value11:@"",
         @"value12":self.value12?self.value12:@"",
         @"value13":self.value13?self.value13:@"",
+        @"value14":self.value14?self.value14:@"",
         @"imagArr1":temp1,
         @"imagArr2":temp2
     };
@@ -1163,4 +1195,12 @@
     }
     return result;
 }
+
+- (QLAddCarPageModel *)belongModel {
+    if (!_belongModel) {
+        _belongModel = [[QLAddCarPageModel alloc]init];
+    }
+    return _belongModel;
+}
+
 @end

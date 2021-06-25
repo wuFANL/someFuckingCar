@@ -242,6 +242,9 @@
             if ([self.delegate respondsToSelector:@selector(imgChange:isCarPic:)]) {
                 [self.delegate imgChange:resultArr isCarPic:self.isCarPic];
             }
+            if ([self.delegate respondsToSelector:@selector(imgClick:)]) {
+                [self.delegate imgClick:indexPath.row];
+            }
             
         }
         

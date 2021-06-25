@@ -132,7 +132,9 @@
     for (int i = 0; i < (_imagesArr.count==1?1:_imagesArr.count+2); i++) {
         QLBaseButton *imageBtn = [[QLBaseButton alloc]init];
         imageBtn.light = NO;
-        [imageBtn setContentMode:UIViewContentModeScaleAspectFill];
+        imageBtn.imageView.clipsToBounds = YES;
+        //设置具体的适配方式
+        [imageBtn.imageView setContentMode:UIViewContentModeScaleAspectFill];
         int index = 0;
         if (i == 0) {
             index = (int)_imagesArr.count-1;

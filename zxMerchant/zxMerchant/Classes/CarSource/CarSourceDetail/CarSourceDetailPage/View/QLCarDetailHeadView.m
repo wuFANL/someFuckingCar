@@ -40,18 +40,19 @@
 }
 #pragma mark - bannerView
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index ImageBtn:(UIButton *)imageBtn {
+    
     if (self.bannerView == bannerView) {
         if (self.bannerArr.count == 0) {
             [imageBtn setBackgroundImage:imageArr[0] forState:UIControlStateNormal];
         } else {
             NSDictionary *obj = imageArr[index];
             if ([obj isKindOfClass:[NSDictionary class]] && [[obj objectForKey:@"pic_url"] isKindOfClass:[NSString class]]) {
-                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal];
+                [imageBtn sd_setImageWithURL:[NSURL URLWithString:[obj objectForKey:@"pic_url"]] forState:UIControlStateNormal];
             } else if ([obj isKindOfClass:[NSString class]]) {
-                [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:(NSString *)obj] forState:UIControlStateNormal];
+                [imageBtn sd_setImageWithURL:[NSURL URLWithString:(NSString *)obj] forState:UIControlStateNormal];
             }
             else {
-                [imageBtn setBackgroundImage:[obj objectForKey:@"pic_url"] forState:UIControlStateNormal];
+                [imageBtn sd_setImageWithURL:[obj objectForKey:@"pic_url"] forState:UIControlStateNormal];
             }
         }
     }
