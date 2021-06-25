@@ -17,6 +17,7 @@
 #import "QLAddCarPopWIndow.h"
 #import "QLMyCarDetailViewController.h"
 #import "QLFullScreenImgView.h"
+#import "QLPicturesDetailViewController.h"
 #import "QLAddCarPageModel.h"
 @interface QLAddCarPageViewController ()<UITableViewDelegate,UITableViewDataSource,QLReleaseImagesCellDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic, strong) QLAddCarBottomView *bottomView;
@@ -332,9 +333,11 @@
 }
 //图片点击
 - (void)imgClick:(NSInteger)index {
-    QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
-    fsiView.img = self.imgsArr[index];
-    [fsiView show];
+    QLPicturesDetailViewController *pdVC = [QLPicturesDetailViewController new];
+    pdVC.showDeleteItem = YES;
+    pdVC.imgsArr = self.imgsArr;
+    pdVC.intoIndex = index;
+    [self.navigationController pushViewController:pdVC animated:YES];
 }
 #pragma mark - tableView
 - (void)tableViewSet {

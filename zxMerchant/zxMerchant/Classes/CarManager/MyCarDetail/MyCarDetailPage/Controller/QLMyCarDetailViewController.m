@@ -71,7 +71,7 @@
 {
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/info",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.userId,@"car_id":self.carID} success:^(id response) {
         self.allSourceDic = [response objectForKey:@"result_info"];
-        self.headView.numLB.text = self.carID;
+        self.headView.numLB.text = [NSString stringWithFormat:@"车辆编号：%@",self.carID];
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
@@ -82,7 +82,7 @@
 {
     [QLNetworkingManager postWithUrl:BusinessPath params:@{@"operation_type":@"car/list_info",@"my_account_id":[QLUserInfoModel getLocalInfo].account.account_id,@"account_id":self.userId,@"car_id":self.carID,@"business_car_id":self.buscarID} success:^(id response) {
         self.allSourceDic = [response objectForKey:@"result_info"];
-        self.headView.numLB.text = self.carID;
+        self.headView.numLB.text = [NSString stringWithFormat:@"车辆编号：%@",self.carID];
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
