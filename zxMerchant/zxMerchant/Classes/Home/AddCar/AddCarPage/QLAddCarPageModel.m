@@ -16,6 +16,10 @@
         self.currentText = @"";
         self.nameArr = [NSMutableArray new];
         self.belongArr = [NSMutableArray new];
+        self.displacement1 = @"";
+        self.displacement2 = @"";
+        self.displacement3 = @"";
+        
     }
     return self;
 }

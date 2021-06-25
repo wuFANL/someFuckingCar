@@ -705,12 +705,44 @@
        }];
    } else if (indexPath.section == 1 && indexPath.row == 10) {
        WEAKSELF
-       [BRStringPickerView showMultiPickerWithTitle:@"" dataSourceArr:@[@[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"],@[@".0",@".1",@".2",@".3",@".4",@".5",@".6",@".7",@".8",@".9"],@[@"L",@"T"]] selectIndexs:@[@(0),@(0),@(0),@(0)] resultBlock:^(NSArray<BRResultModel *> * _Nullable resultModelArr) {
+       NSArray *list1 = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+       NSArray *list2 = @[@".0",@".1",@".2",@".3",@".4",@".5",@".6",@".7",@".8",@".9"];
+       NSArray *list3 = @[@"L",@"T"];
+       
+       NSInteger index1 = [list1 indexOfObject:self.belongModel.displacement1];
+       NSInteger index2 = [list2 indexOfObject:self.belongModel.displacement2];
+       NSInteger index3 = [list3 indexOfObject:self.belongModel.displacement3];
+       
+       [BRStringPickerView showMultiPickerWithTitle:@"" dataSourceArr:@[list1,list2,list3] selectIndexs:@[@(index1),@(index2),@(index3),@(0)] resultBlock:^(NSArray<BRResultModel *> * _Nullable resultModelArr) {
            
            QLSubmitTextCell *cell = [tableView cellForRowAtIndexPath:indexPath];
            NSString *resultString = @"";
+           int index = 0;
            for (BRResultModel *model in resultModelArr) {
                resultString = [resultString stringByAppendingString:model.value];
+               
+               switch (index) {
+                   case 0:
+                   {
+                       self.belongModel.displacement1 = model.value;
+                   }
+                       break;
+                   case 1:
+                   {
+                       self.belongModel.displacement2 = model.value;
+                   }
+                       break;
+                   case 2:
+                   {
+                       self.belongModel.displacement3 = model.value;
+                   }
+                       break;
+                       
+                   default:
+                       break;
+               }
+               
+               index++;
            }
            
            cell.textView.text = resultString;

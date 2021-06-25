@@ -22,6 +22,7 @@
 #import "QLCarDescViewController.h"
 #import <CLPlayerView.h>
 #import "QLChatListPageViewController.h"
+#import "QLFullScreenImgView.h"
 
 @interface QLCarSourceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,QLCarDetailHeadViewDelegate>
 @property (nonatomic, strong) QLCarCircleNaviView *naviView;
@@ -218,7 +219,9 @@
 }
 //轮播图点击
 - (void)bannerView:(QLBannerView *)bannerView ImageData:(NSArray *)imageArr Index:(NSInteger)index {
-    
+    QLFullScreenImgView *fsiView = [QLFullScreenImgView new];
+    fsiView.img = imageArr[index];
+    [fsiView show];
 }
 //分享
 - (void)funBtnClick {

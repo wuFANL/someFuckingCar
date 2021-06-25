@@ -15,6 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong ) NSMutableArray  *belongArr;
 @property (nonatomic, strong ) NSMutableArray  *nameArr;
 
+//排量
+@property (nonatomic, copy) NSString  *displacement1;
+@property (nonatomic, copy) NSString  *displacement2;
+@property (nonatomic, copy) NSString  *displacement3;
+
 - (void )queryData :(NSDictionary *)param complet:(void(^)(BOOL result))complet;
 
 @end

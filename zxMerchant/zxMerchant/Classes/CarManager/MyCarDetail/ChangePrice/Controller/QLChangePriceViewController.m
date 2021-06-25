@@ -64,6 +64,9 @@
                                                           @"car_id":QLNONull([[self.sourceDic objectForKey:@"car_info"] objectForKey:@"id"])} success:^(id response) {
         [MBProgressHUD showSuccess:@"调价成功"];
         [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:nil afterDelay:HUDDefaultShowTime];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changePrice" object:nil];
+        
+        
     } fail:^(NSError *error) {
         [MBProgressHUD showError:error.domain];
     }];

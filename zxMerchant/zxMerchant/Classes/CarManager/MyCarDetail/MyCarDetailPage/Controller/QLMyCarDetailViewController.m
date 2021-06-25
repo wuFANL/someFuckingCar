@@ -442,7 +442,7 @@
         if (section == 2) {
             headerView.titleLB.text = @"车辆信息";
            
-            headerView.moreBtn.hidden = NO;
+            headerView.moreBtn.hidden = YES;
             [headerView.moreBtn setTitle:@"查看更多" forState:UIControlStateNormal];
             [headerView.moreBtn addTarget:self action:@selector(headerAccBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         } else if (section == 3||section == 4) {
